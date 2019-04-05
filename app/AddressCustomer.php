@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class AddressCustomer extends Model
 {
+    protected $table = 'address_customer';
+
     public function customer()
     {
         return $this->belongsTo('App\Customer');

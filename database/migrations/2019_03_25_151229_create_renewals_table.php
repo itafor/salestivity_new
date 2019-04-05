@@ -19,7 +19,6 @@ class CreateRenewalsTable extends Migration
             $table->string('product');
             $table->integer('amount');
             $table->string('period');
-            $table->string('status');
             $table->timestamps();
         });
     }
