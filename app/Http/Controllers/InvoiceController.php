@@ -74,7 +74,10 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        $customers = Customer::all();
+        $products = Product::all();
+        return view('billing.invoice.show', compact('invoice', 'customers', 'products'));
     }
 
     /**
@@ -97,7 +100,28 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $invoice = new Invoice;
+
+        $this->validate($request, [
+            'customer' => 'required',
+            'product' => 'required',
+            'timeline' => 'required',
+            'cost' => 'required|integer',
+        ]);
+        $invoice->customer = $request->input('customer');
+        $invoice->product = $request->input('product');
+        $invoice->timeline = $request->input('timeline');
+        $invoice->cost = $request->input('cost');
+        $invoice->status = $request->input('status');
+        // dd($invoice);
+        $invoice->save();
+
+
+        $status = "Invoice has been been updated ";
+        Session::flash('status', $status);
+        
+
+        return redirect()->route('billing.invoice.show', $invoice->id);
     }
 
     /**
@@ -108,6 +132,10 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        $invoice->delete();
+
+        Session::flash('status', 'The Invoice has been successfully deleted');
+        return redirect()->route('billing.invoice.index');
     }
 }

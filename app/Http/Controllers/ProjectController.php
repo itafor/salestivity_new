@@ -98,7 +98,11 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::find($id);
+        $products = Product::all();
+        $product = Product::where('id', $project->product_id)->first();
+        // dd($product);
+        return view('project.show', compact('project', 'product', 'products'));
     }
 
     /**
@@ -132,6 +136,10 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        $project->delete();
+
+        Session::flash('status', 'The Project has been successfully deleted');
+        return redirect()->route('project.index');
     }
 }

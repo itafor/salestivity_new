@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Project Management')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('Add Add Product')]) 
+@include('users.partials.header', ['title' => __('All Projects')]) 
 
       
     <div class="container-fluid mt--7">
@@ -54,9 +54,17 @@
                                         <td>{{ $project->end_date }}</td>
                                         <td>
                                             <div class="col-4 text-right">
-                                                <a href="{{ route('project.create') }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                                <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                             </div>
                                         </td>
+                                        <td>
+                                        <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                            @csrf
+                                            <div class="col-4 text-right">
+                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                            </div>
+                                        </form>
+                                    </td>
                                     </tr>
                                 @endforeach
                             </tbody>

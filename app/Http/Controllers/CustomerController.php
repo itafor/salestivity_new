@@ -83,7 +83,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::find($id);
+        $address = AddressCustomer::find($id);
+        return view('customer.show', compact('customer', 'address'));
     }
 
     /**
@@ -94,7 +96,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -106,7 +108,41 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer = Customer::find($id);
+        $address = AddressCustomer::find($id);
+        // dd($customer);
+
+        $this->validate($request, [
+            'company_name' => 'required|max:255|min:2',
+            'industry' => 'required',
+            'email' => 'required|max:255',
+            'phone' => 'required|max:11',
+            'website' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+            'country' => 'required',
+        ]);
+        $customer->company_name = $request->input('company_name');
+        $customer->industry = $request->input('industry');
+        $customer->email = $request->input('email');
+        $customer->phone = $request->input('phone');
+        $customer->website = $request->input('website');
+        $customer->save();
+
+        $address->customer_id = $customer->id;
+        $address->state = $request->input('state');
+        $address->city = $request->input('city');
+        $address->street = $request->input('street');
+        $address->country = $request->input('country');
+
+        $address->save();
+
+
+        $status = "Account has been successfully updated";
+        Session::flash('status', $status);
+
+        return redirect()->route('customer.show', $customer->id);
     }
 
     /**
@@ -117,6 +153,10 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->delete();
+
+        Session::flash('status', 'The Customer has been successfully deleted');
+        return redirect()->route('customer.index');
     }
 }

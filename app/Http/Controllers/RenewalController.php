@@ -72,7 +72,10 @@ class RenewalController extends Controller
      */
     public function show($id)
     {
-        //
+        $renewal = Renewal::find($id);
+        $customers = Customer::all();
+        $products = Product::all();
+        return view('billing.renewal.show', compact('renewal', 'customers','products'));
     }
 
     /**
@@ -95,7 +98,27 @@ class RenewalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $renewal = Renewal::find($id);
+
+        $this->validate($request, [
+            'customer' => 'required',
+            'product' => 'required',
+            'period' => 'required',
+            'amount' => 'required|integer',
+        ]);
+
+        $renewal->customer = $request->input('customer');
+        $renewal->product = $request->input('product');
+        $renewal->amount = $request->input('amount');
+        $renewal->period = $request->input('period');
+        $renewal->save();
+
+
+        $status = "Renewal has been Updated ";
+        Session::flash('status', $status);
+        
+
+        return redirect()->route('billing.renewal.show', $renewal->id);
     }
 
     /**
@@ -106,6 +129,10 @@ class RenewalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $renewal = Renewal::find($id);
+        $renewal->delete();
+
+        Session::flash('status', 'The renewal has been successfully deleted');
+        return redirect()->route('billing.renewal.index');
     }
 }

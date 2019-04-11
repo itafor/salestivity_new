@@ -66,7 +66,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        return view('product.show', compact('product'));
     }
 
     /**
@@ -89,7 +90,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $this->validate($request, [
+            'name' => 'required|max:255|min:2',
+            'category' => 'required',
+            'type' => 'required|max:255',
+            'notes' => 'required',
+        ]);
+        $product->name = $request->input('name');
+        $product->category = $request->input('category');
+        $product->type = $request->input('type');
+        $product->notes = $request->input('notes');
+        $product->save();
+
+
+        $status = "Product has been updated successfully!!!";
+        Session::flash('status', $status);
+
+        return redirect()->route('product.show', $product->id);
     }
 
     /**
@@ -100,6 +119,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        Session::flash('status', 'The Product has been successfully deleted');
+        return redirect()->route('product.index');
     }
 }

@@ -37,16 +37,28 @@
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Category') }}</th>
                                     <th scope="col">{{ __('Type') }}</th>
-                                    <th scope="col">{{ __('Email') }}</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($products as $product)
                                   <tr>
-                                      <td>{{ $product->name }}</td>
-                                      <td>{{ $product->category }}</td>
-                                      <td>{{ $product->type }}</td>    
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category }}</td>
+                                    <td>{{ $product->type }}</td> 
+                                    <td>   
+                                        <div class="col-4 text-right">
+                                            <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                            @csrf
+                                            <div class="col-4 text-right">
+                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                            </div>
+                                        </form>
+                                    </td>    
                                   </tr>
                                 @endforeach
                             </tbody>

@@ -18,6 +18,10 @@
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link rel="stylesheet" href="assets/vendor/select2/dist/css/select2.min.css">
+        <link href="ExampleStyle.css" type="text/css" rel="stylesheet"/>
+		<!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+	
 
     </head>
     <body class="{{ $class ?? '' }}">
