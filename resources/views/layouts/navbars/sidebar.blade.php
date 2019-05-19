@@ -83,7 +83,7 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
@@ -103,7 +103,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -113,18 +113,38 @@
 
                     <div class="collapse " id="navbar-accounts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customer.index') }}">
-                                    {{ __('List Accounts') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('customer.create') }}">
-                                    {{ __('Add Account') }}
-                                </a>
-                            </li>
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('customer.index') }}">
+                                        {{ __('List Accounts') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#navbar-addproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Add Account') }}</span>
+                                    </a>
+
+                                    <div class="collapse" id="navbar-addproducts">
+                                        <ul class="nav nav-sm flex-column">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.corporate.create') }}">
+                                                        {{ __('Corporate') }}
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.individual.create') }}">
+                                                        {{ __('Individual') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>        
                         </ul>
-                    </div>
+                    </div> 
+                            
                 </li>
 
                 <li class="nav-item">
@@ -135,52 +155,30 @@
 
                     <div class="collapse " id="navbar-products">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('product.index') }}">
-                                    {{ __('List Products') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('product.create') }}">
-                                    {{ __('Add Products') }}
-                                </a>
-                            </li>
-                        </div>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link active" href="#navbar-addproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                    <i class="fab " style="color: #f4645f;"></i>
-                                    <span class="nav-link-text" style="color: #f4645f;">{{ __('Add Product') }}</span>
-                                </a>
-
-                                <div class="collapse " id="navbar-addproducts">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                                {{ __('Digital Marketing') }}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                                {{ __('Website Design') }}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                                {{ __('App Development') }}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                                {{ __('Managed Hosting') }}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.index') }}">
+                                        {{ __('List Products') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.category.create') }}">
+                                        {{ __('Add Category') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.subcategory.create') }}">
+                                        {{ __('Add Sub Category') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.create') }}">
+                                        {{ __('Add Product') }}
+                                    </a>
+                                </li>
+                            </ul>
                         </ul>
                     </div>
-                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -190,16 +188,92 @@
 
                     <div class="collapse" id="navbar-project">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('project.index') }}">
-                                    {{ __('List Projects') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('project.create') }}">
-                                    {{ __('Add Project') }}
-                                </a>
-                            </li>
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                        {{ __('List Projects') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Add Projects') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-retail" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fab " style="color: #f4645f;"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Retail Field Sales') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-retail">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                        {{ __('List Sales') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Add Sales') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Sales Location') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-target" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fab " style="color: #f4645f;"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Target Management') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-target">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                        {{ __('List Targets') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Build Target') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-opportunity" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fab " style="color: #f4645f;"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Opportunities') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-opportunity">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                        {{ __('List Opportunities') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Add Opportunity') }}
+                                    </a>
+                                </li>
+                            </ul>
                         </ul>
                     </div>
                 </li>

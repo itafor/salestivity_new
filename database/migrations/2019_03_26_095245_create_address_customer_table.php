@@ -16,7 +16,7 @@ class CreateAddressCustomerTable extends Migration
         Schema::create('address_customer', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            // $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('state');
             $table->string('city');
             $table->string('street');

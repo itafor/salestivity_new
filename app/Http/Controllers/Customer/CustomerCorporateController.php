@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
-use App\Customer;
+use App\Http\Controllers\Controller;
 use App\AddressCustomer;
-use App\Contact;
 use App\CustomerCorporate;
+use App\Customer;
+use App\Contact;
 use Session;
 
-class CustomerController extends Controller
+class CustomerCorporateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('id', 'DESC')->get();
-        // dd($customers->individual->email);
-        // $account = Customer::where('id', $id)->first();
-        // $addresses = AddressCustomer::where('customer_id', $account->id);
-        return view('customer.index', compact('customers', 'addresses', 'cus'));
+        //
     }
 
     /**
@@ -32,7 +29,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create', compact('customer'));
+        return view('customer.corporate.create');
     }
 
     /**
@@ -43,8 +40,10 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Customer;
+        $customer = new CustomerCorporate;
+        $account = new Customer;
         $address = new AddressCustomer;
+        $contact = new Contact;
 
         $this->validate($request, [
             'company_name' => 'required|max:255|min:2',
@@ -52,7 +51,10 @@ class CustomerController extends Controller
             'email' => 'required|max:255',
             'phone' => 'required|max:11',
             'website' => 'required',
+            'turn_over' => 'required',
+            'employee_count' => 'required',
             'state' => 'required',
+            'contact_phone' => 'required',
             'city' => 'required',
             'street' => 'required',
             'country' => 'required',
@@ -62,15 +64,29 @@ class CustomerController extends Controller
         $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->website = $request->website;
+        $customer->turn_over = $request->turn_over;
+        $customer->employee_count = $request->employee_count;
         $customer->save();
 
-        $address->customer_id = $customer->id;
+        $account->name = $request->company_name;
+        $account->account_type = $request->account_type;
+        $account->account_id = $customer->id;
+        $account->save();
+
+        $address->customer_id = $account->id;
         $address->state = $request->state;
         $address->city = $request->city;
         $address->street = $request->street;
         $address->country = $request->country;
-
         $address->save();
+
+        $contact->customer_id = $account->id;
+        $contact->title = $request->title;
+        $contact->surname = $request->surname;
+        $contact->name = $request->name;
+        $contact->email = $request->contact_email;
+        $contact->phone = $request->contact_phone;
+        $contact->save();
 
 
         $status = "Account Added";
@@ -87,11 +103,10 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
-        $address = AddressCustomer::where('customer_id', '=', $id)->get()->first();
-        $contacts = Contact::where('customer_id', $id)->get();
-        // dd($contacts);
-        return view('customer.show', compact('customer', 'address', 'contacts'));
+        $customer = Customer::where('account_id',$id)->where('account_type', 1)->first();
+        $address = AddressCustomer::where('customer_id', $customer->id)->first();
+        $contacts = Contact::where('customer_id', $customer->id)->get();
+        return view('customer.corporate.show', compact('customer', 'address', 'contacts'));
     }
 
     /**
@@ -102,7 +117,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -114,10 +129,11 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
-        $address = AddressCustomer::where('customer_id',$id)->first();
-        
-
+        $account = Customer::where('id', $id)->where('account_type', 1)->first();
+        $customer = CustomerCorporate::where('id', $account->account_id)->first();
+        $address = AddressCustomer::where('customer_id', $account->id)->first();
+        // dd($address);
+        $contacts = Contact::where('customer_id', $account->id)->first();
         $this->validate($request, [
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
@@ -136,7 +152,7 @@ class CustomerController extends Controller
         $customer->website = $request->input('website');
         $customer->save();
 
-        $address->customer_id = $customer->id;
+        // $address->customer_id = $customer->id;
         $address->state = $request->input('state');
         $address->city = $request->input('city');
         $address->street = $request->input('street');
@@ -184,7 +200,7 @@ class CustomerController extends Controller
         $status = "Account has been successfully updated";
         Session::flash('status', $status);
 
-        return redirect()->route('customer.show', $customer->id);
+        return redirect()->route('customer.index', $customer->id);
     }
 
     /**
@@ -196,12 +212,11 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $account = Customer::find($id);
+        dd($account);
         $customer = CustomerCorporate::where('id', $account->account_id)->first();
         $address = AddressCustomer::where('customer_id', $account->id)->first();
         $contacts = Contact::where('customer_id', $account->id)->first();
-        // dd($contacts);
 
-        $account->delete();
         $customer->delete();
         $address->delete();
         $contacts->delete();

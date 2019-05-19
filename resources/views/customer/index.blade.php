@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Accounts') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('customer.create') }}" class="btn btn-sm btn-primary">{{ __('Create account') }}</a>
+                                <a href="{{-- route('customer.create') --}}" class="btn btn-sm btn-primary">{{ __('Create account') }}</a>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
-                                    <th scope="col">{{ __('Industry') }}</th>
+                                    <th scope="col">{{ __('Account Type') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
                                     <th scope="col">{{ __('Website') }}</th>
@@ -45,17 +45,21 @@
                             <tbody>
                                 @foreach($customers as $customer)
                                   <tr>
-                                      <td>{{ $customer->company_name }}</td>
-                                      <td>{{ $customer->industry }}</td>
-                                      <td>{{ $customer->email }}</td>
-                                      <td>{{ $customer->phone }}</td>
-                                      <td>{{ $customer->website }}</td>
+                                        <td>{{ $customer->name }}</td>
+                                        <td>{{ $cus = $customer->account_type == 1 ? 'Corporate' : 'Individual'}}</td>
+                                        @if($customer->account_type == 1)
+                                            <td>{{ $customer->corporate->email }}</td>
+                                            <td>{{ $customer->corporate->phone }}</td>
+                                            <td>{{ $customer->corporate->website }}</td>
+                                        @else
+                                            <td>{{ $customer->individual->email }}</td>
+                                            <td>{{ $customer->individual->phone }}</td>
+                                            <td>{{ $customer->individual->website }}</td>
+                                        @endif
                                     <td>
                                         <div class="col-4 text-right">
-                                                <a href="{{ route('customer.show', [$customer->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->corporate->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                         </div>
-                                    </td>
-                                    <td>
                                         <form action="{{ route('customer.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                             @csrf
                                             <div class="col-4 text-right">
@@ -67,11 +71,10 @@
                                 @endforeach
                                   </tr>
                             </tbody>
-                        </table>
+                        </table>    
                     </div>
-                    
-                </div>
             </div>
+        </div>
         </div>
             
 

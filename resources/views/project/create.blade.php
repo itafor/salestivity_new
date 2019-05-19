@@ -36,10 +36,10 @@
                                     <label class="form-control-label" for="input-email">{{ __('Product Name') }}</label>
                                     <!-- <input type="email" name="email" id="product_id-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required> -->
                                     <div class="col-sm-6">
-                                    <select name="product_id" id="product_id">
+                                    <select name="product_id" id="product_id" class="form-control"> 
                                         <option value="">Choose a Product</option>
-                                        @foreach($products as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                     </div>

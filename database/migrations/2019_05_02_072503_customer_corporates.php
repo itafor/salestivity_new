@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContactsTable extends Migration
+class CustomerCorporates extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('customer_corporates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('customer_id');
-            // $table->foreign('customer_id')->references('id')->on('customer')
-            //     ->onDelete('cascade');
-            $table->string('title');
-            $table->string('surname');
-            $table->string('name');
+            $table->string('company_name');
+            $table->string('industry');
             $table->string('phone');
-            $table->string('email')->unique();
+            $table->string('website')->nullable();
+            $table->string('email');
+            $table->string('turn_over');
+            $table->string('employee_count');
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class CreateContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('customer_corporates');
     }
 }

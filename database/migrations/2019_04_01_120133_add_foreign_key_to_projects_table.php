@@ -14,8 +14,8 @@ class AddForeignKeyToProjectsTable extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')
-            ->on('products')->onDelete('cascade')->unsigned();
+            // $table->foreign('product_id')->references('id')
+            // ->on('products')->onDelete('cascade')->unsigned();
         });
     }
 

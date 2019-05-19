@@ -26,21 +26,21 @@
                                   <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
                                   <div class="col-sm-6" data-toggle="select">
                                   <!-- pass in the customer_id to the pivot table ie customer_invoice -->
-                                    <select name="customer_id" id="customer" class="form-control select2-multi" onchange="myFunction(event)">
+                                    <select name="customer" id="customer" class="form-control select2-multi" onchange="myFunction(event)">
                                         <option value="">Choose a Customer</option>
                                             @foreach($customers as $key => $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
                                         @endforeach
                                     </select>
                                     <!-- Pass in this name to the database and store in invoices table -->
-                                    <input type="hidden" id="myText" class="form-control" name="customer">
+                                    <!-- <input type="hidden" id="myText" class="form-control" name="customer"> -->
                                   </div>
                                   <script>
-                                    function myFunction(e) {
-                                    var sel = document.getElementById("customer");
-                                    var text = sel.options[sel.selectedIndex].text; 
-                                    document.getElementById("myText").value = text;
-                                    }
+                                    // function myFunction(e) {
+                                    // var sel = document.getElementById("customer");
+                                    // var text = sel.options[sel.selectedIndex].text; 
+                                    // document.getElementById("myText").value = text;
+                                    // }
                                   </script>
                                 </div>
                                 <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
@@ -49,7 +49,7 @@
                                     <select name="product" id="product" class="form-control" data-toggle="select">
                                         <option value="">Choose a Product</option>
                                             @foreach($products as $key => $product)
-                                            <option value="{{ $product->name }}">{{ $product->name }}</option>
+                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                   </div>
@@ -58,10 +58,19 @@
                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="cost">{{ __('Amount') }}</label>
                                     <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
-
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cost') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
+                                    <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" required >
+                                    @if ($errors->has('discount'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('discount') }}</strong>
                                         </span>
                                     @endif
                                 </div>

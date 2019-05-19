@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class AddStandardPriceAndCategory extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('account_type');
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            
+            $table->integer('standard_price')->after('name');
+            $table->integer('sub_category')->after('standard_price');
         });
     }
 
@@ -28,6 +27,8 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 }

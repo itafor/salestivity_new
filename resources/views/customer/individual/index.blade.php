@@ -1,7 +1,7 @@
-@extends('layouts.app', ['title' => __('Project Management')])
+@extends('layouts.app', ['title' => __('Account Management')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('All Invoices')]) 
+@include('users.partials.header', ['title' => __('All Accounts')]) 
 
       
     <div class="container-fluid mt--7">
@@ -11,10 +11,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('All Invoices') }}</h3>
+                                <h3 class="mb-0">{{ __('All Accounts') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.invoice.create') }}" class="btn btn-sm btn-primary">{{ __('Create Invoice') }}</a>
+                                <a href="{{ route('customer.create') }}" class="btn btn-sm btn-primary">{{ __('Create account') }}</a>
                             </div>
                         </div>
                     </div>
@@ -34,43 +34,39 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('Customer') }}</th>
-                                    <th scope="col">{{ __('Product') }}</th>
-                                    <th scope="col">{{ __('Cost') }}</th>
-                                    <th scope="col">{{ __('Timeline') }}</th>
-                                    <th scope="col">{{ __('Status') }}</th>
+                                    <th scope="col">{{ __('Name') }}</th>
+                                    <th scope="col">{{ __('Industry') }}</th>
+                                    <th scope="col">{{ __('Email') }}</th>
+                                    <th scope="col">{{ __('Phone') }}</th>
+                                    <th scope="col">{{ __('Website') }}</th>
                                     <th scope="col">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($invoices as $invoice)
-                                    <tr>
-                                    
-                                        <td>{{ $invoice->getCustomerName($invoice->customer) }}</td>
-                                        <td>{{ $invoice->getProductName($invoice->product) }}</td>
-                                        <td>{{ $invoice->cost }}</td>
-                                        <td>{{ $invoice->timeline }}</td>
-                                        <td>{{ $invoice->status }}</td>
-                                        <td>
-                                            <div class="col-4 text-right">
-                                                <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                @foreach($customers as $customer)
+                                  <tr>
+                                      <td>{{ $customer->company_name }}</td>
+                                      <td>{{ $customer->industry }}</td>
+                                      <td>{{ $customer->email }}</td>
+                                      <td>{{ $customer->phone }}</td>
+                                      <td>{{ $customer->website }}</td>
+                                    <td>
+                                        <div class="col-4 text-right">
+                                                <a href="{{ route('customer.show', [$customer->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                        </div>
+                                        <form action="{{ route('customer.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                             @csrf
                                             <div class="col-4 text-right">
                                                 <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
                                             </div>
                                         </form>
                                     </td>
-                                    </tr>
+                                    
                                 @endforeach
+                                  </tr>
                             </tbody>
-                        </table>
+                        </table>    
                     </div>
-                    
-                </div>
             </div>
         </div>
             

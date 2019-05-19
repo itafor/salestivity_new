@@ -8,7 +8,7 @@ class Customer extends Model
 {
     public function address()
     {
-        return $this->hasOne('App\AddressCustomer');
+        return $this->hasOne('App\AddressCustomer', 'customer_id');
     }
 
     public function invoice()
@@ -20,4 +20,24 @@ class Customer extends Model
     {
     	return $this->hasMany('App\Renewal');
     }
+
+    /**
+     * Get the corporate account record associated with the account.
+     */
+    public function corporate()
+    {
+        return $this->belongsTo('App\CustomerCorporate', 'account_id');
+    }
+
+     /**
+     * Get the individual account record associated with the account.
+     */
+    public function individual()
+    {
+        return $this->belongsTo('App\CustomerIndividual', 'account_id');
+    }
+
+    protected $casts = [
+        'cont' => 'array'
+    ];
 }

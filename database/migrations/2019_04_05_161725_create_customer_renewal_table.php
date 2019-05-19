@@ -16,9 +16,9 @@ class CreateCustomerRenewalTable extends Migration
         Schema::create('customer_renewal', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('id')->on('customers');
+            // $table->foreign('customer_id')->references('id')->on('customers');
             $table->integer('renewal_id')->unsigned();
-            $table->foreign('renewal_id')->references('id')->on('renewals');
+            // $table->foreign('renewal_id')->references('id')->on('renewals');
             $table->timestamps();
         });
     }

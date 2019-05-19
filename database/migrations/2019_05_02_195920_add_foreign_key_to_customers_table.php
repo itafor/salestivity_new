@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class AddForeignKeyToCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->integer('account_type');
-            $table->timestamps();
+        Schema::table('customers', function (Blueprint $table) {
+            $table->integer('account_id')->after('account_type');
+            // $table->foreign('corporate_id')->references('id')->on('customer_corporate');
+
         });
     }
 
@@ -28,6 +27,8 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::table('customers', function (Blueprint $table) {
+            //
+        });
     }
 }
