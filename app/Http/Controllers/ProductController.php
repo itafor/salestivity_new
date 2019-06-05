@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Product;
+use App\Category;
+use App\SubCategory;
 use Session;
 
 class ProductController extends Controller
@@ -16,6 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+        // dd($products);
         return view('product.index', compact('products'));
     }
 
@@ -26,7 +30,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $categories = Category::all();
+        $subCategories = SubCategory::all();
+        // dd($categories);
+        return view('product.create', compact('categories', 'subCategories'));
     }
 
     /**
@@ -41,15 +48,18 @@ class ProductController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255|min:2',
-            'category' => 'required',
-            'type' => 'required|max:255',
-            'notes' => 'required',
+            'category_id' => 'required'
         ]);
         $product->name = $request->name;
-        $product->category = $request->category;
-        $product->type = $request->type;
-        $product->notes = $request->notes;
+        $product->category_id = $request->category_id;
+        $product->sub_category_id = $request->sub_category_id;
+        $product->description = $request->description;
+        $product->standard_price = $request->standard_price;
         $product->save();
+
+        $cat = $request->category_id;
+
+        $product->category()->sync($cat);
 
 
         $status = "New Product has been Added ";
@@ -67,7 +77,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        return view('product.show', compact('product'));
+        $categories = Category::all();
+        $subCategories = SubCategory::all();
+        return view('product.show', compact('product', 'categories', 'subCategories'));
     }
 
     /**

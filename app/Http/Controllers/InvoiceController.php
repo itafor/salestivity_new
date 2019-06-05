@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Invoice;
 use App\Customer;
 use App\Product;
+use App\Category;
+use App\SubCategory;
+use App\Payment;
 use Session;
 
 class InvoiceController extends Controller
@@ -18,9 +22,10 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
+        $customers = Customer::orderBy('id', 'DESC')->get();
         // dd($invoices->customer()->customer);
 
-        return view('billing.invoice.index', compact('invoices'));
+        return view('billing.invoice.index', compact('invoices', 'customers'));
     }
 
     /**
@@ -55,6 +60,7 @@ class InvoiceController extends Controller
         $invoice->product = $request->product;
         $invoice->timeline = $request->timeline;
         $invoice->cost = $request->cost;
+        $invoice->discount = $request->discount;
         $invoice->status = $request->status;
         $invoice->save();
 
@@ -77,7 +83,52 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         $customers = Customer::all();
         $products = Product::all();
-        return view('billing.invoice.show', compact('invoice', 'customers', 'products'));
+
+        $payments = Payment::where('customer_id', $invoice->customer)->get();
+        
+
+        
+        
+        
+        
+        
+        
+        return view('billing.invoice.show', compact('invoice', 'customers', 'products', 'payments', 'arr'));
+        // dd($payment_type->invoicesMorph);
+
+        // $arr1 = [];
+        // foreach($payment_type->invoicesMorph as $invoice){
+        //     $arr1[] = $invoice->customers->name;
+        // };
+        // dd($arr1);
+
+        // $arr = [];
+        // $lost = [];
+        // foreach($payments as $payment){
+        //     $list[] = $payment->product;
+        //     foreach($payment->product as $product) {
+        //         // dd($payment->product);
+        //     $arr[] = $product->name;
+        // };
+    // };
+    // dd($list);
+        // dd($arr);
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function manage($id)
+    {
+        $invoice = Invoice::find($id);
+        $customers = Customer::all();
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
+        $products = Product::all();
+        return view('billing.invoice.manage', compact('invoice', 'customers', 'products', 'categories', 'sub_categories'));
     }
 
     /**
@@ -136,6 +187,47 @@ class InvoiceController extends Controller
         $invoice->delete();
 
         Session::flash('status', 'The Invoice has been successfully deleted');
+        return redirect()->route('billing.invoice.index');
+    }
+
+    /**
+     * Store a newly created payment resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay(Request $request)
+    {
+        $this->validate($request, [
+            'cost' => 'required',
+            'category_id' => 'required',
+            'product' => 'required',
+            'amount' => 'required'
+        ]);
+
+        $payment = new Payment;
+        $payment->customer_id = $request->customer_id;
+        $invoice_id = $request->invoice_id;
+        $payment->cost = $request->cost;
+        $payment->category_id = $request->category_id;
+        $payment->sub_category_id = $request->sub_category_id;
+        $payment->amount = $request->amount;
+        $payment->discount = $request->discount;
+        $payment->status = $request->status;
+
+        $calcDiscount = ($payment->discount/100) * $request->cost;
+        $discountCost = $request->cost - $calcDiscount;
+        $payment->outstanding = ($request->amount) - ($discountCost);
+
+        $payment->save();
+        $product = $request->product;
+        
+        $payment->invoicesMorph()->sync($invoice_id);
+        $payment->product()->sync($product);
+
+        $status = "Payment has been Registerd ";
+        Session::flash('status', $status);
+
         return redirect()->route('billing.invoice.index');
     }
 }

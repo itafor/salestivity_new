@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Account Management')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('Add Account')]) 
+@include('users.partials.header', ['title' => __('All Accounts')]) 
 
       
     <div class="container-fluid mt--7">
@@ -13,9 +13,9 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('All Accounts') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
-                                <a href="{{-- route('customer.create') --}}" class="btn btn-sm btn-primary">{{ __('Create account') }}</a>
-                            </div>
+                            <!-- <div class="col-4 text-right">
+                                <a href="{{-- route('customer.create') --}}" class="btn btn-sm btn-primary">{{ __('Add account') }}</a>
+                            </div> -->
                         </div>
                     </div>
                     
@@ -38,8 +38,7 @@
                                     <th scope="col">{{ __('Account Type') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Phone') }}</th>
-                                    <th scope="col">{{ __('Website') }}</th>
-                                    <th scope="col">{{ __('Action') }}</th>
+                                    <th scope="col" class="text-center" >{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,24 +49,24 @@
                                         @if($customer->account_type == 1)
                                             <td>{{ $customer->corporate->email }}</td>
                                             <td>{{ $customer->corporate->phone }}</td>
-                                            <td>{{ $customer->corporate->website }}</td>
                                         @else
                                             <td>{{ $customer->individual->email }}</td>
                                             <td>{{ $customer->individual->phone }}</td>
-                                            <td>{{ $customer->individual->website }}</td>
                                         @endif
                                     <td>
-                                        <div class="col-4 text-right">
-                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->corporate->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                        </div>
-                                        <form action="{{ route('customer.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                            @csrf
-                                            <div class="col-4 text-right">
-                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                        <div class="btn-group-justified text-center" role="group">
+                                            <div class="btn-group" role="group">
+                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->corporate->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                            </div>  
+
+                                            <div class="btn-group" role="group">
+                                                <form action="{{ route('customer.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                    @csrf
+                                                    <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </td>
-                                    
                                 @endforeach
                                   </tr>
                             </tbody>

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    public function customer()
+    public function customers()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo('App\Customer', 'customer');
     }
 
     public function getCustomerName($id)
@@ -29,5 +29,10 @@ class Invoice extends Model
         // dd($invoice->customer);
         
         return $product->name;
+    }
+
+    public function payments()
+    {
+        return $this->morphToMany('App\Payment', 'payable');
     }
 }

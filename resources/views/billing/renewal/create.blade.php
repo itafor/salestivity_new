@@ -28,7 +28,7 @@
                                     <select name="customer_id" id="customer" class="form-control select2-multi" onchange="myFunction(event)">
                                         <option value="">Choose a Customer</option>
                                         @foreach($customers as $key => $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
+                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                         @endforeach
                                     </select>
                                     <!-- Pass in this name to the database and store in renewals table -->
@@ -53,7 +53,7 @@
                                     </select>
                                   </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
+                                <!-- <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="amount">{{ __('Amount') }}</label>
                                     <input type="number" name="amount" id="amount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount') }}" value="{{ old('amount') }}" required >
 
@@ -62,15 +62,26 @@
                                             <strong>{{ $errors->first('amount') }}</strong>
                                         </span>
                                     @endif
-                                </div>
+                                </div> -->
                                 
-                                <div class="form-group{{ $errors->has('period') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="period">{{ __('Timeline (in days)') }}</label>
-                                    <input type="text" name="period" id="period" class="form-control form-control-alternative{{ $errors->has('period') ? ' is-invalid' : '' }}" placeholder="{{ __('Period') }}" value="{{ old('periodPeriod') }}" required>
+                                <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" value="{{ old('start_date') }}" required>
 
-                                    @if ($errors->has('period'))
+                                    @if ($errors->has('start_date'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('period') }}</strong>
+                                            <strong>{{ $errors->first('start_date') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>   
+
+                                <div class="form-group{{ $errors->has('end_date') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" value="{{ old('end_date') }}" required>
+
+                                    @if ($errors->has('end_date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('end_date') }}</strong>
                                         </span>
                                     @endif
                                 </div>                                

@@ -106,9 +106,8 @@
                 </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Account Management') }}</span>
+                    <a class="nav-link" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Account Management') }}
                     </a>
 
                     <div class="collapse " id="navbar-accounts">
@@ -120,8 +119,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#navbar-addproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Add Account') }}</span>
+                                    <a class="nav-link" href="#navbar-addproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('Add Account') }}</span>
                                     </a>
 
                                     <div class="collapse" id="navbar-addproducts">
@@ -148,9 +147,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-products" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Product Management') }}</span>
+                    <a class="nav-link" href="#navbar-products" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-briefcase text-primary" aria-hidden="true"></i>{{ __('Product Management') }}
                     </a>
 
                     <div class="collapse " id="navbar-products">
@@ -181,9 +179,9 @@
                     </div>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Project Management') }}</span>
+                    <a class="nav-link" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-paper-diploma text-primary"></i>
+                        <span class="nav-link-text">{{ __('Project Management') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-project">
@@ -204,9 +202,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-retail" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Retail Field Sales') }}</span>
+                    <a class="nav-link" href="#navbar-retail" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-calculator text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Retail Field Sales') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-retail">
@@ -232,9 +230,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-target" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Target Management') }}</span>
+                    <a class="nav-link" href="#navbar-target" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Target Management') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-target">
@@ -255,9 +253,9 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-opportunity" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Opportunities') }}</span>
+                    <a class="nav-link" href="#navbar-opportunity" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-compass text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Opportunities') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-opportunity">
@@ -279,18 +277,18 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Billing') }}</span>
+                    <a class="nav-link" href="#navbar-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-money-coins text-primary "></i>
+                        <span class="nav-link-text">{{ __('Billing') }}</span>
                     </a>
 
                     
             
                     <div class="collapse" id="navbar-billing">
                         <ul class="nav nav-sm flex-column">
-                            <a class="nav-link active" href="#navbar-invoicing-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <a class="nav-link" href="#navbar-invoicing-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                                 <i class="fab " style="color: #f4645f;"></i>
-                                <span class="nav-link-text" style="color: #f4645f;">{{ __('Invoicing') }}</span>
+                                <span class="nav-link-text">{{ __('Invoicing') }}</span>
                             </a>
                             <div class="collapse" id="navbar-invoicing-billing">
                             <ul class="nav nav-sm flex-column">
@@ -311,9 +309,9 @@
                                 </li> 
                                 </ul>  
                             </div>
-                        <a class="nav-link active" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                            <i class="fab " style="color: #f4645f;"></i>
-                            <span class="nav-link-text" style="color: #f4645f;">{{ __('Renewals') }}</span>
+                        <a class="nav-link" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
+                            <span class="nav-link-text">{{ __('Renewals') }}</span>
                         </a>
                         <div class="collapse" id="navbar-invoicing-renewals">
                             <ul class="nav nav-sm flex-column">
@@ -339,9 +337,9 @@
 
                     <div class="collapse" id="navbar-renewal">
                         <ul class="nav nav-sm flex-column">
-                            <a class="nav-link active" href="#navbar-renewal-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <a class="nav-link" href="#navbar-renewal-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                                 <i class="fab " style="color: #f4645f;"></i>
-                                <span class="nav-link-text" style="color: #f4645f;">{{ __('Renewals') }}</span>
+                                <span class="nav-link-text">{{ __('Renewals') }}</span>
                             </a>
                             <div class="collapse" id="navbar-renewal-billing">
                             <ul class="nav nav-sm flex-column">
@@ -367,16 +365,16 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-reporting"  role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Reporting') }}</span>
+                    <a class="nav-link" href="#navbar-reporting"  role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-ruler-pencil text-primary"></i>
+                        <span class="nav-link-text">{{ __('Reporting') }}</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-reporting" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab " style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('User Management') }}</span>
+                    <a class="nav-link" href="#navbar-reporting" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-single-02 text-primary"></i>
+                        <span class="nav-link-text">{{ __('User Management') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-reporting">

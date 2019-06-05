@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Renewal;
 use App\Customer;
+use App\Category;
+use App\SubCategory;
+use App\Payment;
 use App\Product;
 use Session;
 
@@ -44,16 +47,18 @@ class RenewalController extends Controller
         $renewal = new Renewal;
 
         $this->validate($request, [
-            'customer' => 'required',
+            'customer_id' => 'required',
             'product' => 'required',
-            'period' => 'required',
-            'amount' => 'required|integer',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            // 'amount' => 'required|integer',
         ]);
 
-        $renewal->customer = $request->customer;
+        $renewal->customer_id = $request->customer_id;
         $renewal->product = $request->product;
         $renewal->amount = $request->amount;
-        $renewal->period = $request->period;
+        $renewal->start_date = $request->start_date;
+        $renewal->end_date = $request->end_date;
         $renewal->save();
 
 
@@ -75,7 +80,9 @@ class RenewalController extends Controller
         $renewal = Renewal::find($id);
         $customers = Customer::all();
         $products = Product::all();
-        return view('billing.renewal.show', compact('renewal', 'customers','products'));
+
+        $payments = Payment::where('customer_id', $renewal->customer_id)->get();
+        return view('billing.renewal.show', compact('renewal', 'customers','products', 'payments'));
     }
 
     /**
@@ -101,16 +108,20 @@ class RenewalController extends Controller
         $renewal = Renewal::find($id);
 
         $this->validate($request, [
-            'customer' => 'required',
+            'customer_id' => 'required',
             'product' => 'required',
-            'period' => 'required',
-            'amount' => 'required|integer',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            // 'period' => 'required',
+            // 'amount' => 'required|integer',
         ]);
 
-        $renewal->customer = $request->input('customer');
+        $renewal->customer_id = $request->input('customer_id');
         $renewal->product = $request->input('product');
-        $renewal->amount = $request->input('amount');
-        $renewal->period = $request->input('period');
+        $renewal->start_date = $request->input('start_date');
+        $renewal->end_date = $request->input('end_date');
+        // $renewal->amount = $request->input('amount');
+        // $renewal->period = $request->input('period');
         $renewal->save();
 
 
@@ -133,6 +144,63 @@ class RenewalController extends Controller
         $renewal->delete();
 
         Session::flash('status', 'The renewal has been successfully deleted');
+        return redirect()->route('billing.renewal.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function manage($id)
+    {
+        $renewal = Renewal::find($id);
+        $customers = Customer::all();
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
+        $products = Product::all();
+        return view('billing.renewal.manage', compact('renewal', 'customers', 'products', 'categories', 'sub_categories'));
+    }
+
+    /**
+     * Store a newly created payment resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay(Request $request)
+    {
+        $this->validate($request, [
+            'cost' => 'required',
+            // 'category_id' => 'required',
+            'product' => 'required',
+            'amount' => 'required'
+        ]);
+
+        $payment = new Payment;
+        $payment->customer_id = $request->customer_id;
+        $renewal_id = $request->renewal_id;
+        $payment->cost = $request->cost;
+        $payment->category_id = $request->category_id;
+        $payment->sub_category_id = $request->sub_category_id;
+        $payment->amount = $request->amount;
+        $payment->discount = $request->discount;
+        $payment->status = $request->status;
+
+        $calcDiscount = ($payment->discount/100) * $request->cost;
+        $discountCost = $request->cost - $calcDiscount;
+        $payment->outstanding = ($request->amount) - ($discountCost);
+
+        $payment->save();
+        $product = $request->product;
+        
+        $payment->renewalsMorph()->sync($renewal_id);
+        $payment->product()->sync($product);
+
+        $status = "Payment has been Registerd ";
+        Session::flash('status', $status);
+
         return redirect()->route('billing.renewal.index');
     }
 }

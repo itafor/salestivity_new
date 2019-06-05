@@ -52,15 +52,8 @@
                                         <td>
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                <a href="{{ route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('billing.renewal.destroy', [$renewal->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                @csrf
-                                                <div class="col-4 text-right">
-                                                    <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                </div>
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -32,33 +32,55 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('category') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="category">{{ __('Category') }}</label>
-                                    <input type="text" name="category" id="category" class="form-control form-control-alternative{{ $errors->has('category') ? ' is-invalid' : '' }}" placeholder="{{ __('Category') }}" value="{{ old('category') }}" required>
-
-                                    @if ($errors->has('category'))
+                                <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
+                                  <label class="form-control-label" for="category_id">{{ __('Category') }}</label>
+                                 
+                                    <select name="category_id" id="category_id" class="form-control" data-toggle="select">
+                                        <option value="">Choose a Category</option>
+                                            @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('category_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('category') }}</strong>
+                                            <strong>{{ $errors->first('category_id') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="type">{{ __('Type') }}</label>
-                                    <input type="text" name="type" id="type" class="form-control form-control-alternative{{ $errors->has('type') ? ' is-invalid' : '' }}" placeholder="{{ __('Type') }}" value="{{ old('type') }}" required>
 
-                                    @if ($errors->has('type'))
+                                <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
+                                  <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
+                                    <select name="sub_category_id" id="sub_category_id" class="form-control" data-toggle="select">
+                                        <option value="">Choose a Sub Category</option>
+                                        @foreach($subCategories as $subCategory)
+                                            <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
+                                        @endforeach
+                                    </select>     
+                                    @if ($errors->has('sub_category_id'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('type') }}</strong>
+                                            <strong>{{ $errors->first('sub_category_id') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="notes">{{ __('Notes') }}</label>
-                                    <input type="textarea" name="notes" id="notes" class="form-control form-control-alternative{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Notes') }}" value="{{ old('phone') }}" required >
+                                
+                                <div class="form-group{{ $errors->has('standard_price') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="standard_price">{{ __('Standard Price') }}</label>
+                                    <input type="number" name="standard_price" id="standard_price" class="form-control form-control-alternative{{ $errors->has('standard_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Standard Price') }}" value="{{ old('standard_price') }}" required autofocus>
 
-                                    @if ($errors->has('notes'))
+                                    @if ($errors->has('standard_price'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('notes') }}</strong>
+                                            <strong>{{ $errors->first('standard_price') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="description">{{ __('Description') }}</label>
+                                    <input type="textarea" name="description" id="description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Description') }}" value="{{ old('description') }}" required >
+
+                                    @if ($errors->has('description'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('description') }}</strong>
                                         </span>
                                     @endif
                                 </div>

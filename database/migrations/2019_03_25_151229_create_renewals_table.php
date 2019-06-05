@@ -17,7 +17,7 @@ class CreateRenewalsTable extends Migration
             $table->bigIncrements('id');
             $table->string('customer');
             $table->string('product');
-            $table->integer('amount');
+            $table->integer('amount')->nullable();
             $table->string('period');
             $table->timestamps();
         });

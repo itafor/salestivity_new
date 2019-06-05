@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\AddressCustomer;
 use App\CustomerCorporate;
 use App\Customer;
+use App\Industry;
 use App\Contact;
 use Session;
 
@@ -29,7 +30,8 @@ class CustomerCorporateController extends Controller
      */
     public function create()
     {
-        return view('customer.corporate.create');
+        $industries = Industry::all();
+        return view('customer.corporate.create', compact('industries'));
     }
 
     /**
@@ -80,12 +82,42 @@ class CustomerCorporateController extends Controller
         $address->country = $request->country;
         $address->save();
 
-        $contact->customer_id = $account->id;
-        $contact->title = $request->title;
-        $contact->surname = $request->surname;
-        $contact->name = $request->name;
-        $contact->email = $request->contact_email;
-        $contact->phone = $request->contact_phone;
+        // $contact->customer_id = $account->id;
+        // $contact->title = $request->title;
+        // $contact->surname = $request->surname;
+        // $contact->name = $request->name;
+        // $contact->email = $request->contact_email;
+        // $contact->phone = $request->contact_phone;
+        // $contact->save();
+
+        // $contact = new Contact;
+
+        foreach($request->contact_title as $title)
+        {
+            $contact->customer_id = $account->id;
+            $contact->title = $title;
+        }
+
+        foreach($request->contact_surname as $surname)
+        {
+            $contact->surname = $surname;          
+        }
+
+        foreach($request->contact_phone as $phone)
+        {
+            $contact->phone = $phone;
+        }
+
+        foreach($request->contact_name as $name)
+        {
+            $contact->name = $name;
+        }
+
+        foreach($request->contact_email as $email)
+        {
+            $contact->email = $email;
+        }
+
         $contact->save();
 
 

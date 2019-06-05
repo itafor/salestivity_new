@@ -1,6 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Account')])  
+@include('users.partials.header', ['title' => __('Add Account')])
+@include('master')
 
 <div class="container-fluid mt--7">
         <div class="row">
@@ -35,8 +36,12 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('industry') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-industry">{{ __('Industry') }}</label>
-                                    <input type="text" name="industry" id="input-industry" class="form-control form-control-alternative{{ $errors->has('industry') ? ' is-invalid' : '' }}" placeholder="{{ __('Industry') }}" value="{{ old('industry') }}" required>
-
+                                    <select name="industry" id="input-industry" class="form-control form-control-alternative{{ $errors->has('industry') ? ' is-invalid' : '' }}" placeholder="{{ __('Industry') }}" value="{{ old('industry') }}" required>
+                                        <option value="">Select an Industry</option>
+                                        @foreach($industries as $industry)
+                                            <option value="$industry->id">{{ $industry->name }}</option>
+                                        @endforeach
+                                    </select>
                                     @if ($errors->has('industry'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('industry') }}</strong>
@@ -76,8 +81,18 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-turn_over">{{ __('Turn Over') }}</label>
-                                    <input type="amount" name="turn_over" id="input-turn_over" class="form-control form-control-alternative{{ $errors->has('turn_over') ? ' is-invalid' : '' }}" placeholder="{{ __('Turn Over') }}" value="{{ old('turn_over') }}" required >
-
+                                    <select name="turn_over" id="input-turn_over" class="form-control form-control-alternative{{ $errors->has('turn_over') ? ' is-invalid' : '' }}" placeholder="{{ __('Turn Over') }}" value="{{ old('turn_over') }}" required >
+                                        <option value="">Choose an option</option>
+                                        <option value="0 - 50,000">0 - ₦50,000</option>
+                                        <option value="51,000 - 100,000">₦51,000 - ₦100,000</option>
+                                        <option value="101,000 - 150,000">₦101,000 - ₦150,000</option>
+                                        <option value="151,000 - 250,000">₦151,000 - ₦250,000</option>
+                                        <option value="251,000 - 500,000">₦251,000 - ₦500,000</option>
+                                        <option value="501,000 - 750,000">₦501,000 - ₦750,000</option>
+                                        <option value="751,000 - 1,000,000">₦751,000 - ₦1,000,000</option>
+                                        <option value="Above 1,000,000">Above ₦1,000,000</option>
+                                      
+                                    </select>
                                     @if ($errors->has('turn_over'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('turn_over') }}</strong>
@@ -86,14 +101,26 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('employee_count') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-employee_count">{{ __('Employee Count') }}</label>
-                                    <input type="amount" name="employee_count" id="input-employee_count" class="form-control form-control-alternative{{ $errors->has('employee_count') ? ' is-invalid' : '' }}" placeholder="{{ __('Employee Count') }}" value="{{ old('employee_count') }}" required >
-
-                                    @if ($errors->has('turn_over'))
+                                    <select type="amount" name="employee_count" id="input-employee_count" class="form-control form-control-alternative{{ $errors->has('employee_count') ? ' is-invalid' : '' }}" placeholder="{{ __('Employee Count') }}" value="{{ old('employee_count') }}" required >
+                                        <option value="">Choose an option</option>
+                                        <option value="1-10">1 - 10</option>
+                                        <option value="11-50">11 - 50</option>
+                                        <option value="51-250">51 - 250</option>
+                                        <option value="1001 - 5,000">1,001 - 5,000</option>
+                                        <option value="5001 - 10,000">5,001 - 10,000</option>
+                                        <option value="10,001 - 50,000">10,001 - 50,001</option>
+                                        <option value="50,001 - 100,000">50,001 - 100,000</option>
+                                        <option value="Above 100,000">Above 100,000</option>
+                                    </select>
+                                    @if ($errors->has('employee_count'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('employee_count') }}</strong>
                                         </span>
                                     @endif
                                 </div>
+                                <br><br>
+
+                                <h3>Address</h3>
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
@@ -147,11 +174,13 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <h2>Contact</h2>
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('title') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-title">{{ __('Title') }}</label>
-                                            <select name="title" id="input-title" class="form-control" required >
+                                            <select name="tcontact_itle[]" id="input-title" class="form-control" required >
                                                 <option value="mr">Mr</option>
                                                 <option value="mrs">Mrs</option>
                                                 <option value="miss">Miss</option>
@@ -167,7 +196,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('surname') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-country">{{ __('Surname') }}</label>
-                                            <input type="text" name="surname" id="input-surname" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Surname') }}" value="{{ old('country') }}" required >
+                                            <input type="text" name="contact_surname[]" id="input-surname" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Surname') }}" value="{{ old('country') }}" required >
 
                                             @if ($errors->has('country'))
                                                 <span class="invalid-feedback" role="alert">
@@ -181,7 +210,7 @@
                                     <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-name">{{ __('Contact Name') }}</label>
-                                            <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required >
+                                            <input type="text" name="contact_name[]" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required >
 
                                             @if ($errors->has('name'))
                                                 <span class="invalid-feedback" role="alert">
@@ -193,7 +222,7 @@
                                     <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('contact_email') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="contact_email">{{ __('Contact Email') }}</label>
-                                            <input type="email" name="contact_email" id="contact_email" class="form-control form-control-alternative{{ $errors->has('contact_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Email') }}" value="{{ old('contact_email') }}" required >
+                                            <input type="email" name="contact_email[]" id="contact_email" class="form-control form-control-alternative{{ $errors->has('contact_email') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Email') }}" value="{{ old('contact_email') }}" required >
 
                                             @if ($errors->has('contact-_mail'))
                                                 <span class="invalid-feedback" role="alert">
@@ -205,7 +234,7 @@
                                     <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('contact_phone') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-number">{{ __('Contact Phone Number') }}</label>
-                                            <input type="tel" name="contact_phone" id="contact_phone" class="form-control form-control-alternative{{ $errors->has('contact_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Phone') }}" value="{{ old('contact_phone') }}" required >
+                                            <input type="tel" name="contact_phone[]" id="contact_phone" class="form-control form-control-alternative{{ $errors->has('contact_phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Phone') }}" value="{{ old('contact_phone') }}" required >
 
                                             @if ($errors->has('contact_phone'))
                                                 <span class="invalid-feedback" role="alert">
@@ -214,6 +243,19 @@
                                             @endif
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="field_wrapper">
+                                    @csrf
+                                    
+                                    <!-- Append each new contact form to this div -->
+                                    
+                                </div>
+
+                                <div class="ml-auto" style="margin:20px;">
+                                    <!-- <input type="text" name="field_name[]" value="" class="form-control"/> -->
+                                    <a href="javascript:void(0);" class="add_button btn btn-primary" id="addContact"><i class="fa fa-plus-circle"></i> Add Contact</a>
+                                        
                                 </div>
 
                                 <div class="text-center">

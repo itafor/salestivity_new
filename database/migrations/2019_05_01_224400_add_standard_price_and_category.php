@@ -16,7 +16,7 @@ class AddStandardPriceAndCategory extends Migration
         Schema::table('products', function (Blueprint $table) {
             
             $table->integer('standard_price')->after('name');
-            $table->integer('sub_category')->after('standard_price');
+            $table->integer('sub_category_id')->after('standard_price');
         });
     }
 

@@ -14,7 +14,7 @@ class AddDiscountToInvoiceTable extends Migration
     public function up()
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->integer('discount')->after('cost');
+            $table->integer('discount')->default(0)->after('cost');
         });
     }
 

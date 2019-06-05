@@ -35,8 +35,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
-                                    <th scope="col">{{ __('Category') }}</th>
-                                    <th scope="col">{{ __('Type') }}</th>
+                                    <th scope="col">{{ __('Description') }}</th>
+                                    <th scope="col">{{ __('Standard Price') }}</th>
                                     <th scope="col">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
@@ -44,11 +44,13 @@
                                 @foreach($products as $product)
                                   <tr>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->category }}</td>
-                                    <td>{{ $product->type }}</td> 
+                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->standard_price }}</td>
+                                    
                                     <td>   
+                                    <span>
                                         <div class="col-4 text-right">
-                                            <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                            <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                         </div>
                                     </td>
                                     <td>
@@ -58,6 +60,7 @@
                                                 <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
                                             </div>
                                         </form>
+                                        </span>
                                     </td>    
                                   </tr>
                                 @endforeach

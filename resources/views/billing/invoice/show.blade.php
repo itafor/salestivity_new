@@ -1,6 +1,6 @@
-@extends('layouts.app', ['title' => __('Add Invoice')])
+@extends('layouts.app', ['title' => __('View Invoice')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Invoice')])  
+@include('users.partials.header', ['title' => __('View Invoice')])  
 
 <script>
         $(document).ready(function(){
@@ -44,7 +44,7 @@
                                   <div class="col-sm-6" >
                                   <!-- pass in the customer_id to the pivot table ie customer_invoice -->
                                     <select name="customer_id" id="customer" class="form-control " onchange="myFunction(event)">
-                                        <option value="{{ $invoice->customer }}">{{ $invoice->customer }}</option>
+                                        <option value="{{ $invoice->customers->id }}">{{ $invoice->customers->name }}</option>
                                             @foreach($customers as $key => $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
                                         @endforeach
@@ -64,7 +64,7 @@
                                   <label class="form-control-label" for="product">{{ __('Product') }}</label>
                                   <div class="col-sm-6" data-toggle="select">
                                     <select name="product" id="product" class="form-control" data-toggle="select">
-                                        <option value="{{ $invoice->product }}">{{ $invoice->product }}</option>
+                                        <option value="{{ $invoice->product }}">{{ $invoice->getProductName($invoice->product) }}</option>
                                             @foreach($products as $key => $product)
                                             <option value="{{ $product->name }}">{{ $product->name }}</option>
                                         @endforeach
@@ -114,6 +114,7 @@
                             </div>
                         </form>
                     </div>
+                    @include('billing.invoice.payment.show')
                 </div>
             </div>
         </div>
