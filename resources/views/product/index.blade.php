@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Product Management')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('Add Product')]) 
+@include('users.partials.header', ['title' => __('All Products')]) 
 
       
     <div class="container-fluid mt--7">
@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Products') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">{{ __('Create Product') }}</a>
+                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">{{ __('Add Product') }}</a>
                             </div>
                         </div>
                     </div>

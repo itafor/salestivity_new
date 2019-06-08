@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('User Management')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Account')]) 
+@include('users.partials.header', ['title' => __('View Product')]) 
 		
 <script>
     $(document).ready(function(){

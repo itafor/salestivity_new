@@ -222,6 +222,7 @@ class InvoiceController extends Controller
         $payment->save();
         $product = $request->product;
         
+        
         $payment->invoicesMorph()->sync($invoice_id);
         $payment->product()->sync($product);
 

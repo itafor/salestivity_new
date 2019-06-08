@@ -23,4 +23,11 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Payment', 'payment_product', 'payment_id');
     }
+
+    public function opportunities()
+    {
+        return $this->belongsToMany('App\Opportunity', 'opportunity_product', 'opportunity_id', 'product_id')
+                            ->withPivot('product_category', 'product_sub_category', 'product_name',
+                            'quantity', 'price')->withTimestamps();
+    }
 }

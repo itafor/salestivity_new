@@ -1,7 +1,4 @@
-@extends('layouts.app', ['title' => __('User Management')])
-@section('content')
-@include('users.partials.header', ['title' => __('Add Account')]) 
-		
+
 		<script>
 			$(document).ready(function(){
 				/*Disable all input type="text" box*/
@@ -314,8 +311,3 @@ $(document).ready(function(){
 });
 </script>
 	
-        
-        @include('layouts.footers.auth')
-    </div>
-
-@endsection

@@ -101,6 +101,24 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('billing/renewal/{id}', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
 	Route::get('billing/renewal/{id}', ['as' => 'billing.renewal.destroy', 'uses' => 'RenewalController@destroy']);
 
+	// Opportunities
+	Route::get('opportunities', ['as' => 'opportunity.index', 'uses' => 'OpportunityController@index']);
+	Route::get('opportunity/new', ['as' => 'opportunity.create', 'uses' => 'OpportunityController@create']);
+	Route::post('opportunity/new', ['as' => 'opportunity.store', 'uses' => 'OpportunityController@store']);
+	Route::get('opportunity/{id}/show', ['as' => 'opportunity.show', 'uses' => 'OpportunityController@show']);
+	Route::post('opportunity/{id}', ['as' => 'opportunity.update', 'uses' => 'OpportunityController@update']);
+	Route::get('opportunity/{id}', ['as' => 'opportunity.destroy', 'uses' => 'OpportunityController@destroy']);
+	Route::get('getopportunities/{id}', ['as' => 'opportunity.view', 'uses' => 'OpportunityController@getOpportunities']);
 
+	// Target Management
+	Route::get('targets', ['as' => 'target.index', 'uses' => 'TargetController@index']);
+	Route::get('target/new', ['as' => 'target.create', 'uses' => 'TargetController@create']);
+	Route::post('target/new', ['as' => 'target.store', 'uses' => 'TargetController@store']);
+	Route::get('target/{id}/show', ['as' => 'target.show', 'uses' => 'TargetController@show']);
+	Route::post('target/{id}', ['as' => 'target.update', 'uses' => 'TargetController@update']);
+	Route::get('target/{id}', ['as' => 'target.destroy', 'uses' => 'TargetController@destroy']);
+
+	// Ajax
+	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 });
 

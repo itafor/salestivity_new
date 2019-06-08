@@ -239,12 +239,12 @@
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                    <a class="nav-link" href="{{ route('target.index') }}">
                                         {{ __('List Targets') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                    <a class="nav-link" href="{{ route('target.create') }}">
                                         {{ __('Build Target') }}
                                     </a>
                                 </li>
@@ -262,12 +262,12 @@
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                    <a class="nav-link" href="{{ route('opportunity.index') }}">
                                         {{ __('List Opportunities') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                    <a class="nav-link" href="{{ route('opportunity.create') }}">
                                         {{ __('Add Opportunity') }}
                                     </a>
                                 </li>

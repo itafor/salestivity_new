@@ -82,7 +82,7 @@ $(document).ready(function(){
                                             '@endif'+
 										'</div>'+
 									'</div>'+
-									'</div>' +
+								'</div>' +
 									'<a href="javascript:void(0);" class="remove_button"><i class="fa fa-times"></i></a>'+ 
 								'</div>'; //New input field html
     var x = 1; //Initial field counter is 1
@@ -103,4 +103,21 @@ $(document).ready(function(){
         x--; //Decrement field counter
     });
 });
+
+
+
+function selectAccountAjax(value) {
+        $.get('/getcontact/' + value, function (data) {
+            // console.log(data.contacts);
+            $('#contact').html("");
+            $('#contact').append("<option value=''>Select Contact</option>");
+            jQuery.each(data.contacts, function (i, val) {
+                $('#contact').append("<option value='" + val.id + "'>" + val.name + "</option>");
+            });
+        });
+    }
+
+    $('#account').change(function () {
+        selectAccountAjax($(this).val());
+    });
 </script>
