@@ -8,10 +8,12 @@ use App\Product;
 use Session;
 use DB;
 use Storage;
+use App\Customer;
 
 
 class ProjectController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +21,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $projects = Project::where('main_acct_id', $userId)->get();
         
-        return view('project.index', compact('projects', 'products'));
+        return view('project.index', compact('projects', 'products', 'customers'));
     }
 
     /**
@@ -31,10 +35,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-
-        $products = Product::all();
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
         
-        return view('project.create', compact('project', 'products'));
+        return view('project.create', compact('project', 'products', 'customers'));
     }
 
     /**
@@ -46,6 +51,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $project = new Project;
+        $userId = auth()->user()->id;
         $this->validate($request, [
             'customer_account' => 'required',
             'product_id' => 'required',
@@ -53,36 +59,45 @@ class ProjectController extends Controller
             'start' => 'required',
             'end' => 'required',
             'notes' => 'required|max:255',
-						'uploads' => 'required',
+			// 'uploads' => 'required',
 						// 'uploads.*' => 'image|file',
 				]);
 				
 				if($request->hasfile('uploads'))
-         {
+                {
 
 					// save each file in the specified folder
-            foreach($request->file('uploads') as $file){
-								$date = date('Y-m-d');
-								$name=$file->getClientOriginalName();
-								// create a folder according to dates
-								if (!Storage::exists('/public/files/$date')) {
-									Storage::makeDirectory('/public/files/$date');
-								} 
-								$file->move(public_path().'/files/'.$date, $name); 
-								$data[] = $name; 
-							}
-						}
+                foreach($request->file('uploads') as $file){
+                        $date = date('Y-m-d');
+                        $name=$file->getClientOriginalName();
+                        // create a folder according to dates
+                        if (!Storage::exists('/public/files/$date')) {
+                            Storage::makeDirectory('/public/files/$date');
+                        } 
+                        $file->move(public_path().'/files/'.$date, $name); 
+                        $data[] = $name; 
+                    }
+                    $project->uploads = json_encode($data); 
+                    $project->main_acct_id = $userId;
+                    $project->customer_account = $request->customer_account;
+                    $project->product_id = $request->product_id;
+                    $project->technician = $request->technician;
+                    $project->start_date = $request->start;
+                    $project->end_date = $request->end;
+                    $project->notes = $request->notes;
+                    $project->save();
+                } else {
+                    $project->main_acct_id = $userId;
+                    $project->customer_account = $request->customer_account;
+                    $project->product_id = $request->product_id;
+                    $project->technician = $request->technician;
+                    $project->start_date = $request->start;
+                    $project->end_date = $request->end;
+                    $project->notes = $request->notes;
+                    $project->save();
+                }
 						
 						// dd($data);
-				$project->uploads = json_encode($data); 
-				$project->customer_account = $request->customer_account;
-				$project->product_id = $request->product_id;
-				$project->technician = $request->technician;
-				$project->start_date = $request->start;
-				$project->end_date = $request->end;
-				$project->notes = $request->notes;
-				// dd($project);
-				$project->save();
 
         $status = "Project Added";
 				Session::flash('status', $status);
@@ -98,10 +113,10 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::find($id);
-        $products = Product::all();
-        $product = Product::where('id', $project->product_id)->first();
-        // dd($product);
+        $userId = auth()->user()->id;
+        $project = Project::where('main_acct_id', $userId)->first();
+        $products = Product::where('main_acct_id', $userId)->get();
+        $product = Product::where('id', $project->product_id)->where('main_acct_id', $userId)->first();
         return view('project.show', compact('project', 'product', 'products'));
     }
 
@@ -124,8 +139,49 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {															
-        //
+    {	
+        $userId = auth()->user()->id;
+        $project = Project::where('main_acct_id', $userId)->where('id', $id)->first();														
+				
+        if($request->hasfile('uploads'))
+        {
+
+            // save each file in the specified folder
+        foreach($request->file('uploads') as $file){
+                $date = date('Y-m-d');
+                $name=$file->getClientOriginalName();
+                // create a folder according to dates
+                if (!Storage::exists('/public/files/$date')) {
+                    Storage::makeDirectory('/public/files/$date');
+                } 
+                $file->move(public_path().'/files/'.$date, $name); 
+                $data[] = $name; 
+            }
+            $project->uploads = json_encode($data); 
+            $project->main_acct_id = $userId;
+            $project->customer_account = $request->customer_account;
+            $project->product_id = $request->product_id;
+            $project->technician = $request->technician;
+            $project->start_date = $request->start;
+            $project->end_date = $request->end;
+            $project->notes = $request->notes;
+            // dd($project);
+            $project->update();
+        } else {
+            $project->main_acct_id = $userId;
+            $project->customer_account = $request->customer_account;
+            $project->product_id = $request->product_id;
+            $project->technician = $request->technician;
+            $project->start_date = $request->start;
+            $project->end_date = $request->end;
+            $project->notes = $request->notes;
+            $project->update();
+        }
+
+        $status = "Project Updated";
+        Session::flash('status', $status);
+        
+        return redirect()->route('project.index');
     }
 
     /**

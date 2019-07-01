@@ -18,7 +18,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('id', 'DESC')->get();
+        $userId = auth()->user()->id;
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
         // dd($customers->individual->email);
         // $account = Customer::where('id', $id)->first();
         // $addresses = AddressCustomer::where('customer_id', $account->id);
@@ -45,7 +46,8 @@ class CustomerController extends Controller
     {
         $customer = new Customer;
         $address = new AddressCustomer;
-
+        $userId = auth()->user()->id;
+        
         $this->validate($request, [
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
@@ -62,6 +64,7 @@ class CustomerController extends Controller
         $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->website = $request->website;
+        $customer->main_acct_id = $userId;
         $customer->save();
 
         $address->customer_id = $customer->id;
@@ -69,7 +72,7 @@ class CustomerController extends Controller
         $address->city = $request->city;
         $address->street = $request->street;
         $address->country = $request->country;
-
+        $address->main_acct_id = $userId;
         $address->save();
 
 
@@ -87,9 +90,12 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
+        $userId = auth()->user()->id;
+
+        $contact->main_acct_id = $userId;
         $customer = Customer::find($id);
-        $address = AddressCustomer::where('customer_id', '=', $id)->get()->first();
-        $contacts = Contact::where('customer_id', $id)->get();
+        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', $userId)->get()->first();
+        $contacts = Contact::where('customer_id', $id)->where('main_acct_id', $userId)->get();
         // dd($contacts);
         return view('customer.show', compact('customer', 'address', 'contacts'));
     }
@@ -176,6 +182,7 @@ class CustomerController extends Controller
         foreach($request->contact_email as $email)
         {
             $contact->email = $email;
+            $contact->main_acct_id = $userId;
         }
 
         $contact->save();
@@ -201,9 +208,9 @@ class CustomerController extends Controller
         $contacts = Contact::where('customer_id', $account->id)->first();
         // dd($contacts);
 
-        $account->delete();
-        $customer->delete();
-        $address->delete();
+        // $account->delete();
+        // $customer->delete();
+        // $address->delete();
         $contacts->delete();
 
         Session::flash('status', 'The Customer has been successfully deleted');

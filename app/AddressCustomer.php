@@ -12,4 +12,23 @@ class AddressCustomer extends Model
     {
         return $this->belongsTo('App\Customer', 'customer_id');
     }
+
+    public function getCountry($id)
+    {
+        $country = Country::where('id',$id)->first();
+        return $country->country_name;
+    }
+
+    public function getState($id)
+    {
+        $state = State::where('id',$id)->first();
+        return $state->name;
+    }
+
+    public function getCity($id)
+    {
+        $city = City::where('id',$id)->first();
+        return $city->name;
+    }
+
 }

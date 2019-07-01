@@ -23,74 +23,155 @@
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Account information') }}</h6>
                             <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('company_name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-company">{{ __('Company Name') }}</label>
-                                    <input type="text" name="company_name" id="input-company" class="form-control form-control-alternative{{ $errors->has('company_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Company Name') }}" value="{{ $customer->corporate->company_name }}" required autofocus>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('company_name') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-company">{{ __('Company Name') }}</label>
+                                        <input type="text" name="company_name" id="input-company" class="form-control form-control-alternative{{ $errors->has('company_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Company Name') }}" value="{{ $customer->corporate->company_name }}" required autofocus>
 
-                                    @if ($errors->has('company_name'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('company_name') }}</strong>
-                                        </span>
-                                    @endif
+                                        @if ($errors->has('company_name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('company_name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('industry') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-industry">{{ __('Industry') }}</label>
-                                    <input type="text" name="industry" id="input-industry" class="form-control form-control-alternative{{ $errors->has('industry') ? ' is-invalid' : '' }}" placeholder="{{ __('Industry') }}" value="{{ $customer->corporate->industry }}" required>
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('industry') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-industry">{{ __('Industry') }}</label>
+                                        <input type="text" name="industry" id="input-industry" class="form-control form-control-alternative{{ $errors->has('industry') ? ' is-invalid' : '' }}" placeholder="{{ __('Industry') }}" value="{{ $customer->corporate->industry }}" required>
 
-                                    @if ($errors->has('industry'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('industry') }}</strong>
-                                        </span>
-                                    @endif
+                                        @if ($errors->has('industry'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('industry') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                                    <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ $customer->corporate->email }}" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
+                                        <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ $customer->corporate->email }}" required>
 
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-phone">{{ __('Phone') }}</label>
-                                    <input type="tel" name="phone" id="input-phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ $customer->corporate->phone }}" required >
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-phone">{{ __('Phone') }}</label>
+                                        <input type="tel" name="phone" id="input-phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ $customer->corporate->phone }}" required >
 
-                                    @if ($errors->has('phone'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('phone') }}</strong>
-                                        </span>
-                                    @endif
+                                        @if ($errors->has('phone'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('phone') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
-                                    <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="{{ $customer->corporate->website }}" required >
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
+                                        <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="{{ $customer->corporate->website }}" required >
 
-                                    @if ($errors->has('website'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('website') }}</strong>
-                                        </span>
-                                    @endif
+                                        @if ($errors->has('website'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('website') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('turn_over') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-turn_over">{{ __('Turn Over') }}</label>
+                                        <select name="turn_over" id="input-turn_over" class="form-control form-control-alternative{{ $errors->has('turn_over') ? ' is-invalid' : '' }}" placeholder="{{ __('Turn Over') }}" value="{{ old('turn_over') }}" required >
+                                            <option value="{{ $customer->corporate->turn_over }}">{{ $customer->corporate->turn_over }}</option>
+                                            <option value="0 - 50,000">0 - ₦50,000</option>
+                                            <option value="51,000 - 100,000">₦51,000 - ₦100,000</option>
+                                            <option value="101,000 - 150,000">₦101,000 - ₦150,000</option>
+                                            <option value="151,000 - 250,000">₦151,000 - ₦250,000</option>
+                                            <option value="251,000 - 500,000">₦251,000 - ₦500,000</option>
+                                            <option value="501,000 - 750,000">₦501,000 - ₦750,000</option>
+                                            <option value="751,000 - 1,000,000">₦751,000 - ₦1,000,000</option>
+                                            <option value="Above 1,000,000">Above ₦1,000,000</option>
+                                        
+                                        </select>
+                                        @if ($errors->has('turn_over'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('turn_over') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('employee_count') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-employee_count">{{ __('Employee Count') }}</label>
+                                        <select name="employee_count" id="input-employee_count" class="form-control form-control-alternative{{ $errors->has('employee_count') ? ' is-invalid' : '' }}" placeholder="{{ __('Employee Count') }}" value="{{ old('employee_count') }}" required >
+                                            <option value="{{ $customer->corporate->employee_count }}">{{ $customer->corporate->employee_count }}</option>
+                                            <option value="1-10">1 - 10</option>
+                                            <option value="11-50">11 - 50</option>
+                                            <option value="51-250">51 - 250</option>
+                                            <option value="1001 - 5,000">1,001 - 5,000</option>
+                                            <option value="5001 - 10,000">5,001 - 10,000</option>
+                                            <option value="10,001 - 50,000">10,001 - 50,001</option>
+                                            <option value="50,001 - 100,000">50,001 - 100,000</option>
+                                            <option value="Above 100,000">Above 100,000</option>
+                                        </select>
+                                        @if ($errors->has('employee_count'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('employee_count') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>    
+                            <div class="row">
                                     <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-state">{{ __('State') }}</label>
-                                            <input type="text" name="state" id="input-state" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ $address->state }}" required >
-
-                                            {{--@if ($errors->has('state'))
+                                        <div class="form-group{{ $errors->has('country') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-country">{{ __('Country') }}</label>
+                                            <select name="country" id="country_id" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" required >
+                                                <option value="{{ $address->country }}">{{ $address->getCountry($address->country) }}</option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('country'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('state') }}</strong>
+                                                    <strong>{{ $errors->first('country') }}</strong>
                                                 </span>
-                                            @endif--}}
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-state">{{ __('State') }}</label>
+                                            <select type="text" name="state" id="state_id" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ $address->getState($address->state) }}" required >
+                                                <option value="{{ $address->state }}">{{ $address->getState($address->state) }}</option>
+                                                
+                                            </select>
+                                            @if ($errors->has('state'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('state') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-city">{{ __('City') }}</label>
-                                            <input type="text" name="city" id="input-city" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ $address->city }}" required >
-
+                                            <select name="city" id="city_id" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ $address->city }}" required >
+                                                <option value="{{ $address->city }}">{{ $address->getCity($address->city) }}</option>
+                                            </select>
                                             @if ($errors->has('city'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('city') }}</strong>
@@ -98,8 +179,6 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-street">{{ __('Street') }}</label>
@@ -112,23 +191,13 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('country') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-country">{{ __('Country') }}</label>
-                                            <input type="text" name="country" id="input-country" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ $address->country }}" required >
-
-                                            @if ($errors->has('country'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('country') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-								<input type="hidden" value="{{ $customer->id }}" name="customer_id[]">
-                                <div class="text-center hide">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                </div>
+                                    
+                                </div>  
+                                
+                            <input type="hidden" value="{{ $customer->id }}" name="customer_id[]">
+                            <div class="text-center hide">
+                                <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                            </div>
                             </div>
                         </form>
                     </div>

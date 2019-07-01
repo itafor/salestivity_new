@@ -26,18 +26,24 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = auth()->user()->id;
         // store each new category that was added
         $subcategory = new SubCategory;
         $subcategory->name = $request->name;
+        $subcategory->save();
+
+        $addNewSubCategory = new SubCategory;
 
         if($request->addSubCategory) {
             foreach($request->addSubCategory as $addSubCategory)
             {
-                $subcategory->name = $addSubCategory;
+                $addNewSubCategory->name = $addSubCategory;
+                $addNewSubCategory->main_acct_id = $userId;
             }
+            $addNewCategory->save();
         }
 
-        $subcategory->save();
+        
 
         $status = 'Sub Category has been created';
         Session::flash('status', $status);

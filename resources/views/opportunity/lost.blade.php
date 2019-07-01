@@ -58,11 +58,9 @@
                                         <td>{{ $opportunity->stage }}</td>
                                         <td>{{ $opportunity->initiation_date }}</td>
                                         <td>{{ $opportunity->closure_date }}</td>
-                                        <td>
-                                            <div class="col-4 text-right">
-                                                <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a>
-                                            </div>
+                                        <td> 
+                                            <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                            <!-- <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a> -->
                                         </td>
                                     </tr>
                                 @endforeach

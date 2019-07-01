@@ -4,10 +4,12 @@
 	$(document).ready(function(){
 		/*Disable all input type="text" box*/
 		$('#form1 input').prop("disabled", true);
+		$('#form1 select').prop("disabled", true);
 		$('#form1 button').hide();
 
 		$('#edit').click(function(){
 		$('#form1 input').prop("disabled", false);
+		$('#form1 select').prop("disabled", false);
 		$('#form1 button').show();
 		$('#edit').toggle();
 		// $('#addContact').css("display","block");
@@ -119,5 +121,7 @@ function selectAccountAjax(value) {
 
     $('#account').change(function () {
         selectAccountAjax($(this).val());
-    });
+	});
+	
+	
 </script>

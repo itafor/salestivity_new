@@ -52,6 +52,7 @@
                                         <div class="col-4 text-right">
                                             <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                         </div>
+                                    </span>
                                     </td>
                                     <td>
                                         <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >

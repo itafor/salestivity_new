@@ -15,9 +15,11 @@ class CreateSalesLocationTable extends Migration
     {
         Schema::create('sales_location', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('country_id');
-            $table->string('state_id');
+            $table->integer('country_id');
+            $table->integer('state_id');
+            $table->integer('city_id');
             $table->string('location');
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

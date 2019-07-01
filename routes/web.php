@@ -20,6 +20,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
+
+
+
+	// Sub users
+	Route::get('/all/user', 'Usercontroller@indexSubusers')->name('allSubUsers');
+	Route::get('create/new/user', 'Usercontroller@createsubuser')->name('newSubUser');
+	Route::post('create/new/user', 'Usercontroller@storesubuser')->name('storeuser');
+
+
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
@@ -115,10 +124,38 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('target/new', ['as' => 'target.create', 'uses' => 'TargetController@create']);
 	Route::post('target/new', ['as' => 'target.store', 'uses' => 'TargetController@store']);
 	Route::get('target/{id}/show', ['as' => 'target.show', 'uses' => 'TargetController@show']);
+	Route::get('target/{id}/manage', ['as' => 'target.manage', 'uses' => 'TargetController@manage']);
 	Route::post('target/{id}', ['as' => 'target.update', 'uses' => 'TargetController@update']);
 	Route::get('target/{id}', ['as' => 'target.destroy', 'uses' => 'TargetController@destroy']);
 
+	// Department
+	Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
+	Route::post('dept/new', ['as' => 'dept.store', 'uses' => 'DepartmentController@store']);
+	Route::get('departments', ['as' => 'dept.index', 'uses' => 'DepartmentController@index']);
+	Route::get('dept/{id}/show', ['as' => 'dept.show', 'uses' => 'DepartmentController@show']);
+	Route::post('dept/{id}', ['as' => 'dept.update', 'uses' => 'DepartmentController@update']);
+	Route::get('dept/{id}', ['as' => 'dept.destroy', 'uses' => 'DepartmentController@destroy']);
+
+	// Retail Field Sales Management
+	Route::get('location', ['as' => 'sales.location.index', 'uses' => 'RetailFieldSalesController@allLocation']);
+	Route::get('location/show/{id}', ['as' => 'sales.location.show', 'uses' => 'RetailFieldSalesController@showLocation']);
+	Route::post('location/show/{id}', ['as' => 'sales.location.update', 'uses' => 'RetailFieldSalesController@updateLocation']);
+	Route::get('sales', ['as' => 'sales.index', 'uses' => 'RetailFieldSalesController@index']);
+	Route::get('sales/new', ['as' => 'sales.create', 'uses' => 'RetailFieldSalesController@create']);
+	Route::post('sales/new', ['as' => 'sales.store', 'uses' => 'RetailFieldSalesController@store']);
+	Route::get('sales/{id}/show', ['as' => 'sales.show', 'uses' => 'RetailFieldSalesController@show']);
+	Route::get('sales/{id}/manage', ['as' => 'sales.manage', 'uses' => 'RetailFieldSalesController@manage']);
+	Route::post('sales/{id}', ['as' => 'sales.update', 'uses' => 'RetailFieldSalesController@update']);
+	Route::get('sales/{id}', ['as' => 'sales.destroy', 'uses' => 'RetailFieldSalesController@destroy']);
+	Route::get('sales/location/new', ['as' => 'sales.location.create', 'uses' => 'RetailFieldSalesController@createLocation']);
+	Route::post('sales/location/new', ['as' => 'sales.location.store', 'uses' => 'RetailFieldSalesController@storeLocation']);
+
 	// Ajax
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
+	Route::get('getdept/{id}', 'AjaxController@getDept');
+	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');
+	Route::get('getsales/{id}', 'AjaxController@getSalesDept');
+	Route::get('getstates/{id}', 'AjaxController@getState');
+	Route::get('getcities/{id}', 'AjaxController@getCity');
 });
 

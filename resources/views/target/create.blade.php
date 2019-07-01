@@ -18,152 +18,120 @@
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('target.store') }}" autocomplete="off">
+                            <input type="hidden" value="Open" name="status">
+                            <input type="hidden" value="0" name="percentage">
+                            <input type="hidden" value="" name="department_id" id="dept_id">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Target information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('opportunity_name') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-opportunity">{{ __('Opportunity Name') }}</label>
-                                            <input type="text" name="opportunity_name" id="input-opportunity" class="form-control form-control-alternative{{ $errors->has('opportunity_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Opportunity Name') }}" value="{{ old('opportunity_name') }}" required>
-
-                                            @if ($errors->has('opportunity_name'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('opportunity_name') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
-                                            <select name="account_id" id="account" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
-                                                <option value="">Select Account</option>
-                                                @foreach($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                        <div class="form-group{{ $errors->has('sales') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-sales">{{ __('Sales Person') }}</label>
+                                            <select name="sales" id="input-sales" class="form-control form-control-alternative{{ $errors->has('sales') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales') }}" >
+                                                <option value="">Select Sales Person</option>
+                                                @foreach($salesPersons as $sales)
+                                                    <option value="{{$sales->id}}">{{ $sales->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @if ($errors->has('account_id'))
+                                            @if ($errors->has('sales'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('account_id') }}</strong>
+                                                    <strong>{{ $errors->first('sales') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="row">
                                     <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('stage') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-stage">{{ __('Stage') }}</label>
-                                            <select name="stage" id="stage" class="form-control form-control-alternative{{ $errors->has('stage') ? ' is-invalid' : '' }}" placeholder="{{ __('Stage') }}" value="{{ old('stage') }}" required >
-                                                <option value="">Select a stage</option>
-                                                <option value="Qualification">Qualification</option>
-                                                <option value="Needs Analysis">Needs Analysis</option>
+                                        <div class="form-group{{ $errors->has('manager') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-manager">{{ __('Line Manager') }}</label>
+                                            <select name="manager" id="input-manager" class="form-control form-control-alternative{{ $errors->has('manager') ? ' is-invalid' : '' }}" placeholder="{{ __('Line Manager') }}" value="{{ old('manager') }}" >
+                                                <option value="">Select Manager</option>
+                                                @foreach($salesPersons as $sales)
+                                                    <option value="{{$sales->id}}">{{ $sales->name }}</option>
+                                                @endforeach
                                             </select>
-                                            @if ($errors->has('stage'))
+                                            @if ($errors->has('manager'))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('stage') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('contact') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-contact">{{ __('Contact') }}</label>
-                                            <select name="contact" id="contact" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}" disabled>
-                                                <option value="">Select Contact</option>
-                                            </select>
-                                            @if ($errors->has('contact'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('contact') }}</strong>
+                                                    <strong>{{ $errors->first('manager') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('probability') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-probability">{{ __('Probability(%)') }}</label>
-                                            <input type="text" name="probability" id="input-probability" class="form-control form-control-alternative{{ $errors->has('probability') ? ' is-invalid' : '' }}" placeholder="{{ __('Probability') }}" value="{{ old('probability') }}">
-
-                                            @if ($errors->has('probability'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('probability') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-amount">{{ __('Amount(₦)') }}</label>
-                                            <input type="text" name="amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('probability') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount') }}" value="{{ old('amount') }}">
-
-                                            @if ($errors->has('amount'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('amount') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div> 
-
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('initiation_date') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-initiation_date">{{ __('Initiation Date') }}</label>
-                                            <input type="date" name="initiation_date" id="input-initiation_date" class="form-control form-control-alternative{{ $errors->has('initiation_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Initiation Date') }}" value="{{ old('initiation_date') }}" required>
-
-                                            @if ($errors->has('initiation_date'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('initiation_date') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('closure_date') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-closure_date">{{ __('Expected Closure Date') }}</label>
-                                            <input type="date" name="closure_date" id="input-closure_date" class="form-control form-control-alternative{{ $errors->has('closure_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Expected Closure Date') }}" value="{{ old('closure_date') }}" required>
-
-                                            @if ($errors->has('closure_date'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('closure_date') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('owner') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-owner">{{ __('Owner') }}</label>
-                                            <input type="text" name="owner" id="input-owner" class="form-control form-control-alternative{{ $errors->has('owner') ? ' is-invalid' : '' }}" placeholder="{{ __('Owner') }}" value="{{ old('owner') }}">
-
-                                            @if ($errors->has('owner'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('owner') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br><br><br>
-                                <div class="field_wrapper">
-                                    
-                                </div>
-
-                                <div class="ml-auto" style="margin:20px;">
-                                    <!-- <input type="text" name="field_name[]" value="" class="form-control"/> -->
-                                    <a href="javascript:void(0);" class="add_button btn btn-primary" id="addContact"><i class="fa fa-plus-circle"></i> Add Product</a>
+                                        <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-type">{{ __('Target Type') }}</label>
+                                            <select name="type" id="input-type" class="form-control form-control-alternative{{ $errors->has('type') ? ' is-invalid' : '' }}" placeholder="{{ __('Target Type') }}" value="{{ old('type') }}" >
+                                                <option value="">Target Type</option>
+                                                <option value="1">Weekly</option>
+                                                <option value="2">Monthly</option>
+                                                <option value="3">Yearly</option>
                                         
+                                            </select>
+
+                                            @if ($errors->has('type'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('type') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-product">{{ __('Product Name') }}</label>
+                                            <select name="product_id" id="input-product" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="{{ old('product_id') }}" >
+                                                <option value="">Select Product</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{$product->id}}">{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('product_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('product_id') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('unit_price') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="unit-input">{{ __('Unit Price') }}</label>
+                                            <input type="text" name="unit_price" id="unit-input" class="form-control form-control-alternative{{ $errors->has('unit_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit Price') }}" value="{{ old('unit_price') }}" required>
+
+                                            @if ($errors->has('unit_price'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('unit_price') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('qty') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="qty">{{ __('Quantity') }}</label>
+                                            <input type="num" name="qty" id="qty" class="form-control form-control-alternative{{ $errors->has('qty') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ old('qty')}}" required>
+
+                                            @if ($errors->has('qty'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('qty') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('product_amount') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-amount">{{ __('Amount') }}</label>
+                                            <input type="number" name="product_amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('product_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ old('product_amount') }}" required>
+                                            @if ($errors->has('product_amount'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('product_amount') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                                 </div>
@@ -176,4 +144,54 @@
         
         @include('layouts.footers.auth')
     </div>
+    
+    <script>
+
+        // Auto fill unit price when a product has been picked
+        function selectProduct(value) {
+            $.get('/getproductprice/' + value, function (data) {
+                // console.log(data.products);
+                // $('#input-unit').html("");
+                // $('#input-unit').append("");
+                jQuery.each(data.products, function (i, val) {
+                    $('#unit-input').val(val.standard_price);
+                });
+            });
+        }
+
+        $('#input-product').change(function () {
+            selectProduct($(this).val());
+            // $('#input-unit').prop('disabled', false)
+        });
+
+        // Auto fill department id when a sales person has been picked
+        function selectSales(value) {
+            $.get('/getsales/' + value, function (data) {
+                // console.log(data.depts);
+                jQuery.each(data.depts, function (i, val) {  
+                    // console.log(val.id)
+                    $('#dept_id').val(val.id);
+                });
+            });
+        }
+
+        $('#input-sales').change(function () {
+            selectSales($(this).val());
+            // $('#input-unit').prop('disabled', false)
+        });
+
+        // calculate value for Total Amount according to number of quantity
+        $('.form-group').on('input', '#qty', function(){
+            var totalAmount = $('#unit-input').val().replace( /,/g, '');
+    
+            // console.log(totalAmount);
+            $('.form-group #qty').each(function(){
+                var inputVal = $(this).val();
+                if($.isNumeric(inputVal)){
+                    totalAmount *= parseFloat(inputVal)
+                }
+            });
+            $('#input-amount').val(totalAmount);
+        });
+    </script>
 @endsection

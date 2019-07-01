@@ -211,18 +211,23 @@
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                    <a class="nav-link" href="{{ route('sales.index') }}">
                                         {{ __('List Sales') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                    <a class="nav-link" href="{{ route('sales.create') }}">
                                         {{ __('Add Sales') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('project.create') }}">
-                                        {{ __('Sales Location') }}
+                                    <a class="nav-link" href="{{ route('sales.location.create') }}">
+                                        {{ __('Add Sales Location') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('sales.location.index') }}">
+                                        {{ __('List Sales Location') }}
                                     </a>
                                 </li>
                             </ul>
@@ -281,32 +286,33 @@
                         <i class="ni ni-money-coins text-primary "></i>
                         <span class="nav-link-text">{{ __('Billing') }}</span>
                     </a>
-
-                    
             
                     <div class="collapse" id="navbar-billing">
                         <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
                             <a class="nav-link" href="#navbar-invoicing-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                                 <i class="fab " style="color: #f4645f;"></i>
                                 <span class="nav-link-text">{{ __('Invoicing') }}</span>
                             </a>
+                        </li>
+                        <li class="nav-item">
                             <div class="collapse" id="navbar-invoicing-billing">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('billing.invoice.index') }}">
-                                        {{ __('List Invoice') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('billing.invoice.create') }}">
-                                        {{ __('Manage Invoice') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('billing.invoice.create') }}">
-                                        {{ __('Add Invoice') }}
-                                    </a>
-                                </li> 
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.index') }}">
+                                            {{ __('List Invoice') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.create') }}">
+                                            {{ __('Manage Invoice') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.create') }}">
+                                            {{ __('Add Invoice') }}
+                                        </a>
+                                    </li> 
                                 </ul>  
                             </div>
                         <a class="nav-link" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -315,23 +321,26 @@
                         </a>
                         <div class="collapse" id="navbar-invoicing-renewals">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('billing.renewal.index') }}">
-                                        {{ __('List Renewals') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="">
-                                        {{ __('Manage Renewals') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('billing.renewal.create') }}">
-                                        {{ __('Add Renewals') }}
-                                    </a>
-                                </li> 
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.renewal.index') }}">
+                                                {{ __('List Renewals') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="">
+                                                {{ __('Manage Renewals') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.renewal.create') }}">
+                                                {{ __('Add Renewals') }}
+                                            </a>
+                                        </li> 
+                                </ul>
+                                
                                 </ul>  
-                            </div>
+                        </div>
                         </ul>
                     </div>
 
@@ -372,30 +381,66 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#navbar-reporting" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-single-02 text-primary"></i>
-                        <span class="nav-link-text">{{ __('User Management') }}</span>
+                    <a class="nav-link" href="#navbar-parameters" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Parameters') }}
                     </a>
 
-                    <div class="collapse" id="navbar-reporting">
+                    <div class="collapse " id="navbar-parameters">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('List User') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Add User') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Manage User') }}
-                                </a>
-                            </li>
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('User') }}</span>
+                                    </a>
+                                    <ul class="flex-column">
+                                        <div class="collapse" id="navbar-user">
+                                            <ul class="nav nav-sm flex-column" >
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('allSubUsers') }}">
+                                                            {{ __('List User') }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('newSubUser') }}">
+                                                            {{ __('Add User') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('Department') }}</span>
+                                    </a>
+                                    <ul class="flex-column">
+                                        <div class="collapse" id="navbar-dept">
+                                            <ul class="nav nav-sm flex-column" >
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('dept.index') }}">
+                                                            {{ __('List Departments') }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('dept.store') }}">
+                                                            {{ __('Add Department') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </ul>        
                         </ul>
-                    </div>
+                    </div> 
+
+                    
+                            
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">

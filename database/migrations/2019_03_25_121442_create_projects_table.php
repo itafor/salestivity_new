@@ -16,10 +16,10 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('customer_account');
-            $table->string('product');
+            $table->integer('product_id');
             $table->string('technician');
             $table->string('notes');
-            $table->string('uploads');
+            $table->string('uploads')->nullable();
             $table->timestamps();
         });
     }

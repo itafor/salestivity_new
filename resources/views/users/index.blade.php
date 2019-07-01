@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Management')])
-
 @section('content')
-    @include('layouts.headers.cards')
+@include('users.partials.header', ['title' => __('All Users')])
+
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('Users') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Add user') }}</a>
+                                <a href="{{ route('newSubUser') }}" class="btn btn-sm btn-primary">{{ __('Add user') }}</a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-bordered">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
@@ -41,13 +41,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($allusers as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
-                                        <td>{{ $user->role_id }}</td>
+                                        <td>{{ $user->roles->name }}</td>
                                         <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $users->links() }}
+                            {{ $allusers->links() }}
                         </nav>
                     </div>
                 </div>

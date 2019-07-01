@@ -21,7 +21,7 @@
                     <div class="col-xl-6">
                         <div class="form-group dropdown">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Closing next Month
+                                My Opportunities
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('opportunity.view', [$id=1]) }}">All Opportunities</a>
@@ -59,10 +59,8 @@
                                         <td>{{ $opportunity->initiation_date }}</td>
                                         <td>{{ $opportunity->closure_date }}</td>
                                         <td>
-                                            <div class="col-4 text-right">
                                             <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a>
-                                            </div>
+                                                <!-- <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a> -->
                                         </td>
                                     </tr>
                                 @endforeach

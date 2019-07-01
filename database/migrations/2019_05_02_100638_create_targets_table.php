@@ -18,7 +18,7 @@ class CreateTargetsTable extends Migration
             $table->integer('sales_person_id');
             $table->integer('department_id');
             $table->integer('amount');
-            $table->integer('percentage');
+            $table->integer('percentage')->nullable();
             $table->integer('manager');
             $table->string('type');
             $table->integer('product_id');

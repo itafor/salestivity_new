@@ -10,4 +10,10 @@ class CustomerIndividual extends Model
     {
         return $this->hasOne('App\Customer', 'account_id');
     }
+
+    public function getIndustry($id)
+    {
+        $industry = Industry::where('id', $id)->first();
+        return $industry->name;
+    }
 }

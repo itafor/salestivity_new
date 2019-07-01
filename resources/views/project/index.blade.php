@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Projects') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('project.create') }}" class="btn btn-sm btn-primary">{{ __('Create Project') }}</a>
+                                <a href="{{ route('project.create') }}" class="btn btn-sm btn-primary">{{ __('Add Project') }}</a>
                             </div>
                         </div>
                     </div>

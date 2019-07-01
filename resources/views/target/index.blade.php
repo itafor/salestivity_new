@@ -38,10 +38,26 @@
                                     <th scope="col">{{ __('Target Amount') }}</th>
                                     <th scope="col">{{ __('Amount Achieved') }}</th>
                                     <th scope="col">{{ __('Percentage Achieved') }}</th>
+                                    <th scope="col">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                               @foreach($targets as $target)
+                               <tr>
+                                    <td>{{ $target->salesPerson->name }}</td>
+                                    <td>{{ $target->dept->name }}</td>
+                                    <td>{{ $target->amount }}</td>
+                                    <td>{{ $target->amt_achieved }}</td>
+                                    <td>{{ $target->percentage }}%</td>
+                               <td>   
+                                    <span>
+                                        <div class="col-4 text-right">
+                                            <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                        </div>
+                                    </span>
+                                </td>
+                               </tr>
+                               @endforeach
                             </tbody>
                         </table>
                     </div>

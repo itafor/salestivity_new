@@ -21,7 +21,7 @@ class CustomerIndividual extends Migration
             $table->string('industry');
             $table->string('email');
             $table->string('phone');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->string('office_address')->nullable();
             $table->string('home_address')->nullable();
             $table->timestamps();

@@ -10,6 +10,8 @@ use App\CustomerIndividual;
 use App\Customer;
 use App\AddressCustomer;
 use App\Contact;
+use App\Country;
+use App\Industry;
 use Session;
 
 class CustomerIndividualController extends Controller
@@ -31,7 +33,9 @@ class CustomerIndividualController extends Controller
      */
     public function create()
     {
-        return view('customer.individual.create');
+        $countries = Country::all();
+        $industries = Industry::all();
+        return view('customer.individual.create', compact('countries', 'industries'));
     }
 
     /**
@@ -45,6 +49,7 @@ class CustomerIndividualController extends Controller
         $customer = new CustomerIndividual;
         $account = new Customer;
         $address = new AddressCustomer;
+        $userId = auth()->user()->id;
 
 
         // $input = request()->all();
@@ -81,12 +86,14 @@ class CustomerIndividualController extends Controller
             'industry' => 'required',
             'email' => 'required|max:255',
             'phone' => 'required|max:11',
-            'website' => 'required',
+            // 'website' => 'required',
             'state' => 'required',
             'city' => 'required',
             'street' => 'required',
             'country' => 'required',
         ]);
+
+
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
         $customer->profession = $request->profession;
@@ -94,11 +101,13 @@ class CustomerIndividualController extends Controller
         $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->website = $request->website;
+        $customer->main_acct_id = $userId;
         $customer->save();
 
         $account->name = $request->first_name;
         $account->account_type = $request->account_type;
         $account->account_id = $customer->id;
+        $account->main_acct_id = $userId;
         $account->save();
 
         $address->customer_id = $account->id;
@@ -106,6 +115,7 @@ class CustomerIndividualController extends Controller
         $address->city = $request->city;
         $address->street = $request->street;
         $address->country = $request->country;
+        $address->main_acct_id = $userId;
         $address->save();
     
 
@@ -124,9 +134,12 @@ class CustomerIndividualController extends Controller
      */
     public function show($id)
     {
+        // the value 2 is used as a parameter because it denotes customer type of 'individual' in the DB
         $customer = Customer::where('account_id',$id)->where('account_type', 2)->first();
         $address = AddressCustomer::where('customer_id', $customer->id)->first();
-        return view('customer.individual.show', compact('customer', 'address'));
+        $countries = Country::all();
+        $industries = Industry::all();
+        return view('customer.individual.show', compact('customer', 'address', 'industries', 'countries'));
     }
 
     /**

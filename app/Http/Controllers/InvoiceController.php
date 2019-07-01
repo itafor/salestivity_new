@@ -21,8 +21,9 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $userId = auth()->user()->id;
         $invoices = Invoice::all();
-        $customers = Customer::orderBy('id', 'DESC')->get();
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
         // dd($invoices->customer()->customer);
 
         return view('billing.invoice.index', compact('invoices', 'customers'));
@@ -35,8 +36,9 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $customers = Customer::all();
-        $products = Product::all();
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.invoice.create', compact('customers', 'products'));
     }
 
@@ -48,6 +50,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = auth()->user()->id;
         $invoice = new Invoice;
 
         $this->validate($request, [
@@ -62,6 +65,7 @@ class InvoiceController extends Controller
         $invoice->cost = $request->cost;
         $invoice->discount = $request->discount;
         $invoice->status = $request->status;
+        $invoice->main_acct_id = $userId;
         $invoice->save();
 
 
@@ -80,20 +84,14 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
+        $userId = auth()->user()->id;
         $invoice = Invoice::find($id);
-        $customers = Customer::all();
-        $products = Product::all();
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
 
         $payments = Payment::where('customer_id', $invoice->customer)->get();
         
-
-        
-        
-        
-        
-        
-        
-        return view('billing.invoice.show', compact('invoice', 'customers', 'products', 'payments', 'arr'));
+        return view('billing.invoice.show', compact('invoice', 'customers', 'products', 'payments'));
         // dd($payment_type->invoicesMorph);
 
         // $arr1 = [];
@@ -123,11 +121,12 @@ class InvoiceController extends Controller
      */
     public function manage($id)
     {
+        $userId = auth()->user()->id;
         $invoice = Invoice::find($id);
-        $customers = Customer::all();
-        $categories = Category::all();
-        $sub_categories = SubCategory::all();
-        $products = Product::all();
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $categories = Category::where('main_acct_id', $userId)->get();
+        $sub_categories = SubCategory::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.invoice.manage', compact('invoice', 'customers', 'products', 'categories', 'sub_categories'));
     }
 
@@ -184,7 +183,7 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         $invoice = Invoice::find($id);
-        $invoice->delete();
+        // $invoice->delete();
 
         Session::flash('status', 'The Invoice has been successfully deleted');
         return redirect()->route('billing.invoice.index');
@@ -198,6 +197,7 @@ class InvoiceController extends Controller
      */
     public function pay(Request $request)
     {
+        $userId = auth()->user()->id;
         $this->validate($request, [
             'cost' => 'required',
             'category_id' => 'required',
@@ -214,6 +214,7 @@ class InvoiceController extends Controller
         $payment->amount = $request->amount;
         $payment->discount = $request->discount;
         $payment->status = $request->status;
+        $payment->main_acct_id = $userId;
 
         $calcDiscount = ($payment->discount/100) * $request->cost;
         $discountCost = $request->cost - $calcDiscount;

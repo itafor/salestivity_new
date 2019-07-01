@@ -18,8 +18,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        // dd($products);
+        $userId = auth()->user()->id;
+        $products = Product::where('main_acct_id', $userId)->get();
         return view('product.index', compact('products'));
     }
 
@@ -30,8 +30,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $subCategories = SubCategory::all();
+        $userId = auth()->user()->id;
+        $categories = Category::where('main_acct_id', $userId)->get();
+        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
         // dd($categories);
         return view('product.create', compact('categories', 'subCategories'));
     }
@@ -45,6 +46,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
+        $userId = auth()->user()->id;
 
         $this->validate($request, [
             'name' => 'required|max:255|min:2',
@@ -55,6 +57,7 @@ class ProductController extends Controller
         $product->sub_category_id = $request->sub_category_id;
         $product->description = $request->description;
         $product->standard_price = $request->standard_price;
+        $product->main_acct_id = $userId;
         $product->save();
 
         $cat = $request->category_id;
@@ -76,7 +79,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $userId = auth()->user()->id;
+        $product = Product::where('id', $id)->where('main_acct_id', $userId)->first();
+        // dd($product);
         $categories = Category::all();
         $subCategories = SubCategory::all();
         return view('product.show', compact('product', 'categories', 'subCategories'));
@@ -106,21 +111,20 @@ class ProductController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255|min:2',
-            'category' => 'required',
-            'type' => 'required|max:255',
-            'notes' => 'required',
+            'category_id' => 'required',
         ]);
         $product->name = $request->input('name');
-        $product->category = $request->input('category');
-        $product->type = $request->input('type');
-        $product->notes = $request->input('notes');
-        $product->save();
+        $product->category_id = $request->input('category_id');
+        $product->sub_category_id = $request->input('sub_category_id');
+        $product->description = $request->input('description');
+        $product->standard_price = $request->input('standard_price');
+        $product->update();
 
 
         $status = "Product has been updated successfully!!!";
         Session::flash('status', $status);
 
-        return redirect()->route('product.show', $product->id);
+        return redirect()->route('product.index');
     }
 
     /**
@@ -132,7 +136,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        $product->delete();
+        // $product->delete();
 
         Session::flash('status', 'The Product has been successfully deleted');
         return redirect()->route('product.index');

@@ -36,20 +36,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = auth()->user()->id;
         // store each new category that was added
         $category = new Category;
         $category->name = $request->name;
-
-        if($request->addCategory) {
-            foreach($request->addCategory as $addCategory)
-            {
-                $category->name = $addCategory;
-            }
-        }
-
+        $category->main_acct_id = $userId;
+        // dd($category);
         $category->save();
 
-        Session::flash('status', 'Category has been created');
+        $addNewCategory = new Category;
+        if($request->addCategorys) {
+            foreach($request->addCategory as $addCategory)
+            {
+                $addNewCategory->name = $addCategory;
+                $addNewCategory->main_acct_id = $userId;
+
+            }
+            $addNewCategory->save();
+        }
+
+
+        $status = "Category has been created successfully!!!";
+        Session::flash('status', $status);
         return redirect()->route('product.category.create');
     }
 

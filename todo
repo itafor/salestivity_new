@@ -1,1 +1,2 @@
-Add User ID to all modules being created so as to know who created a product, target, opportunity, etc.
+Add User ID to all modules being created so as to know who created a product, target, opportunity, etc. DONE!!!
+automatically update total amount as quantity is being updated while trying to build a target
