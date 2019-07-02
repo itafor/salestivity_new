@@ -1,0 +1,28 @@
+.header {
+    padding: 10px;
+  }
+  .text-center {
+    color: #c00001;
+    font-weight: bold;
+  }
+  th {
+    background-color: #c2c8eb ;
+    color: white;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #c2c8eb;
+  }
+  
+  .selected {
+    background: #c2c8eb;
+    color: #ffffff;
+  }
+
+  span.badge {
+    color: white;
+}
+
+button.badge {
+  color: white;
+}

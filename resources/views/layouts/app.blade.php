@@ -17,6 +17,13 @@
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.min.css') }}">
+        <!-- <link href="ExampleStyle.css" type="text/css" rel="stylesheet"/> -->
+        <link rel="stylesheet" href="{{ asset('css/tablestyle.css') }}">
+		<!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+	
+
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -42,5 +49,6 @@
         
         <!-- Argon JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
+        <script src="{{ asset('select2-4.0.7/dist/js/select2.min.js') }}"></script>
     </body>
 </html>

@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'users', 'subusers'
     ],
 
     /*
@@ -38,7 +38,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'users', 'subusers'
+        ],
+        'subuser' => [
+            'driver' => 'session',
+            'provider' => 'subusers',
         ],
 
         'api' => [
@@ -70,6 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'subusers' => [
+            'driver' => 'eloquent',
+            'model' => App\SubUser::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -95,6 +103,11 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'subusers' => [
+            'provider' => 'subusers',
             'table' => 'password_resets',
             'expire' => 60,
         ],

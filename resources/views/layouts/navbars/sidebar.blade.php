@@ -83,13 +83,13 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
                     </a>
 
-                    <div class="collapse show" id="navbar-examples">
+                    <div class="collapse" id="navbar-examples">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
@@ -103,9 +103,346 @@
                             </li>
                         </ul>
                     </div>
+                </li> -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Account Management') }}
+                    </a>
+
+                    <div class="collapse " id="navbar-accounts">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('customer.index') }}">
+                                        {{ __('List Accounts') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-addproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('Add Account') }}</span>
+                                    </a>
+
+                                    <div class="collapse" id="navbar-addproducts">
+                                        <ul class="nav nav-sm flex-column">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.corporate.create') }}">
+                                                        {{ __('Corporate') }}
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.individual.create') }}">
+                                                        {{ __('Individual') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>        
+                        </ul>
+                    </div> 
+                            
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="#navbar-products" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-briefcase text-primary" aria-hidden="true"></i>{{ __('Product Management') }}
+                    </a>
+
+                    <div class="collapse " id="navbar-products">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.index') }}">
+                                        {{ __('List Products') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.category.create') }}">
+                                        {{ __('Add Category') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.subcategory.create') }}">
+                                        {{ __('Add Sub Category') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('product.create') }}">
+                                        {{ __('Add Product') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-paper-diploma text-primary"></i>
+                        <span class="nav-link-text">{{ __('Project Management') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-project">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.index') }}">
+                                        {{ __('List Projects') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('project.create') }}">
+                                        {{ __('Add Projects') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-retail" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-calculator text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Retail Field Sales') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-retail">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('sales.index') }}">
+                                        {{ __('List Sales') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('sales.create') }}">
+                                        {{ __('Add Sales') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('sales.location.create') }}">
+                                        {{ __('Add Sales Location') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('sales.location.index') }}">
+                                        {{ __('List Sales Location') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-target" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Target Management') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-target">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('target.index') }}">
+                                        {{ __('List Targets') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('target.create') }}">
+                                        {{ __('Build Target') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-opportunity" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-compass text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Opportunities') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-opportunity">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('opportunity.index') }}">
+                                        {{ __('List Opportunities') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('opportunity.create') }}">
+                                        {{ __('Add Opportunity') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-money-coins text-primary "></i>
+                        <span class="nav-link-text">{{ __('Billing') }}</span>
+                    </a>
+            
+                    <div class="collapse" id="navbar-billing">
+                        <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#navbar-invoicing-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                <i class="fab " style="color: #f4645f;"></i>
+                                <span class="nav-link-text">{{ __('Invoicing') }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="collapse" id="navbar-invoicing-billing">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.index') }}">
+                                            {{ __('List Invoice') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.create') }}">
+                                            {{ __('Manage Invoice') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('billing.invoice.create') }}">
+                                            {{ __('Add Invoice') }}
+                                        </a>
+                                    </li> 
+                                </ul>  
+                            </div>
+                        <a class="nav-link" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
+                            <span class="nav-link-text">{{ __('Renewals') }}</span>
+                        </a>
+                        <div class="collapse" id="navbar-invoicing-renewals">
+                            <ul class="nav nav-sm flex-column">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.renewal.index') }}">
+                                                {{ __('List Renewals') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="">
+                                                {{ __('Manage Renewals') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.renewal.create') }}">
+                                                {{ __('Add Renewals') }}
+                                            </a>
+                                        </li> 
+                                </ul>
+                                
+                                </ul>  
+                        </div>
+                        </ul>
+                    </div>
+
+                    <div class="collapse" id="navbar-renewal">
+                        <ul class="nav nav-sm flex-column">
+                            <a class="nav-link" href="#navbar-renewal-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                <i class="fab " style="color: #f4645f;"></i>
+                                <span class="nav-link-text">{{ __('Renewals') }}</span>
+                            </a>
+                            <div class="collapse" id="navbar-renewal-billing">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                                        {{ __('List Renewals') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                                        {{ __('Manage Renewals') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                                        {{ __('Add Renewals') }}
+                                    </a>
+                                </li> 
+                                </ul>  
+                            </div>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-reporting"  role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-ruler-pencil text-primary"></i>
+                        <span class="nav-link-text">{{ __('Reporting') }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-parameters" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Parameters') }}
+                    </a>
+
+                    <div class="collapse " id="navbar-parameters">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('User') }}</span>
+                                    </a>
+                                    <ul class="flex-column">
+                                        <div class="collapse" id="navbar-user">
+                                            <ul class="nav nav-sm flex-column" >
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('allSubUsers') }}">
+                                                            {{ __('List User') }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('newSubUser') }}">
+                                                            {{ __('Add User') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('Department') }}</span>
+                                    </a>
+                                    <ul class="flex-column">
+                                        <div class="collapse" id="navbar-dept">
+                                            <ul class="nav nav-sm flex-column" >
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('dept.index') }}">
+                                                            {{ __('List Departments') }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('dept.store') }}">
+                                                            {{ __('Add Department') }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                    </ul>
+                                </li>
+                            </ul>        
+                        </ul>
+                    </div> 
+
+                    
+                            
+                </li>
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
@@ -120,6 +457,7 @@
                         <i class="ni ni-key-25 text-info"></i> {{ __('Login') }}
                     </a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
@@ -130,13 +468,13 @@
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
                 </li>
-            </ul>
+            </ul> -->
             <!-- Divider -->
-            <hr class="my-3">
+            <!-- <hr class="my-3"> -->
             <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Documentation</h6>
+            <!-- <h6 class="navbar-heading text-muted">Documentation</h6> -->
             <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
+            <!-- <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
                         <i class="ni ni-spaceship"></i> Getting started
@@ -152,7 +490,7 @@
                         <i class="ni ni-ui-04"></i> Components
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </nav>
