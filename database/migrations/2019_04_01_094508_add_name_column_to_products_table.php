@@ -14,7 +14,7 @@ class AddNameColumnToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('name')->after('type');
+            $table->string('name');
         });
     }
 
