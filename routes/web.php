@@ -24,9 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	// Sub users
-	Route::get('/all/user', 'Usercontroller@indexSubusers')->name('allSubUsers');
-	Route::get('create/new/user', 'Usercontroller@createsubuser')->name('newSubUser');
-	Route::post('create/new/user', 'Usercontroller@storesubuser')->name('storeuser');
+	Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
+	Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
+	Route::post('create/new/user', 'UserController@storesubuser')->name('storeuser');
 
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
