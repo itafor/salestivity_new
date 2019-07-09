@@ -30,6 +30,7 @@ class SubCategoryController extends Controller
         // store each new category that was added
         $subcategory = new SubCategory;
         $subcategory->name = $request->name;
+        $subcategory->main_acct_id = $userId;
         $subcategory->save();
 
         $addNewSubCategory = new SubCategory;
@@ -39,8 +40,9 @@ class SubCategoryController extends Controller
             {
                 $addNewSubCategory->name = $addSubCategory;
                 $addNewSubCategory->main_acct_id = $userId;
+
             }
-            $addNewCategory->save();
+            $addNewSubCategory->save();
         }
 
         
