@@ -20,7 +20,8 @@ class RenewalController extends Controller
      */
     public function index()
     {
-        $renewals = Renewal::all();
+        $userId = auth()->user()->id;
+        $renewals = Renewal::where('main_acct_id', $userId)->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
@@ -31,8 +32,9 @@ class RenewalController extends Controller
      */
     public function create()
     {
-        $customers = Customer::all();
-        $products = Product::all();
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.renewal.create', compact('customers', 'products'));
     }
 
@@ -44,6 +46,7 @@ class RenewalController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = auth()->user()->id;
         $renewal = new Renewal;
 
         $this->validate($request, [
@@ -54,6 +57,7 @@ class RenewalController extends Controller
             // 'amount' => 'required|integer',
         ]);
 
+        $renewal->main_acct_id = $userId;
         $renewal->customer_id = $request->customer_id;
         $renewal->product = $request->product;
         $renewal->amount = $request->amount;
@@ -77,11 +81,13 @@ class RenewalController extends Controller
      */
     public function show($id)
     {
+        $userId = auth()->user()->id;
+        $renewal->main_acct_id = $userId;
         $renewal = Renewal::find($id);
         $customers = Customer::all();
         $products = Product::all();
 
-        $payments = Payment::where('customer_id', $renewal->customer_id)->get();
+        $payments = Payment::where('customer_id', $renewal->customer_id)->where('main_acct_id', $userId)->get();
         return view('billing.renewal.show', compact('renewal', 'customers','products', 'payments'));
     }
 
@@ -105,7 +111,8 @@ class RenewalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $renewal = Renewal::find($id);
+        $userId = auth()->user()->id;
+        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId);
 
         $this->validate($request, [
             'customer_id' => 'required',
@@ -116,6 +123,7 @@ class RenewalController extends Controller
             // 'amount' => 'required|integer',
         ]);
 
+        $renewal->main_acct_id = $userId;
         $renewal->customer_id = $request->input('customer_id');
         $renewal->product = $request->input('product');
         $renewal->start_date = $request->input('start_date');
@@ -155,11 +163,12 @@ class RenewalController extends Controller
      */
     public function manage($id)
     {
-        $renewal = Renewal::find($id);
-        $customers = Customer::all();
-        $categories = Category::all();
-        $sub_categories = SubCategory::all();
-        $products = Product::all();
+        $userId = auth()->user()->id;
+        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->get();
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $categories = Category::where('main_acct_id', $userId)->get();
+        $sub_categories = SubCategory::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.renewal.manage', compact('renewal', 'customers', 'products', 'categories', 'sub_categories'));
     }
 
@@ -171,6 +180,7 @@ class RenewalController extends Controller
      */
     public function pay(Request $request)
     {
+        $userId = auth()->user()->id;
         $this->validate($request, [
             'cost' => 'required',
             // 'category_id' => 'required',
@@ -187,7 +197,7 @@ class RenewalController extends Controller
         $payment->amount = $request->amount;
         $payment->discount = $request->discount;
         $payment->status = $request->status;
-
+        $payment->main_acct_id = $userId;
         $calcDiscount = ($payment->discount/100) * $request->cost;
         $discountCost = $request->cost - $calcDiscount;
         $payment->outstanding = ($request->amount) - ($discountCost);

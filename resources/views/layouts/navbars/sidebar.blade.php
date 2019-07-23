@@ -177,6 +177,7 @@
                             </ul>
                         </ul>
                     </div>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
