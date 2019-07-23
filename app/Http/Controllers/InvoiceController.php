@@ -59,6 +59,7 @@ class InvoiceController extends Controller
             'timeline' => 'required',
             'cost' => 'required|integer',
         ]);
+        $invoice->main_act_id = $userId;
         $invoice->customer = $request->customer;
         $invoice->product = $request->product;
         $invoice->timeline = $request->timeline;
