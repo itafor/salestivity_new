@@ -58,7 +58,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                                            <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
+                                            <input type="company_email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
 
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback" role="alert">
@@ -97,14 +97,14 @@
                                             <label class="form-control-label" for="input-turn_over">{{ __('Turn Over') }}</label>
                                             <select name="turn_over" id="input-turn_over" class="form-control form-control-alternative{{ $errors->has('turn_over') ? ' is-invalid' : '' }}" placeholder="{{ __('Turn Over') }}" value="{{ old('turn_over') }}" required >
                                                 <option value="">Choose an option</option>
-                                                <option value="0 - 50,000">0 - ₦50,000</option>
-                                                <option value="51,000 - 100,000">₦51,000 - ₦100,000</option>
-                                                <option value="101,000 - 150,000">₦101,000 - ₦150,000</option>
-                                                <option value="151,000 - 250,000">₦151,000 - ₦250,000</option>
-                                                <option value="251,000 - 500,000">₦251,000 - ₦500,000</option>
-                                                <option value="501,000 - 750,000">₦501,000 - ₦750,000</option>
-                                                <option value="751,000 - 1,000,000">₦751,000 - ₦1,000,000</option>
-                                                <option value="Above 1,000,000">Above ₦1,000,000</option>
+                                                <option value="0 - 1,000,000">0 - ₦1,000,000</option>
+                                                <option value="1,000,001 - 10,000,000">₦1,000,001 - ₦10,000,000</option>
+                                                <option value="10,000,001 - 50,000,000">₦10,000,001 - ₦50,000,000</option>
+                                                <option value="50,000,001 - 250,000,000">₦50,000,000 - ₦250,000,000</option>
+                                                <option value="250,000,001 - 500,000,000">₦250,000,001 - ₦500,000,000</option>
+                                                <option value="500,000,001 - 750,000,000">₦500,000,001 - ₦750,000,000</option>
+                                                <option value="750,000,001 - 1,000,000,000">₦750,000,001 - ₦1,000,000,000</option>
+                                                <option value="Above 1,000,000,000">Above ₦1,000,000,000</option>
                                             
                                             </select>
                                             @if ($errors->has('turn_over'))

@@ -306,11 +306,6 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('billing.invoice.create') }}">
-                                            {{ __('Manage Invoice') }}
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('billing.invoice.create') }}">
                                             {{ __('Add Invoice') }}
                                         </a>
                                     </li> 
@@ -326,11 +321,6 @@
                                     <li class="nav-item">
                                             <a class="nav-link" href="{{ route('billing.renewal.index') }}">
                                                 {{ __('List Renewals') }}
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="">
-                                                {{ __('Manage Renewals') }}
                                             </a>
                                         </li>
                                         <li class="nav-item">
@@ -356,11 +346,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('profile.edit') }}">
                                         {{ __('List Renewals') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Manage Renewals') }}
                                     </a>
                                 </li>
                                 <li class="nav-item">
