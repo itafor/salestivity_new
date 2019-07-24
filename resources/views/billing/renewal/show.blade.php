@@ -96,7 +96,7 @@
 
                                 <div class="form-group{{ $errors->has('end_date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-                                    <input type="text" name="end_date" id="end_date" class="form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" value="{{ date('Y-m-d', strtotime($renewal->end_date)) }}" required>
+                                    <input type="date" name="end_date" id="end_date" class="form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" value="{{ date('Y-m-d', strtotime($renewal->end_date)) }}" required>
 
                                     @if ($errors->has('period'))
                                         <span class="invalid-feedback" role="alert">

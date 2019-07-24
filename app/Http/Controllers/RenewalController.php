@@ -82,8 +82,7 @@ class RenewalController extends Controller
     public function show($id)
     {
         $userId = auth()->user()->id;
-        $renewal->main_acct_id = $userId;
-        $renewal = Renewal::find($id);
+        $renewal = Renewal::where('id',$id)->where('main_acct_id', $userId)->first();
         $customers = Customer::all();
         $products = Product::all();
 
@@ -164,7 +163,7 @@ class RenewalController extends Controller
     public function manage($id)
     {
         $userId = auth()->user()->id;
-        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->get();
+        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->first();
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $sub_categories = SubCategory::where('main_acct_id', $userId)->get();

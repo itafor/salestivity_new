@@ -36,8 +36,8 @@
                                 <tr>
                                     <th scope="col">{{ __('Customer') }}</th>
                                     <th scope="col">{{ __('Product') }}</th>
-                                    <th scope="col">{{ __('Amount') }}</th>
-                                    <th scope="col">{{ __('Period') }}</th>
+                                    <th scope="col">{{ __('Start Date') }}</th>
+                                    <th scope="col">{{ __('End Date') }}</th>
                                     <th scope="col">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
@@ -45,10 +45,11 @@
                                 @foreach($renewals as $renewal)
                                     <tr>
                                     
-                                        <td>{{ $renewal->customer }}</td>
+                                        <td>{{ $renewal->customers->name }}</td>
                                         <td>{{ $renewal->product }}</td>
-                                        <td>{{ $renewal->amount }}</td>
-                                        <td>{{ $renewal->period }}</td>
+                                        <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>
+                                        <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
+                                        
                                         <td>
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>

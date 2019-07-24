@@ -54,7 +54,7 @@ class CustomerCorporateController extends Controller
         $this->validate($request, [
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
-            'email' => 'required|max:255',
+            'company_email' => 'required|max:255',
             'phone' => 'required|max:11',
             'website' => 'required',
             'turn_over' => 'required',
@@ -66,7 +66,7 @@ class CustomerCorporateController extends Controller
         ]);
         $customer->company_name = $request->company_name;
         $customer->industry = $request->industry;
-        $customer->email = $request->email;
+        $customer->email = $request->company_email;
         $customer->phone = $request->phone;
         $customer->website = $request->website;
         $customer->turn_over = $request->turn_over;

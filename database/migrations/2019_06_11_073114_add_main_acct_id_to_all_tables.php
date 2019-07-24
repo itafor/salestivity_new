@@ -29,9 +29,9 @@ class AddMainAcctIdToAllTables extends Migration
         });
 
         //
-        Schema::table('category_product', function (Blueprint $table) {
-            $table->integer('main_acct_id')->after('category_id')->unsigned();
-        });
+        // Schema::table('category_product', function (Blueprint $table) {
+        //     $table->integer('main_acct_id')->after('category_id')->unsigned();
+        // });
         Schema::table('contacts', function (Blueprint $table) {
             $table->integer('main_acct_id')->after('email')->unsigned();
         });
@@ -151,9 +151,9 @@ class AddMainAcctIdToAllTables extends Migration
         });
 
         //
-        Schema::table('category_product', function (Blueprint $table) {
-            $table->dropColumn('main_acct_id');
-        });
+        // Schema::table('category_product', function (Blueprint $table) {
+        //     $table->dropColumn('main_acct_id');
+        // });
         Schema::table('contacts', function (Blueprint $table) {
             $table->dropColumn('main_acct_id');
         });

@@ -31,7 +31,6 @@
                 </tr>
 
                 
-                @endforeach      
                 <tr>
                 <td></td>
                 <td></td>
@@ -40,6 +39,7 @@
                 <td><b> ₦{{ $payment->formatValue($payments->sum('cost')) }} </b></td>
                 <td><b> ₦{{ $payment->formatValue($payments->sum('outstanding')) }} </b></td>
                 </tr>                  
+                @endforeach      
         </tbody>
     </table>    
 </div>
