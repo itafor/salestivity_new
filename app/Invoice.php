@@ -5,9 +5,11 @@ use App\Customer;
 use App\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
 {
+    use SoftDeletes;
     public function customers()
     {
         return $this->belongsTo('App\Customer', 'customer');

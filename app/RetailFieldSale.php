@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RetailFieldSale extends Model
 {
+    use SoftDeletes;
+    
     public function getName($id)
     {
         $sales = User::find($id);

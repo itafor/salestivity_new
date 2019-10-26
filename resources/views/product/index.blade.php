@@ -37,7 +37,7 @@
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Description') }}</th>
                                     <th scope="col">{{ __('Standard Price') }}</th>
-                                    <th scope="col">{{ __('Action') }}</th>
+                                    <th scope="col" class="text-center">{{ __('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,8 +46,22 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->standard_price }}</td>
+                                    <td>
+                                        <div class="btn-group-justified text-center" role="group">
+                                            <div class="btn-group" role="group">
+                                                <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                            </div>  
+
+                                            <div class="btn-group" role="group">
+                                                <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                    @csrf
+                                                    <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
                                     
-                                    <td>   
+                                    <!-- <td>   
                                     <span>
                                         <div class="col-4 text-right">
                                             <a href="{{ route('product.show', [$product->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
@@ -62,7 +76,7 @@
                                             </div>
                                         </form>
                                         </span>
-                                    </td>    
+                                    </td>     -->
                                   </tr>
                                 @endforeach
                             </tbody>

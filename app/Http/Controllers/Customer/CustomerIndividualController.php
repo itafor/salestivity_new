@@ -13,6 +13,7 @@ use App\Contact;
 use App\Country;
 use App\Industry;
 use Session;
+use DB;
 
 class CustomerIndividualController extends Controller
 {
@@ -102,22 +103,32 @@ class CustomerIndividualController extends Controller
         $customer->phone = $request->phone;
         $customer->website = $request->website;
         $customer->main_acct_id = $userId;
-        $customer->save();
-
+        
         $account->name = $request->first_name;
         $account->account_type = $request->account_type;
         $account->account_id = $customer->id;
         $account->main_acct_id = $userId;
-        $account->save();
-
+        
         $address->customer_id = $account->id;
         $address->state = $request->state;
         $address->city = $request->city;
         $address->street = $request->street;
         $address->country = $request->country;
         $address->main_acct_id = $userId;
-        $address->save();
-    
+        
+        DB::beginTransaction();
+        try {
+            $customer->save();
+            $account->save();
+            $address->save();
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            // return response()->json(['error' => $ex->getMessage()], 500);
+            $status = "Account not Added";
+            Session::flash('error', $status);
+            return redirect()->route('customer.index');
+        }
 
 
         $status = "Account Added";
@@ -209,6 +220,32 @@ class CustomerIndividualController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $account = Customer::find($id);
+        $customer = CustomerIndividual::where('id', $account->account_id)->first();
+        $address = AddressCustomer::where('customer_id', $account->id)->first();
+        // dd($address);
+        // dd($account);
+
+        DB::beginTransaction();
+        try {
+                $account->delete();
+                $customer->delete();
+                $address->delete();
+            
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            // return response()->json(['error' => $ex->getMessage()], 500);
+            $status = "Account not Deleted";
+            Session::flash('error', $status);
+            return redirect()->route('customer.index');
+        }
+
+            $status = "Account has been successfully Deleted";
+            Session::flash('status', $status);
+            return redirect()->route('customer.index');
+
+
     }
 }

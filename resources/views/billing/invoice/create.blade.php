@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="cost">{{ __('Amount') }}</label>
+                                    <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
                                     <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
@@ -104,5 +104,21 @@
         
         @include('layouts.footers.auth')
     </div>
+
+    <script>
+        function selectProductAjax(value) {
+        $.get('/getproductprice/' + value, function (data) {
+            // console.log(data.products);
+            $('#cost').html("");
+            jQuery.each(data.products, function (i, val) {
+                $('#cost').val(val.standard_price)
+            });
+        });
+    }
+
+    $('#product').change(function () {
+        selectProductAjax($(this).val());
+	});
+    </script>
 
 @endsection

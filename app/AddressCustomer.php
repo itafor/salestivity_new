@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AddressCustomer extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'address_customer';
 
     public function customer()

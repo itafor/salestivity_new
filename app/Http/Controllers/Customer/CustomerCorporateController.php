@@ -11,6 +11,7 @@ use App\Industry;
 use App\Contact;
 use App\Country;
 use Session;
+use DB;
 
 class CustomerCorporateController extends Controller
 {
@@ -52,33 +53,34 @@ class CustomerCorporateController extends Controller
         // $contact->main_acct_id = $userId;
 
         $this->validate($request, [
-            'company_name' => 'required|max:255|min:2',
-            'industry' => 'required',
-            'company_email' => 'required|max:255',
-            'phone' => 'required|max:11',
-            'website' => 'required',
-            'turn_over' => 'required',
-            'employee_count' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'country' => 'required',
+        //     'company_name' => 'required|max:255|min:2',
+        //     'industry' => 'required',
+        //     'company_email' => 'required|max:255',
+        //     'phone' => 'required|max:11',
+        //     'website' => 'required',
+        //     'turn_over' => 'required',
+        //     'employee_count' => 'required',
+        //     'state' => 'required',
+        //     'city' => 'required',
+        //     'street' => 'required',
+        //     'country' => 'required',
         ]);
+        // dd($request);
         $customer->company_name = $request->company_name;
         $customer->industry = $request->industry;
         $customer->email = $request->company_email;
-        $customer->phone = $request->phone;
+        $customer->phone = $request->company_phone;
         $customer->website = $request->website;
         $customer->turn_over = $request->turn_over;
         $customer->employee_count = $request->employee_count;
         $customer->main_acct_id = $userId;
-        $customer->save();
+        
         
         $account->name = $request->company_name;
         $account->account_type = $request->account_type;
         $account->account_id = $customer->id;
         $account->main_acct_id = $userId;
-        $account->save();
+        
         
         // dd($customer->id);
         
@@ -88,7 +90,7 @@ class CustomerCorporateController extends Controller
         $address->street = $request->street;
         $address->country = $request->country;
         $address->main_acct_id = $userId;
-        $address->save();
+        
         
         $contact->customer_id = $account->id;
         $contact->title = $request->title;
@@ -97,7 +99,23 @@ class CustomerCorporateController extends Controller
         $contact->email = $request->email;
         $contact->phone = $request->phone;
         $contact->main_acct_id = $userId;
-        $contact->save();
+
+        // use transaction to make sure all requests has been saved or else roll back the transaction
+        DB::beginTransaction();
+        try {
+            $customer->save();
+            $account->save();
+            $address->save();
+            $contact->save();
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            // return response()->json(['error' => $ex->getMessage()], 500);
+            $status = "Account not Added";
+            Session::flash('error', $status);
+            return redirect()->route('customer.index');
+        }
+        
         
         
         $addContact = new Contact;
@@ -276,14 +294,42 @@ class CustomerCorporateController extends Controller
     public function destroy($id)
     {
         $account = Customer::find($id);
-        dd($account);
+        // dd($account);
         $customer = CustomerCorporate::where('id', $account->account_id)->first();
         $address = AddressCustomer::where('customer_id', $account->id)->first();
-        $contacts = Contact::where('customer_id', $account->id)->first();
+        $contacts = Contact::where('customer_id', $account->id)->get();
+        // dd($contacts);
 
-        $customer->delete();
-        $address->delete();
-        $contacts->delete();
+        // dd($account);
+
+        DB::beginTransaction();
+        try {
+            // delete all contacts related to this customer 
+            if ($contacts !== null){
+                foreach($contacts as $contact){
+                    $contact->delete();
+                }
+                $account->delete();
+                $customer->delete();
+                $address->delete();
+            } else {
+                $account->delete();
+                $customer->delete();
+                $address->delete();
+            }
+            
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            // return response()->json(['error' => $ex->getMessage()], 500);
+            $status = "Account not Deleted";
+            Session::flash('error', $status);
+            return redirect()->route('customer.index');
+        }
+
+        // $customer->delete();
+        // $address->delete();
+        // $contacts->delete();
 
         Session::flash('status', 'The Customer has been successfully deleted');
         return redirect()->route('customer.index');

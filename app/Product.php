@@ -3,13 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+    
     // Create a many to many relationship btw product and category model
     public function category()
     {
-        return $this->belongsToMany('App\Category', 'category_product', 'category_id', 'product_id');
+        return $this->belongsTo('App\Category', 'category_id');
     }
 
      // Create a one to many relationship btw product and category model

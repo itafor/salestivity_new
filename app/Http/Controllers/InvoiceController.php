@@ -59,7 +59,6 @@ class InvoiceController extends Controller
             'timeline' => 'required',
             'cost' => 'required|integer',
         ]);
-        $invoice->main_act_id = $userId;
         $invoice->customer = $request->customer;
         $invoice->product = $request->product;
         $invoice->timeline = $request->timeline;
@@ -90,7 +89,8 @@ class InvoiceController extends Controller
         $customers = Customer::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
 
-        $payments = Payment::where('customer_id', $invoice->customer)->get();
+        $payments = Payment::where('customer_id', $invoice->customer)->where('status', '!=', 'Renewal')->get();
+        
         
         return view('billing.invoice.show', compact('invoice', 'customers', 'products', 'payments'));
         // dd($payment_type->invoicesMorph);
@@ -184,7 +184,8 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         $invoice = Invoice::find($id);
-        // $invoice->delete();
+        // $payment = Payment::where
+        $invoice->delete();
 
         Session::flash('status', 'The Invoice has been successfully deleted');
         return redirect()->route('billing.invoice.index');
@@ -216,6 +217,8 @@ class InvoiceController extends Controller
         $payment->discount = $request->discount;
         $payment->status = $request->status;
         $payment->main_acct_id = $userId;
+
+        
 
         $calcDiscount = ($payment->discount/100) * $request->cost;
         $discountCost = $request->cost - $calcDiscount;
