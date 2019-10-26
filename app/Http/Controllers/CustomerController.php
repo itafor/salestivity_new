@@ -42,45 +42,45 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $customer = new Customer;
-        $address = new AddressCustomer;
-        $userId = auth()->user()->id;
+    // public function store(Request $request)
+    // {
+    //     $customer = new Customer;
+    //     $address = new AddressCustomer;
+    //     $userId = auth()->user()->id;
         
-        $this->validate($request, [
-            'company_name' => 'required|max:255|min:2',
-            'industry' => 'required',
-            'email' => 'required|max:255',
-            'phone' => 'required|max:11',
-            'website' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'country' => 'required',
-        ]);
-        $customer->company_name = $request->company_name;
-        $customer->industry = $request->industry;
-        $customer->email = $request->email;
-        $customer->phone = $request->phone;
-        $customer->website = $request->website;
-        $customer->main_acct_id = $userId;
-        $customer->save();
+    //     $this->validate($request, [
+    //         'company_name' => 'required|max:255|min:2',
+    //         'industry' => 'required',
+    //         'email' => 'required|max:255',
+    //         'phone' => 'required|max:11',
+    //         'website' => 'required',
+    //         'state' => 'required',
+    //         'city' => 'required',
+    //         'street' => 'required',
+    //         'country' => 'required',
+    //     ]);
+    //     $customer->company_name = $request->company_name;
+    //     $customer->industry = $request->industry;
+    //     $customer->email = $request->email;
+    //     $customer->phone = $request->phone;
+    //     $customer->website = $request->website;
+    //     $customer->main_acct_id = $userId;
+    //     $customer->save();
 
-        $address->customer_id = $customer->id;
-        $address->state = $request->state;
-        $address->city = $request->city;
-        $address->street = $request->street;
-        $address->country = $request->country;
-        $address->main_acct_id = $userId;
-        $address->save();
+    //     $address->customer_id = $customer->id;
+    //     $address->state = $request->state;
+    //     $address->city = $request->city;
+    //     $address->street = $request->street;
+    //     $address->country = $request->country;
+    //     $address->main_acct_id = $userId;
+    //     $address->save();
 
 
-        $status = "Account Added";
-        Session::flash('status', $status);
+    //     $status = "Account Added";
+    //     Session::flash('status', $status);
 
-        return redirect()->route('customer.index');
-    }
+    //     return redirect()->route('customer.index');
+    // }
 
     /**
      * Display the specified resource.
@@ -205,13 +205,38 @@ class CustomerController extends Controller
         $account = Customer::find($id);
         $customer = CustomerCorporate::where('id', $account->account_id)->first();
         $address = AddressCustomer::where('customer_id', $account->id)->first();
-        $contacts = Contact::where('customer_id', $account->id)->first();
+        $contacts = Contact::where('customer_id', $account->id)->get();
         // dd($contacts);
+
+        DB::beginTransaction();
+        try {
+            // delete all contacts related to this customer 
+            if ($contacts !== null){
+                foreach($contacts as $contact){
+                    $contact->delete();
+                }
+                $address->delete();
+                $account->delete();
+                $customer->delete();
+            } else {
+                $address->delete();
+                $account->delete();
+                $customer->delete();
+            }
+            
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            // return response()->json(['error' => $ex->getMessage()], 500);
+            $status = "Account not Deleted";
+            Session::flash('error', $status);
+            return redirect()->route('customer.index');
+        }
 
         // $account->delete();
         // $customer->delete();
         // $address->delete();
-        $contacts->delete();
+        // $contacts->delete();
 
         Session::flash('status', 'The Customer has been successfully deleted');
         return redirect()->route('customer.index');

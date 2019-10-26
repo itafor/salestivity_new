@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $products = Product::where('main_acct_id', $userId)->get();
+        $products = Product::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
         return view('product.index', compact('products'));
     }
 
@@ -80,7 +80,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $userId = auth()->user()->id;
-        $product = Product::where('id', $id)->where('main_acct_id', $userId)->first();
+        $product = Product::where('id', $id)->where('main_acct_id', $userId)->latest()->first();
         // dd($product);
         $categories = Category::all();
         $subCategories = SubCategory::all();
@@ -136,7 +136,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        // $product->delete();
+        $product->delete();
 
         Session::flash('status', 'The Product has been successfully deleted');
         return redirect()->route('product.index');

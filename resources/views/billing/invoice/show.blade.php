@@ -114,7 +114,11 @@
                             </div>
                         </form>
                     </div>
-                    @include('billing.invoice.payment.show')
+                    @if($payments->isEmpty() )
+                    
+                    @else
+                        @include('billing.invoice.payment.show')
+                    @endif
                 </div>
             </div>
         </div>

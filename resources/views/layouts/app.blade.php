@@ -20,8 +20,8 @@
         <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.min.css') }}">
         <!-- <link href="ExampleStyle.css" type="text/css" rel="stylesheet"/> -->
         <link rel="stylesheet" href="{{ asset('css/tablestyle.css') }}">
-		<!-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> -->
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        
 	
 
     </head>

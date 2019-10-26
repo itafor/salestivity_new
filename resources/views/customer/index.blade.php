@@ -28,6 +28,14 @@
                                 </button>
                             </div>
                         @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="table-responsive">
@@ -56,11 +64,11 @@
                                     <td>
                                         <div class="btn-group-justified text-center" role="group">
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->corporate->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                             </div>  
 
                                             <div class="btn-group" role="group">
-                                                <form action="{{ route('customer.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                <form action="{{ route('customer.'.strtolower($cus).'.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                     @csrf
                                                     <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
                                                 </form>

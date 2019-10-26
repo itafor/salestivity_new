@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Customer;
 
 class Opportunity extends Model
 {
+    use SoftDeletes;
+    
     // Relationship between Customer and Opportunity model
     public function customer()
     {

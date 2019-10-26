@@ -86,7 +86,7 @@ class RenewalController extends Controller
         $customers = Customer::all();
         $products = Product::all();
 
-        $payments = Payment::where('customer_id', $renewal->customer_id)->where('main_acct_id', $userId)->get();
+        $payments = Payment::where('customer_id', $renewal->customer_id)->where('status', 'Renewal')->where('main_acct_id', $userId)->get();
         return view('billing.renewal.show', compact('renewal', 'customers','products', 'payments'));
     }
 

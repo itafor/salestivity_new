@@ -83,7 +83,7 @@
 
                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
-                                    <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ $invoice->cost }}" required >
+                                    <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ $invoice->cost }}" >
 
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
@@ -134,7 +134,7 @@
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
-                                    <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ $invoice->cost }}" required >
+                                    <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ $invoice->cost }}" >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cost') }}</strong>
@@ -186,7 +186,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
-                                <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" required >
+                                <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}"  >
                                 @if ($errors->has('discount'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('discount') }}</strong>
@@ -208,7 +208,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="amount">{{ __('Amount Paid') }}</label>
-                                <input type="number" name="amount" id="discount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount') }}" value="{{ old('amount') }}" required >
+                                <input type="number" name="amount" id="discount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount') }}" value="{{ old('amount') }}" >
                                 @if ($errors->has('amount'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('amount') }}</strong>

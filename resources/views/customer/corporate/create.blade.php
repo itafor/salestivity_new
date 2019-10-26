@@ -58,7 +58,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                                            <input type="company_email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
+                                            <input type="company_email" name="company_email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
 
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-phone">{{ __('Phone') }}</label>
-                                            <input type="tel" name="phone" id="input-phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ old('phone') }}" required >
+                                            <input type="tel" name="company_phone" id="input-phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone') }}" value="{{ old('phone') }}" required >
                                             @if ($errors->has('phone'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('phone') }}</strong>
@@ -209,9 +209,9 @@
                                         <div class="form-group{{ $errors->has('title') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-title">{{ __('Title') }}</label>
                                             <select name="title" id="input-title" class="form-control" required >
-                                                <option value="mr">Mr</option>
-                                                <option value="mrs">Mrs</option>
-                                                <option value="miss">Miss</option>
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                                <option value="Miss">Miss</option>
                                             </select>
 
                                             @if ($errors->has('title'))
@@ -263,7 +263,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="phone">{{ __('Contact Phone Number') }}</label>
-                                            <input type="tel" name="phone" id="phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Phone') }}" value="{{ old('phone') }}" required >
+                                            <input type="tel" name="phone" id="contact_phone" class="form-control form-control-alternative{{ $errors->has('phone') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact Phone') }}" value="{{ old('phone') }}" required >
 
                                             @if ($errors->has('phone'))
                                                 <span class="invalid-feedback" role="alert">

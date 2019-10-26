@@ -41,22 +41,23 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('project/{id}', ['as' => 'project.destroy', 'uses' => 'ProjectController@destroy']);
 
 	// customer account
-	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
-	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
-	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
+	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
+	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
+	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
 	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
 	Route::get('account/corporate/new', ['as' => 'customer.corporate.create', 'uses' => 'Customer\CustomerCorporateController@create']);
 	Route::post('account/corporate/new', ['as' => 'customer.corporate.store', 'uses' => 'Customer\CustomerCorporateController@store']);
 	Route::get('account/corporate/{id}/show', ['as' => 'customer.corporate.show', 'uses' => 'Customer\CustomerCorporateController@show']);
 	Route::post('account/corporate/{id}/update', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
+	Route::get('account/corporate/{id}/delete', ['as' => 'customer.corporate.destroy', 'uses' => 'Customer\CustomerCorporateController@destroy']);
 	Route::post('account/corporate/{id}/saveContact', ['as' => 'customer.corporate.saveContacts', 'uses' => 'ContactController@saveContacts']);
-	Route::get('account/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
+	// Route::get('account/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
 
 	Route::get('account/individual/new', ['as' => 'customer.individual.create', 'uses' => 'Customer\CustomerIndividualController@create']);
 	Route::post('account/individual/new', ['as' => 'customer.individual.store', 'uses' => 'Customer\CustomerIndividualController@store']);
 	Route::get('account/individual/{id}/show', ['as' => 'customer.individual.show', 'uses' => 'Customer\CustomerIndividualController@show']);
 	Route::post('account/individual/{id}/update', ['as' => 'customer.individual.update', 'uses' => 'Customer\CustomerIndividualController@update']);
-	Route::get('account/individual/{id}', ['as' => 'customer.individual.destroy', 'uses' => 'Customer\CustomerIndividualController@destroy']);
+	Route::get('account/individual/{id}/delete', ['as' => 'customer.individual.destroy', 'uses' => 'Customer\CustomerIndividualController@destroy']);
 
 	// products
 	Route::get('products', ['as' => 'product.index', 'uses' => 'ProductController@index']);

@@ -55,7 +55,12 @@
                                         <span>
                                         <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                         <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a>
-                                        
+                                        <!-- <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                            @csrf
+                                            <div class="col-4 text-right">
+                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                            </div>
+                                        </form> -->
                                         </span>
                                             <div class="col-4 text-right">
                                                 
