@@ -94,7 +94,9 @@ class CustomerIndividualController extends Controller
             'country' => 'required',
         ]);
 
-
+// dd($request);
+    DB::beginTransaction();
+    try {
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
         $customer->profession = $request->profession;
@@ -103,11 +105,13 @@ class CustomerIndividualController extends Controller
         $customer->phone = $request->phone;
         $customer->website = $request->website;
         $customer->main_acct_id = $userId;
+        $customer->save();
         
         $account->name = $request->first_name;
         $account->account_type = $request->account_type;
         $account->account_id = $customer->id;
         $account->main_acct_id = $userId;
+        $account->save();
         
         $address->customer_id = $account->id;
         $address->state = $request->state;
@@ -115,13 +119,10 @@ class CustomerIndividualController extends Controller
         $address->street = $request->street;
         $address->country = $request->country;
         $address->main_acct_id = $userId;
+        $address->save();
         
-        DB::beginTransaction();
-        try {
-            $customer->save();
-            $account->save();
-            $address->save();
-            DB::commit();
+        DB::commit();
+        
         } catch (\Exception $ex) {
             DB::rollback();
             // return response()->json(['error' => $ex->getMessage()], 500);
@@ -185,7 +186,7 @@ class CustomerIndividualController extends Controller
             'industry' => 'required',
             'email' => 'required|max:255',
             'phone' => 'required|max:11',
-            'website' => 'required',
+            // 'website' => 'required',
             'state' => 'required',
             'city' => 'required',
             'street' => 'required',
