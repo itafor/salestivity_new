@@ -146,12 +146,13 @@ class OpportunityController extends Controller
     {
         $userId = auth()->user()->id;
         // dd($userId);
-        $opportunity = Opportunity::where('main_acct_id', $userId)->get();
+        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
         return view('opportunity.show', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
+        // return view('opportunity.show', compact('opportunity', 'customers'));
     }
 
     /**
