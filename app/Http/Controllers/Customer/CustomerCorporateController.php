@@ -66,48 +66,50 @@ class CustomerCorporateController extends Controller
         //     'country' => 'required',
         ]);
         // dd($request);
-        $customer->company_name = $request->company_name;
-        $customer->industry = $request->industry;
-        $customer->email = $request->company_email;
-        $customer->phone = $request->company_phone;
-        $customer->website = $request->website;
-        $customer->turn_over = $request->turn_over;
-        $customer->employee_count = $request->employee_count;
-        $customer->main_acct_id = $userId;
-        
-        
-        $account->name = $request->company_name;
-        $account->account_type = $request->account_type;
-        $account->account_id = $customer->id;
-        $account->main_acct_id = $userId;
-        
-        
-        // dd($customer->id);
-        
-        $address->customer_id = $account->id;
-        $address->state = $request->state;
-        $address->city = $request->city;
-        $address->street = $request->street;
-        $address->country = $request->country;
-        $address->main_acct_id = $userId;
-        
-        
-        $contact->customer_id = $account->id;
-        $contact->title = $request->title;
-        $contact->surname = $request->surname;
-        $contact->name = $request->name;
-        $contact->email = $request->email;
-        $contact->phone = $request->phone;
-        $contact->main_acct_id = $userId;
 
         // use transaction to make sure all requests has been saved or else roll back the transaction
         DB::beginTransaction();
         try {
+            $customer->company_name = $request->company_name;
+            $customer->industry = $request->industry;
+            $customer->email = $request->company_email;
+            $customer->phone = $request->company_phone;
+            $customer->website = $request->website;
+            $customer->turn_over = $request->turn_over;
+            $customer->employee_count = $request->employee_count;
+            $customer->main_acct_id = $userId;
             $customer->save();
+            
+            
+            $account->name = $request->company_name;
+            $account->account_type = $request->account_type;
+            $account->account_id = $customer->id;
+            $account->main_acct_id = $userId;
             $account->save();
+            
+            
+            // dd($customer->id);
+            
+            $address->customer_id = $account->id;
+            $address->state = $request->state;
+            $address->city = $request->city;
+            $address->street = $request->street;
+            $address->country = $request->country;
+            $address->main_acct_id = $userId;
             $address->save();
+            
+            
+            $contact->customer_id = $account->id;
+            $contact->title = $request->title;
+            $contact->surname = $request->surname;
+            $contact->name = $request->name;
+            $contact->email = $request->email;
+            $contact->phone = $request->phone;
+            $contact->main_acct_id = $userId;
             $contact->save();
             DB::commit();
+
+        
         } catch (\Exception $ex) {
             DB::rollback();
             // return response()->json(['error' => $ex->getMessage()], 500);
