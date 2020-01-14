@@ -22,6 +22,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 
 
+	Route::get('email/template', function() {
+		return view('emails/sendinvoice');
+	});
 
 	// Sub users
 	Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
