@@ -183,7 +183,8 @@ class CustomerCorporateController extends Controller
 
         $industries = Industry::all();
         $countries = Country::all();
-        $customer = Customer::where('account_id',$id)->where('account_type', 1)->where('main_acct_id', $userId)->first();
+        $customer = Customer::where('id',$id)->where('account_type', 1)->where('main_acct_id', $userId)->first();
+        //dd($customer);
         $address = AddressCustomer::where('customer_id', $customer->id)->first();
         $contacts = Contact::where('customer_id', $customer->id)->get();
         return view('customer.corporate.show', compact('customer', 'address', 'contacts', 'countries', 'industries'));

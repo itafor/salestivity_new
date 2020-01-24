@@ -23,7 +23,7 @@ class CustomerController extends Controller
         // dd($customers->individual->email);
         // $account = Customer::where('id', $id)->first();
         // $addresses = AddressCustomer::where('customer_id', $account->id);
-        return view('customer.index', compact('customers', 'addresses', 'cus'));
+        return view('customer.index', compact('customers'));
     }
 
     /**

@@ -123,10 +123,11 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('country') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="country_id">{{ __('Country') }}</label>
+                                           
                                             <select name="country" id="country_id" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country') }}" required >
                                                 <option value="">Select a country</option>
                                                 @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('country'))
