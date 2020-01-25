@@ -29,6 +29,8 @@
     <link type="text/css" href="{{ url('css/select2.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ url('assets/css/style.css') }}" rel="stylesheet">
 
+<!-- Data table stylesheet -->
+    <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
         <style>
         .select2-selection {
@@ -91,14 +93,23 @@
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
        
        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<!-- datatable script -->
+       <script src="{{url('assets/datatables.net/js/jquery.dataTables.js')}}"></script>
+    <script src="{{url('assets/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{ url('js/select2.js') }}"></script>
         
         <script type="text/javascript">
+
+            $('.datatable').DataTable({
+            dom: '<"html5buttons" B>lTfgitp',
+
+        });
+
             $(document).ready(function() {
             $("select").not('.user').select2({
                 theme: "bootstrap"
             });
-            // $('.datatable').DataTable();
+            $('.datatable').DataTable();
         });
 
           var Datepicker = (function() {

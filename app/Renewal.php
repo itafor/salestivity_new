@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Renewal extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
         'main_acct_id', 'customer_id', 
         'product','start_date',
@@ -24,6 +25,10 @@ class Renewal extends Model
     public function payments()
     {
         return $this->morphToMany('App\Payment', 'payable');
+    }
+
+    public function product_name(){
+        return $this->belongsTo('App\Product','product');
     }
 
     public static function createNew($data) {

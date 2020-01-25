@@ -31,14 +31,14 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
+                        <table class="table  table-bordered table-hover datatable">
+                            <thead>
                                 <tr>
-                                    <th scope="col">{{ __('Customer') }}</th>
-                                    <th scope="col">{{ __('Product') }}</th>
-                                    <th scope="col">{{ __('Start Date') }}</th>
-                                    <th scope="col">{{ __('End Date') }}</th>
-                                    <th scope="col">{{ __('Action') }}</th>
+                                    <th ><b>{{ __('Customer') }}</b></th>
+                                    <th ><b>{{ __('Product') }}</b></th>
+                                    <th ><b>{{ __('Start Date') }}</b></th>
+                                    <th ><b>{{ __('End Date') }}</b></th>
+                                    <th class="text-center"><b>{{ __('Action') }}</b></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +46,7 @@
                                     <tr>
                                     
                                         <td>{{ $renewal->customers->name }}</td>
-                                        <td>{{ $renewal->product }}</td>
+                                        <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
                                         
