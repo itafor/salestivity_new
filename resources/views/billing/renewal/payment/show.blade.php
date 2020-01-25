@@ -4,7 +4,7 @@
 					
 <div class="table-responsive">
     <table class="table align-items-center table-flush">
-        <thead class="thead-light">
+        <thead>
             <tr>
                 <th scope="col">{{ __('Products') }}</th>
                 <th scope="col">{{ __('Status') }}</th>
