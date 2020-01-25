@@ -24,6 +24,38 @@
         
 	
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link type="text/css" href="{{ url('css/b4-select2.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('css/select2.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('assets/css/style.css') }}" rel="stylesheet">
+
+
+        <style>
+        .select2-selection {
+            font-size: 1.4rem !important;
+            line-height: 1.5 !important;
+            display: block !important;
+            width: 100% !important;
+            height: calc(3.42rem + 2px) !important;
+            padding: .625rem .75rem !important;
+            transition: all .2s cubic-bezier(.68, -.55, .265, 1.55) !important;
+            color: #8898aa !important;
+            border: 1px solid #cad1d7 !important;
+            border-radius: .375rem !important;
+            background-color: #fff !important;
+            background-clip: padding-box !important;
+            box-shadow: none !important;
+            transition: box-shadow .15s ease !important;
+            border: 1px solid #ced4da !important;
+        }
+        .heading-small{
+            font-weight: bold
+        }
+        .theme-semidark .dt-brand:before {
+            background-color: #fff !important;
+        }
+    </style>
+    @yield('style')
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -46,9 +78,39 @@
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         
         @stack('js')
+
+        <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         
-        <!-- Argon JS -->
+        <!-- select2 JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
-        <script src="{{ asset('select2-4.0.7/dist/js/select2.min.js') }}"></script>
+       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="{{ url('js/select2.js') }}"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $("select").not('.user').select2({
+                theme: "bootstrap"
+            });
+            $('.datatable').DataTable();
+        });
+
+          var Datepicker = (function() {
+    var $datepicker = $('.datepicker');
+    function init($this) {
+        var options = {
+            disableTouchKeyboard: true,
+            autoclose: false,
+            format: 'dd/mm/yyyy'
+        };
+        $this.datepicker(options);
+    }
+    if ($datepicker.length) {
+        $datepicker.each(function() {
+            init($(this));
+        });
+    }
+})();
+        </script>
     </body>
 </html>

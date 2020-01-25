@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Renewal;
-use App\Customer;
 use App\Category;
-use App\SubCategory;
+use App\Customer;
 use App\Payment;
 use App\Product;
+use App\Renewal;
+use App\SubCategory;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Session;
 
 class RenewalController extends Controller
@@ -61,8 +62,8 @@ class RenewalController extends Controller
         $renewal->customer_id = $request->customer_id;
         $renewal->product = $request->product;
         $renewal->amount = $request->amount;
-        $renewal->start_date = $request->start_date;
-        $renewal->end_date = $request->end_date;
+        $renewal->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
+        $renewal->end_date = Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
         $renewal->save();
 
 
