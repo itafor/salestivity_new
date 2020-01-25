@@ -46,6 +46,13 @@ class AjaxController extends Controller
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['products' => $products]);
     }
+     
+     public function fetchSelectedProductPrice($id)
+    {
+        $userId = auth()->user()->id;
+        $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
+        return response()->json(['products' => $products]);
+    }
 
     public function getSalesDept($id)
     {

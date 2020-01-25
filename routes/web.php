@@ -155,6 +155,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('sales/location/new', ['as' => 'sales.location.store', 'uses' => 'RetailFieldSalesController@storeLocation']);
 
 	// Ajax
+	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 	Route::get('getdept/{id}', 'AjaxController@getDept');
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');

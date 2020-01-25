@@ -10,7 +10,10 @@ use App\Renewal;
 use App\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
+use Validator;
 
 class RenewalController extends Controller
 {
@@ -47,30 +50,42 @@ class RenewalController extends Controller
      */
     public function store(Request $request)
     {
-        $userId = auth()->user()->id;
-        $renewal = new Renewal;
-
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'product' => 'required',
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|numeric',
+            'product' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required',
-            // 'amount' => 'required|integer',
+            'productPrice' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'description' => 'required',
         ]);
 
-        $renewal->main_acct_id = $userId;
-        $renewal->customer_id = $request->customer_id;
-        $renewal->product = $request->product;
-        $renewal->amount = $request->amount;
-        $renewal->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
-        $renewal->end_date = Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
-        $renewal->save();
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
+        if(compareEndStartDate($request->start_date,$request->end_date) == false){
+            Alert::error('Invalid End Date', 'End Date cannot be less than start date');
+         return back()->withInput();
+        }
 
-        $status = "Renewal has been Added ";
-        Session::flash('status', $status);
+        DB::beginTransaction();
+        try{
+            Renewal::createNew($request->all());
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Addition Failed', 'An attempt to add renewal failed');
+         return back()->withInput();
+            
+        }
         
-
+        Alert::success('Add Renewal', 'Renewal added successfully');
         return redirect()->route('billing.renewal.index');
     }
 
