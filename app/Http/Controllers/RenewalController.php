@@ -180,10 +180,13 @@ class RenewalController extends Controller
     public function destroy($id)
     {
         $renewal = Renewal::find($id);
-        $renewal->delete();
-
-        Session::flash('status', 'The renewal has been successfully deleted');
+        if($renewal->delete()){
+            Alert::success('Delete Renewal', 'Renewal deleted successfully');
         return redirect()->route('billing.renewal.index');
+        }else{
+            Alert::error('Delete Renewal', 'An attempt to delete the selected renewal failed');
+        return redirect()->route('billing.renewal.index');
+        }
     }
 
     /**

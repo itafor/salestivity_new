@@ -54,6 +54,7 @@
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                 <a href="{{ route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Payment') }}</a>
+                                                <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
                                             </div>
                                         </td>
                                     </tr>
