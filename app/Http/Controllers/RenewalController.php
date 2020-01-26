@@ -114,7 +114,12 @@ class RenewalController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
+        $renewal = Renewal::where('id',$id)->first();
+        return view('billing.renewal.edit', compact('renewal','customers', 'products'));
     }
 
     /**
@@ -124,35 +129,46 @@ class RenewalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $userId = auth()->user()->id;
-        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId);
 
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'product' => 'required',
+        $validator = Validator::make($request->all(), [
+            'renewal_id' => 'required|numeric',
+            'customer_id' => 'required|numeric',
+            'product' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required',
-            // 'period' => 'required',
-            // 'amount' => 'required|integer',
+            'productPrice' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'description' => 'required',
         ]);
 
-        $renewal->main_acct_id = $userId;
-        $renewal->customer_id = $request->input('customer_id');
-        $renewal->product = $request->input('product');
-        $renewal->start_date = $request->input('start_date');
-        $renewal->end_date = $request->input('end_date');
-        // $renewal->amount = $request->input('amount');
-        // $renewal->period = $request->input('period');
-        $renewal->save();
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
+        if(compareEndStartDate($request->start_date,$request->end_date) == false){
+            Alert::error('Invalid End Date', 'End Date cannot be less than start date');
+         return back()->withInput();
+        }
 
-        $status = "Renewal has been Updated ";
-        Session::flash('status', $status);
+        DB::beginTransaction();
+        try{
+            Renewal::updateRenewal($request->all());
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Update Failed', 'An attempt to edit the selected renewal failed');
+         return back()->withInput();
+            
+        }
         
-
-        return redirect()->route('billing.renewal.show', $renewal->id);
+        Alert::success('Renewal Update successful', 'Renewal updated successfully');
+        return redirect()->route('billing.renewal.show', $request->renewal_id);
     }
 
     /**

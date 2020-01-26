@@ -46,4 +46,19 @@ class Renewal extends Model
 
     	return $renewal;
     }
+
+    public static function updateRenewal($data)
+    {
+        self::where('id', $data['renewal_id'])->update([
+        'main_acct_id' => auth()->user()->id,
+        'customer_id' => $data['customer_id'],
+        'product' => $data['product'],
+        'productPrice' => $data['productPrice'],
+        'discount' => $data['discount'],
+        'billingAmount' => $data['billingAmount'],
+        'description' => $data['description'],
+        'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
+        'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
+        ]); 
+    }
 }

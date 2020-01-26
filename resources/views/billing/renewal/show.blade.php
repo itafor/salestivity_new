@@ -30,13 +30,21 @@
                             <div class="col-8">
                                 <h3 class="mb-0" id="title">{{ __('Renewal') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
-                                <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
-                            </div>
+            <div class="col-4 text-right">
+
+            <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
+            <button id="edit" class="btn btn-sm btn-primary">
+            {{ __('Edit') }}
+            </button>
+            </a>
+
+            <a href="{{ route('billing.renewal.index') }}"><button id="edit" class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
+
+            </div>
                         </div>
                     </div>
                     <div class="card-body">
-                                <table class="table" style="background-color: #ffffff;">
+                                <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($renewal))
                     <tbody>
                    <tr>

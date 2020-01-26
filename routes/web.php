@@ -107,11 +107,12 @@ Route::group(['middleware' => 'auth'], function () {
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
 	Route::get('billing/renewal/new', ['as' => 'billing.renewal.create', 'uses' => 'RenewalController@create']);
+	Route::get('billing/renewal/edit/{id}', ['as' => 'billing.renewal.edit', 'uses' => 'RenewalController@edit']);
 	Route::post('billing/renewal/new', ['as' => 'billing.renewal.store', 'uses' => 'RenewalController@store']);
 	Route::get('billing/renewal/{id}/manage', ['as' => 'billing.renewal.manage', 'uses' => 'RenewalController@manage']);
 	Route::post('billing/renewal/pay', ['as' => 'billing.renewal.pay', 'uses' => 'RenewalController@pay']);
 	Route::get('billing/renewal/{id}/show', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
-	Route::post('billing/renewal/{id}', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
+	Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
 	Route::get('billing/renewal/{id}', ['as' => 'billing.renewal.destroy', 'uses' => 'RenewalController@destroy']);
 
 	// Opportunities
