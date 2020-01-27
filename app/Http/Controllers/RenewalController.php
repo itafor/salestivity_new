@@ -87,9 +87,8 @@ class RenewalController extends Controller
             
         }
         
-        //Alert::success('Add Renewal', 'Renewal added successfully');
-        return redirect()->route('billing.renewal.index')->with('success', 'Renewal added successfully');
-        //return redirect()->route('billing.renewal.index');
+        Alert::success('Add Renewal', 'Renewal added successfully');
+        return redirect()->route('billing.renewal.index');
     }
 
     /**

@@ -11,8 +11,8 @@ function formatDate($date, $oldFormat, $newFormat)
 
 function compareEndStartDate($start_date,$end_date) {
 	date_default_timezone_set("Africa/Lagos");
-    $startdate = strtotime($start_date); 
-    $enddate = strtotime($end_date); 
+    $startdate = Carbon::parse(formatDate($start_date, 'd/m/Y', 'Y-m-d'));
+    $enddate   =   Carbon::parse(formatDate($end_date, 'd/m/Y', 'Y-m-d'));
 
     if($enddate < $startdate){
         return false;
