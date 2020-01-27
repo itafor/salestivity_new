@@ -43,4 +43,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role', 'role_id');
     }
+
+    public function renewalPayment(){
+        return $this->hasMany(RenewalPayment::class);
+    }
 }

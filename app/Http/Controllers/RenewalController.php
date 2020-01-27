@@ -7,6 +7,7 @@ use App\Customer;
 use App\Payment;
 use App\Product;
 use App\Renewal;
+use App\RenewalPayment;
 use App\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -216,38 +217,43 @@ class RenewalController extends Controller
      */
     public function pay(Request $request)
     {
-        dd($request->all());
-        $userId = auth()->user()->id;
-        $this->validate($request, [
-            'cost' => 'required',
-            // 'category_id' => 'required',
-            'product' => 'required',
-            'amount' => 'required'
+         dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'productPrice' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'amount_paid' => 'required|numeric',
+            'billingbalance' => 'required',
+            'discount' => 'required|numeric',
+            'customer_id' => 'required|numeric',
+            'product_id' => 'required|numeric',
+            'renewal_id' => 'required|numeric',
+            'payment_date' => 'required',
         ]);
 
-        $payment = new Payment;
-        $payment->customer_id = $request->customer_id;
-        $renewal_id = $request->renewal_id;
-        $payment->cost = $request->cost;
-        $payment->category_id = $request->category_id;
-        $payment->sub_category_id = $request->sub_category_id;
-        $payment->amount = $request->amount;
-        $payment->discount = $request->discount;
-        $payment->status = $request->status;
-        $payment->main_acct_id = $userId;
-        $calcDiscount = ($payment->discount/100) * $request->cost;
-        $discountCost = $request->cost - $calcDiscount;
-        $payment->outstanding = ($request->amount) - ($discountCost);
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
-        $payment->save();
-        $product = $request->product;
+        // if(compareEndStartDate($request->start_date,$request->end_date) == false){
+        //     Alert::error('Invalid End Date', 'End Date cannot be less than start date');
+        //  return back()->withInput();
+        // }
+
+        DB::beginTransaction();
+        try{
+            RenewalPayment::createNew($request->all());
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Payment', 'An attempt to record renewal payment failed');
+         return back()->withInput();
+            
+        }
         
-        $payment->renewalsMorph()->sync($renewal_id);
-        $payment->product()->sync($product);
-
-        $status = "Payment has been Registerd ";
-        Session::flash('status', $status);
-
+        Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
         return redirect()->route('billing.renewal.index');
     }
 }

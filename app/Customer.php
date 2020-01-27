@@ -42,4 +42,8 @@ class Customer extends Model
     protected $casts = [
         'cont' => 'array'
     ];
+
+    public function renewalPayment(){
+        return $this->hasMany(RenewalPayment::class);
+    }
 }

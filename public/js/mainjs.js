@@ -70,9 +70,9 @@ function renewalPayment (id) {
            $('.modal-title').text('Renewal Payment')
            $('#customer_id').val(data.renewal.customer_id)
            $('#product_id').val(data.renewal.product)
-           $('#main_acct_id').val(data.renewal.main_acct_id)
+           // $('#main_acct_id').val(data.renewal.main_acct_id)
            $('#productPrice').val(data.renewal.productPrice)
-           $('#billingAmount').val(data.renewal.billingAmount)
+           $('#billingAmount').val(data.renewal.billingBalance)
            $('#discount').val(data.renewal.discount)
            $('#renewal_id').val(data.renewal.id)
                     }
@@ -89,11 +89,11 @@ $('body').on('keyup', '#amount_paid', function(){
 
             if( parseFloat(amountPaid) > parseFloat(billingAmount) ){
                 alert('Ooops!! Amount paid exceed billing amount, please check and try again')
-              $('#balance').val('')
+              $('#billingbalance').val('')
               $('#amount_paid').val('');
             }else{
                  balance = billingAmount - amountPaid;
-              $('#balance').val(balance)
+              $('#billingbalance').val(balance)
               
             }
         })
@@ -106,3 +106,25 @@ if(value <= 0){
     
 }
  });
+
+//validate payment dates
+$(document).ready(function(){
+ $("#payment_date").datepicker();
+    $("#payment_date").on("change",function(event){
+        event.preventDefault();
+    var selected_date = $(this).val();
+    var fist_date = selected_date.replace('/','-');
+    var second_date = fist_date.replace('/','-');
+    $.ajax({
+                    url: baseUrl+'/validate-selected-date/'+second_date,
+                    type: "GET",
+                    data: {'selected_date':selected_date},
+                    success: function(data) {
+                      if(data ==='invalidate'){
+                   alert( 'Ooops!! Invalid date. Future date ('+ selected_date +') detected');        
+                   $("#payment_date").val('')
+            }
+        }
+        });
+    });
+})

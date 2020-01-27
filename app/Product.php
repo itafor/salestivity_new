@@ -34,4 +34,8 @@ class Product extends Model
                             ->withPivot('product_category', 'product_sub_category', 'product_name',
                             'quantity', 'price')->withTimestamps();
     }
+
+    public function renewalPayment(){
+        return $this->hasMany(RenewalPayment::class);
+    }
 }

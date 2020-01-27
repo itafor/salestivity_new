@@ -33,9 +33,9 @@
     </div>
   </div>
    <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Balance</label>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Billing Balance</label>
     <div class="col-sm-10">
-      <input type="number" min="1" name="balance"  class="form-control" id="balance" placeholder="Enter balance" readonly="">
+      <input type="number" min="1" name="billingbalance"  class="form-control" id="billingbalance" placeholder="Enter balance" readonly="">
     </div>
   </div>
      <div class="form-group row">
@@ -62,12 +62,12 @@
       <input type="text" name="product_id" class="form-control" id="product_id" placeholder="Enter Product">
     </div>
   </div>
-  <div class="form-group row">
+<!--   <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">main Account ID</label>
     <div class="col-sm-10">
       <input type="text" name="main_acct_id" class="form-control" id="main_acct_id">
     </div>
-  </div>
+  </div> -->
 
    
      <div class="form-group row">
