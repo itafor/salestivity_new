@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Ajax
 	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
+	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 	Route::get('getdept/{id}', 'AjaxController@getDept');
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');

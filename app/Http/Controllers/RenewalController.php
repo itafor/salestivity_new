@@ -85,8 +85,9 @@ class RenewalController extends Controller
             
         }
         
-        Alert::success('Add Renewal', 'Renewal added successfully');
-        return redirect()->route('billing.renewal.index');
+        //Alert::success('Add Renewal', 'Renewal added successfully');
+        return redirect()->route('billing.renewal.index')->with('success', 'Renewal added successfully');
+        //return redirect()->route('billing.renewal.index');
     }
 
     /**
@@ -214,6 +215,7 @@ class RenewalController extends Controller
      */
     public function pay(Request $request)
     {
+        dd($request->all());
         $userId = auth()->user()->id;
         $this->validate($request, [
             'cost' => 'required',

@@ -55,3 +55,54 @@ if(value <= 0){
      $(this).val('');
 }
  });
+
+//renewal payment
+function renewalPayment (id) {
+    //$('#modal-form form')[0];
+    $('#modal-form').modal("show");
+
+    $.ajax({
+        url: baseUrl+'/fetch-renewal-details/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.renewal)
+           $('.modal-title').text('Renewal Payment')
+           $('#customer_id').val(data.renewal.customer_id)
+           $('#product_id').val(data.renewal.product)
+           $('#main_acct_id').val(data.renewal.main_acct_id)
+           $('#productPrice').val(data.renewal.productPrice)
+           $('#billingAmount').val(data.renewal.billingAmount)
+           $('#discount').val(data.renewal.discount)
+           $('#renewal_id').val(data.renewal.id)
+                    }
+                });
+}
+
+$('body').on('keyup', '#amount_paid', function(){
+            let amountPaid = $(this).val();
+           //alert(amountPaid)
+            let balance = 0;
+            let billingAmount = $('#billingAmount').val();
+
+
+
+            if( parseFloat(amountPaid) > parseFloat(billingAmount) ){
+                alert('Ooops!! Amount paid exceed billing amount, please check and try again')
+              $('#balance').val('')
+              $('#amount_paid').val('');
+            }else{
+                 balance = billingAmount - amountPaid;
+              $('#balance').val(balance)
+              
+            }
+        })
+$(document).on('keyup', '#amount_paid', function(e){
+    e.preventDefault();
+    let value = e.target.value;
+    //alert(value)
+if(value <= 0){
+     $(this).val('');
+    
+}
+ });

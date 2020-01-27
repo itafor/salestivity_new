@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Contact;
-use App\Opportunity;
-use App\Department;
-use App\Unit;
-use App\Product;
-use Carbon\Carbon;
-use App\State;
 use App\City;
+use App\Contact;
+use App\Department;
+use App\Opportunity;
+use App\Product;
+use App\Renewal;
+use App\State;
+use App\Unit;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
@@ -53,6 +54,14 @@ class AjaxController extends Controller
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
         return response()->json(['products' => $products]);
     }
+
+     public function fetchRenewalDetails($id)
+    {
+        $userId = auth()->user()->id;
+        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->first();
+        return response()->json(['renewal' => $renewal]);
+    }
+    
 
     public function getSalesDept($id)
     {

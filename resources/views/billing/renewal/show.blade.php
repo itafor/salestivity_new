@@ -31,14 +31,22 @@
                                 <h3 class="mb-0" id="title">{{ __('Renewal') }}</h3>
                             </div>
             <div class="col-4 text-right">
+            <a onclick="renewalPayment({{$renewal->id}})">
+                <button class="btn btn-sm btn-success">
+            {{ __('Payment') }}
+            </button>
+        </a>
 
             <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
-            <button id="edit" class="btn btn-sm btn-primary">
+            <button class="btn btn-sm btn-primary">
             {{ __('Edit') }}
             </button>
             </a>
+            
+             <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
 
             <a href="{{ route('billing.renewal.index') }}"><button id="edit" class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
+
 
             </div>
                         </div>
@@ -102,6 +110,8 @@
         </div>
         
         @include('layouts.footers.auth')
+    @include('billing.renewal.payment.create')
+
     </div>
 
 @endsection
