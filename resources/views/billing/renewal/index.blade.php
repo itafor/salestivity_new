@@ -55,10 +55,6 @@
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                 <a  class="btn btn-sm btn-primary" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
 
-                                                <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-form" onclick="renewalPayment({{$renewal->id}})">
-  Launch demo modal
-</button> -->
                                                 <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
                                             </div>
                                         </td>

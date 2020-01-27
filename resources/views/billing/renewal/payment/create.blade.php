@@ -47,7 +47,7 @@
   <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">Payment Date</label>
     <div class="col-sm-10">
-      <input type="text" name="payment_date" class="datepicker form-control" id="payment_date" placeholder="Enter payment date" required>
+      <input type="text" name="payment_date" class="datepicker form-control" id="payment_date" data-date-format="dd/mm/yyyy" placeholder="Enter payment date" required>
     </div>
   </div>
    <div class="form-group row">

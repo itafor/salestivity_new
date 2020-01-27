@@ -14,7 +14,8 @@ class Renewal extends Model
         'main_acct_id', 'customer_id', 
         'product','start_date',
         'end_date','amount','productPrice',
-        'discount','billingAmount','description'
+        'discount','billingAmount','billingBalance',
+        'description','status'
     	];
 
     public function customers()
@@ -39,6 +40,7 @@ class Renewal extends Model
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
         'billingAmount' => $data['billingAmount'],
+        'billingBalance' => $data['billingAmount'],
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
@@ -56,6 +58,7 @@ class Renewal extends Model
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
         'billingAmount' => $data['billingAmount'],
+        'billingBalance' => $data['billingAmount'],
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),

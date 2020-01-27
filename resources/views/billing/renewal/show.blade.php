@@ -89,6 +89,11 @@
                      </td>
                    </tr>
                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td>{{ $renewal->status }}
+                     </td>
+                   </tr>
+                    <tr>
                      <td style="width: 200px;"><b>{{ __('Start Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
               </tr>

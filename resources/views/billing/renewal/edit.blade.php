@@ -111,7 +111,7 @@
   <div class="form-row">
 <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }} col-md-6">
     <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-    <input type="text" name="start_date" id="start_date" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" value="{{\Carbon\Carbon::parse($renewal->start_date)->format('d/m/Y')}}" required>
+    <input type="text" name="start_date" id="start_date" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" data-date-format="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($renewal->start_date)->format('d/m/Y')}}" required>
 
     @if ($errors->has('start_date'))
         <span class="invalid-feedback" role="alert">
@@ -122,7 +122,7 @@
     
 <div class="form-group{{ $errors->has('end_date') ? ' has-danger' : '' }} col-md-6" >
     <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-    <input type="text" name="end_date" id="end_date" class="datepicker form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" value="{{\Carbon\Carbon::parse($renewal->end_date)->format('d/m/Y')}}" required>
+    <input type="text" name="end_date" id="end_date" class="datepicker form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" data-date-format="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($renewal->end_date)->format('d/m/Y')}}" required>
 
     @if ($errors->has('end_date'))
         <span class="invalid-feedback" role="alert">

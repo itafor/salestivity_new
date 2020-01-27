@@ -25,7 +25,9 @@ class RenewalController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $renewals = Renewal::where('main_acct_id', $userId)->get();
+        $renewals = Renewal::where('main_acct_id', $userId)
+        ->orderby('created_at','desc')
+        ->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
