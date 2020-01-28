@@ -7,7 +7,7 @@
         $(document).ready(function(){
             /*Disable all input type="text" box*/
             $('#form1 input').prop("disabled", true);
-            $('#form1 select').prop("disabled", true);
+            $('#pay').prop("disabled", true);
             $('#form1 button').hide();
 
             $('#edit').click(function(){
@@ -31,11 +31,20 @@
                                 <h3 class="mb-0" id="title">{{ __('Renewal') }}</h3>
                             </div>
             <div class="col-4 text-right">
-            <a onclick="renewalPayment({{$renewal->id}})">
-                <button class="btn btn-sm btn-success">
+                @if($renewal->status == 'Paid')
+            <a onclick="renewalPayment({{$renewal->id}})" >
+                <button class="btn btn-sm btn-success" id="pay">
+            {{ __('Paid') }}
+            </button>
+        </a>
+        @else
+               <a onclick="renewalPayment({{$renewal->id}})" >
+                <button class="btn btn-sm btn-primary" >
             {{ __('Payment') }}
             </button>
         </a>
+
+        @endif
 
             <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
             <button class="btn btn-sm btn-primary">
@@ -45,7 +54,7 @@
             
              <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
 
-            <a href="{{ route('billing.renewal.index') }}"><button id="edit" class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
+            <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
 
 
             </div>
@@ -81,6 +90,11 @@
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
                      <td>&#8358;{{ number_format($renewal->billingAmount,2) }}
+                     </td>
+                   </tr>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Billing Balance') }}</b></td>
+                     <td>&#8358;{{ number_format($renewal->billingBalance,2) }}
                      </td>
                    </tr>
                     <tr>

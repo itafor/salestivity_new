@@ -33,18 +33,19 @@ class Renewal extends Model
     }
 
     public function renewalPayment(){
-        return $this->hasMany(RenewalPayment::class);
+        return $this->hasMany(RenewalPayment::class,'renewal_id','id');
     }
 
     public static function createNew($data) {
+        $billing_Amount = ($data['discount'] / 100) * $data['productPrice'];
     	$renewal = self::create([
     	'main_acct_id' => auth()->user()->id,
         'customer_id' => $data['customer_id'],
         'product' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
-        'billingAmount' => $data['billingAmount'],
-        'billingBalance' => $data['billingAmount'],
+        'billingAmount' =>  $billing_Amount,  //$data['billingAmount'],
+        'billingBalance' => $billing_Amount,  //$data['billingAmount'],
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),

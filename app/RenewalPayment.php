@@ -41,7 +41,7 @@ class RenewalPayment extends Model
 		'discount' => $data['discount'],
 		'billingAmount' => $data['billingAmount'],
 		'amount_paid' => $data['amount_paid'],
-		'billingbalance' => $data['billingbalance'],
+		'billingbalance' =>$data['billingAmount'] - $data['amount_paid'],
 		'payment_date' => Carbon::parse(formatDate($data['payment_date'], 'd/m/Y', 'Y-m-d')),
 		'customer_id' => $data['customer_id'],
 		'product_id' => $data['product_id'],

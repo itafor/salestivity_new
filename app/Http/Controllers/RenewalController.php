@@ -102,11 +102,15 @@ class RenewalController extends Controller
     {
         $userId = auth()->user()->id;
         $renewal = Renewal::where('id',$id)->where('main_acct_id', $userId)->first();
-        $customers = Customer::all();
-        $products = Product::all();
+        // $customers = Customer::all();
+        // $products = Product::all();
 
-        $payments = Payment::where('customer_id', $renewal->customer_id)->where('status', 'Renewal')->where('main_acct_id', $userId)->get();
-        return view('billing.renewal.show', compact('renewal', 'customers','products', 'payments'));
+         // $payments = Payment::where('customer_id', $renewal->customer_id)->where('status', 'Renewal')->where('main_acct_id', $userId)->get();
+        //$renewalPayments = $renewal->renewalPayment();
+         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
+         // dd($renewalPayments);
+       
+        return view('billing.renewal.show', compact('renewal','renewalPayments'));
     }
 
     /**
@@ -234,11 +238,6 @@ class RenewalController extends Controller
             Alert::warning('Required Fields', 'Please fill in a required fields');
             return back()->withInput();
         }
-
-        // if(compareEndStartDate($request->start_date,$request->end_date) == false){
-        //     Alert::error('Invalid End Date', 'End Date cannot be less than start date');
-        //  return back()->withInput();
-        // }
 
         DB::beginTransaction();
         try{

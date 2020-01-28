@@ -11,7 +11,7 @@
                         console.log(data.products.standard_price)
                         $('#productPrice').empty();
                         product_price=data.products.standard_price;
-                        $('#productPrice').val(data.products.standard_price);
+                        $('#productPrice').val((data.products.standard_price).toFixed(2));
                     }
                 });
             }
@@ -29,7 +29,7 @@
                alert('Please select a product to display product price')
                $('#discount').val('');
             }else{
-                let billingAmount = (discount/100) * product_price;
+                let billingAmount = ((discount/100) * product_price).toFixed(2);
               $('#billingAmount').val(billingAmount)
             }
         }else{
@@ -58,7 +58,7 @@ if(value <= 0){
 
 //renewal payment
 function renewalPayment (id) {
-    //$('#modal-form form')[0];
+    //$('#modal-form form')[0].reset();
     $('#modal-form').modal("show");
 
     $.ajax({
