@@ -13,6 +13,7 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo('App\Category', 'category_id');
+        //return $this->belongsToMany('App\Category', 'category_id');
     }
 
      // Create a one to many relationship btw product and category model
@@ -32,5 +33,9 @@ class Product extends Model
         return $this->belongsToMany('App\Opportunity', 'opportunity_product', 'opportunity_id', 'product_id')
                             ->withPivot('product_category', 'product_sub_category', 'product_name',
                             'quantity', 'price')->withTimestamps();
+    }
+
+    public function renewalPayment(){
+        return $this->hasMany(RenewalPayment::class);
     }
 }

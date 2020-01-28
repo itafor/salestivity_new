@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Contact;
-use App\Opportunity;
-use App\Department;
-use App\Unit;
-use App\Product;
-use Carbon\Carbon;
-use App\State;
 use App\City;
+use App\Contact;
+use App\Department;
+use App\Opportunity;
+use App\Product;
+use App\Renewal;
+use App\State;
+use App\Unit;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
@@ -46,6 +47,35 @@ class AjaxController extends Controller
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['products' => $products]);
     }
+     
+     public function fetchSelectedProductPrice($id)
+    {
+        $userId = auth()->user()->id;
+        $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
+        return response()->json(['products' => $products]);
+    }
+
+     public function fetchRenewalDetails($id)
+    {
+        $userId = auth()->user()->id;
+        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->first();
+        return response()->json(['renewal' => $renewal]);
+    }
+    
+    public function validateSelectedPaymentDate($selected_date){
+
+        $payment_date = str_replace("-","/",$selected_date);
+        date_default_timezone_set("Africa/Lagos");
+        $pay_date   = Carbon::parse(formatDate($payment_date, 'd/m/Y', 'Y-m-d'));
+        $today = Carbon::now()->format('d/m/Y');
+        $current_timestamp = Carbon::parse(formatDate($today, 'd/m/Y', 'Y-m-d'));
+
+    if($pay_date > $current_timestamp){
+        return 'invalidate';
+    }
+    }
+
+
 
     public function getSalesDept($id)
     {
