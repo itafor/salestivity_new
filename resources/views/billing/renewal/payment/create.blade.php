@@ -14,12 +14,12 @@
         
         <form method="post" action="{{ route('billing.renewal.pay') }}" autocomplete="off">
            @csrf
-    <div class="form-group row">
+    <!-- <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">product Price</label>
-    <div class="col-sm-10">
-      <input type="text" name="productPrice" class="form-control" id="productPrice" readonly="">
-    </div>
-  </div>
+    <div class="col-sm-10"> -->
+      <input type="hidden" name="productPrice" class="form-control" id="productPrice" readonly="">
+  <!--   </div>
+  </div> -->
     <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">Billing Amount</label>
     <div class="col-sm-10">
@@ -38,44 +38,24 @@
       <input type="number" min="1" name="billingbalance"  class="form-control" id="billingbalance" placeholder="Enter balance" readonly="">
     </div>
   </div>
-     <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">discount</label>
-    <div class="col-sm-10">
-      <input type="number" min="1" name="discount"  class="form-control" id="discount">
-    </div>
-  </div>
+     
+      <input type="hidden" min="1" name="discount"  class="form-control" id="discount">
+    
   <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">Payment Date</label>
     <div class="col-sm-10">
       <input type="text" name="payment_date" class="datepicker form-control" id="payment_date" data-date-format="dd/mm/yyyy" placeholder="Enter payment date" required>
     </div>
   </div>
-   <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Customer ID</label>
-    <div class="col-sm-10">
-      <input type="text" name="customer_id" class="form-control" id="customer_id" placeholder="Enter Customer">
-    </div>
-  </div>
-   <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Product ID</label>
-    <div class="col-sm-10">
-      <input type="text" name="product_id" class="form-control" id="product_id" placeholder="Enter Product">
-    </div>
-  </div>
-<!--   <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">main Account ID</label>
-    <div class="col-sm-10">
-      <input type="text" name="main_acct_id" class="form-control" id="main_acct_id">
-    </div>
-  </div> -->
-
    
-     <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">renewal_id</label>
-    <div class="col-sm-10">
-      <input type="text" name="renewal_id" class="form-control" id="renewal_id">
-    </div>
-  </div>
+      <input type="hidden" name="customer_id" class="form-control" id="customer_id" placeholder="Enter Customer">
+   
+ 
+      <input type="hidden" name="product_id" class="form-control" id="product_id" placeholder="Enter Product">
+ 
+  
+      <input type="hidden" name="renewal_id" class="form-control" id="renewal_id">
+  
   <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save Payment</button>

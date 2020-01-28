@@ -81,12 +81,8 @@ function renewalPayment (id) {
 
 $('body').on('keyup', '#amount_paid', function(){
             let amountPaid = $(this).val();
-           //alert(amountPaid)
             let balance = 0;
             let billingAmount = $('#billingAmount').val();
-
-
-
             if( parseFloat(amountPaid) > parseFloat(billingAmount) ){
                 alert('Ooops!! Amount paid exceed billing amount, please check and try again')
               $('#billingbalance').val('')
@@ -100,7 +96,6 @@ $('body').on('keyup', '#amount_paid', function(){
 $(document).on('keyup', '#amount_paid', function(e){
     e.preventDefault();
     let value = e.target.value;
-    //alert(value)
 if(value <= 0){
      $(this).val('');
     

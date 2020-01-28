@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Renewal;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -71,7 +72,7 @@ class RenewalPayment extends Model
        						->where('main_acct_id',auth()->user()->id)->first();
        		if($getRenewal){
             $getRenewal->billingbalance = $renewalPayment->billingbalance;
-      			$renewalPayment->status = $renewalPayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
+      			$getRenewal->status = $renewalPayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
       			$getRenewal->save();
       		}	
        }

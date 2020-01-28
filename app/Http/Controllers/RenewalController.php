@@ -217,7 +217,7 @@ class RenewalController extends Controller
      */
     public function pay(Request $request)
     {
-         dd($request->all());
+         //dd($request->all());
         $validator = Validator::make($request->all(), [
             'productPrice' => 'required|numeric',
             'billingAmount' => 'required|numeric',
@@ -254,6 +254,6 @@ class RenewalController extends Controller
         }
         
         Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
-        return redirect()->route('billing.renewal.index');
+        return redirect()->route('billing.renewal.show',$request->renewal_id);
     }
 }

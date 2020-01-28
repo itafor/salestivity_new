@@ -32,6 +32,10 @@ class Renewal extends Model
         return $this->belongsTo('App\Product','product');
     }
 
+    public function renewalPayment(){
+        return $this->hasMany(RenewalPayment::class);
+    }
+
     public static function createNew($data) {
     	$renewal = self::create([
     	'main_acct_id' => auth()->user()->id,

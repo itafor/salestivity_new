@@ -34,6 +34,7 @@
                         <table class="table  table-bordered table-hover datatable">
                             <thead>
                                 <tr>
+                                    <th ><b>{{ __('S/N') }}</b></th>
                                     <th ><b>{{ __('Customer') }}</b></th>
                                     <th ><b>{{ __('Product') }}</b></th>
                                     <th ><b>{{ __('Start Date') }}</b></th>
@@ -44,7 +45,7 @@
                             <tbody>
                                 @foreach($renewals as $renewal)
                                     <tr>
-                                    
+                                        <td>{{$loop->iteration}}</td>
                                         <td>{{ $renewal->customers->name }}</td>
                                         <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>
@@ -53,7 +54,7 @@
                                         <td>
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                <a  class="btn btn-sm btn-primary" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
+                                                <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
 
                                                 <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
                                             </div>
