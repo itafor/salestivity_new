@@ -26,7 +26,8 @@
             let discount = $(this).val();
            if(0 < discount && discount < 101){
             if(parseFloat(product_price) <= 0){
-               alert('Please select a product to display product price')
+               //alert('Please select a product to display product price')
+               swal("Select a Product!", "...Please select a product to display product price!");
                $('#discount').val('');
             }else{
                 let billingAmount = ((discount/100) * product_price).toFixed(2);
@@ -41,7 +42,7 @@
 $(document).on('keyup', '#discount', function(e){
     e.preventDefault();
     let value = e.target.value;
-    //alert(value)
+    //swal("Here's the title!", "...and here's the text!");
 if(value <= 0){
      $(this).val('');
     
@@ -123,3 +124,39 @@ $(document).ready(function(){
         });
     });
 })
+
+function deleteData (url1,url2,id) {
+
+  swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover the selected data!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+
+ $.ajax({
+        url: baseUrl+'/'+url1+'/'+url2+'/'+id,
+        type: "GET",
+        data: {'id':id},
+        success: function(data) {
+          
+           swal("Poof! The selected data has been deleted!", {
+            icon: "success",
+          });
+           window.location.href=window.location.href// refresh page
+                    }
+                });
+
+        } else {
+          swal("Your data is safe!");
+        }
+      });
+ 
+}
+
+function completelypayAlert(){
+  swal("Payment completed!")
+}

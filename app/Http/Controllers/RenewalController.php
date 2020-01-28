@@ -102,13 +102,9 @@ class RenewalController extends Controller
     {
         $userId = auth()->user()->id;
         $renewal = Renewal::where('id',$id)->where('main_acct_id', $userId)->first();
-        // $customers = Customer::all();
-        // $products = Product::all();
 
-         // $payments = Payment::where('customer_id', $renewal->customer_id)->where('status', 'Renewal')->where('main_acct_id', $userId)->get();
-        //$renewalPayments = $renewal->renewalPayment();
          $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
-         // dd($renewalPayments);
+         
        
         return view('billing.renewal.show', compact('renewal','renewalPayments'));
     }
@@ -187,13 +183,7 @@ class RenewalController extends Controller
     public function destroy($id)
     {
         $renewal = Renewal::find($id);
-        if($renewal->delete()){
-            Alert::success('Delete Renewal', 'Renewal deleted successfully');
-        return redirect()->route('billing.renewal.index');
-        }else{
-            Alert::error('Delete Renewal', 'An attempt to delete the selected renewal failed');
-        return redirect()->route('billing.renewal.index');
-        }
+         $renewal->delete();
     }
 
     /**

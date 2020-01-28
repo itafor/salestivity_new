@@ -55,13 +55,13 @@
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                 @if($renewal->status == 'Paid')
-                                                <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
+                                                <a  class="btn btn-sm btn-primary text-white" onclick="completelypayAlert()">{{ __('Payment') }}</a>
                                                 @else
 
                                                 <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
 
                                                 @endif
-                                                <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
+                         <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
                                             </div>
                                         </td>
                                     </tr>

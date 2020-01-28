@@ -97,6 +97,8 @@
        <script src="{{url('assets/datatables.net/js/jquery.dataTables.js')}}"></script>
     <script src="{{url('assets/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{ url('js/select2.js') }}"></script>
+    
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
         <script type="text/javascript">
 
@@ -129,8 +131,8 @@
     }
 })();
 
+
         </script>
     <script src="{{url('js/mainjs.js')}}"></script>
-
     </body>
 </html>

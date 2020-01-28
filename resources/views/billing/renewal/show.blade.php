@@ -52,7 +52,7 @@
             </button>
             </a>
             
-             <a onclick="return confirm('Are you sure?')" href="{{ route('billing.renewal.destroy', [$renewal->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a>
+             <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
 
             <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
 
