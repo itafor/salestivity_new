@@ -26,7 +26,6 @@
             let discount = $(this).val();
            if(0 < discount && discount < 101){
             if(parseFloat(product_price) <= 0){
-               //alert('Please select a product to display product price')
                swal("Select a Product!", "...Please select a product to display product price!");
                $('#discount').val('');
             }else{
@@ -42,7 +41,6 @@
 $(document).on('keyup', '#discount', function(e){
     e.preventDefault();
     let value = e.target.value;
-    //swal("Here's the title!", "...and here's the text!");
 if(value <= 0){
      $(this).val('');
     
