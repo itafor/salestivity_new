@@ -85,6 +85,7 @@ class CustomerCorporateController extends Controller
             $account->account_type = $request->account_type;
             $account->account_id = $customer->id;
             $account->main_acct_id = $userId;
+            $account->email = $request->company_email;
             $account->save();
             
             
