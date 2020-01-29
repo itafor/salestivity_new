@@ -12,8 +12,8 @@ class Product extends Model
     // Create a many to many relationship btw product and category model
     public function category()
     {
-        return $this->belongsTo('App\Category', 'category_id');
-        //return $this->belongsToMany('App\Category', 'category_id');
+        //return $this->belongsTo('App\Category', 'category_id');
+        return $this->belongsToMany('App\Category', 'category_id');
     }
 
      // Create a one to many relationship btw product and category model
