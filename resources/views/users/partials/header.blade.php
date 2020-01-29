@@ -1,4 +1,4 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="background-color: rgb(242, 244, 244); background-size: cover; background-position: center top; height: 50px;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="background-color: #000000; background-size: cover; background-position: center top; height: 50px;">
     <!-- Mask -->
     <!-- <span class="mask bg-gradient-default opacity-8"></span> -->
     <!-- Header container -->
