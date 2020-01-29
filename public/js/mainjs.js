@@ -158,3 +158,37 @@ function deleteData (url1,url2,id) {
 function completelypayAlert(){
   swal("Payment completed!")
 }
+
+
+ // Auto fill state when a country has been picked
+    function selectCountry(value) {
+            $.get('/getstates/' + value, function (data) {
+                console.log(data.states);
+                $('#state_id').html("");
+                // $('#input-unit').append("");
+                jQuery.each(data.states, function (i, val) {
+                    $('#state_id').append("<option value='" + val.id + "'>" + val.name + "</option>");
+                });
+            });
+        }
+
+        $('#country_id').change(function () {
+            selectCountry($(this).val());
+            // $('#input-unit').prop('disabled', false)
+        });
+
+        function selectState(value) {
+            $.get('/getcities/' + value, function (data) {
+                console.log(data.cities);
+                $('#city_id').html("");
+                // $('#input-unit').append("");
+                jQuery.each(data.cities, function (i, val) {
+                    $('#city_id').append("<option value='" + val.id + "'>" + val.name + "</option>");
+                });
+            });
+        }
+
+        $('#state_id').change(function () {
+            selectState($(this).val());
+            // $('#input-unit').prop('disabled', false)
+        });
