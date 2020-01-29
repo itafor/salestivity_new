@@ -1,4 +1,4 @@
-
+//Auto fill product price when a product has been picked
     let product_price =0;
         $('#product_id').change(function(){
             var product_id = $(this).val();
@@ -8,7 +8,6 @@
                     type: "GET",
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data.products.standard_price)
                         $('#productPrice').empty();
                         product_price=data.products.standard_price;
                         $('#productPrice').val((data.products.standard_price).toFixed(2));
@@ -55,7 +54,7 @@ if(value <= 0){
 }
  });
 
-//renewal payment
+//renewal payment: display renewal payment details on a modal
 function renewalPayment (id) {
     //$('#modal-form form')[0].reset();
     $('#modal-form').modal("show");
@@ -77,7 +76,7 @@ function renewalPayment (id) {
                     }
                 });
 }
-
+//auto input billing balance when amout paid is entered
 $('body').on('keyup', '#amount_paid', function(){
             let amountPaid = $(this).val();
             let balance = 0;
@@ -92,6 +91,7 @@ $('body').on('keyup', '#amount_paid', function(){
               
             }
         })
+//disallow negative or zero input
 $(document).on('keyup', '#amount_paid', function(e){
     e.preventDefault();
     let value = e.target.value;
@@ -101,7 +101,7 @@ if(value <= 0){
 }
  });
 
-//validate payment dates
+//validate payment dates, check if a user select future dates
 $(document).ready(function(){
  $("#payment_date").datepicker();
     $("#payment_date").on("change",function(event){
@@ -123,8 +123,9 @@ $(document).ready(function(){
     });
 })
 
-function deleteData (url1,url2,id) {
 
+// Delete data with ajax
+function deleteData (url1,url2,id) {
   swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover the selected data!",
@@ -155,40 +156,49 @@ function deleteData (url1,url2,id) {
  
 }
 
+//display payment completed status, when a payment button is clicked
 function completelypayAlert(){
   swal("Payment completed!")
 }
 
 
- // Auto fill state when a country has been picked
-    function selectCountry(value) {
-            $.get('/getstates/' + value, function (data) {
-                console.log(data.states);
-                $('#state_id').html("");
-                // $('#input-unit').append("");
-                jQuery.each(data.states, function (i, val) {
-                    $('#state_id').append("<option value='" + val.id + "'>" + val.name + "</option>");
+ //Auto fill state when a country has been picked
+        $('#country_id').change(function(){
+            var country = $(this).val();
+            if(country){
+                $('#state_id').empty();
+                $('<option>').val('').text('Loading...').appendTo('#state_id');
+                $.ajax({
+                    url: baseUrl+'/getstates/'+country,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#state_id').empty();
+                        $('<option>').val('').text('Select State').appendTo('#state_id');
+                        $.each(data.states, function(k, v) {
+                            $('<option>').val(v.id).text(v.name).appendTo('#state_id');
+                        });
+                    }
                 });
-            });
-        }
-
-        $('#country_id').change(function () {
-            selectCountry($(this).val());
-            // $('#input-unit').prop('disabled', false)
+            }
         });
-
-        function selectState(value) {
-            $.get('/getcities/' + value, function (data) {
-                console.log(data.cities);
-                $('#city_id').html("");
-                // $('#input-unit').append("");
-                jQuery.each(data.cities, function (i, val) {
-                    $('#city_id').append("<option value='" + val.id + "'>" + val.name + "</option>");
+//Auto fill city when a state has been picked
+        $('#state_id').change(function(){
+            var state = $(this).val();
+            if(state){
+                $('#city_id').empty();
+                $('<option>').val('').text('Loading...').appendTo('#city_id');
+                $.ajax({
+                    url: baseUrl+'/getcities/'+state,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#city_id').empty();
+                        $('<option>').val('').text('Select City').appendTo('#city_id');
+                        $.each(data.cities, function(k, v) {
+                            $('<option>').val(v.id).text(v.name).appendTo('#city_id');
+                        });
+                    }
                 });
-            });
-        }
-
-        $('#state_id').change(function () {
-            selectState($(this).val());
-            // $('#input-unit').prop('disabled', false)
+            }
         });
