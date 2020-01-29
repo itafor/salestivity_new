@@ -32,7 +32,7 @@
                             </div>
             <div class="col-4 text-right">
                 @if($renewal->status == 'Paid')
-            <a onclick="renewalPayment({{$renewal->id}})" >
+            <a>
                 <button class="btn btn-sm btn-success" id="pay">
             {{ __('Paid') }}
             </button>
@@ -102,11 +102,29 @@
                      <td>{{ $renewal->description }}
                      </td>
                    </tr>
+
+                    @if($renewal->status == 'Paid')
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
-                     <td>{{ $renewal->status }}
+                     <td class="text-success">{{ $renewal->status }}
                      </td>
                    </tr>
+                    @elseif($renewal->status == 'Partly paid')
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td class="text-warning">
+                        {{ $renewal->status }}
+                     </td>
+                   </tr>
+                     @else
+                      <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td class="text-danger">
+                         {{ $renewal->status }}
+                     </td>
+                   </tr>
+                     @endif
+
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Start Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
