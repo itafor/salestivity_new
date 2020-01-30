@@ -69,7 +69,7 @@
     
 <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-6" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
-    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" required>
+    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}">
 
     @if ($errors->has('discount'))
         <span class="invalid-feedback" role="alert">

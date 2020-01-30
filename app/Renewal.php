@@ -37,7 +37,8 @@ class Renewal extends Model
     }
 
     public static function createNew($data) {
-        $billing_Amount = ($data['discount'] / 100) * $data['productPrice'];
+        $discountValue = $data['discount'] == '' ? 100 : $data['discount'];
+        $billing_Amount = ($discountValue / 100) * $data['productPrice'];
     	$renewal = self::create([
     	'main_acct_id' => auth()->user()->id,
         'customer_id' => $data['customer_id'],

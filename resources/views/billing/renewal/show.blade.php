@@ -27,12 +27,14 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0" id="title">{{ __('Renewal') }}</h3>
+                            <div class="col-12">
+                                <h3 class="mb-0 float-left" id="title">{{ __('Renewal') }}</h3>
+                                 <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
                             </div>
-            <div class="col-4 text-right">
+         @if(isset($renewal))
+            <div class="col-8">
                 @if($renewal->status == 'Paid')
-            <a>
+            <a >
                 <button class="btn btn-sm btn-success" id="pay">
             {{ __('Paid') }}
             </button>
@@ -46,18 +48,25 @@
 
         @endif
 
+             @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
+            <a onclick="deletePaidRenewalAlert()">
+            <button class="btn btn-sm btn-primary" >
+            {{ __('Edit') }}
+            </button>
+            </a>
+            @else
             <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
             <button class="btn btn-sm btn-primary">
             {{ __('Edit') }}
             </button>
             </a>
-            
+            @endif
+
+
              <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
 
-            <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary">{{ __('Back to list') }} </button></a>
-
-
             </div>
+            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -83,7 +92,8 @@
 
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Discount') }}</b></td>
-                     <td>{{ $renewal->discount }} %
+                     <td>
+                        {{ $renewal->discount == '' ? 'N/A' : $renewal->discount.'%'}} 
                      </td>
                    </tr>
 
@@ -141,12 +151,15 @@
                     @endif
                   </table>
                     </div>
+                     @if($renewalPayments !='')
                     @include('billing.renewal.payment.show')
+                      @endif
                 </div>
             </div>
         </div>
         
         @include('layouts.footers.auth')
+       
     @include('billing.renewal.payment.create')
 
     </div>

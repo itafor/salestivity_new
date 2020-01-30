@@ -1,5 +1,6 @@
 //Auto fill product price when a product has been picked
     let product_price =0;
+    let billinga_amount =0;
         $('#product_id').change(function(){
             var product_id = $(this).val();
             if(product_id){
@@ -11,38 +12,49 @@
                         $('#productPrice').empty();
                         product_price=data.products.standard_price;
                         $('#productPrice').val((data.products.standard_price).toFixed(2));
+                         $('#billingAmount').val((data.products.standard_price).toFixed(2));
+                         billinga_amount = (data.products.standard_price).toFixed(2);
                     }
                 });
             }
             else{
                 $('#productPrice').val('');
                 product_price=0;
+                billinga_amount =0;
             }
         });
 
         $('body').on('keyup', '#discount', function(){
 
             let discount = $(this).val();
-           if(0 < discount && discount < 101){
+           if(0 <= discount && discount < 101){
             if(parseFloat(product_price) <= 0){
                swal("Select a Product!", "...Please select a product to display product price!");
                $('#discount').val('');
+             
             }else{
                 let billingAmount = ((discount/100) * product_price).toFixed(2);
               $('#billingAmount').val(billingAmount)
+              if(billingAmount =='' || discount ==''){
+             $('#billingAmount').val(billinga_amount);
+              }
+
             }
         }else{
              $('#billingAmount').val('');
-            alert('discount must not be more than 100')
+               $('#discount').val('');
+             $('#billingAmount').val(billinga_amount);
+            //alert('Discount must not be more than 100')
+          swal("Maximun Discount!", "...Discount must not be more than 100 %!");
         }
         })
 
 $(document).on('keyup', '#discount', function(e){
     e.preventDefault();
     let value = e.target.value;
-if(value <= 0){
+if(value <=0){
      $(this).val('');
-    
+    $('#billingAmount').val(billinga_amount);
 }
  });
 $(document).on('keyup', '#productPrice', function(e){
@@ -128,7 +140,7 @@ $(document).ready(function(){
 function deleteData (url1,url2,id) {
   swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover the selected data!",
+        text: "Once deleted, you will not be able to recover the selected data, and corresponding payment histories will also be deleted!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -159,6 +171,11 @@ function deleteData (url1,url2,id) {
 //display payment completed status, when a payment button is clicked
 function completelypayAlert(){
   swal("Payment completed!")
+}
+
+//display payment completed status, when a payment button is clicked
+function deletePaidRenewalAlert(){
+  swal("You can't edit the selected renewal because some payments has been recorded!")
 }
 
 
