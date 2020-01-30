@@ -111,6 +111,7 @@ class CustomerIndividualController extends Controller
         $account->account_type = $request->account_type;
         $account->account_id = $customer->id;
         $account->main_acct_id = $userId;
+        $account->email = $request->email;
         $account->save();
         
         $address->customer_id = $account->id;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Customer;
+use App\Mail\RenewalPaid;
 use App\Payment;
 use App\Product;
 use App\Renewal;
@@ -12,6 +13,7 @@ use App\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
@@ -231,7 +233,11 @@ class RenewalController extends Controller
 
         DB::beginTransaction();
         try{
-            RenewalPayment::createNew($request->all());
+         $renewal =  RenewalPayment::createNew($request->all());
+             $toEmail = $renewal->customer->email;
+             $payment_status =RenewalPayment::where('id',$renewal->id)->first();
+             //dd($toEmail);
+            Mail::to($toEmail)->send(new RenewalPaid($renewal,$payment_status));
             DB::commit();
         }
         catch(Exception $e){
