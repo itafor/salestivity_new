@@ -136,6 +136,29 @@ $(document).ready(function(){
 })
 
 
+
+//increase renewal start date by one yr. and display on endate
+$(document).ready(function(){
+ $("#startdate").datepicker();
+    $("#startdate").on("change",function(event){
+        event.preventDefault();
+    var selected_date = $(this).val();
+    var fist_date = selected_date.replace('/','-');
+    var second_date = fist_date.replace('/','-');
+    $.ajax({
+                  url: baseUrl+'/increase-start-date-by-oneyear/'+second_date,
+                  type: "GET",
+                  data: {'selected_date':selected_date},
+                  success: function(data) {
+                  if(data){
+                    $('#end_date').val(data);
+                }
+        }
+        });
+    });
+})
+
+
 // Delete data with ajax
 function deleteData (url1,url2,id) {
   swal({
