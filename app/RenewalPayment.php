@@ -76,4 +76,14 @@ class RenewalPayment extends Model
       			$getRenewal->save();
       		}	
        }
+
+  public static function deletePaymentHistory($renewalId) {
+    $payments = self::where('renewal_id',$renewalId)->get();
+    if($payments){
+      foreach ($payments as $key => $val) {
+        $val->delete();
+    }
+  }
+}
+
 }

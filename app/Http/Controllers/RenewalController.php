@@ -62,7 +62,6 @@ class RenewalController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'productPrice' => 'required|numeric',
-            'discount' => 'required|numeric',
             'billingAmount' => 'required|numeric',
             'description' => 'required',
         ]);
@@ -103,9 +102,14 @@ class RenewalController extends Controller
     public function show($id)
     {
         $userId = auth()->user()->id;
-        $renewal = Renewal::where('id',$id)->where('main_acct_id', $userId)->first();
-
+        $renewalPayments='';
+        $renewal = Renewal::where('id',$id)
+        ->where('main_acct_id', $userId)
+        ->whereNull('deleted_at')->first();
+       
+        if($renewal){
          $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
+        }
          
        
         return view('billing.renewal.show', compact('renewal','renewalPayments'));
@@ -136,7 +140,6 @@ class RenewalController extends Controller
      */
     public function update(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'renewal_id' => 'required|numeric',
             'customer_id' => 'required|numeric',
@@ -144,7 +147,6 @@ class RenewalController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'productPrice' => 'required|numeric',
-            'discount' => 'required|numeric',
             'billingAmount' => 'required|numeric',
             'description' => 'required',
         ]);
@@ -185,6 +187,7 @@ class RenewalController extends Controller
     public function destroy($id)
     {
         $renewal = Renewal::find($id);
+         RenewalPayment::deletePaymentHistory($renewal->id);
          $renewal->delete();
     }
 
@@ -219,7 +222,6 @@ class RenewalController extends Controller
             'billingAmount' => 'required|numeric',
             'amount_paid' => 'required|numeric',
             'billingbalance' => 'required',
-            'discount' => 'required|numeric',
             'customer_id' => 'required|numeric',
             'product_id' => 'required|numeric',
             'renewal_id' => 'required|numeric',

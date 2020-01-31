@@ -22,10 +22,12 @@
                 <tr>
                     <td>{{$payment->product ? $payment->product->name : 'N/A' }}</td>
                     <td>{{$payment->status}}</td>
-                    <td>{{$payment->discount}}</td>
-                    <td>{{$payment->billingAmount}}</td>
-                    <td>{{$payment->amount_paid}}</td>
-                    <td>{{$payment->billingbalance}}</td>
+                     <td>
+                        {{ $payment->discount == '' ? 'N/A' : $payment->discount.'%'}} 
+                     </td>
+                    <td>&#8358;{{ number_format($payment->billingAmount,2)}}</td>
+                    <td>&#8358;{{ number_format($payment->amount_paid,2)}}</td>
+                    <td>&#8358;{{ number_format($payment->billingbalance,2)}}</td>
                     <td>{{ date("jS F, Y", strtotime($payment->payment_date)) }}</td>
               </tr>                 
                 @endforeach      
