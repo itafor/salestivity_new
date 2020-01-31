@@ -55,7 +55,7 @@
 
   </div>
     <div class="form-row">
-<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-6">
+<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Product Price') }}</label>
     <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value=" " required readonly="">
 
@@ -66,7 +66,7 @@
     @endif
 </div> 
     
-<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-6" >
+<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-4" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
     <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount') }}">
 
@@ -76,12 +76,8 @@
         </span>
     @endif
 </div>
-    
-  </div>
-
-
-    <div class="form-row">
-<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-6">
+   
+<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
 
@@ -91,8 +87,9 @@
         </span>
     @endif
 </div> 
-    
-<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
+</div>
+    <div class="form-row"> 
+<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-12" >
     <label class="form-control-label" for="discount">{{ __('Description') }}</label>
     <textarea name="description" class="form-control" id="description"></textarea>
 
@@ -110,7 +107,7 @@
   <div class="form-row">
 <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }} col-md-6">
     <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-    <input type="text" name="start_date" id="start_date" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" data-date-format="dd/mm/yyyy" value="{{ old('start_date') }}" required>
+    <input type="text" name="start_date" id="startdate" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" data-date-format="dd/mm/yyyy" value="{{ old('start_date') }}" required>
 
     @if ($errors->has('start_date'))
         <span class="invalid-feedback" role="alert">

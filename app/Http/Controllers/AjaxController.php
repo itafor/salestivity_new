@@ -75,6 +75,13 @@ class AjaxController extends Controller
     }
     }
 
+public function increaseStartDatebyOneYear($selected_date){
+
+        $startDate = str_replace("-","/",$selected_date);
+       $increased_date = Carbon::parse(formatDate($startDate, 'd/m/Y', 'Y-m-d'))->addYear()->format('d/m/Y');
+
+        return $increased_date;
+    }
 
 
     public function getSalesDept($id)

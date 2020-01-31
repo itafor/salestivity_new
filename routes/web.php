@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Ajax
 	Route::get('/validate-selected-date/{selected_date}', 'AjaxController@validateSelectedPaymentDate');
+	Route::get('/increase-start-date-by-oneyear/{selected_date}', 'AjaxController@increaseStartDatebyOneYear');
 	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
 	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');

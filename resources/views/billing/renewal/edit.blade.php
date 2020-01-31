@@ -56,7 +56,7 @@
     </div>
   </div>
     <div class="form-row">
-<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-6">
+<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Product Price') }}</label>
     <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $renewal->productPrice)}}" required readonly="">
 
@@ -67,7 +67,7 @@
     @endif
 </div> 
     
-<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-6" >
+<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-4" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
     <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}">
 
@@ -78,11 +78,11 @@
     @endif
 </div>
     
-  </div>
+  
 
 
-    <div class="form-row">
-<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-6">
+   
+<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $renewal->billingAmount)}}" required readonly="">
 
@@ -92,8 +92,9 @@
         </span>
     @endif
 </div> 
-    
-<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
+    </div>
+    <div class="form-row">
+<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-12" >
     <label class="form-control-label" for="discount">{{ __('Description') }}</label>
     <textarea name="description" class="form-control" id="description">{{old('description', $renewal->description)}}</textarea>
 
