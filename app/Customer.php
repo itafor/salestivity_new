@@ -39,6 +39,14 @@ class Customer extends Model
         return $this->belongsTo('App\CustomerIndividual', 'account_id');
     }
 
+    /**
+     * Get the individual account record associated with the account.
+     */
+    public function contacts()
+    {
+        return $this->hasMany('App\Contact', 'customer_id','id');
+    }
+
     protected $casts = [
         'cont' => 'array'
     ];

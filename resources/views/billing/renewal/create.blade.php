@@ -16,7 +16,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+
+                    <div class="card-body" style="background-color: #ffffff;">
 
 <form method="post" action="{{ route('billing.renewal.store') }}" autocomplete="off">
      @csrf
@@ -25,8 +26,8 @@
 
     <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }} col-md-6" >
       <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
-            <select name="customer_id" id="customer" class="form-control">
-                <option value="">Choose a Customer</option>
+            <select name="customer_id" id="customer" class=" form-control selectOption">
+                <option selected>Choose a Customer</option>
                 @foreach($customers as $key => $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                 @endforeach
@@ -40,8 +41,8 @@
 
 <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }} col-md-6">
   <label class="form-control-label" for="product">{{ __('Product') }}</label>
-        <select name="product" id="product_id" class="form-control form-control-alternative{{ $errors->has('product') ? ' is-invalid' : '' }}">
-            <option value="">Choose a Product</option>
+        <select name="product" id="product_id" class=" form-control form-control-alternative{{ $errors->has('product') ? ' is-invalid' : '' }}" >
+            <option selected>Choose a Product</option>
                 @foreach($products as $key => $product)
                 <option value="{{ $product->id }}">{{ $product->name }}</option>
             @endforeach
@@ -89,7 +90,22 @@
 </div> 
 </div>
     <div class="form-row"> 
-<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-12" >
+
+        <div class="form-group{{ $errors->has('contact_emails') ? ' has-danger' : '' }} col-md-6" >
+    <label class="form-control-label" for="discount">{{ __('Contact Emails') }} <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button>  <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button></label>
+   <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
+  <option value="" selected="true">Choose contact emails</option>
+</select>
+
+    @if ($errors->has('description'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('description') }}</strong>
+        </span>
+    @endif
+</div>
+
+
+<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
     <label class="form-control-label" for="discount">{{ __('Description') }}</label>
     <textarea name="description" class="form-control" id="description"></textarea>
 

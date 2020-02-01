@@ -78,7 +78,9 @@ class RenewalController extends Controller
 
         DB::beginTransaction();
         try{
-            Renewal::createNew($request->all());
+         $renewal =   Renewal::createNew($request->all());
+         $contacts =$renewal->customers->contacts;
+        // dd($contacts);
             DB::commit();
         }
         catch(Exception $e){

@@ -28,13 +28,15 @@
     <link type="text/css" href="{{ url('css/b4-select2.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ url('css/select2.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ url('assets/css/style.css') }}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
 <!-- Data table stylesheet -->
     <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
         <style>
         .select2-selection {
-            font-size: 1.4rem !important;
+            font-size: 1rem !important;
             line-height: 1.5 !important;
             display: block !important;
             width: 100% !important;
@@ -49,6 +51,7 @@
             box-shadow: none !important;
             transition: box-shadow .15s ease !important;
             border: 1px solid #ced4da !important;
+            overflow: hidden;
         }
         .heading-small{
             font-weight: bold
@@ -56,8 +59,13 @@
         .theme-semidark .dt-brand:before {
             background-color: #fff !important;
         }
+
+
+
     </style>
     @yield('style')
+
+
 
     <script>
         var baseUrl = '{{url("/")}}';
@@ -133,6 +141,13 @@
 
 
         </script>
+
+        <!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script> -->
+
     <script src="{{url('js/mainjs.js')}}"></script>
     </body>
 </html>

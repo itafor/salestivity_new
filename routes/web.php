@@ -160,6 +160,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/increase-start-date-by-oneyear/{selected_date}', 'AjaxController@increaseStartDatebyOneYear');
 	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
 	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
+	Route::get('get-contact-emails/{id}', 'AjaxController@getContactEmails');
+
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 	Route::get('getdept/{id}', 'AjaxController@getDept');
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');

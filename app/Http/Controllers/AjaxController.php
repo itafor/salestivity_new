@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Contact;
+use App\Customer;
 use App\Department;
 use App\Opportunity;
 use App\Product;
@@ -82,7 +83,11 @@ public function increaseStartDatebyOneYear($selected_date){
 
         return $increased_date;
     }
-
+public function getContactEmails($id) {
+    $customer = Customer::where('id',$id)->first();
+    $contacts = $customer->contacts;
+        return response()->json(['contacts' => $contacts]);
+}
 
     public function getSalesDept($id)
     {
