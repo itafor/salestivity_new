@@ -137,7 +137,7 @@ $(document).ready(function(){
 
 
 
-//increase renewal start date by one yr. and display on endate
+//increase renewal start date by one yr. and display on endate field
 $(document).ready(function(){
  $("#startdate").datepicker();
     $("#startdate").on("change",function(event){
@@ -242,3 +242,62 @@ function deletePaidRenewalAlert(){
                 });
             }
         });
+
+//searchable select dropdown
+$('.selectpicker').selectpicker({
+  dropdownAlignRight:false,
+  liveSearch:true,
+  actionsBox: true,
+  header: 'Choose an option',
+  liveSearchNormalize: true,
+  liveSearchPlaceholder: 'Choose an option',
+  liveSearchStyle: 'contains'
+});
+
+//Auto fill contact_emails when a customer has been picked
+        $('#customer').change(function(){
+            var customerId = $(this).val();
+            if(customerId){
+                $('#contact_emails').empty();
+                $('<option>').attr('selected', true).val('').text('Loading...').appendTo('#contact_emails');
+                $.ajax({
+                    url: baseUrl+'/get-contact-emails/'+customerId,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.contacts !=''){
+                        $('#contact_emails').empty();
+                        $('<option>').attr('selected', true).val('').text('Select contacts').appendTo('#contact_emails');
+                       localStorage.setItem('contact_emails',JSON.stringify(data.contacts));
+                        $.each(data.contacts, function(k, v) {
+                            $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#contact_emails');
+                        });
+
+                      }else{
+                        $('#contact_emails').empty();
+                         $('<option>').attr('selected', true).val('').text('No contact emails found').appendTo('#contact_emails');
+                      }
+
+                    }
+                });
+            }
+        });
+
+  function selectAllcontactEmails(){
+      var contactemails = localStorage.getItem('contact_emails');
+        $('#contact_emails').empty();
+               $.each(JSON.parse(contactemails), function(k, v) {
+        $('<option>').attr('selected', true).val(v.id).text(v.email).appendTo('#contact_emails');
+     });
+  }
+
+  function deSelectAllcontactEmails(){
+        $('#contact_emails').empty();
+       $('<option>').attr('selected', true).val('').text('Select contacts').appendTo('#contact_emails');
+     
+     var contactemails = localStorage.getItem('contact_emails');
+        $.each(JSON.parse(contactemails), function(k, v) {
+        $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#contact_emails');
+     });
+
+        }
