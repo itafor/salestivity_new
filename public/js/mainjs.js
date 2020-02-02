@@ -275,7 +275,8 @@ $('.selectpicker').selectpicker({
 
                       }else{
                         $('#contact_emails').empty();
-                         $('<option>').attr('selected', true).val('').text('No contact emails found').appendTo('#contact_emails');
+                         $('<option>').attr('selected', true).val(' ').text('No contact emails found').appendTo('#contact_emails');
+                      localStorage.removeItem('contact_emails');
                       }
 
                     }

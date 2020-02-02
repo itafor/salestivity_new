@@ -37,6 +37,8 @@ class Renewal extends Model
     }
 
     public static function createNew($data) {
+        $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
+       
         $discountValue = $data['discount'] == '' ? 100 : $data['discount'];
         $billing_Amount = ($discountValue / 100) * $data['productPrice'];
     	$renewal = self::create([
@@ -52,6 +54,9 @@ class Renewal extends Model
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
     	]);
 
+        if($renewal){
+           self::createRenewalContactEmail($renewal,$contactEmails);
+        }
     	return $renewal;
     }
 
@@ -70,4 +75,19 @@ class Renewal extends Model
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
         ]); 
     }
+
+ public static function createRenewalContactEmail($renewal,$contactEmails) {
+
+   
+    if($contactEmails !='' && $contactEmails[0] != null){
+    foreach ($contactEmails as $key => $contactEmail) {
+       $renewalContact = new renewalContactEmail();
+       $renewalContact->contact_id = $contactEmail;
+       $renewalContact->renewal_id = $renewal->id;
+       $renewalContact->save();
+    }
+
+  }
+
+ }
 }
