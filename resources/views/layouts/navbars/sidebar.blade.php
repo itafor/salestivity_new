@@ -332,10 +332,33 @@
                                 
                                 </ul>  
                         </div>
+                        <!-- Billing Agent -->
+                          <a class="nav-link" href="#navbar-billing-agent" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                            <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
+                            <span class="nav-link-text">{{ __('Billing Agent') }}</span>
+                        </a>
+                        <div class="collapse" id="navbar-billing-agent">
+                            <ul class="nav nav-sm flex-column">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.agent.index') }}">
+                                                {{ __('List') }}
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('billing.agent.create') }}">
+                                                {{ __('Add New') }}
+                                            </a>
+                                        </li> 
+                                </ul>
+                                
+                                </ul>  
+                        </div>
+                         <!-- Billing Agent end -->
                         </ul>
                     </div>
 
-                    <div class="collapse" id="navbar-renewal">
+                   <!--  <div class="collapse" id="navbar-renewal">
                         <ul class="nav nav-sm flex-column">
                             <a class="nav-link" href="#navbar-renewal-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                                 <i class="fab " style="color: #f4645f;"></i>
@@ -356,7 +379,7 @@
                                 </ul>  
                             </div>
                         </ul>
-                    </div>
+                    </div> -->
                 </li>
 
                 <li class="nav-item">

@@ -47,11 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
 
 	Route::get('customer/{id}/show', ['as' => 'customer.show', 'uses' => 'CustomerController@show']);
-
 	Route::get('customer/{id}/edit', ['as' => 'customer.edit', 'uses' => 'CustomerController@edit']);
-
 	Route::get('customer/destroy/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
-
 	Route::get('contact/destroy/{id}', ['as' => 'contact.destroy', 'uses' => 'CustomerController@deleteContact']);
 
 
@@ -113,6 +110,12 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('billing/renewal/{id}/show', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
 	Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
 	Route::get('billing/renewal/{id}', ['as' => 'billing.renewal.destroy', 'uses' => 'RenewalController@destroy']);
+
+	// Billing Agent
+	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');
+	Route::get('billing/create','BillingAgentController@create')->name('billing.agent.create');
+	Route::get('billing/store','BillingAgentController@store')->name('billing.agent.store');
+
 
 	// Opportunities
 	Route::get('opportunities', ['as' => 'opportunity.index', 'uses' => 'OpportunityController@index']);
