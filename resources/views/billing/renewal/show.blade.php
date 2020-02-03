@@ -79,12 +79,12 @@
                    </tr>
                  <tr>
                      <td style="width: 200px;"><b>{{ __('Email') }}</b></td>
-                     <td>{{ $renewal->customers->corporate->email }}</td>
+                     <td>{{ $renewal->customers->email }}</td>
                    </tr>
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Phone') }}</b></td>
-                     <td>{{ $renewal->customers->corporate->phone }}</td>
+                     <td>{{ $renewal->customers->phone }}</td>
                    </tr>
 
                      <tr>
