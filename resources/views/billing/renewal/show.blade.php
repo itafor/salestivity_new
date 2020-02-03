@@ -77,6 +77,15 @@
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $renewal->customers->name }}</td>
                    </tr>
+                 <tr>
+                     <td style="width: 200px;"><b>{{ __('Email') }}</b></td>
+                     <td>{{ $renewal->customers->email }}</td>
+                   </tr>
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Phone') }}</b></td>
+                     <td>{{ $renewal->customers->phone }}</td>
+                   </tr>
 
                      <tr>
                      <td style="width: 200px;"><b>{{ __('Product') }}</b></td>

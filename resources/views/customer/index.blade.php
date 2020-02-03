@@ -8,15 +8,14 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{ __('All Accounts') }}</h3>
+                    <div class="card-header col-12">
+                     
+                            <div class="col-6  float-left">
+                                <a href="{{ route('customer.corporate.create') }}" class="btn btn-sm btn-primary">{{ __('Add Corporate account') }}</a>
                             </div>
-                            <!-- <div class="col-4 text-right">
-                                <a href="{{-- route('customer.create') --}}" class="btn btn-sm btn-primary">{{ __('Add account') }}</a>
-                            </div> -->
-                        </div>
+                            <div class="col-6  float-right">
+                                <a href="{{ route('customer.individual.create') }}" class="btn btn-sm btn-primary">{{ __('Add Individual account') }}</a>
+                            </div>
                     </div>
                     
                     <div class="col-12">
@@ -39,9 +38,10 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
+                        <table class="table  table-bordered table-hover datatable">
+                            <thead>
                                 <tr>
+                                    <th scope="col">{{ __('S/N') }}</th>
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Account Type') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
@@ -52,26 +52,20 @@
                             <tbody>
                                 @foreach($customers as $customer)
                                   <tr>
+                                        <td>{{$loop->iteration}}</td>
                                         <td>{{ $customer->name }}</td>
-                                        <td>{{ $cus = $customer->account_type == 1 ? 'Corporate' : 'Individual'}}</td>
-                                        @if($customer->account_type == 1)
-                                            <td>{{ $customer->corporate->email }}</td>
-                                            <td>{{ $customer->corporate->phone }}</td>
-                                        @else
-                                            <td>{{ $customer->individual->email }}</td>
-                                            <td>{{ $customer->individual->phone }}</td>
-                                        @endif
+                                        <td>{{ $customer->customer_type}}</td>
+                                        <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->phone }}</td>
+                                        
                                     <td>
                                         <div class="btn-group-justified text-center" role="group">
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('customer.'.strtolower($cus).'.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                             </div>  
 
                                             <div class="btn-group" role="group">
-                                                <form action="{{ route('customer.'.strtolower($cus).'.destroy', [$customer->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                    @csrf
-                                                    <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                </form>
+                                                             <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
                                             </div>
                                         </div>
                                     </td>

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Contact;
 use App\Customer;
+use App\Jobs\SendRenewalPaymentNotification;
 use App\Mail\RenewalPaid;
 use App\Payment;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
 use App\SubCategory;
+use App\renewalContactEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -79,7 +82,7 @@ class RenewalController extends Controller
         DB::beginTransaction();
         try{
          $renewal =   Renewal::createNew($request->all());
-         $contacts =$renewal->customers->contacts;
+         //$contacts =$renewal->customers->contacts;
         // dd($contacts);
             DB::commit();
         }
@@ -239,9 +242,17 @@ class RenewalController extends Controller
         try{
          $renewal =  RenewalPayment::createNew($request->all());
              $toEmail = $renewal->customer->email;
-             $payment_status =RenewalPayment::where('id',$renewal->id)->first();
-             //dd($toEmail);
+         $payment_status =RenewalPayment::where('id',$renewal->id)->first();
+         $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
+
             Mail::to($toEmail)->send(new RenewalPaid($renewal,$payment_status));
+            if($renewalcontacts){
+                    foreach ($renewalcontacts as $key => $contact) {
+                        $customerContactEmail=Contact::where('id',$contact->contact_id)->first();
+        SendRenewalPaymentNotification::dispatch($renewal,$customerContactEmail,$payment_status)
+            ->delay(now()->addSeconds(5));
+            }
+        }
             DB::commit();
         }
         catch(Exception $e){

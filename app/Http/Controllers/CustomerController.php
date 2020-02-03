@@ -8,6 +8,7 @@ use App\AddressCustomer;
 use App\Contact;
 use App\CustomerCorporate;
 use Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomerController extends Controller
 {
@@ -20,9 +21,6 @@ class CustomerController extends Controller
     {
         $userId = auth()->user()->id;
         $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
-        // dd($customers->individual->email);
-        // $account = Customer::where('id', $id)->first();
-        // $addresses = AddressCustomer::where('customer_id', $account->id);
         return view('customer.index', compact('customers'));
     }
 
@@ -42,45 +40,10 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $customer = new Customer;
-    //     $address = new AddressCustomer;
-    //     $userId = auth()->user()->id;
-        
-    //     $this->validate($request, [
-    //         'company_name' => 'required|max:255|min:2',
-    //         'industry' => 'required',
-    //         'email' => 'required|max:255',
-    //         'phone' => 'required|max:11',
-    //         'website' => 'required',
-    //         'state' => 'required',
-    //         'city' => 'required',
-    //         'street' => 'required',
-    //         'country' => 'required',
-    //     ]);
-    //     $customer->company_name = $request->company_name;
-    //     $customer->industry = $request->industry;
-    //     $customer->email = $request->email;
-    //     $customer->phone = $request->phone;
-    //     $customer->website = $request->website;
-    //     $customer->main_acct_id = $userId;
-    //     $customer->save();
-
-    //     $address->customer_id = $customer->id;
-    //     $address->state = $request->state;
-    //     $address->city = $request->city;
-    //     $address->street = $request->street;
-    //     $address->country = $request->country;
-    //     $address->main_acct_id = $userId;
-    //     $address->save();
-
-
-    //     $status = "Account Added";
-    //     Session::flash('status', $status);
-
-    //     return redirect()->route('customer.index');
-    // }
+    public function store(Request $request)
+    {
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -90,11 +53,11 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
+       
         $userId = auth()->user()->id;
 
-        $contact->main_acct_id = $userId;
-        $customer = Customer::find($id);
-        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', $userId)->get()->first();
+        $customer = Customer::where('id',$id)->where('main_acct_id',$userId)->first();
+        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', $userId)->first();
         $contacts = Contact::where('customer_id', $id)->where('main_acct_id', $userId)->get();
         // dd($contacts);
         return view('customer.show', compact('customer', 'address', 'contacts'));
@@ -120,78 +83,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
-        $address = AddressCustomer::where('customer_id',$id)->first();
         
-
-        $this->validate($request, [
-            'company_name' => 'required|max:255|min:2',
-            'industry' => 'required',
-            'email' => 'required|max:255',
-            'phone' => 'required|max:11',
-            'website' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'country' => 'required',
-        ]);
-        $customer->company_name = $request->input('company_name');
-        $customer->industry = $request->input('industry');
-        $customer->email = $request->input('email');
-        $customer->phone = $request->input('phone');
-        $customer->website = $request->input('website');
-        $customer->save();
-
-        $address->customer_id = $customer->id;
-        $address->state = $request->input('state');
-        $address->city = $request->input('city');
-        $address->street = $request->input('street');
-        $address->country = $request->input('country');
-
-        // dd($address);
-
-        $address->save();
-
-        $contact = new Contact;
-
-        foreach($request->customer_id as $customer_id)
-        {
-            $contact->customer_id = $customer_id;
-        }
-
-        foreach($request->contact_title as $title)
-        {
-            $contact->title = $title;
-        }
-
-        foreach($request->contact_surname as $surname)
-        {
-            $contact->surname = $surname;          
-        }
-
-        foreach($request->contact_phone as $phone)
-        {
-            $contact->phone = $phone;
-        }
-
-        foreach($request->contact_name as $name)
-        {
-            $contact->name = $name;
-        }
-
-        foreach($request->contact_email as $email)
-        {
-            $contact->email = $email;
-            $contact->main_acct_id = $userId;
-        }
-
-        $contact->save();
-
-
-        $status = "Account has been successfully updated";
-        Session::flash('status', $status);
-
-        return redirect()->route('customer.show', $customer->id);
     }
 
     /**
@@ -200,45 +92,20 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+  public function destroy($id)
     {
-        $account = Customer::find($id);
-        $customer = CustomerCorporate::where('id', $account->account_id)->first();
-        $address = AddressCustomer::where('customer_id', $account->id)->first();
-        $contacts = Contact::where('customer_id', $account->id)->get();
-        // dd($contacts);
-
-        DB::beginTransaction();
-        try {
-            // delete all contacts related to this customer 
-            if ($contacts !== null){
-                foreach($contacts as $contact){
-                    $contact->delete();
-                }
-                $address->delete();
-                $account->delete();
-                $customer->delete();
-            } else {
-                $address->delete();
-                $account->delete();
-                $customer->delete();
-            }
-            
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollback();
-            // return response()->json(['error' => $ex->getMessage()], 500);
-            $status = "Account not Deleted";
-            Session::flash('error', $status);
-            return redirect()->route('customer.index');
-        }
-
-        // $account->delete();
-        // $customer->delete();
-        // $address->delete();
-        // $contacts->delete();
-
-        Session::flash('status', 'The Customer has been successfully deleted');
-        return redirect()->route('customer.index');
+    $customer = Customer::find($id);
+    if($customer){
+        Customer::deleteContacts($customer->id);
+        Customer::deleteAddress($customer->id);
+   $customer->delete();
     }
+ }
+  public function deleteContact($id)
+    {
+    $contact = Contact::find($id);
+    if($contact){
+   $contact->delete();
+    }
+ }
 }

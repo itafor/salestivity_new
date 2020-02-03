@@ -163,7 +163,7 @@ $(document).ready(function(){
 function deleteData (url1,url2,id) {
   swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover the selected data, and corresponding payment histories will also be deleted!",
+        text: "Once deleted, you will not be able to recover the selected data!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -275,7 +275,8 @@ $('.selectpicker').selectpicker({
 
                       }else{
                         $('#contact_emails').empty();
-                         $('<option>').attr('selected', true).val('').text('No contact emails found').appendTo('#contact_emails');
+                         $('<option>').attr('selected', true).val(' ').text('No contact emails found').appendTo('#contact_emails');
+                      localStorage.removeItem('contact_emails');
                       }
 
                     }
@@ -300,4 +301,90 @@ $('.selectpicker').selectpicker({
         $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#contact_emails');
      });
 
-        }
+  }
+
+
+
+
+
+function identifier(){
+    return Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
+}
+
+var row = 1;
+
+$('#addMore').click(function(e) {
+    e.preventDefault();
+
+    if(row >= 10){
+        alert("You've reached the maximum limit");
+        return;
+    }
+
+    var rowId = identifier();
+
+    $("#container").append(
+        '<div>'
+            +'<div style="float:right" class="remove_project_file"><span style="cursor:pointer" class="btn btn-danger btn-sm" border="2"><i class="fa fa-minus-circle"></i> Remove</span></div>'
+            +'<div style="clear:both"></div>'
+               +'<div class="row" id="rowNumber'+rowId+'" data-row="'+rowId+'">'
+            
+                +'<div class="form col-md-3">'
+                +'<label class="form-control-label" for="input-category">Title</label>'
+                +'<select name="contacts['+rowId+'][contact_title]"  class="form-control select'+rowId+'" required>'
+                +'<option value="">Select Property Type</option>'
+                +'<option value="">Select title</option>'
+                +'<option value="Mr.">Mr.</option>'
+                +'<option value="Mrs.">Mrs.</option>'
+                +'<option value="Miss">Miss</option>'
+                                        
+                +'</select>'
+
+                +'</div>'
+                 
+                +'<div class="form-group{{ $errors->has("contact_surname") ? "has-danger": "" }} col-md-3">'
+                +'    <label class="form-control-label" for="input-category">Surname</label>'
+                + '<input type="text" name="contacts['+rowId+'][contact_surname]" id="input-contact_surname" class="form-control" placeholder="Enter surname" value="" required>'
+
+                +'</div>'
+
+                +'<div class="form-group{{ $errors->has("contact_name") ? "has-danger" : ""}} col-md-3">'
+                +'    <label class="form-control-label" for="input-contact_name"> Other names</label>'
+                
+                +'    <input type="text"  name="contacts['+rowId+'][contact_name]" class="form-control {{ $errors->has("contact_name") ? "is-invalid" : "" }} contact_name" placeholder="Enter other name" value="" required>' 
+               
+    
+                +'</div>'
+                 +'<div style="clear:both"></div>'
+                +'<div class="form-group{{ $errors->has("contact_email") ? "has-danger" : "" }} col-md-3">'
+                +'    <label class="form-control-label" for="input-contact_email">Email</label>'
+                +'    <input type="email" name="contacts['+rowId+'][contact_email]" class="contact_email form-control {{ $errors->has("contact_email") ? "is-invalid" : "" }} contact_email" placeholder="Enter contact email" value="" required>'
+
+                +'</div>'
+
+
+                +'<div class="form-group{{ $errors->has("contact_phone") ? "has-danger" : "" }} col-md-2">'
+                +'    <label class="form-control-label" for="input-contact_phone">Phone</label>'
+                +'    <input type="tel" name="contacts['+rowId+'][contact_phone]" class="contact_phone form-control {{ $errors->has("contact_phone") ? "is-invalid" : ""}} contact_phone" placeholder="Enter contact phone" value="" required>'
+
+                +'</div>'
+
+                +'<div style="clear:both"></div>'
+            +'</div>'
+        +'</div>'
+    );
+    row++;
+    $(".select"+rowId).select2({
+            theme: "bootstrap"
+        });
+});
+
+// Remove parent of 'remove' link when link is clicked.
+$('#container').on('click', '.remove_project_file', function(e) {
+    e.preventDefault();
+    $(this).parent().remove();
+    row--;
+});
+
+
+

@@ -60,8 +60,26 @@
             background-color: #fff !important;
         }
 
-
-
+        input[type=email] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=text] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=tel] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+         input[type=url] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=number] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
     </style>
     @yield('style')
 
