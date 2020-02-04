@@ -13,17 +13,17 @@ class RenewalPaid extends Mailable
 
     public $renewal;
     public $payment_status;
-    public $billingAgent;
+    //public $billingAgent;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($renewal,$payment_status,$billingAgent)
+    public function __construct($renewal,$payment_status)
     {
         $this->renewal = $renewal;
         $this->payment_status = $payment_status;
-        $this->billingAgent = $billingAgent;
+        //$this->billingAgent = $billingAgent;
     }
 
     /**
@@ -35,7 +35,7 @@ class RenewalPaid extends Mailable
     {
         return $this->view('emails.renewal_paid')
         ->from('noreply@salestivity.com')
-        ->subject('Renewal Payment Notification')
-        ->cc($this->billingAgent->email);
+        ->subject('Renewal Payment Notification');
+       // ->cc($this->billingAgent->email);
     }
 }
