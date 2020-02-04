@@ -11,7 +11,12 @@ class BillingAgent extends Model
 	
     protected $fillable = ['customer_id','main_acct_id','name','phone','email'];
 
-       public static function createNew($data){
+
+  public function customer(){
+    	return $this->belongsTo(Customer::class,'customer_id','id');
+    }
+  
+  public static function createNew($data){
 
     	$billing_agent = self::create([
 		'main_acct_id' =>  auth()->user()->id,

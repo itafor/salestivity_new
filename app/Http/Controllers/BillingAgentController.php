@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\BillingAgent;
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BillingAgentController extends Controller
 {
@@ -56,4 +58,12 @@ class BillingAgentController extends Controller
         return redirect()->route('billing.agent.index');
         
     }
+
+  public function destroy($id)
+    {
+    $billing_agent = BillingAgent::find($id);
+    if($billing_agent){
+   $billing_agent->delete();
+    }
+ }
 }

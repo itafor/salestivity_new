@@ -114,7 +114,9 @@ Route::group(['middleware' => 'auth'], function () {
 	// Billing Agent
 	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');
 	Route::get('billing/create','BillingAgentController@create')->name('billing.agent.create');
-	Route::get('billing/store','BillingAgentController@store')->name('billing.agent.store');
+	Route::post('billing/store','BillingAgentController@store')->name('billing.agent.store');
+	Route::get('billing/agent/{id}','BillingAgentController@destroy')->name('billing.agent.destroy');
+
 
 
 	// Opportunities
