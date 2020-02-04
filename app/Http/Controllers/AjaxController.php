@@ -53,7 +53,12 @@ class AjaxController extends Controller
     {
         $userId = auth()->user()->id;
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
-        return response()->json(['products' => $products]);
+
+        return response()->json([
+            'products' => $products,
+            'category' => $products->category->name,
+            'subcategory' => $products->sub_category->name
+        ]);
     }
 
      public function fetchRenewalDetails($id)
