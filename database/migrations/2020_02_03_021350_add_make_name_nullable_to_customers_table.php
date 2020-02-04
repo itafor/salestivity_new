@@ -22,7 +22,7 @@ class AddMakeNameNullableToCustomersTable extends Migration
             });
           }
 
-            $table->string('name')->after('email')->nullable();
+            $table->string('name')->after('id')->nullable();
         });
     }
 
