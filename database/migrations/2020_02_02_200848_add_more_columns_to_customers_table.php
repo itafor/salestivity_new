@@ -23,7 +23,7 @@ class AddMoreColumnsToCustomersTable extends Migration
             });
           }
 
-            $table->string('industry')->after('email')->nullable();
+            $table->string('industry')->after('name')->nullable();
             $table->string('phone')->after('industry')->nullable();
             $table->string('website')->after('phone')->nullable();
             $table->string('turn_over')->after('website')->nullable();
