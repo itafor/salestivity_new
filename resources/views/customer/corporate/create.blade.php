@@ -66,7 +66,7 @@
                                 <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
-                                            <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="{{ old('website') }}" required >
+                                            <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="" required onfocus="if(this.value=='')this.value='http://'" >
 
                                             @if ($errors->has('website'))
                                                 <span class="invalid-feedback" role="alert">
