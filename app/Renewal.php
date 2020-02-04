@@ -39,16 +39,18 @@ class Renewal extends Model
     public static function createNew($data) {
         $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
        
-        $discountValue = $data['discount'] == '' ? 100 : $data['discount'];
-        $billing_Amount = ($discountValue / 100) * $data['productPrice'];
+        $discountValue = $data['discount'] == '' ? 0 : $data['discount'];
+        $discountedPrice = ($discountValue / 100) * $data['productPrice'];
+        $finalPrice = $data['productPrice'] - $discountedPrice;
+
     	$renewal = self::create([
     	'main_acct_id' => auth()->user()->id,
         'customer_id' => $data['customer_id'],
         'product' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
-        'billingAmount' =>  $billing_Amount,  //$data['billingAmount'],
-        'billingBalance' => $billing_Amount,  //$data['billingAmount'],
+        'billingAmount' =>  $finalPrice,  //$data['billingAmount'],
+        'billingBalance' => $finalPrice,  //$data['billingAmount'],
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
