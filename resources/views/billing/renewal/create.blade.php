@@ -107,7 +107,7 @@
 
 <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
     <label class="form-control-label" for="discount">{{ __('Description') }}</label>
-    <textarea name="description" class="form-control" id="description"></textarea>
+    <textarea name="description" class="form-control" id="renewal_description"></textarea>
 
     @if ($errors->has('description'))
         <span class="invalid-feedback" role="alert">

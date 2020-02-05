@@ -13,13 +13,13 @@ class Product extends Model
     public function category()
     {
         //return $this->belongsTo('App\Category', 'category_id');
-        return $this->belongsToMany('App\Category', 'category_id');
+        return $this->belongsTo('App\Category', 'category_id','id');
     }
 
      // Create a one to many relationship btw product and category model
      public function sub_category()
      {
-         return $this->belongsTo('App\SubCategory', 'sub_category_id');
+         return $this->belongsTo('App\SubCategory', 'sub_category_id','id');
      }
 
      // Create a many to many relationship btw product and payment model

@@ -3,7 +3,7 @@
     let billinga_amount =0;
         $('#product_id').change(function(){
             var product_id = $(this).val();
-            if(product_id){
+            if(product_id !='' && !isNaN(parseFloat(product_id))){
                 $.ajax({
                     url: baseUrl+'/fetch-product-price/'+product_id,
                     type: "GET",
@@ -13,12 +13,15 @@
                         product_price=data.products.standard_price;
                         $('#productPrice').val((data.products.standard_price).toFixed(2));
                          $('#billingAmount').val((data.products.standard_price).toFixed(2));
+                         $('#renewal_description').val('Product Category: ' + data.category +', '+'Product SubCategory: '+ ' ' + data.subcategory);
                          billinga_amount = (data.products.standard_price).toFixed(2);
                     }
                 });
             }
             else{
                 $('#productPrice').val('');
+                $('#billingAmount').val('');
+                $('#renewal_description').val('');
                 product_price=0;
                 billinga_amount =0;
             }
