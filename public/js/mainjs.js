@@ -33,9 +33,10 @@
                $('#discount').val('');
              
             }else{
-                let billingAmount = ((discount/100) * product_price).toFixed(2);
-              $('#billingAmount').val(billingAmount)
-              if(billingAmount =='' || discount ==''){
+                let discountedPrice = ((discount/100) * product_price);
+                let final_price = (product_price - discountedPrice).toFixed(2);
+              $('#billingAmount').val(final_price)
+              if(final_price =='' || discount ==''){
              $('#billingAmount').val(billinga_amount);
               }
 

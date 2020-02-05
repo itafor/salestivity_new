@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BillingAgent;
 use App\Category;
 use App\Contact;
 use App\Customer;
@@ -83,7 +84,6 @@ class RenewalController extends Controller
         try{
          $renewal =   Renewal::createNew($request->all());
          //$contacts =$renewal->customers->contacts;
-        // dd($contacts);
             DB::commit();
         }
         catch(Exception $e){
@@ -242,6 +242,7 @@ class RenewalController extends Controller
         try{
          $renewal =  RenewalPayment::createNew($request->all());
              $toEmail = $renewal->customer->email;
+        //$billingAgent = BillingAgent::where('customer_id',$renewal->customer_id)->first();
          $payment_status =RenewalPayment::where('id',$renewal->id)->first();
          $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
 
