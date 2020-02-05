@@ -52,7 +52,7 @@ class CustomerCorporateController extends Controller
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
             'company_email' => 'required|max:255',
-            'phone' => 'required|max:11',
+            'company_phone' => 'required|max:11',
             'website' => 'required',
             'turn_over' => 'required',
             'employee_count' => 'required',

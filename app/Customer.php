@@ -91,6 +91,7 @@ class Customer extends Model
     }
 
  public static function createCorporateCustomer($data) {
+
         $corporateCustomer = self::create([
         'name' => $data['company_name'],
         'industry' => $data['industry'],
@@ -127,6 +128,8 @@ class Customer extends Model
 
 public static function createContact($customer,$data)
     {
+    if($data['contacts'][112211]['contact_email'] !=null )
+   {
         foreach($data['contacts'] as $contact){
             Contact::create([
                 'customer_id' => $customer->id,
@@ -139,7 +142,7 @@ public static function createContact($customer,$data)
             ]);
         }
     }
-
+}
  public static function deleteContacts($customer_id) {
     $contacts = Contact::where('customer_id',$customer_id)
     ->where('main_acct_id',auth()->user()->id)
