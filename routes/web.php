@@ -172,5 +172,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('getsales/{id}', 'AjaxController@getSalesDept');
 	Route::get('getstates/{id}', 'AjaxController@getState');
 	Route::get('getcities/{id}', 'AjaxController@getCity');
+
+	//cron jobs
+	Route::get('renewals_notificationAt_15_Percent', 'CronJobController@renewalsNotificationAt15Percent');
+	Route::get('renewals_notificationAt_5_Percent', 'CronJobController@renewalsNotificationAt5Percent');
+	Route::get('renewals_notificationAt_0_Percent', 'CronJobController@renewalsNotificationAt0Percent');
+
 });
 

@@ -144,11 +144,25 @@
                     <table>
                           <tr>
                             <td colspan="2">
-                                Dear {{$customerContacts->name}},<br>
+                                Dear {{$renewal->customers->name}},<br>
                                 <em>
-                                  We wish to inform you that the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> has been recorded for the payment of <strong>{{$renewal->product->name}}</strong>
+                                @if($remaingDays == 0)
+                            Kindly be notified that your renewal has expired.<br>
+
+                                Expired Date:
+                    ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
+                                
+                                    @else
+
+                                   Kindly be notified that your renewal will be due in {{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}
+                                   
+                    ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
+
+                                 @endif
+
                                  <br/>
                                   Please find below renewal details.
+                                 
                                 </em>
                             </td>
                         </tr>
@@ -163,12 +177,12 @@
                     <tbody>
                    <tr>
                      <td style="width: 120px;"><b>{{ __('Customer') }}</b></td>
-                     <td>{{ $renewal->customer->name }}</td>
+                     <td>{{ $renewal->customers->name }}</td>
                    </tr>
 
                      <tr>
                      <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
-                     <td>{{ $renewal->product ? $renewal->product->name:'N/A' }}
+                     <td>{{ $renewal->product_name ? $renewal->product_name->name:'N/A' }}
                      </td>
                    </tr>
 
@@ -178,48 +192,48 @@
                      </td>
                    </tr>
 
-                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>&#8358;{{ number_format($renewal->amount_paid,2) }}
-                     </td>
-                   </tr>
-
                    <tr>
                      <td style="width: 120px;"><b>{{ __('Billing Balance') }}</b></td>
-                     <td>&#8358;{{ number_format($renewal->billingbalance,2) }}
+                     <td>&#8358;{{ number_format($renewal->billingBalance,2) }}
                      </td>
                    </tr>
                     
 
-                    @if($payment_status->status == 'Paid')
+                    @if($renewal->status == 'Paid')
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
-                     <td class="text-success">{{ $payment_status->status }}
+                     <td class="text-success">{{ $renewal->status }}
                      </td>
                    </tr>
-                    @elseif($payment_status->status == 'Partly paid')
+                    @elseif($renewal->status == 'Partly paid')
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
                      <td class="text-warning">
-                        {{ $payment_status->status }}
+                        {{ $renewal->status }}
                      </td>
                    </tr>
                      @else
                       <tr>
                      <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
                      <td class="text-danger">
-                         {{ $payment_status->status }}
+                         {{ $renewal->status }}
                      </td>
                    </tr>
                      @endif
 
-                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($renewal->payment_date)) }}</td>           
+                <tr>
+                     <td style="width: 120px;"><b>{{ __('Start Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
               </tr>
+
               <tr>
-                     <td style="width: 120px;"><b>{{ __('Date Recorded') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($renewal->created_at)) }}</td>           
+                     <td style="width: 120px;"><b>{{ __('End Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
+              </tr>
+
+              <tr>
+                     <td style="width: 120px;"><b>{{ __('Days left') }}</b></td>
+                <td>{{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}</td>           
               </tr>
 
                     </tbody>
