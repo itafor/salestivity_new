@@ -21,4 +21,8 @@ class Contact extends Model
     protected $casts = [
         'cont' => 'array'
     ];
+    
+    public function customer() {
+        return $this->belongsTo('App\Customer','customer_id','id');
+    }
 }

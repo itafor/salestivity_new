@@ -23,6 +23,11 @@ class Renewal extends Model
         return $this->belongsTo('App\Customer', 'customer_id');
     }
 
+    public function contacts()
+    {
+        return $this->hasMany('App\renewalContactEmail', 'renewal_id','id');
+    }
+
     public function payments()
     {
         return $this->morphToMany('App\Payment', 'payable');

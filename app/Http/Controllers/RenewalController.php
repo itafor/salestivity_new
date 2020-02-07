@@ -76,7 +76,7 @@ class RenewalController extends Controller
         }
 
         if(compareEndStartDate($request->start_date,$request->end_date) == false){
-            Alert::error('Invalid End Date', 'End Date cannot be less than start date');
+            Alert::error('Invalid End Date', 'Please ensure that the End Date is after the Start Date');
          return back()->withInput();
         }
 
