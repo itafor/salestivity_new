@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Customer;
 use App\AddressCustomer;
+use App\City;
 use App\Contact;
+use App\Customer;
 use App\CustomerCorporate;
-use Session;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Session;
 
 class CustomerController extends Controller
 {
@@ -73,7 +74,9 @@ class CustomerController extends Controller
             $customerType = $customer->customer_type;
             if($customerType == 'Corporate'){
                 $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',authUserId())->first();
-        return view('customer.corporate.edit',compact('customer','address'));
+                 $cityId = $address->city;
+                 $cityName= $address->cityName->name;
+        return view('customer.corporate.edit',compact('customer','address','cityId','cityName'));
             }else{
 
 
