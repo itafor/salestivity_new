@@ -158,7 +158,7 @@ class CustomerCorporateController extends Controller
             
         }
         
-        Alert::success('Update Corporate Account', 'Account update');
+        Alert::success('Update Corporate Account', 'Account updated');
 
         return redirect()->route('customer.edit',$request->id);
     }

@@ -71,16 +71,18 @@ class CustomerController extends Controller
     {
         $customer = Customer::where('id',$id)->where('main_acct_id',authUserId())->first();
         if($customer){
-            $customerType = $customer->customer_type;
-            if($customerType == 'Corporate'){
-                $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',authUserId())->first();
+            $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',authUserId())->first();
                  $cityId = $address->city;
                  $cityName= $address->cityName->name;
+
+            $customerType = $customer->customer_type;
+            if($customerType == 'Corporate'){
+                
         return view('customer.corporate.edit',compact('customer','address','cityId','cityName'));
             }else{
 
 
-        return view('customer.individual.edit');
+        return view('customer.individual.edit',compact('customer','address','cityId','cityName'));
 
             }
         }
