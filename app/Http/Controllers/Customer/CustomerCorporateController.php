@@ -34,9 +34,7 @@ class CustomerCorporateController extends Controller
      */
     public function create()
     {
-        $industries = Industry::all();
-        $countries = Country::all();
-        return view('customer.corporate.create', compact('industries', 'countries'));
+        return view('customer.corporate.create');
     }
 
     /**
@@ -123,9 +121,46 @@ class CustomerCorporateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-       
+       //dd($request->all());
+
+         $validator = Validator::make($request->all(), [
+            'company_name' => 'required|max:255|min:2',
+            'industry' => 'required',
+            'company_email' => 'required|max:255',
+            'company_phone' => 'required|max:11',
+            'website' => 'required',
+            'turn_over' => 'required',
+            'employee_count' => 'required',
+            'state' => 'required',
+            // 'city' => 'required',
+            'street' => 'required',
+            'country' => 'required',
+        ]);
+
+         if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
+        
+    DB::beginTransaction();
+        try{
+         $account =   Customer::updateCorporateCustomerAcount($request->all());
+
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Update Corporate Account', 'An attempt to update create account failed');
+         return back()->withInput();
+            
+        }
+        
+        Alert::success('Update Corporate Account', 'Account update');
+
+        return redirect()->route('customer.edit',$request->id);
     }
 
     /**
