@@ -53,10 +53,12 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	Route::get('account/corporate/new', ['as' => 'customer.corporate.create', 'uses' => 'Customer\CustomerCorporateController@create']);
+
+	Route::post('customer/corporate', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
 	
+
 	Route::post('account/corporate/new', ['as' => 'customer.corporate.store', 'uses' => 'Customer\CustomerCorporateController@store']);
 	Route::get('account/corporate/{id}/show', ['as' => 'customer.corporate.show', 'uses' => 'Customer\CustomerCorporateController@show']);
-	Route::post('account/corporate/{id}/update', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
 	Route::get('account/corporate/{id}/delete', ['as' => 'customer.corporate.destroy', 'uses' => 'Customer\CustomerCorporateController@destroy']);
 	Route::post('account/corporate/{id}/saveContact', ['as' => 'customer.corporate.saveContacts', 'uses' => 'ContactController@saveContacts']);
 

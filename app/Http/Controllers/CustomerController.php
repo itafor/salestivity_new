@@ -19,8 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', authUserId())->get();
         return view('customer.index', compact('customers'));
     }
 
@@ -53,12 +52,10 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-       
-        $userId = auth()->user()->id;
 
-        $customer = Customer::where('id',$id)->where('main_acct_id',$userId)->first();
-        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', $userId)->first();
-        $contacts = Contact::where('customer_id', $id)->where('main_acct_id', $userId)->get();
+        $customer = Customer::where('id',$id)->where('main_acct_id',authUserId())->first();
+        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', authUserId())->first();
+        $contacts = Contact::where('customer_id', $id)->where('main_acct_id', authUserId())->get();
         // dd($contacts);
         return view('customer.show', compact('customer', 'address', 'contacts'));
     }
@@ -71,7 +68,19 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        
+        $customer = Customer::where('id',$id)->where('main_acct_id',authUserId())->first();
+        if($customer){
+            $customerType = $customer->customer_type;
+            if($customerType == 'Corporate'){
+                $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',authUserId())->first();
+        return view('customer.corporate.edit',compact('customer','address'));
+            }else{
+
+
+        return view('customer.individual.edit');
+
+            }
+        }
     }
 
     /**

@@ -114,7 +114,7 @@ class Customer extends Model
         return $corporateCustomer;
     }
 
-     public static function createCustomerAddress($customer,$data) {
+public static function createCustomerAddress($customer,$data) {
 
             $address = new AddressCustomer;
             $address->customer_id = $customer->id;
@@ -143,6 +143,70 @@ public static function createContact($customer,$data)
         }
     }
 }
+
+ public static function updateCorporateCustomerAcount($data)
+    {
+       //dd($data);
+        self::where('id', $data['id'])->update([
+        'name' => $data['company_name'],
+        'industry' => $data['industry'],
+        'email' => $data['company_email'],
+        'phone' => $data['company_phone'],
+        'website' => $data['website'],
+        'turn_over' => $data['turn_over'],
+        'employee_count' => $data['employee_count'],
+        'main_acct_id' => auth()->user()->id,
+        'account_type' => $data['account_type'],
+        'account_id' => null,
+        'customer_type' => 'Corporate',
+        ]); 
+
+        $customer = self::where('id', $data['id'])->first();
+        $address = AddressCustomer::where('customer_id', $data['id'])->first();
+
+        self::updateAddress($address,$data);
+        self::updateContacts($data,$customer);
+    }
+
+    public static function updateContacts($data,$customer)
+    {
+        foreach($data['customerContacts'] as $key => $contact){
+            $cont = Contact::where('id', $key)->first();
+            if($cont){
+                $cont->title = $contact['contact_title'];
+                $cont->surname = $contact['contact_surname'];
+                $cont->name = $contact['contact_name'];
+                $cont->email = $contact['contact_email'];
+                $cont->phone = $contact['contact_phone'];
+                $cont->save();
+            }
+        }
+
+        if(isset($data['contacts']))
+        {
+           foreach($data['contacts'] as $contact){
+            Contact::create([
+                'customer_id' => $data['id'],
+                'title' => $contact['contact_title'],
+                'surname' => $contact['contact_surname'],
+                'name' => $contact['contact_name'],
+                'phone' => $contact['contact_phone'],
+                'email' => $contact['contact_email'],
+                'main_acct_id' => auth()->user()->id,
+            ]);
+        }  
+    }
+}
+
+public static function updateAddress($address,$data){
+    AddressCustomer::where('id', $address->id)->update([
+        'country' => $data['country'],
+        'state' => $data['state'],
+        'city' => $data['city'],
+        'street' => $data['street'],
+        ]); 
+}
+
  public static function deleteContacts($customer_id) {
     $contacts = Contact::where('customer_id',$customer_id)
     ->where('main_acct_id',auth()->user()->id)
