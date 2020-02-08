@@ -75,16 +75,16 @@
                     <tbody>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
-                     <td>{{ $renewal->customers->name }}</td>
+                     <td>{{ $renewal->customers ? $renewal->customers->name : 'N/A' }}</td>
                    </tr>
                  <tr>
                      <td style="width: 200px;"><b>{{ __('Email') }}</b></td>
-                     <td>{{ $renewal->customers->email }}</td>
+                     <td>{{ $renewal->customers ? $renewal->customers->email : 'N/A' }}</td>
                    </tr>
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Phone') }}</b></td>
-                     <td>{{ $renewal->customers->phone }}</td>
+                     <td>{{ $renewal->customers ? $renewal->customers->phone : 'N/A' }}</td>
                    </tr>
 
                      <tr>
