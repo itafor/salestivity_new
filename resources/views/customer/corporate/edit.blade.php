@@ -201,11 +201,7 @@
                                             <label class="form-control-label" for="city_id">{{ __('City') }}</label>
                                             <select name="city" id="city_id" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('street') }}"  >
                                                 <option value="">Select City</option>
-<!--                                                 @foreach(getCities() as $ct)
-                                                    <option value="{{ $ct->id }}"
-                                             {{$ct->id == $address->city ? 'selected' : ''}}
-                                                        >{{ $ct->name }}</option>
-                                                @endforeach -->
+                        <option value="{{ $cityId }}" selected="true">{{ $cityName }}</option>
                                             </select>
                                             @if ($errors->has('city'))
                                                 <span class="invalid-feedback" role="alert">

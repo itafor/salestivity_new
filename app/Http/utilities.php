@@ -46,5 +46,7 @@ function getStates(){
 
 function getCities(){
  $cities = City::all();
+ if($cities){
  return $cities;
+ }
 }
