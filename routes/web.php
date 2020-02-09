@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('project/{id}', ['as' => 'project.update', 'uses' => 'ProjectController@update']);
 	Route::get('project/{id}', ['as' => 'project.destroy', 'uses' => 'ProjectController@destroy']);
 
-
+//Accounts
 	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
 
 	Route::get('customer/{id}/show', ['as' => 'customer.show', 'uses' => 'CustomerController@show']);
@@ -51,11 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('customer/destroy/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
 	Route::get('contact/destroy/{id}', ['as' => 'contact.destroy', 'uses' => 'CustomerController@deleteContact']);
 
-
 	Route::get('account/corporate/new', ['as' => 'customer.corporate.create', 'uses' => 'Customer\CustomerCorporateController@create']);
 
-	Route::post('customer/corporate', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
+	Route::post('customer/corporate/update', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
 	
+	Route::post('account/individual/update', ['as' => 'customer.individual.update', 'uses' => 'Customer\CustomerIndividualController@update']);
 
 	Route::post('account/corporate/new', ['as' => 'customer.corporate.store', 'uses' => 'Customer\CustomerCorporateController@store']);
 	Route::get('account/corporate/{id}/show', ['as' => 'customer.corporate.show', 'uses' => 'Customer\CustomerCorporateController@show']);
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('account/individual/new', ['as' => 'customer.individual.create', 'uses' => 'Customer\CustomerIndividualController@create']);
 	Route::post('account/individual/new', ['as' => 'customer.individual.store', 'uses' => 'Customer\CustomerIndividualController@store']);
 	Route::get('account/individual/{id}/show', ['as' => 'customer.individual.show', 'uses' => 'Customer\CustomerIndividualController@show']);
-	Route::post('account/individual/{id}/update', ['as' => 'customer.individual.update', 'uses' => 'Customer\CustomerIndividualController@update']);
+	
 	
 
 	// products

@@ -121,9 +121,45 @@ class CustomerIndividualController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+     public function update(Request $request)
     {
-       
+      // dd($request->all());
+
+         $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255|min:2',
+            'profession' => 'required',
+            'industry' => 'required',
+            'email' => 'required|max:255',
+            'phone' => 'required|max:11',
+            'website' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+            'country' => 'required',
+        ]);
+
+         if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
+        
+    DB::beginTransaction();
+        try{
+         $account =   Customer::updateIndividualCustomerAcount($request->all());
+
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Update Individual Account', 'An attempt to update create account failed');
+         return back()->withInput();
+            
+        }
+        
+        Alert::success('Update Individual Account', 'Account updated');
+
+        return redirect()->route('customer.edit',$request->id);
     }
 
     /**

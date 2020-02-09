@@ -168,8 +168,29 @@ public static function createContact($customer,$data)
         self::updateContacts($data,$customer);
     }
 
+     public static function updateIndividualCustomerAcount($data)
+    {
+       //dd($data);
+        self::where('id', $data['id'])->update([
+        'name' => $data['name'],
+        'profession' => $data['profession'],
+        'industry' => $data['industry'],
+        'email' => $data['email'],
+        'phone' => $data['phone'],
+        'website' => $data['website'],
+        'customer_type' => 'Individual',
+        ]); 
+
+        $customer = self::where('id', $data['id'])->first();
+        $address = AddressCustomer::where('customer_id', $data['id'])->first();
+
+        self::updateAddress($address,$data);
+        self::updateContacts($data,$customer);
+    }
+
     public static function updateContacts($data,$customer)
     {
+         if(isset($data['customerContacts'])){
         foreach($data['customerContacts'] as $key => $contact){
             $cont = Contact::where('id', $key)->first();
             if($cont){
@@ -181,8 +202,8 @@ public static function createContact($customer,$data)
                 $cont->save();
             }
         }
-
-        if(isset($data['contacts']))
+    }
+     if(isset($data['contacts']))
         {
            foreach($data['contacts'] as $contact){
             Contact::create([

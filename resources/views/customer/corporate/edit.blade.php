@@ -199,7 +199,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="city_id">{{ __('City') }}</label>
-                                            <select name="city" id="city_id" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('street') }}"  >
+                                            <select name="city" id="city_id" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('street') }}" required >
                                                 <option value="">Select City</option>
                         <option value="{{ $cityId }}" selected="true">{{ $cityName }}</option>
                                             </select>
@@ -301,6 +301,8 @@
                             </div>
                         </div>
                               @endforeach
+                                @else
+                              <h4>No contact record found</h4>
                         @endif
 
                             </div>
