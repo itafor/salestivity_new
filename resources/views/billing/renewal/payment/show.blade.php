@@ -4,42 +4,45 @@
 					
 <div class="table-responsive">
     <table class="table align-items-center table-flush">
-        <thead class="thead-light">
+        <thead>
             <tr>
                 <th scope="col">{{ __('Products') }}</th>
                 <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Discount') }}</th>
+                <th scope="col">{{ __('Billing AMT') }}</th>
                 <th scope="col">{{ __('Amount Paid') }}</th>
-                <th scope="col">{{ __('Cost') }}</th>
                 <th scope="col">{{ __('Outstanding') }}</th>
+                <th scope="col">{{ __('Payment Date') }}</th>
                 
             </tr>
         </thead>
         <tbody>
-            @foreach($payments as $payment)
+            @if($renewalPayments->count() >=1)
+            @foreach($renewalPayments as $payment)
                 <tr>
-                    <td>
-                    @foreach($payment->product as $product)
-                        {{ $product->name }},
-                    @endforeach
-                    </td>
-                    <td>{{ $payment->status }}</td> 
-                    <td>{{ $payment->discount }}%</td>
-                    <td>{{ $payment->formatValue($payment->amount) }}</td>
-                    <td>{{ $payment->formatValue($payment->cost) }}</td>
-                    <td>{{ $payment->formatValue($payment->outstanding) }}</td>
-                </tr>
-
-                
-                <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><b> ₦{{ $payment->formatValue($payments->sum('amount')) }} </b></td>
-                <td><b> ₦{{ $payment->formatValue($payments->sum('cost')) }} </b></td>
-                <td><b> ₦{{ $payment->formatValue($payments->sum('outstanding')) }} </b></td>
-                </tr>                  
+                    <td>{{$payment->product ? $payment->product->name : 'N/A' }}</td>
+                    <td>{{$payment->status}}</td>
+                     <td>
+                        {{ $payment->discount == '' ? 'N/A' : $payment->discount.'%'}} 
+                     </td>
+                    <td>&#8358;{{ number_format($payment->billingAmount,2)}}</td>
+                    <td>&#8358;{{ number_format($payment->amount_paid,2)}}</td>
+                    <td>&#8358;{{ number_format($payment->billingbalance,2)}}</td>
+                    <td>{{ date("jS F, Y", strtotime($payment->payment_date)) }}</td>
+              </tr>                 
                 @endforeach      
+            @else
+            <tr>
+                <td colspan="8">
+                <h5>No payment record found</h5> 
+            <a onclick="renewalPayment({{$renewal->id}})" >
+                <button class="btn btn-sm btn-primary" >
+            {{ __('Make Payment') }}
+            </button>
+        </a>
+                </td>
+            </tr>
+            @endif
         </tbody>
     </table>    
 </div>

@@ -16,6 +16,21 @@ class AddressCustomer extends Model
         return $this->belongsTo('App\Customer', 'customer_id');
     }
 
+    public function countryName()
+    {
+        return $this->belongsTo('App\Country', 'country','id');
+    }
+
+     public function stateName()
+    {
+        return $this->belongsTo('App\State', 'state','id');
+    }
+
+    public function cityName()
+    {
+        return $this->belongsTo('App\City', 'city','id');
+    }
+
     public function getCountry($id)
     {
         $country = Country::where('id',$id)->first();

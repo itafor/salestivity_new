@@ -24,6 +24,71 @@
         
 	
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link type="text/css" href="{{ url('css/b4-select2.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('css/select2.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('assets/css/style.css') }}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+<!-- Data table stylesheet -->
+    <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+
+        <style>
+        .select2-selection {
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            display: block !important;
+            width: 100% !important;
+            height: calc(3.42rem + 2px) !important;
+            padding: .625rem .75rem !important;
+            transition: all .2s cubic-bezier(.68, -.55, .265, 1.55) !important;
+            color: #8898aa !important;
+            border: 1px solid #cad1d7 !important;
+            border-radius: .375rem !important;
+            background-color: #fff !important;
+            background-clip: padding-box !important;
+            box-shadow: none !important;
+            transition: box-shadow .15s ease !important;
+            border: 1px solid #ced4da !important;
+            overflow: hidden;
+        }
+        .heading-small{
+            font-weight: bold
+        }
+        .theme-semidark .dt-brand:before {
+            background-color: #fff !important;
+        }
+
+        input[type=email] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=text] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=tel] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+         input[type=url] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+        input[type=number] {
+        border: 0.5px solid;
+        border-radius: 4px;
+        }
+    </style>
+    @yield('style')
+
+
+
+    <script>
+        var baseUrl = '{{url("/")}}';
+    </script>
+
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -34,6 +99,7 @@
         @endauth
         
         <div class="main-content">
+            @include('sweetalert::alert')
             @include('layouts.navbars.navbar')
             @yield('content')
         </div>
@@ -46,9 +112,60 @@
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         
         @stack('js')
+
+        <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         
-        <!-- Argon JS -->
+        <!-- select2 JS -->
         <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
-        <script src="{{ asset('select2-4.0.7/dist/js/select2.min.js') }}"></script>
+       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<!-- datatable script -->
+       <script src="{{url('assets/datatables.net/js/jquery.dataTables.js')}}"></script>
+    <script src="{{url('assets/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{ url('js/select2.js') }}"></script>
+    
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+        <script type="text/javascript">
+
+            $('.datatable').DataTable({
+            dom: '<"html5buttons" B>lTfgitp',
+
+        });
+
+            $(document).ready(function() {
+            $("select").not('.user').select2({
+                theme: "bootstrap"
+            });
+            $('.datatable').DataTable();
+        });
+
+          var Datepicker = (function() {
+    var $datepicker = $('.datepicker');
+    function init($this) {
+        var options = {
+            disableTouchKeyboard: true,
+            autoclose: false,
+            format: 'dd/mm/yyyy'
+        };
+        $this.datepicker(options);
+    }
+    if ($datepicker.length) {
+        $datepicker.each(function() {
+            init($(this));
+        });
+    }
+})();
+
+
+        </script>
+
+        <!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script> -->
+
+    <script src="{{url('js/mainjs.js')}}"></script>
     </body>
 </html>

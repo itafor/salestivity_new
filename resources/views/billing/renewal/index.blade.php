@@ -31,29 +31,37 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
+                        <table class="table  table-bordered table-hover datatable">
+                            <thead>
                                 <tr>
-                                    <th scope="col">{{ __('Customer') }}</th>
-                                    <th scope="col">{{ __('Product') }}</th>
-                                    <th scope="col">{{ __('Start Date') }}</th>
-                                    <th scope="col">{{ __('End Date') }}</th>
-                                    <th scope="col">{{ __('Action') }}</th>
+                                    <th ><b>{{ __('S/N') }}</b></th>
+                                    <th ><b>{{ __('Customer') }}</b></th>
+                                    <th ><b>{{ __('Product') }}</b></th>
+                                    <th ><b>{{ __('Start Date') }}</b></th>
+                                    <th ><b>{{ __('End Date') }}</b></th>
+                                    <th class="text-center"><b>{{ __('Action') }}</b></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($renewals as $renewal)
                                     <tr>
-                                    
-                                        <td>{{ $renewal->customers->name }}</td>
-                                        <td>{{ $renewal->product }}</td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
+                                        <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
                                         
                                         <td>
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                <a href="{{ route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a>
+                                                @if($renewal->status == 'Paid')
+                                                <a  class="btn btn-sm btn-primary text-white" onclick="completelypayAlert()">{{ __('Payment') }}</a>
+                                                @else
+
+                                                <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
+
+                                                @endif
+                         <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -69,5 +77,6 @@
 
 
     @include('layouts.footers.auth')
+    @include('billing.renewal.payment.create')
   </div>
 @endsection

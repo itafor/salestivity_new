@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Renewal;
-use App\Customer;
+use App\BillingAgent;
 use App\Category;
-use App\SubCategory;
+use App\Contact;
+use App\Customer;
+use App\Jobs\SendRenewalPaymentNotification;
+use App\Mail\RenewalPaid;
 use App\Payment;
 use App\Product;
+use App\Renewal;
+use App\RenewalPayment;
+use App\SubCategory;
+use App\renewalContactEmail;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
+use Validator;
 
 class RenewalController extends Controller
 {
@@ -21,7 +32,9 @@ class RenewalController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $renewals = Renewal::where('main_acct_id', $userId)->get();
+        $renewals = Renewal::where('main_acct_id', $userId)
+        ->orderby('created_at','desc')
+        ->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
@@ -46,30 +59,42 @@ class RenewalController extends Controller
      */
     public function store(Request $request)
     {
-        $userId = auth()->user()->id;
-        $renewal = new Renewal;
-
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'product' => 'required',
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required|numeric',
+            'product' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required',
-            // 'amount' => 'required|integer',
+            'productPrice' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'description' => 'required',
         ]);
 
-        $renewal->main_acct_id = $userId;
-        $renewal->customer_id = $request->customer_id;
-        $renewal->product = $request->product;
-        $renewal->amount = $request->amount;
-        $renewal->start_date = $request->start_date;
-        $renewal->end_date = $request->end_date;
-        $renewal->save();
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
+        if(compareEndStartDate($request->start_date,$request->end_date) == false){
+            Alert::error('Invalid End Date', 'Please ensure that the End Date is after the Start Date');
+         return back()->withInput();
+        }
 
-        $status = "Renewal has been Added ";
-        Session::flash('status', $status);
+        DB::beginTransaction();
+        try{
+         $renewal =   Renewal::createNew($request->all());
+         //$contacts =$renewal->customers->contacts;
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Addition Failed', 'An attempt to add renewal failed');
+         return back()->withInput();
+            
+        }
         
-
+        Alert::success('Add Renewal', 'Renewal added successfully');
         return redirect()->route('billing.renewal.index');
     }
 
@@ -82,12 +107,17 @@ class RenewalController extends Controller
     public function show($id)
     {
         $userId = auth()->user()->id;
-        $renewal = Renewal::where('id',$id)->where('main_acct_id', $userId)->first();
-        $customers = Customer::all();
-        $products = Product::all();
-
-        $payments = Payment::where('customer_id', $renewal->customer_id)->where('status', 'Renewal')->where('main_acct_id', $userId)->get();
-        return view('billing.renewal.show', compact('renewal', 'customers','products', 'payments'));
+        $renewalPayments='';
+        $renewal = Renewal::where('id',$id)
+        ->where('main_acct_id', $userId)
+        ->whereNull('deleted_at')->first();
+       
+        if($renewal){
+         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
+        }
+         
+       
+        return view('billing.renewal.show', compact('renewal','renewalPayments'));
     }
 
     /**
@@ -98,7 +128,12 @@ class RenewalController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $userId = auth()->user()->id;
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
+        $renewal = Renewal::where('id',$id)->first();
+        return view('billing.renewal.edit', compact('renewal','customers', 'products'));
     }
 
     /**
@@ -108,35 +143,44 @@ class RenewalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $userId = auth()->user()->id;
-        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId);
-
-        $this->validate($request, [
-            'customer_id' => 'required',
-            'product' => 'required',
+        $validator = Validator::make($request->all(), [
+            'renewal_id' => 'required|numeric',
+            'customer_id' => 'required|numeric',
+            'product' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required',
-            // 'period' => 'required',
-            // 'amount' => 'required|integer',
+            'productPrice' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'description' => 'required',
         ]);
 
-        $renewal->main_acct_id = $userId;
-        $renewal->customer_id = $request->input('customer_id');
-        $renewal->product = $request->input('product');
-        $renewal->start_date = $request->input('start_date');
-        $renewal->end_date = $request->input('end_date');
-        // $renewal->amount = $request->input('amount');
-        // $renewal->period = $request->input('period');
-        $renewal->save();
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
+        if(compareEndStartDate($request->start_date,$request->end_date) == false){
+            Alert::error('Invalid End Date', 'End Date cannot be less than start date');
+         return back()->withInput();
+        }
 
-        $status = "Renewal has been Updated ";
-        Session::flash('status', $status);
+        DB::beginTransaction();
+        try{
+            Renewal::updateRenewal($request->all());
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Update Failed', 'An attempt to edit the selected renewal failed');
+         return back()->withInput();
+            
+        }
         
-
-        return redirect()->route('billing.renewal.show', $renewal->id);
+        Alert::success('Renewal Update successful', 'Renewal updated successfully');
+        return redirect()->route('billing.renewal.show', $request->renewal_id);
     }
 
     /**
@@ -148,10 +192,8 @@ class RenewalController extends Controller
     public function destroy($id)
     {
         $renewal = Renewal::find($id);
-        $renewal->delete();
-
-        Session::flash('status', 'The renewal has been successfully deleted');
-        return redirect()->route('billing.renewal.index');
+         RenewalPayment::deletePaymentHistory($renewal->id);
+         $renewal->delete();
     }
 
     /**
@@ -179,37 +221,50 @@ class RenewalController extends Controller
      */
     public function pay(Request $request)
     {
-        $userId = auth()->user()->id;
-        $this->validate($request, [
-            'cost' => 'required',
-            // 'category_id' => 'required',
-            'product' => 'required',
-            'amount' => 'required'
+         //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'productPrice' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'amount_paid' => 'required|numeric',
+            'billingbalance' => 'required',
+            'customer_id' => 'required|numeric',
+            'product_id' => 'required|numeric',
+            'renewal_id' => 'required|numeric',
+            'payment_date' => 'required',
         ]);
 
-        $payment = new Payment;
-        $payment->customer_id = $request->customer_id;
-        $renewal_id = $request->renewal_id;
-        $payment->cost = $request->cost;
-        $payment->category_id = $request->category_id;
-        $payment->sub_category_id = $request->sub_category_id;
-        $payment->amount = $request->amount;
-        $payment->discount = $request->discount;
-        $payment->status = $request->status;
-        $payment->main_acct_id = $userId;
-        $calcDiscount = ($payment->discount/100) * $request->cost;
-        $discountCost = $request->cost - $calcDiscount;
-        $payment->outstanding = ($request->amount) - ($discountCost);
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
 
-        $payment->save();
-        $product = $request->product;
+        DB::beginTransaction();
+        try{
+         $renewal =  RenewalPayment::createNew($request->all());
+             $toEmail = $renewal->customer->email;
+        //$billingAgent = BillingAgent::where('customer_id',$renewal->customer_id)->first();
+         $payment_status =RenewalPayment::where('id',$renewal->id)->first();
+         $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
+
+            Mail::to($toEmail)->send(new RenewalPaid($renewal,$payment_status));
+            if($renewalcontacts){
+                    foreach ($renewalcontacts as $key => $contact) {
+                        $customerContactEmail=Contact::where('id',$contact->contact_id)->first();
+        SendRenewalPaymentNotification::dispatch($renewal,$customerContactEmail,$payment_status)
+            ->delay(now()->addSeconds(5));
+            }
+        }
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Renewal Payment', 'An attempt to record renewal payment failed');
+         return back()->withInput();
+            
+        }
         
-        $payment->renewalsMorph()->sync($renewal_id);
-        $payment->product()->sync($product);
-
-        $status = "Payment has been Registerd ";
-        Session::flash('status', $status);
-
-        return redirect()->route('billing.renewal.index');
+        Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
+        return redirect()->route('billing.renewal.show',$request->renewal_id);
     }
 }
