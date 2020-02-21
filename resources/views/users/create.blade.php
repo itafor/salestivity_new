@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('User Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('allSubUsers') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
@@ -68,11 +68,17 @@
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('role_id') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-role">{{ __('Role') }}</label>
-                                        <select name="role_id" id="input-role" class="form-control" data-toggle="select">
+                                        @if($roles->isEmpty())
+                                            <select name="role_id" id="input-role" class="form-control" data-toggle="select">
+                                                <option value="">No role created</option>
+                                            </select>
+                                        @else
+                                            <select name="role_id" id="input-role" class="form-control" data-toggle="select">
                                             <option value="">Select a Role</option>
-                                            @foreach($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                            @endforeach
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select> 
 
                                         @if ($errors->has('name'))
@@ -105,7 +111,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('unit_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-unit">{{ __('Unit') }}</label>
-                                            <select name="unit_id" id="input-unit" class="form-control" data-toggle="select" disabled>
+                                            <select name="unit_id" id="input-unit" class="form-control" data-toggle="select">
                                                 <option value="">Select a Unit</option>
                                             </select> 
 

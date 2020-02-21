@@ -30,8 +30,8 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-bordered">
-                            <thead class="thead-light">
+                        <table class="table align-items-center table-bordered datatable">
+                            <thead>
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
                                     <th scope="col">{{ __('Email') }}</th>
@@ -47,7 +47,7 @@
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
-                                        <td>{{ $user->roles->name }}</td>
+                                        <td>{{ $user->name }}</td>
                                         <td>{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                         <td class="text-right">
                                             <div class="dropdown">

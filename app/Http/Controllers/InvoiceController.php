@@ -22,7 +22,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $invoices = Invoice::all();
+        $invoices = Invoice::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
         $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
         // dd($invoices->customer()->customer);
 

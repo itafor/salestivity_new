@@ -23,9 +23,9 @@ class ProjectController extends Controller
     {
         $userId = auth()->user()->id;
         $customers = Customer::where('main_acct_id', $userId)->get();
-        $projects = Project::where('main_acct_id', $userId)->get();
+        $projects = Project::where('main_acct_id', $userId)->orderBy('created_at', 'DESC')->get();
         
-        return view('project.index', compact('projects', 'products', 'customers'));
+        return view('project.index', compact('projects', 'customers'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ProjectController extends Controller
         $customers = Customer::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
         
-        return view('project.create', compact('project', 'products', 'customers'));
+        return view('project.create', compact('products', 'customers'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ProjectController extends Controller
             'technician' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'notes' => 'required|max:255',
+            // 'notes' => 'required|max:255',
 			// 'uploads' => 'required',
 						// 'uploads.*' => 'image|file',
 				]);
