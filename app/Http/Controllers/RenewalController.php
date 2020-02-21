@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\RenewalCreated;
+use App\User;
 use Session;
 use Validator;
 
@@ -82,8 +84,21 @@ class RenewalController extends Controller
 
         DB::beginTransaction();
         try{
-         $renewal =   Renewal::createNew($request->all());
-         //$contacts =$renewal->customers->contacts;
+            // $user = auth()->user();
+            $when = now()->addSeconds(5);
+            $emails = [];
+         $renewal = Renewal::createNew($request->all());
+         $getContactEmail = renewalContactEmail::where('renewal_id', $renewal->id)->get();
+            foreach ($getContactEmail as $key => $contact) {
+                $con = Contact::where('id', $contact->contact_id)->first();
+                // $user->notify(new RenewalCreated($renewal));
+                (new User)->forceFill([
+                    'name' => $con->name,
+                    'email' => $con->email,
+                    ])->notify((new RenewalCreated($renewal))->delay($when));
+                    // ])->notify(new RenewalCreated($renewal));
+            }
+
             DB::commit();
         }
         catch(Exception $e){
@@ -96,6 +111,11 @@ class RenewalController extends Controller
         
         Alert::success('Add Renewal', 'Renewal added successfully');
         return redirect()->route('billing.renewal.index');
+    }
+
+    public function mail()
+    {
+        return view('emails.renewal_created_notification');
     }
 
     /**

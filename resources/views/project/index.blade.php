@@ -31,8 +31,8 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
+                        <table class="table table-bordered table-hover datatable align-items-center">
+                            <thead>
                                 <tr>
                                     <th scope="col">{{ __('Customer') }}</th>
                                     <th scope="col">{{ __('Product') }}</th>
@@ -46,12 +46,12 @@
                             <tbody>
                                 @foreach($projects as $project)
                                     <tr>
-                                        <td>{{ $project->customer_account }}</td>
-                                        <td>{{ $project->product_id }}</td>
+                                        <td>{{ $project->customer->name }}</td>
+                                        <td>{{ $project->product->name }}</td>
                                         <td>{{ $project->technician }}</td>
+                                        <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
+                                        <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
                                         <td>{{ $project->notes }}</td>
-                                        <td>{{ $project->start_date }}</td>
-                                        <td>{{ $project->end_date }}</td>
                                         <td>
                                             <div class="col-4 text-right">
                                                 <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>

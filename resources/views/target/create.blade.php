@@ -167,7 +167,7 @@
         // Auto fill department id when a sales person has been picked
         function selectSales(value) {
             $.get('/getsales/' + value, function (data) {
-                // console.log(data.depts);
+                console.log(data.depts);
                 jQuery.each(data.depts, function (i, val) {  
                     // console.log(val.id)
                     $('#dept_id').val(val.id);
