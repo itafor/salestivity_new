@@ -87,14 +87,17 @@ class OpportunityController extends Controller
         $product = $request->product_id;
         
 
-        $opportunity->products()->attach($product, [
-            'product_category' => implode($request['category_id']),
-            'product_sub_category' => implode($request->sub_category_id),
-            'product_name' => implode($product),
-            'product_qty' => implode($request->quantity),
-            'product_price' => implode($request->price),
-            'main_acct_id' => implode($userId),
-        ]);
+        if(isset($request->category_id)) {
+            $opportunity->products()->attach($product, [
+                'product_category' => implode($request['category_id']),
+                'product_sub_category' => implode($request->sub_category_id),
+                'product_name' => implode($product),
+                'product_qty' => implode($request->quantity),
+                'product_price' => implode($request->price),
+                // 'main_acct_id' => implode($userId),
+                'main_acct_id' => $userId,
+            ]);
+        }
         $status = "Opportunity has been saved";
         Session::flash('status', $status);
 

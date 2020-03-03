@@ -90,37 +90,49 @@
 </div> 
 </div>
     <div class="form-row"> 
-
         <div class="form-group{{ $errors->has('contact_emails') ? ' has-danger' : '' }} col-md-6" >
-    <label class="form-control-label" for="discount">{{ __('Contact Emails') }} <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button>  <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button></label>
-   <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
-  <option value="" selected="true">Choose contact emails</option>
-</select>
+            <label class="form-control-label" for="discount">{{ __('Contact Emails') }} <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button>  <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button></label>
+            <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
+                <option value="" selected="true">Choose contact emails</option>
+            </select>
 
-    @if ($errors->has('description'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('description') }}</strong>
-        </span>
-    @endif
-</div>
-
-
-<div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
-    <label class="form-control-label" for="discount">{{ __('Description') }}</label>
-    <textarea name="description" class="form-control" id="renewal_description"></textarea>
-
-    @if ($errors->has('description'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('description') }}</strong>
-        </span>
-    @endif
-</div>
+        @if ($errors->has('description'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('description') }}</strong>
+            </span>
+        @endif
+        </div>
     
-  </div>
+        <div class="form-group{{ $errors->has('contact_emails') ? ' has-danger' : '' }} col-md-6" >
+            <label class="form-control-label" for="discount">{{ __('CC') }}</label>
+            <input name="company_email" class="form-control company_email " id="company_email">
+                <!-- <option value="" selected="true">Choose contact emails</option>
+            </select> -->
+
+        @if ($errors->has('description'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('description') }}</strong>
+            </span>
+        @endif
+        </div>
+    </div>
+    <div class="form-row"> 
+        <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-6" >
+            <label class="form-control-label" for="discount">{{ __('Description') }}</label>
+            <textarea name="description" class="form-control" id="renewal_description"></textarea>
+
+            @if ($errors->has('description'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('description') }}</strong>
+                </span>
+            @endif
+        </div>
 
 
 
-  <div class="form-row">
+
+
+  <!-- <div class="form-row"> -->
 <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }} col-md-6">
     <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
     <input type="text" name="start_date" id="startdate" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" data-date-format="dd/mm/yyyy" value="{{ old('start_date') }}" required>

@@ -26,6 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('emails/sendinvoice');
 	});
 
+	// Roles
+	Route::get('roles', 'UsersRoleController@index')->name('role.index');
+	Route::get('new/role', 'UsersRoleController@create')->name('role.create');
+	Route::post('new/role', 'UsersRoleController@store')->name('role.store');
+
+
 	// Sub users
 	Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
 	Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
@@ -167,6 +173,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
 	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
 	Route::get('get-contact-emails/{id}', 'AjaxController@getContactEmails');
+	Route::get('get-company-email/{id}', 'AjaxController@getCompanyEmail');
 
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 	Route::get('getdept/{id}', 'AjaxController@getDept');

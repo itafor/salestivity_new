@@ -46,7 +46,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
-                                            <select name="account_id" id="account" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
+                                            <select name="account_id" id="customer" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
                                                 <option value="">Select Account</option>
                                                 @foreach($customers as $customer)
                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -80,7 +80,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('contact') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-contact">{{ __('Contact') }}</label>
-                                            <select name="contact" id="contact" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}" disabled>
+                                            <select name="contact" id="contact_emails" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}">
                                                 <!-- Automatically filled according to an account picked using jquery -->
                                                 <option value="">Select Contact</option>
                                             </select>

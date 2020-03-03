@@ -94,6 +94,13 @@ public function getContactEmails($id) {
         return response()->json(['contacts' => $contacts]);
 }
 
+public function getCompanyEmail($id)
+{
+    $customer = Customer::where('id',$id)->get();
+    $contact = $customer;
+        return response()->json(['contact' => $contact]);
+}
+
     public function getSalesDept($id)
     {
 

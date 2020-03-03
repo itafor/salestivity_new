@@ -35,7 +35,7 @@ class RenewalController extends Controller
     {
         $userId = auth()->user()->id;
         $renewals = Renewal::where('main_acct_id', $userId)
-        ->orderby('created_at','desc')
+        ->orderby('end_date','asc')
         ->get();
         return view('billing.renewal.index', compact('renewals'));
     }
@@ -89,6 +89,16 @@ class RenewalController extends Controller
             $emails = [];
          $renewal = Renewal::createNew($request->all());
          $getContactEmail = renewalContactEmail::where('renewal_id', $renewal->id)->get();
+
+         // get Company Email
+         $company_email = $request->company_email;
+        //  send email to company email
+         (new User)->forceFill([
+            'name' => 'Company',
+            'email' => $company_email,
+            ])->notify((new RenewalCreated($renewal))->delay($when));
+
+
             foreach ($getContactEmail as $key => $contact) {
                 $con = Contact::where('id', $contact->contact_id)->first();
                 // $user->notify(new RenewalCreated($renewal));
