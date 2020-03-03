@@ -34,10 +34,8 @@
                         <table class="table  table-bordered table-hover datatable">
                             <thead>
                                 <tr>
-                                    <th ><b>{{ __('S/N') }}</b></th>
                                     <th ><b>{{ __('Customer') }}</b></th>
                                     <th ><b>{{ __('Product') }}</b></th>
-                                    <th ><b>{{ __('Start Date') }}</b></th>
                                     <th ><b>{{ __('End Date') }}</b></th>
                                     <th class="text-center"><b>{{ __('Action') }}</b></th>
                                 </tr>
@@ -45,10 +43,8 @@
                             <tbody>
                                 @foreach($renewals as $renewal)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
                                         <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                                         <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}</td>
-                                        <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>
                                         <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
                                         
                                         <td>
@@ -61,7 +57,7 @@
                                                 <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
 
                                                 @endif
-                         <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                                                <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
                                             </div>
                                         </td>
                                     </tr>

@@ -288,6 +288,38 @@ $('.selectpicker').selectpicker({
             }
         });
 
+        // fill company email whan a cutomer is picked
+        $('#customer').change(function(){
+            var customerId = $(this).val();
+            if(customerId){
+                $('#company_email').empty();
+                $('<option>').attr('selected', true).val('').text('Loading...').appendTo('#company_email');
+                $.ajax({
+                    url: baseUrl+'/get-company-email/'+customerId,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.contact !=''){
+                            console.log(data.contact);
+                        $('#company_email').empty();
+                        $('<option>').attr('selected', true).val('').text('Select contact').appendTo('#company_email');
+                       localStorage.setItem('company_email',JSON.stringify(data.contact));
+                        $.each(data.contact, function(k, v) {
+                            // $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#company_email');
+                            $('#company_email').val(v.email);
+                        });
+
+                      }else{
+                        $('#company_email').empty();
+                        //  $('<option>').attr('selected', true).val(' ').text('No Email found').appendTo('#company_email');
+                      localStorage.removeItem('company_email');
+                      }
+
+                    }
+                });
+            }
+        });
+
   function selectAllcontactEmails(){
       var contactemails = localStorage.getItem('contact_emails');
         $('#contact_emails').empty();
@@ -389,6 +421,8 @@ $('#container').on('click', '.remove_project_file', function(e) {
     $(this).parent().remove();
     row--;
 });
+
+
 
 
 

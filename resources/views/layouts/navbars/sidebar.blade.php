@@ -107,7 +107,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Account Management') }}
+                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Account') }}
                     </a>
 
                     <div class="collapse " id="navbar-accounts">
@@ -148,7 +148,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-products" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fa fa-briefcase text-primary" aria-hidden="true"></i>{{ __('Product Management') }}
+                        <i class="fa fa-briefcase text-primary" aria-hidden="true"></i>{{ __('Product') }}
                     </a>
 
                     <div class="collapse " id="navbar-products">
@@ -182,7 +182,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-project" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-paper-diploma text-primary"></i>
-                        <span class="nav-link-text">{{ __('Project Management') }}</span>
+                        <span class="nav-link-text">{{ __('Project') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-project">
@@ -238,7 +238,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-target" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
-                        <span class="nav-link-text">{{ __('Target Management') }}</span>
+                        <span class="nav-link-text">{{ __('Target') }}</span>
                     </a>
 
                     <div class="collapse" id="navbar-target">
@@ -381,6 +381,12 @@
                         </ul>
                     </div> -->
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#navbar-email_marketing"  role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-ruler-pencil text-primary"></i>
+                        <span class="nav-link-text">{{ __('Email Marketing') }}</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-reporting"  role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -413,6 +419,11 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link" href="{{ route('newSubUser') }}">
                                                             {{ __('Add User') }}
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="{{ route('role.create') }}">
+                                                            {{ __('Add User Role') }}
                                                         </a>
                                                     </li>
                                                 </ul>

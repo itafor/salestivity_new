@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Mail;
 
 class CronJobController extends Controller
 {
-    public static function renewalsNotificationAt15Percent($percentage = 15)
+    // public static function renewalsNotificationAt15Percent($percentage = 15)
+    public static function renewalsNotificationAt15Percent($percentage = 85)
     {
        
        $renewals = self::getRenewals($percentage);
@@ -43,7 +44,8 @@ class CronJobController extends Controller
 
 
 
-    public static function renewalsNotificationAt5Percent($percentage = 5)
+    // public static function renewalsNotificationAt5Percent($percentage = 5)
+    public static function renewalsNotificationAt5Percent($percentage = 95)
     {
        
        $renewals = self::getRenewals($percentage);
@@ -72,7 +74,8 @@ class CronJobController extends Controller
 		return 'Done';
   }
 
-    public static function renewalsNotificationAt0Percent($percentage = 0)
+    // public static function renewalsNotificationAt0Percent($percentage = 0)
+    public static function renewalsNotificationAt0Percent($percentage = 100)
     {
        
        $renewals = self::getRenewals($percentage);
