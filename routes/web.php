@@ -26,6 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('emails/sendinvoice');
 	});
 
+	// Roles
+	Route::get('roles', 'UsersRoleController@index')->name('role.index');
+	Route::get('new/role', 'UsersRoleController@create')->name('role.create');
+	Route::post('new/role', 'UsersRoleController@store')->name('role.store');
+
+
 	// Sub users
 	Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
 	Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
@@ -43,24 +49,30 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('project/{id}', ['as' => 'project.update', 'uses' => 'ProjectController@update']);
 	Route::get('project/{id}', ['as' => 'project.destroy', 'uses' => 'ProjectController@destroy']);
 
-	// customer account
-	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
-	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
-	// Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
+//Accounts
 	Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);
+
+	Route::get('customer/{id}/show', ['as' => 'customer.show', 'uses' => 'CustomerController@show']);
+	Route::get('customer/{id}/edit', ['as' => 'customer.edit', 'uses' => 'CustomerController@edit']);
+	Route::get('customer/destroy/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
+	Route::get('contact/destroy/{id}', ['as' => 'contact.destroy', 'uses' => 'CustomerController@deleteContact']);
+
 	Route::get('account/corporate/new', ['as' => 'customer.corporate.create', 'uses' => 'Customer\CustomerCorporateController@create']);
+
+	Route::post('customer/corporate/update', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
+	
+	Route::post('account/individual/update', ['as' => 'customer.individual.update', 'uses' => 'Customer\CustomerIndividualController@update']);
+
 	Route::post('account/corporate/new', ['as' => 'customer.corporate.store', 'uses' => 'Customer\CustomerCorporateController@store']);
 	Route::get('account/corporate/{id}/show', ['as' => 'customer.corporate.show', 'uses' => 'Customer\CustomerCorporateController@show']);
-	Route::post('account/corporate/{id}/update', ['as' => 'customer.corporate.update', 'uses' => 'Customer\CustomerCorporateController@update']);
 	Route::get('account/corporate/{id}/delete', ['as' => 'customer.corporate.destroy', 'uses' => 'Customer\CustomerCorporateController@destroy']);
 	Route::post('account/corporate/{id}/saveContact', ['as' => 'customer.corporate.saveContacts', 'uses' => 'ContactController@saveContacts']);
-	// Route::get('account/{id}', ['as' => 'customer.destroy', 'uses' => 'CustomerController@destroy']);
 
 	Route::get('account/individual/new', ['as' => 'customer.individual.create', 'uses' => 'Customer\CustomerIndividualController@create']);
 	Route::post('account/individual/new', ['as' => 'customer.individual.store', 'uses' => 'Customer\CustomerIndividualController@store']);
 	Route::get('account/individual/{id}/show', ['as' => 'customer.individual.show', 'uses' => 'Customer\CustomerIndividualController@show']);
-	Route::post('account/individual/{id}/update', ['as' => 'customer.individual.update', 'uses' => 'Customer\CustomerIndividualController@update']);
-	Route::get('account/individual/{id}/delete', ['as' => 'customer.individual.destroy', 'uses' => 'Customer\CustomerIndividualController@destroy']);
+	
+	
 
 	// products
 	Route::get('products', ['as' => 'product.index', 'uses' => 'ProductController@index']);
@@ -78,18 +90,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('product/category/{id}', ['as' => 'product.category.update', 'uses' => 'CategoryController@update']);
 	Route::get('product/category/{id}', ['as' => 'product.category.destroy', 'uses' => 'CategoryController@destroy']);
 
-	// Sub Categories
-	// Route::get('product/subcategories', ['as' => 'product.subcategory.index', 'uses' => 'SubCategoryController@index']);
+	
 	Route::get('product/subcategory/new', ['as' => 'product.subcategory.create', 'uses' => 'SubCategoryController@create']);
 	Route::post('product/subcategory/new', ['as' => 'product.subcategory.store', 'uses' => 'SubCategoryController@store']);
-	// Route::get('product/category/{id}/show', ['as' => 'product.subcategory.show', 'uses' => 'SubCategoryController@show']);
-	// Route::post('product/category/{id}', ['as' => 'product.subcategory.update', 'uses' => 'SubCategoryController@update']);
-	// Route::get('product/category/{id}', ['as' => 'product.subcategory.destroy', 'uses' => 'SubCategoryController@destroy']);
-
-	// Contacts
-	// Route::get('products', ['as' => 'product.index', 'uses' => 'ProductController@index']);
-	// Route::get('product/new', ['as' => 'product.create', 'uses' => 'ProductController@create']);
-	// Route::post('product/new', ['as' => 'product.store', 'uses' => 'ProductController@store']);
+	
 	Route::get('contact/{id}/show', ['as' => 'customer.contact.show', 'uses' => 'ContactController@show']);
 	Route::post('contact/{id}', ['as' => 'customer.contact.update', 'uses' => 'ContactController@update']);
 	Route::get('contact/{id}', ['as' => 'contact.destroy', 'uses' => 'ContactController@destroy']);
@@ -107,12 +111,21 @@ Route::group(['middleware' => 'auth'], function () {
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
 	Route::get('billing/renewal/new', ['as' => 'billing.renewal.create', 'uses' => 'RenewalController@create']);
+	Route::get('billing/renewal/edit/{id}', ['as' => 'billing.renewal.edit', 'uses' => 'RenewalController@edit']);
 	Route::post('billing/renewal/new', ['as' => 'billing.renewal.store', 'uses' => 'RenewalController@store']);
 	Route::get('billing/renewal/{id}/manage', ['as' => 'billing.renewal.manage', 'uses' => 'RenewalController@manage']);
 	Route::post('billing/renewal/pay', ['as' => 'billing.renewal.pay', 'uses' => 'RenewalController@pay']);
 	Route::get('billing/renewal/{id}/show', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
-	Route::post('billing/renewal/{id}', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
+	Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
 	Route::get('billing/renewal/{id}', ['as' => 'billing.renewal.destroy', 'uses' => 'RenewalController@destroy']);
+
+	// Billing Agent
+	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');
+	Route::get('billing/create','BillingAgentController@create')->name('billing.agent.create');
+	Route::post('billing/store','BillingAgentController@store')->name('billing.agent.store');
+	Route::get('billing/agent/{id}','BillingAgentController@destroy')->name('billing.agent.destroy');
+
+
 
 	// Opportunities
 	Route::get('opportunities', ['as' => 'opportunity.index', 'uses' => 'OpportunityController@index']);
@@ -155,11 +168,25 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('sales/location/new', ['as' => 'sales.location.store', 'uses' => 'RetailFieldSalesController@storeLocation']);
 
 	// Ajax
+	Route::get('/validate-selected-date/{selected_date}', 'AjaxController@validateSelectedPaymentDate');
+	Route::get('/increase-start-date-by-oneyear/{selected_date}', 'AjaxController@increaseStartDatebyOneYear');
+	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
+	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
+	Route::get('get-contact-emails/{id}', 'AjaxController@getContactEmails');
+	Route::get('get-company-email/{id}', 'AjaxController@getCompanyEmail');
+
 	Route::get('getcontact/{id}', 'AjaxController@getContacts');
 	Route::get('getdept/{id}', 'AjaxController@getDept');
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');
 	Route::get('getsales/{id}', 'AjaxController@getSalesDept');
 	Route::get('getstates/{id}', 'AjaxController@getState');
 	Route::get('getcities/{id}', 'AjaxController@getCity');
+	Route::get('mails', 'RenewalController@mail');
+
+	//cron jobs
+	Route::get('renewals_notificationAt_15_Percent', 'CronJobController@renewalsNotificationAt15Percent');
+	Route::get('renewals_notificationAt_5_Percent', 'CronJobController@renewalsNotificationAt5Percent');
+	Route::get('renewals_notificationAt_0_Percent', 'CronJobController@renewalsNotificationAt0Percent');
+
 });
 

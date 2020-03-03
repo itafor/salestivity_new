@@ -1,0 +1,541 @@
+.datepicker {
+    border-radius: 0.375rem;
+
+    direction: ltr;
+}
+
+.datepicker-inline {
+    width: 220px;
+}
+
+.datepicker-rtl {
+    direction: rtl;
+}
+
+.datepicker-rtl.dropdown-menu {
+    left: auto;
+}
+
+.datepicker-rtl table tr td span {
+    float: right;
+}
+
+.datepicker-dropdown {
+    top: 0;
+    left: 0;
+
+    padding: 20px 22px;
+
+    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
+        0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.datepicker-dropdown.datepicker-orient-left:before {
+    left: 6px;
+}
+
+.datepicker-dropdown.datepicker-orient-left:after {
+    left: 7px;
+}
+
+.datepicker-dropdown.datepicker-orient-right:before {
+    right: 6px;
+}
+
+.datepicker-dropdown.datepicker-orient-right:after {
+    right: 7px;
+}
+
+.datepicker-dropdown.datepicker-orient-bottom:before {
+    top: -7px;
+}
+
+.datepicker-dropdown.datepicker-orient-bottom:after {
+    top: -6px;
+}
+
+.datepicker-dropdown.datepicker-orient-top:before {
+    bottom: -7px;
+
+    border-top: 7px solid white;
+    border-bottom: 0;
+}
+
+.datepicker-dropdown.datepicker-orient-top:after {
+    bottom: -6px;
+
+    border-top: 6px solid #fff;
+    border-bottom: 0;
+}
+
+.datepicker table {
+    margin: 0;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -webkit-touch-callout: none;
+}
+
+.datepicker table tr td {
+    border-radius: 50%;
+}
+
+.datepicker table tr th {
+    font-weight: 500;
+
+    border-radius: 0.375rem;
+}
+
+.datepicker table tr td,
+.datepicker table tr th {
+    font-size: 0.875rem;
+
+    width: 36px;
+    height: 36px;
+
+    transition: all 0.15s ease;
+    text-align: center;
+
+    border: none;
+}
+
+.table-striped .datepicker table tr td,
+.table-striped .datepicker table tr th {
+    background-color: transparent;
+}
+
+.datepicker table tr td.old,
+.datepicker table tr td.new {
+    color: #adb5bd;
+}
+
+.datepicker table tr td.day:hover,
+.datepicker table tr td.focused {
+    cursor: pointer;
+
+    background: white;
+}
+
+.datepicker table tr td.disabled,
+.datepicker table tr td.disabled:hover {
+    cursor: default;
+
+    color: #dee2e6;
+    background: none;
+}
+
+.datepicker table tr td.highlighted {
+    border-radius: 0;
+}
+
+.datepicker table tr td.highlighted.focused {
+    background: #5e72e4;
+}
+
+.datepicker table tr td.highlighted.disabled,
+.datepicker table tr td.highlighted.disabled:active {
+    color: #ced4da;
+    background: #5e72e4;
+}
+
+.datepicker table tr td.today {
+    background: white;
+}
+
+.datepicker table tr td.today.focused {
+    background: white;
+}
+
+.datepicker table tr td.today.disabled,
+.datepicker table tr td.today.disabled:active {
+    color: #8898aa;
+    background: white;
+}
+
+.datepicker table tr td.range {
+    color: #fff;
+    border-radius: 0;
+    background: #5e72e4;
+}
+
+.datepicker table tr td.range.focused {
+    background: #3b53de;
+}
+
+.datepicker table tr td.range.disabled,
+.datepicker table tr td.range.disabled:active,
+.datepicker table tr td.range.day.disabled:hover {
+    color: #8a98eb;
+    background: #324cdd;
+}
+
+.datepicker table tr td.range.highlighted.focused {
+    background: #cbd3da;
+}
+
+.datepicker table tr td.range.highlighted.disabled,
+.datepicker table tr td.range.highlighted.disabled:active {
+    color: #dee2e6;
+    background: #e9ecef;
+}
+
+.datepicker table tr td.range.today.disabled,
+.datepicker table tr td.range.today.disabled:active {
+    color: #fff;
+    background: #5e72e4;
+}
+
+.datepicker table tr td.day.range-start {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.datepicker table tr td.day.range-end {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.datepicker table tr td.day.range-start.range-end {
+    border-radius: 50%;
+}
+
+.datepicker table tr td.selected,
+.datepicker table tr td.selected.highlighted,
+.datepicker table tr td.selected:hover,
+.datepicker table tr td.selected.highlighted:hover,
+.datepicker table tr td.day.range:hover {
+    color: #fff;
+    background: #5e72e4;
+}
+
+.datepicker table tr td.active,
+.datepicker table tr td.active.highlighted,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.highlighted:hover {
+    color: #fff;
+    background: #5e72e4;
+    box-shadow: none;
+}
+
+.datepicker table tr td span {
+    line-height: 54px;
+
+    display: block;
+    float: left;
+
+    width: 23%;
+    height: 54px;
+    margin: 1%;
+
+    cursor: pointer;
+
+    border-radius: 4px;
+}
+
+.datepicker table tr td span:hover,
+.datepicker table tr td span.focused {
+    background: #e9ecef;
+}
+
+.datepicker table tr td span.disabled,
+.datepicker table tr td span.disabled:hover {
+    cursor: default;
+
+    color: #dee2e6;
+    background: none;
+}
+
+.datepicker table tr td span.active,
+.datepicker table tr td span.active:hover,
+.datepicker table tr td span.active.disabled,
+.datepicker table tr td span.active.disabled:hover {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.datepicker table tr td span.old,
+.datepicker table tr td span.new {
+    color: #8898aa;
+}
+
+.datepicker .datepicker-switch {
+    width: 145px;
+}
+
+.datepicker .datepicker-switch,
+.datepicker .prev,
+.datepicker .next,
+.datepicker tfoot tr th {
+    cursor: pointer;
+}
+
+.datepicker .datepicker-switch:hover,
+.datepicker .prev:hover,
+.datepicker .next:hover,
+.datepicker tfoot tr th:hover {
+    background: #e9ecef;
+}
+
+.datepicker .prev.disabled,
+.datepicker .next.disabled {
+    visibility: hidden;
+}
+
+.datepicker .cw {
+    font-size: 10px;
+
+    width: 12px;
+    padding: 0 2px 0 5px;
+
+    vertical-align: middle;
+}
+
+.hide {
+    display: none;
+}
+
+.bg-gradient-orange {
+    background: rgb(240, 175, 89);
+    background: -moz-linear-gradient(
+        90deg,
+        rgba(240, 175, 89, 1) 0%,
+        rgba(255, 153, 10, 1) 50%,
+        rgba(255, 132, 0, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+        90deg,
+        rgba(240, 175, 89, 1) 0%,
+        rgba(255, 153, 10, 1) 50%,
+        rgba(255, 132, 0, 1) 100%
+    );
+    background: linear-gradient(
+        90deg,
+        rgba(240, 175, 89, 1) 0%,
+        rgba(255, 153, 10, 1) 50%,
+        rgba(255, 132, 0, 1) 100%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f0af59",endColorstr="#ff8400",GradientType=1);
+}
+
+.dt-brand {
+    color: #7a7a7a !important;
+    background-color: #fff !important;
+}
+
+table thead tr th{
+    background-color: #013365;
+    color: #fff !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #bff2ff !important;
+}
+
+.btn-default {
+    background-color: #777 !important;
+    color: #fff !important;
+}
+/*my stylesheet started  here*/
+.tenant-profile-image{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+.tenant-profile-container{
+    margin: 5px 50px 10px 100px;
+}
+/**
+ * Checkbox Four
+ */
+.checkboxFour {
+    width: 40px;
+    height: 40px;
+    background: #ddd;
+    margin: 50px 10px;
+
+    border-radius: 100%;
+    position: relative;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/**
+ * Create the checkbox button
+ */
+.checkboxFour label {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+
+    background: #333;
+    box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/**
+ * Create the checked state
+ */
+.checkboxFour input[type=checkbox]:checked + label {
+    background: #26ca28;
+}
+
+section{
+    margin-top: -65px;
+}
+
+.all-tenant-label{
+width: 150px;
+ height: 30px; 
+ margin-top: 55px;
+}
+
+/*activate and deactivate rental renewal*/
+    
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+.toggle-btn{
+  width: 70px;
+  height: 20px;
+  margin: 8px;
+  border-radius: 50px;
+  display: inline-block;
+  position: relative;
+  background : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyklEQVQ4T42TaxHCQAyENw5wAhLACVUAUkABOCkSwEkdhNmbpHNckzv689L98toIAKjqGcAFwElEFr5ln6ruAMwA7iLyFBM/TPDuQSrxwf6fCKBoX2UMIYGYkg8BLOnVg2RiAEexGaQQq4w9e9klcxGLLAUwgDAcihlYAR1IvZA1sz/+AAaQjXhTQQVoe2Yo3E7UQiT2ijeQdojRtClOfVKvMVyVpU594kZK9zzySWTlcNqZY9tjCsUds00+A57z1e35xzlzJjee8xf0HYp+cOZQUQAAAABJRU5ErkJggg==') no-repeat 50px center #e74c3c;
+  cursor: pointer;
+  -webkit-transition: background-color .40s ease-in-out;
+  -moz-transition: background-color .40s ease-in-out;
+  -o-transition: background-color .40s ease-in-out;
+  transition: background-color .40s ease-in-out;
+  cursor:pointer;
+
+}
+
+  .active{
+    background : url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmUlEQVQ4T6WT0RWDMAhFeZs4ipu0mawZpaO4yevBc6hUIWLNd+4NeQDk5sE/PMkZwFvZywKSTxF5iUgH0C4JHGyF97IggFVSqyCFga0CvQSg70Mdwd8QSSr4sGBMcgavAgdvwQCtApvA2uKr1x7Pu++06ItrF5LXPB/CP4M0kKTwYRIDyRAOR9lJTuF0F0hOAJbKopVHOZN9ACS0UgowIx8ZAAAAAElFTkSuQmCC') no-repeat 10px center #2ecc71;
+  }
+
+   /* .round-btn{
+      left: 45px;
+    }*/
+    .cb-value{
+    position: absolute;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 9;
+    cursor:pointer;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  }
+
+/*    .round-btn{
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    margin-top: -15px;
+    -webkit-transition: all .30s ease-in-out;
+  -moz-transition: all .30s ease-in-out;
+  -o-transition: all .30s ease-in-out;
+  transition: all .30s ease-in-out;
+  }
+*//* end activate and deactivate rental renewal*/
+
+/*.datatable tbody{
+  display:block;
+  overflow:auto;
+  height:300px;
+  width:100%;
+  margin-right: 0px;
+}
+.datatable thead tr{
+  display:block;
+  margin-right: 0px;
+
+}*/
+
+
+/*#table-1 > thead > tr{
+        position: fixed;
+        width: 100%;
+        top: 20em;
+        z-index: 300;
+    }*/
+
+@media only screen and (max-width: 600px) {
+section{
+    margin-top: -55px;
+}
+.tenant-profile-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.tenant-profile-container{
+    margin: 5px 50px 10px 120px;
+}
+
+.all-tenant-label{
+width: 150px;
+ height: 30px; 
+ margin-top: 55px;
+ margin-left: 50px;
+}
+/**
+ * Checkbox Four
+ */
+.checkboxFour {
+    width: 40px;
+    height: 40px;
+    background: #ddd;
+   margin-top: -38px;
+   margin-left: 210px;
+    border-radius: 100%;
+    position: relative;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/**
+ * Create the checkbox button
+ */
+.checkboxFour label {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+
+    background: #333;
+    box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/**
+ * Create the checked state
+ */
+.checkboxFour input[type=checkbox]:checked + label {
+    background: #26ca28;
+}
+}

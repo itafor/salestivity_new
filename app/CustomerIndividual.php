@@ -19,4 +19,5 @@ class CustomerIndividual extends Model
         $industry = Industry::where('id', $id)->first();
         return $industry->name;
     }
+
 }

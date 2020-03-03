@@ -1,13 +1,13 @@
 @extends('layouts.app', ['title' => __('Add Renewal')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Renewal')])  
+@include('users.partials.header', ['title' => __('View Renewal')])  
 
 
 <script>
         $(document).ready(function(){
             /*Disable all input type="text" box*/
             $('#form1 input').prop("disabled", true);
-            $('#form1 select').prop("disabled", true);
+            $('#pay').prop("disabled", true);
             $('#form1 button').hide();
 
             $('#edit').click(function(){
@@ -27,96 +27,150 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0" id="title">{{ __('View Renewal') }}</h3>
+                            <div class="col-12">
+                                <h3 class="mb-0 float-left" id="title">{{ __('Renewal') }}</h3>
+                                 <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
                             </div>
-                            <div class="col-4 text-right">
-                                <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
-                            </div>
+         @if(isset($renewal))
+            <div class="col-8">
+                @if($renewal->status == 'Paid')
+            <a >
+                <button class="btn btn-sm btn-success" id="pay">
+            {{ __('Paid') }}
+            </button>
+        </a>
+        @else
+               <a onclick="renewalPayment({{$renewal->id}})" >
+                <button class="btn btn-sm btn-primary" >
+            {{ __('Payment') }}
+            </button>
+        </a>
+
+        @endif
+
+             @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
+            <a onclick="deletePaidRenewalAlert()">
+            <button class="btn btn-sm btn-primary" >
+            {{ __('Edit') }}
+            </button>
+            </a>
+            @else
+            <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
+            <button class="btn btn-sm btn-primary">
+            {{ __('Edit') }}
+            </button>
+            </a>
+            @endif
+
+
+             <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+
+            </div>
+            @endif
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('billing.renewal.update', [$renewal->id]) }}" autocomplete="off" id="form1">
-                            @csrf
-                            <h6 class="heading-small text-muted mb-4">{{ __('Renewal information') }}</h6>
-                            <div class="pl-lg-4">
-                              <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }}">
-                                  <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
-                                  <div class="col-sm-6" data-toggle="select">
-                                  <!-- pass in the customer_id to the pivot table ie customer_renewal -->
-                                    <select name="customer_id" id="customer" class="form-control select2-multi" onchange="myFunction(event)">
-                                        <option value="{{ $renewal->customer_id }}">{{ $renewal->customers->name }}</option>
-                                        @foreach($customers as $key => $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->company_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <!-- Pass in this name to the database and store in renewals table -->
-                                    <input type="hidden" id="myText" class="form-control" name="customer" value="{{ $renewal->customer }}">
-                                  </div>
-                                  <script>
-                                    function myFunction(e) {
-                                    var sel = document.getElementById("customer");
-                                    var text = sel.options[sel.selectedIndex].text; 
-                                    document.getElementById("myText").value = text;
-                                    }
-                                  </script>
-                                </div>
-                                <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
-                                  <label class="form-control-label" for="product">{{ __('Product') }}</label>
-                                  <div class="col-sm-6" data-toggle="select">
-                                    <select name="product" id="product" class="form-control" data-toggle="select">
-                                        <option value="{{ $renewal->product }}">{{ $renewal->product }}</option>
-                                            @foreach($products as $key => $product)
-                                            <option value="{{ $product->name }}">{{ $product->name }}</option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                </div>
-                                <!-- <div class="form-group{{ $errors->has('amount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="amount">{{ __('Amount') }}</label>
-                                    <input type="number" name="amount" id="amount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount') }}" value="{{ $renewal->amount }}" required >
+                                <table class="table table-bordered" style="background-color: #ffffff;">
+           @if(isset($renewal))
+                    <tbody>
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
+                     <td>{{ $renewal->customers ? $renewal->customers->name : 'N/A' }}</td>
+                   </tr>
+                 <tr>
+                     <td style="width: 200px;"><b>{{ __('Email') }}</b></td>
+                     <td>{{ $renewal->customers ? $renewal->customers->email : 'N/A' }}</td>
+                   </tr>
 
-                                    @if ($errors->has('amount'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('amount') }}</strong>
-                                        </span>
-                                    @endif
-                                </div> -->
-                                
-                                <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="start_date">{{ __('Start Date (in days)') }}</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control form-control-alternative{{ $errors->has('period') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" value="{{ date('Y-m-d', strtotime($renewal->start_date)) }}" required>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Phone') }}</b></td>
+                     <td>{{ $renewal->customers ? $renewal->customers->phone : 'N/A' }}</td>
+                   </tr>
 
-                                    @if ($errors->has('start_date'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('start_date') }}</strong>
-                                        </span>
-                                    @endif
-                                </div> 
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Product') }}</b></td>
+                     <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}
+                     </td>
+                   </tr>
 
-                                <div class="form-group{{ $errors->has('end_date') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" value="{{ date('Y-m-d', strtotime($renewal->end_date)) }}" required>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
+                     <td>&#8358;{{ number_format($renewal->productPrice,2) }}
+                     </td>
+                   </tr>
 
-                                    @if ($errors->has('period'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('period') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>                                  
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Discount') }}</b></td>
+                     <td>
+                        {{ $renewal->discount == '' ? 'N/A' : $renewal->discount.'%'}} 
+                     </td>
+                   </tr>
 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                </div>
-                            </div>
-                        </form>
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
+                     <td>&#8358;{{ number_format($renewal->billingAmount,2) }}
+                     </td>
+                   </tr>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Billing Balance') }}</b></td>
+                     <td>&#8358;{{ number_format($renewal->billingBalance,2) }}
+                     </td>
+                   </tr>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Discription') }}</b></td>
+                     <td>{{ $renewal->description }}
+                     </td>
+                   </tr>
+
+                    @if($renewal->status == 'Paid')
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td class="text-success">{{ $renewal->status }}
+                     </td>
+                   </tr>
+                    @elseif($renewal->status == 'Partly paid')
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td class="text-warning">
+                        {{ $renewal->status }}
+                     </td>
+                   </tr>
+                     @else
+                      <tr>
+                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td class="text-danger">
+                         {{ $renewal->status }}
+                     </td>
+                   </tr>
+                     @endif
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Start Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
+              </tr>
+              <tr>
+                     <td style="width: 200px;"><b>{{ __('End Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
+              </tr>
+
+                    </tbody>
+                    @else
+                    <span>No matching records found</span>
+
+                    @endif
+                  </table>
                     </div>
+                     @if($renewalPayments !='')
                     @include('billing.renewal.payment.show')
+                      @endif
                 </div>
             </div>
         </div>
         
         @include('layouts.footers.auth')
+       
+    @include('billing.renewal.payment.create')
+
     </div>
 
 @endsection

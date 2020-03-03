@@ -32,7 +32,7 @@
 
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
+                            <thead>
                                 <tr>
                                     <th scope="col">{{ __('Customer') }}</th>
                                     <th scope="col">{{ __('Product') }}</th>

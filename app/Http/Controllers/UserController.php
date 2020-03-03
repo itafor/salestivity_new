@@ -30,7 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+        $userId = auth()->user()->id;
+        $roles = Role::where('main_acct_id', $userId)->get();
         return view('users.create', compact('roles'));
     }
 

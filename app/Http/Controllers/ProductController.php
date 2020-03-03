@@ -60,9 +60,9 @@ class ProductController extends Controller
         $product->main_acct_id = $userId;
         $product->save();
 
-        $cat = $request->category_id;
+        // $cat = $request->category_id;
 
-        $product->category()->sync($cat);
+        //$product->category()->sync($cat);
 
 
         $status = "New Product has been Added ";

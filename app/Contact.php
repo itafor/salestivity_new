@@ -11,10 +11,18 @@ class Contact extends Model
     protected $fillable = [
         'customer_id',
         'title',
-
+        'surname',
+        'name',
+        'phone',
+        'email',
+        'main_acct_id'
     ];
 
     protected $casts = [
         'cont' => 'array'
     ];
+    
+    public function customer() {
+        return $this->belongsTo('App\Customer','customer_id','id');
+    }
 }
