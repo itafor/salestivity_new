@@ -28,14 +28,28 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Roles
 	Route::get('roles', 'UsersRoleController@index')->name('role.index');
-	Route::get('new/role', 'UsersRoleController@create')->name('role.create');
-	Route::post('new/role', 'UsersRoleController@store')->name('role.store');
+	// Route::get('new/role', 'UsersRoleController@create')->name('role.create');
+	// Route::post('new/role', 'UsersRoleController@store')->name('role.store');
+	
 
 
-	// Sub users
-	Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
-	Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
-	Route::post('create/new/user', 'UserController@storesubuser')->name('storeuser');
+	// Only a super admin can access this route
+	Route::group(['middleware' => ['superAdmin']], function() {
+		
+		// Sub users
+		Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
+		Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
+		Route::post('create/new/user', 'UserController@storesubuser')->name('storeuser');
+
+		// Department
+		Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
+		Route::post('dept/new', ['as' => 'dept.store', 'uses' => 'DepartmentController@store']);
+		Route::get('departments', ['as' => 'dept.index', 'uses' => 'DepartmentController@index']);
+		Route::get('dept/{id}/show', ['as' => 'dept.show', 'uses' => 'DepartmentController@show']);
+		Route::post('dept/{id}', ['as' => 'dept.update', 'uses' => 'DepartmentController@update']);
+		Route::get('dept/{id}', ['as' => 'dept.destroy', 'uses' => 'DepartmentController@destroy']);
+
+	});
 
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
@@ -145,13 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('target/{id}', ['as' => 'target.update', 'uses' => 'TargetController@update']);
 	Route::get('target/{id}', ['as' => 'target.destroy', 'uses' => 'TargetController@destroy']);
 
-	// Department
-	Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
-	Route::post('dept/new', ['as' => 'dept.store', 'uses' => 'DepartmentController@store']);
-	Route::get('departments', ['as' => 'dept.index', 'uses' => 'DepartmentController@index']);
-	Route::get('dept/{id}/show', ['as' => 'dept.show', 'uses' => 'DepartmentController@show']);
-	Route::post('dept/{id}', ['as' => 'dept.update', 'uses' => 'DepartmentController@update']);
-	Route::get('dept/{id}', ['as' => 'dept.destroy', 'uses' => 'DepartmentController@destroy']);
+	
 
 	// Retail Field Sales Management
 	Route::get('location', ['as' => 'sales.location.index', 'uses' => 'RetailFieldSalesController@allLocation']);

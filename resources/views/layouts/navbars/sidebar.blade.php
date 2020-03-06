@@ -395,73 +395,73 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#navbar-parameters" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                    <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Parameters') }}
-                    </a>
+                @if(auth()->user()->role_id == 1)
+                    <li class="nav-item">
+                        <a class="nav-link" href="#navbar-parameters" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-university text-primary" aria-hidden="true"></i>{{ __('Parameters') }}
+                        </a>
 
-                    <div class="collapse " id="navbar-parameters">
-                        <ul class="nav nav-sm flex-column">
+                        <div class="collapse " id="navbar-parameters">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                        <span class="nav-link-text">{{ __('User') }}</span>
-                                    </a>
-                                    <ul class="flex-column">
-                                        <div class="collapse" id="navbar-user">
-                                            <ul class="nav nav-sm flex-column" >
-                                                <ul class="nav nav-sm flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{{ route('allSubUsers') }}">
-                                                            {{ __('List User') }}
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{{ route('newSubUser') }}">
-                                                            {{ __('Add User') }}
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{{ route('role.create') }}">
-                                                            {{ __('Add User Role') }}
-                                                        </a>
-                                                    </li>
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#navbar-user" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                            <span class="nav-link-text">{{ __('User') }}</span>
+                                        </a>
+                                        <ul class="flex-column">
+                                            <div class="collapse" id="navbar-user">
+                                                <ul class="nav nav-sm flex-column" >
+                                                    <ul class="nav nav-sm flex-column">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('allSubUsers') }}">
+                                                                {{ __('List User') }}
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('newSubUser') }}">
+                                                                {{ __('Add User') }}
+                                                            </a>
+                                                        </li>
+                                                        <!-- <li class="nav-item">
+                                                            <a class="nav-link" href="{{-- route('role.create') --}}">
+                                                                {{ __('Add User Role') }}
+                                                            </a>
+                                                        </li> -->
+                                                    </ul>
                                                 </ul>
-                                            </ul>
-                                        </div>
-                                    </ul>
-                                </li>
+                                            </div>
+                                        </ul>
+                                    </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                        <span class="nav-link-text">{{ __('Department') }}</span>
-                                    </a>
-                                    <ul class="flex-column">
-                                        <div class="collapse" id="navbar-dept">
-                                            <ul class="nav nav-sm flex-column" >
-                                                <ul class="nav nav-sm flex-column">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{{ route('dept.index') }}">
-                                                            {{ __('List Departments') }}
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" href="{{ route('dept.store') }}">
-                                                            {{ __('Add Department') }}
-                                                        </a>
-                                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                            <span class="nav-link-text">{{ __('Department') }}</span>
+                                        </a>
+                                        <ul class="flex-column">
+                                            <div class="collapse" id="navbar-dept">
+                                                <ul class="nav nav-sm flex-column" >
+                                                    <ul class="nav nav-sm flex-column">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('dept.index') }}">
+                                                                {{ __('List Departments') }}
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('dept.store') }}">
+                                                                {{ __('Add Department') }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </ul>
-                                            </ul>
-                                        </div>
-                                    </ul>
-                                </li>
-                            </ul>        
-                        </ul>
-                    </div> 
-
-                    
-                            
-                </li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                </ul>        
+                            </ul>
+                        </div>   
+                                
+                    </li>
+                @endif
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
