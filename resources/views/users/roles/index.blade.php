@@ -12,9 +12,9 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Roles') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
-                                <a href="{{ route('role.create') }}" class="btn btn-sm btn-primary">{{ __('Add role') }}</a>
-                            </div>
+                            <!-- <div class="col-4 text-right">
+                                <a href="{{-- route('role.create') --}}" class="btn btn-sm btn-primary">{{ __('Add role') }}</a>
+                            </div> -->
                         </div>
                     </div>
                     
@@ -34,14 +34,14 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{ __('Name') }}</th>
-                                    <th scope="col">{{ __('Date Created') }}</th>
+                                    <!-- <th scope="col">{{ __('Date Created') }}</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($roles as $role)
                                     <tr>
                                         <td>{{ $role->name }}</td>
-                                        <td>{{ strftime('%d-%b-%Y', strtotime($role->created_at)) }}</td>
+                                        <!-- <td>{{ strftime('%d-%b-%Y', strtotime($role->created_at)) }}</td> -->
                                     </tr>
                                 @endforeach
                             </tbody>

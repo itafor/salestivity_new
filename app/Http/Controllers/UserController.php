@@ -46,6 +46,11 @@ class UserController extends Controller
     {
         
         $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
+        // dd($model);
+        // // update profile with a profile_id
+        // $userId = $model->id;
+        // $model->profile_id = $userId;
+        // $model->update();
 
         return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
@@ -101,7 +106,8 @@ class UserController extends Controller
     public function createsubuser()
     {
         $userId = auth()->user()->id;
-        $roles = Role::where('main_acct_id', $userId)->get();
+        // $roles = Role::where('main_acct_id', $userId)->get();
+        $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $reportsTo = User::where('profile_id', $userId)->get();
         return view('users.create', compact('roles', 'departments', 'reportsTo'));
