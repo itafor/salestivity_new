@@ -15,8 +15,9 @@ class UsersRoleController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
-        $roles = Role::where('main_acct_id', $userId)->get();
+        // $userId = auth()->user()->id;
+        // $roles = Role::where('main_acct_id', $userId)->get();
+        $roles = Role::all();
 
         return view('users.roles.index', compact('roles'));
     }
