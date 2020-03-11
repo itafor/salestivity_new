@@ -29,15 +29,15 @@ class DepartmentController extends Controller
         // store each new category that was added
         $dept = new Department;
         $dept->name = $request->dept;
-        $dept->dept_head = $request->dept_head;
+        // $dept->dept_head = $request->dept_head;
         $dept->main_acct_id = $userId;
         // dd($category);
         $dept->save();
 
+        // create an instance of the unit and save it
         $unit = new Unit;
-
         $unit->name = $request->unit;
-        $unit->head = $request->unit_head;
+        // $unit->head = $request->unit_head;
         $unit->dept_id = $dept->id;
         $unit->main_acct_id = $userId;
         $unit->save();
@@ -48,12 +48,12 @@ class DepartmentController extends Controller
             {
                 $addNew->name = $addUnit;
                 $addNew->main_acct_id = $userId;
+                $addNew->dept_id = $dept->id;
 
             }
-            foreach($request->addUnitHead as $addUnitHead) {
-                $addNew->head =$addUnitHead ;
-                $addNew->dept_id = $dept->id;
-            }
+            // foreach($request->addUnitHead as $addUnitHead) {
+            //     $addNew->head =$addUnitHead ;
+            // }
             $addNew->save();
         }
 
@@ -80,7 +80,7 @@ class DepartmentController extends Controller
     
         $dept->name = $request->input('dept');
         $dept->dept_head = $request->input('dept_head');
-        $dept->save();
+        $dept->update();
         
         $units = Unit::where('dept_id', $dept->id)->get();
    
@@ -91,18 +91,20 @@ class DepartmentController extends Controller
         }
 
         // if the add more contact was clicked    
-        if($request->addUnit && $request->addUnitHead) {
+        if($request->addUnit) {
+            // dd($request->addUnit);
             $addNew = new Unit;
             foreach($request->addUnit as $addUnit)
             {
+                // dd($addUnit);
                 $addNew->name = $addUnit;
                 $addNew->main_acct_id = $userId;
+                $addNew->dept_id = $dept->id;
 
             }
-            foreach($request->addUnitHead as $addUnitHead) {
-                $addNew->head =$addUnitHead ;
-                $addNew->dept_id = $dept->id;
-            }
+            // foreach($request->addUnitHead as $addUnitHead) {
+            //     $addNew->head =$addUnitHead ;
+            // }
             $addNew->save();
         }
 

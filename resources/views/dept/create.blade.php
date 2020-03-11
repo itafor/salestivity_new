@@ -20,7 +20,7 @@
                         <form method="post" action="{{ route('dept.store') }}" autocomplete="off">
                             @csrf
                             
-                            <h6 class="heading-small text-muted mb-4">{{ __('Add Category') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Add Department/Unit') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
@@ -35,22 +35,6 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('dept_head') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="dept_head">{{ __('Department Head') }}</label>
-                                            <input type="text" name="dept_head" id="dept_head" class="form-control form-control-alternative{{ $errors->has('dept_head') ? ' is-invalid' : '' }}" placeholder="{{ __('Department Head') }}" value="{{ old('dept_head') }}" required>
-
-                                            @if ($errors->has('dept_head'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('dept_head') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('unit') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="unit">{{ __('Unit') }}</label>
@@ -63,18 +47,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('unit_head') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="unit_hed">{{ __('Unit Head') }}</label>
-                                            <input type="text" name="unit_head" id="unit_head" class="form-control form-control-alternative{{ $errors->has('unit_head') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit Head') }}" value="{{ old('unit_head') }}" required>
-
-                                            @if ($errors->has('unit_head'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('unit_head') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
+      
+                                    
+                                </div>
+                                <div class="row">
+                                    
                                 </div>
                                 <!-- <div class="row"> -->
                                     
@@ -112,27 +89,28 @@
                 var addButton = $('.add_button'); //Add button selector
                 var wrapper = $('.field_wrapper'); //Input field wrapper
                 var fieldHTML = 
-                                    '<div class="col-xl-6 addnew">'+ 
-                                    '<label class="form-control-label" for="unit">{{ __('Unit') }}</label>'+
-                                    '<input type="text" name="addUnit[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
+                                    '<div class="col-xl-12 addnew">'+ 
+                                        '<label class="form-control-label" for="unit">{{ __('Unit') }}</label>'+
+                                        '<input type="text" name="addUnit[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
 
-                                    '@if ($errors->has('addUnit'))' +
-                                        '<span class="invalid-feedback" role="alert">' +
-                                            '<strong>{{ $errors->first('addUnit') }}</strong>' +
-                                        '</span>' +
-                                    '@endif' +
-                                    '</div>'+
-                                    '<div class="col-xl-6 addnew">'+ 
-                                    '<label class="form-control-label" for="unit">{{ __('Unit Head') }}</label>'+
-                                    '<input type="text" name="addUnitHead[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
+                                        '@if ($errors->has('addUnit'))' +
+                                            '<span class="invalid-feedback" role="alert">' +
+                                                '<strong>{{ $errors->first('addUnit') }}</strong>' +
+                                            '</span>' +
+                                        '@endif' +
+                                        '<button class="badge bg-purple remove_button">Remove</button>' +
+                                    '</div>'
+                                //     '<div class="col-xl- addnew">'+ 
+                                //     '<label class="form-control-label" for="unit">{{ __('Unit Head') }}</label>'+
+                                //     '<input type="text" name="addUnitHead[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
 
-                                    '@if ($errors->has('addUnit'))' +
-                                        '<span class="invalid-feedback" role="alert">' +
-                                            '<strong>{{ $errors->first('addUnit') }}</strong>' +
-                                        '</span>' +
-                                    '@endif'  +
-                                    '<button class="badge bg-purple remove_button">Remove</button>' +
-                                '</div>'
+                                //     '@if ($errors->has('addUnit'))' +
+                                //         '<span class="invalid-feedback" role="alert">' +
+                                //             '<strong>{{ $errors->first('addUnit') }}</strong>' +
+                                //         '</span>' +
+                                //     '@endif'  +
+                                //     '<button class="badge bg-purple remove_button">Remove</button>' +
+                                // '</div>'
                                 
                                 
                 var x = 1; //Initial field counter is 1
@@ -149,7 +127,6 @@
                 //Once remove button is clicked
                 $(wrapper).on('click', '.remove_button', function(e){
                     e.preventDefault();
-                    $(this).parent('div').prev().remove(); //Remove field html
                     $(this).parent('div').remove(); //Remove field html
                     x--; //Decrement field counter
                 });

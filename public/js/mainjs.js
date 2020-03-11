@@ -1,3 +1,21 @@
+// Autofill a unit when a dept is picked while creating a new user.
+function selectDeptAjax(value) {   
+    $.get('/getdept/' + value, function (data) {
+        console.log(data.units);
+        $('#input-unit').html("");
+        $('#input-unit').append("<option value=''>Select Unit</option>");
+        jQuery.each(data.units, function (i, val) {
+            $('#input-unit').append("<option value='" + val.id + "'>" + val.name + "</option>");
+        });
+    });
+}
+
+$('#input-dept').change(function () {
+    selectDeptAjax($(this).val());
+    $('#input-unit').prop('disabled', false)
+});
+
+
 //Auto fill product price when a product has been picked
     let product_price =0;
     let billinga_amount =0;
