@@ -130,7 +130,6 @@
                                             <label class="form-control-label" for="input-report">{{ __('Reports To') }}</label>
                                             <select name="report" id="input-report" class="form-control" data-toggle="select">
                                                 <option value="0">No one</option>
-                                                <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
                                                 @foreach($reportsTo as $report)
                                                     <option value="{{ $report->id }}">{{ $report->name }}</option>
                                                 @endforeach
@@ -190,21 +189,8 @@
         @include('layouts.footers.auth')
     </div>
     <script>
-        function selectDeptAjax(value) {
-        $.get('/getdept/' + value, function (data) {
-            // console.log(data.units);
-            $('#input-unit').html("");
-            $('#input-unit').append("<option value=''>Select Unit</option>");
-            jQuery.each(data.units, function (i, val) {
-                $('#input-unit').append("<option value='" + val.id + "'>" + val.name + "</option>");
-            });
-        });
-    }
 
-    $('#input-dept').change(function () {
-        selectDeptAjax($(this).val());
-        $('#input-unit').prop('disabled', false)
-    });
+        
     </script>
     
 @endsection

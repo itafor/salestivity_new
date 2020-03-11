@@ -110,6 +110,7 @@ class UserController extends Controller
         $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $reportsTo = User::where('profile_id', $userId)->get();
+        // dd($reportsTo);
         return view('users.create', compact('roles', 'departments', 'reportsTo'));
     }
     
