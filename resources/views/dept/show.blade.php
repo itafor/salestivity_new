@@ -23,7 +23,7 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Show Category') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-12">
                                         <div class="form-group{{ $errors->has('dept') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="dept"><b><h3>{{ __('Department') }}</h3></b></label>
                                             <input type="text" name="dept" id="dept" class="form-control form-control-alternative{{ $errors->has('dept') ? ' is-invalid' : '' }}" placeholder="{{ __('Department') }}" value="{{ $dept->name }}" required autofocus>
@@ -36,7 +36,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
+                                    <!-- <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('dept_head') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="dept_head"><b><h3>{{ __('Department Head') }}</h3></b></label>
                                             <input type="text" name="dept_head" id="dept_head" class="form-control form-control-alternative{{ $errors->has('dept_head') ? ' is-invalid' : '' }}" placeholder="{{ __('Department Head') }}" value="{{ $dept->dept_head }}" required>
@@ -47,7 +47,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                 </div>
                                 @foreach($units as $unit)
@@ -64,7 +64,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
+                                    <!-- <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('unit_head') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="unit_hed">{{ __('Unit Head') }}</label>
                                             <input type="text" name="unit_head[]" id="unit_head" class="form-control form-control-alternative{{ $errors->has('unit_head') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit Head') }}" value="{{ $unit->head }}" required>
@@ -75,7 +75,7 @@
                                                 </span>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 @endforeach
                                 <!-- <div class="row"> -->
@@ -124,18 +124,19 @@
                                             '<strong>{{ $errors->first('addUnit') }}</strong>' +
                                         '</span>' +
                                     '@endif' +
-                                    '</div>'+
-                                    '<div class="col-xl-6 addnew">'+ 
-                                    '<label class="form-control-label" for="unit">{{ __('Unit Head') }}</label>'+
-                                    '<input type="text" name="addUnitHead[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
-
-                                    '@if ($errors->has('addUnit'))' +
-                                        '<span class="invalid-feedback" role="alert">' +
-                                            '<strong>{{ $errors->first('addUnit') }}</strong>' +
-                                        '</span>' +
-                                    '@endif'  +
                                     '<button class="badge bg-purple remove_button">Remove</button>' +
-                                '</div>'
+                                    '</div>'
+                                //     '<div class="col-xl-6 addnew">'+ 
+                                //     '<label class="form-control-label" for="unit">{{ __('Unit Head') }}</label>'+
+                                //     '<input type="text" name="addUnitHead[]" id="addUnit" class="form-control form-control-alternative{{ $errors->has('addUnit') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit') }}" value="{{ old('addUnit') }}" required>' +
+
+                                //     '@if ($errors->has('addUnit'))' +
+                                //         '<span class="invalid-feedback" role="alert">' +
+                                //             '<strong>{{ $errors->first('addUnit') }}</strong>' +
+                                //         '</span>' +
+                                //     '@endif'  +
+                                //     '<button class="badge bg-purple remove_button">Remove</button>' +
+                                // '</div>'
                                 
                                 
                 var x = 1; //Initial field counter is 1
@@ -152,7 +153,7 @@
                 //Once remove button is clicked
                 $(wrapper).on('click', '.remove_button', function(e){
                     e.preventDefault();
-                    $(this).parent('div').prev().remove(); //Remove field html
+                    // $(this).parent('div').prev().remove(); //Remove field html
                     $(this).parent('div').remove(); //Remove field html
                     x--; //Decrement field counter
                 });
