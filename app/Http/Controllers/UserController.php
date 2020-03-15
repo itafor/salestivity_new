@@ -20,7 +20,10 @@ class UserController extends Controller
      */
     public function index(User $model)
     {
-        return view('users.index', ['users' => $model->paginate(15)]);
+        // return view('users.index', ['users' => $model->paginate(15)]);
+        $userId = auth()->user()->id;
+        $allUsers = User::where('profile_id', '=', $userId);
+        return view('users.index', ['allusers' => $allUsers->paginate(15)]);
     }
 
     /**
@@ -89,9 +92,14 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User  $user)
+    public function destroy(User $user)
     {
+        // set a user to disabled and delete user
+        $user->status = 0;
+        $user->update();
+        // dd($user);
         $user->delete();
+        
 
         return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
     }
@@ -99,6 +107,7 @@ class UserController extends Controller
     public function indexSubusers()
     {
         $userId = auth()->user()->id;
+        
         $allUsers = User::where('profile_id', '=', $userId);
         return view('users.index', ['allusers' => $allUsers->paginate(15)]);
     }
@@ -135,7 +144,38 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('allSubUsers')->withStatus(__('User successfully created.'));
+        
+    }
 
 
+    /**
+     * Edit a sub user
+     */
+    public function editSubUser(Request $request, $id)
+    {
+        $userId = auth()->user()->id;
+        $user = User::find($id);
+        $roles = Role::all();
+        $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
+        $reportsTo = User::where('profile_id', $userId)->get();
+
+
+        return view('users.editSubUser', compact('roles', 'departments', 'reportsTo', 'user'));
+    }
+
+    public function updateSubUser(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('role_id');
+        $user->department_id = $request->input('department_id');
+        $user->unit_id = $request->input('unit_id');
+        $user->reports_to = $request->input('report');
+        $user->status = $request->input('status');
+        // $user->password = bcrypt($request->password);
+        $user->update();
+        return redirect()->route('allSubUsers')->withStatus(__('User successfully updated.'));
     }
 }

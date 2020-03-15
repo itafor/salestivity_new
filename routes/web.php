@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/all/user', 'UserController@indexSubusers')->name('allSubUsers');
 		Route::get('create/new/user', 'UserController@createsubuser')->name('newSubUser');
 		Route::post('create/new/user', 'UserController@storesubuser')->name('storeuser');
+		Route::get('subuser/{id}', 'UserController@editSubUser')->name('editSubUser');
+		Route::post('subuser/{id}', 'UserController@updateSubUser')->name('updateSubUser');
 
 		// Department
 		Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
