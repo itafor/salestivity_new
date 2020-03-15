@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function reportsTo()
     {
-        return $this->belongsTo('App\User', 'reports_to',);
+        return $this->belongsTo('App\User', 'reports_to');
     }
     public function renewalPayment(){
         return $this->hasMany(RenewalPayment::class);
