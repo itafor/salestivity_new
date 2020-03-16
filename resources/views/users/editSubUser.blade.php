@@ -160,10 +160,11 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @if(auth()->user()->id != $user->id)
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('status') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-status">{{ __('Status') }}</label>
-                                            <select name="status" id="input-status" class="form-control" data-toggle="select">
+                                            <select name="status" id="input-status" class="form-control" data-toggle="select" >
                                                 <option value="">Select a Status</option>
                                                 <option {{ ($user->status === 1 || $user->status === null) ? 'selected' : '' }} value="1">Enable</option>
                                                 <option {{ $user->status === 0 ? 'selected' : '' }} value="0">Disable</option>
@@ -175,6 +176,7 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                                     
     
