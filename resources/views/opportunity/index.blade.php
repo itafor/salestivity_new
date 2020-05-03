@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('Opportunities')])
 @section('content')
-@include('users.partials.header', ['title' => __('Biodun')]) 
+@include('users.partials.header', ['title' => __('Opportunities')]) 
 
       
     <div class="container-fluid mt--7">

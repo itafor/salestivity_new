@@ -386,7 +386,6 @@ $('#addMore').click(function(e) {
                 +'<div class="form col-md-3">'
                 +'<label class="form-control-label" for="input-category">Title</label>'
                 +'<select name="contacts['+rowId+'][contact_title]"  class="form-control select'+rowId+'" required>'
-                +'<option value="">Select Property Type</option>'
                 +'<option value="">Select title</option>'
                 +'<option value="Mr.">Mr.</option>'
                 +'<option value="Mrs.">Mrs.</option>'
