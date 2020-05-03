@@ -26,3 +26,8 @@
 button.badge {
   color: white;
 }
+
+.country-code {
+  background-color: darkgrey;
+  color: #ffffff;
+}

@@ -135,7 +135,7 @@
                                             <select name="country" id="country_id" class="form-control form-control-alternative{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country') }}" required data-live-search="true">
                                                 <option value="">Select a country</option>
                                                 @foreach($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                <option {{ $country->sortname == $location ? "selected" : "" }} value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('country'))
@@ -150,6 +150,9 @@
                                             <label class="form-control-label" for="state_id">{{ __('State') }}</label>
                                             <select name="state" id="state_id" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state') }}" required >
                                                 <option value="">Select State</option>
+                                                @foreach($states as $state)
+                                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                                @endforeach
                                             </select>
                                             @if ($errors->has('state'))
                                                 <span class="invalid-feedback" role="alert">
@@ -188,9 +191,9 @@
                                         </div>
                                     </div>
                                 </div> 
- <h2>{{ __('Contacts:') }}</h2>
+                <h2>{{ __('Contacts:') }}</h2>
                     <div class="row">
-                         <div class="col-md-2">
+                         <div class="col-md-4">
                         <div class="form-group{{ $errors->has('contact_title') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-property_type">{{ __('Title') }}</label>
                                     <select name="contacts[112211][contact_title]"  class="form-control">
@@ -209,7 +212,7 @@
                                 </div>
 
                             </div>
-                             <div class="col-md-2">
+                             <div class="col-md-4">
                                 <div class="form-group{{ $errors->has('contact_surname') ? ' has-danger' : '' }} ">
                                     <label class="form-control-label" for="input-category">{{ __('Surname') }}</label>
 
@@ -221,7 +224,7 @@
                                     @endif
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                             <div class="col-md-4">
                                 <div class="form-group{{ $errors->has('contact_name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-contact_name">Other Names</label>
                                     <input type="text" name="contacts[112211][contact_name]" id="input-contact_name" class="form-control {{ $errors->has('contact_name') ? ' is-invalid' : '' }} contact_name" placeholder="Enter other names" value="{{old('contact_name')}}">
@@ -233,7 +236,7 @@
                                     @endif
                                 </div> 
                                 </div>
-                                 <div class="col-md-3">                  
+                                 <div class="col-md-4">                  
                                 <div class="form-group{{ $errors->has('contact_email') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-contact_email">{{ __('Email') }}</label>
                                     <input type="email" name="contacts[112211][contact_email]" id="input-contact_email" class="form-control {{ $errors->has('contact_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('contact_email')}}">
@@ -245,11 +248,15 @@
                                     @endif
                                 </div>
                             </div>
-                             <div class="col-md-2">
+                             <div class="col-md-4">
                                 <div class="form-group{{ $errors->has('rent_commission') ? ' has-danger' : '' }} ">
                                     <label class="form-control-label" for="input-contact_phone">{{ __('Phone') }}</label>
-                                    <input type="tel"  name="contacts[112211][contact_phone]" id="input-contact_phone" class="form-control {{ $errors->has('contact_phone') ? ' is-invalid' : '' }} contact_phone" placeholder="Enter contact phone" value="{{old('contact_phone')}}">
-
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text country-code" id="basic-addon1">+{{$getCountry->phonecode}}</span>
+                                        </div>
+                                        <input type="tel"  name="contacts[112211][contact_phone]" id="input-contact_phone" class="form-control {{ $errors->has('contact_phone') ? ' is-invalid' : '' }} contact_phone" placeholder=" 8090000000" value="{{old('contact_phone')}}">
+                                    </div>
                                     @if ($errors->has('contact_phone'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('contact_phone') }}</strong>
