@@ -200,3 +200,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+// Only a zeus Admin can access this route
+Route::group(['middleware' => ['zeus'], 'prefix' => 'admin/', 'as' => 'admin.'], function() {
+	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
+});
+

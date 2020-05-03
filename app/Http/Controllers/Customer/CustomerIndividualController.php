@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Validator;
 use App\CustomerIndividual;
 use App\Customer;
 use App\AddressCustomer;
+use App\State;
 use App\Contact;
 use App\Country;
 use App\Industry;
 use Session;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Stevebauman\Location\Facades\Location;
 
 class CustomerIndividualController extends Controller
 {
@@ -33,11 +35,25 @@ class CustomerIndividualController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $ip = $request->ip();
+        if($ip == '127.0.0.1'){
+            $ip = '105.112.24.184';
+        }
+
+        // get location of user
+        $loc = Location::get($ip);
+        $location = $loc->countryCode;
+        // dd($location);
+
+        // default the country, states and city to these values
+        $getCountry = Country::where('sortname', $location)->first();
+        // dd($getCountry);
+        $states = State::where('country_id', $getCountry->id)->get();
         $countries = Country::all();
         $industries = Industry::all();
-        return view('customer.individual.create', compact('countries', 'industries'));
+        return view('customer.individual.create', compact('countries', 'getCountry', 'location', 'industries', 'states'));
     }
 
     /**

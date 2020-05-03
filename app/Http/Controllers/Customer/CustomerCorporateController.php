@@ -10,10 +10,12 @@ use App\Customer;
 use App\Industry;
 use App\Contact;
 use App\Country;
+use App\State;
 use Session;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
+use Stevebauman\Location\Facades\Location;
 
 class CustomerCorporateController extends Controller
 {
@@ -32,9 +34,23 @@ class CustomerCorporateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('customer.corporate.create');
+        $ip = $request->ip();
+        if($ip == '127.0.0.1'){
+            $ip = '105.112.24.184';
+        }
+
+        // get location of user
+        $loc = Location::get($ip);
+        $location = $loc->countryCode;
+        // dd($location);
+
+        // default the country, states and city to these values
+        $getCountry = Country::where('sortname', $location)->first();
+        // dd($getCountry);
+        $states = State::where('country_id', $getCountry->id)->get();
+        return view('customer.corporate.create', compact('getCountry', 'location', 'states'));
     }
 
     /**
