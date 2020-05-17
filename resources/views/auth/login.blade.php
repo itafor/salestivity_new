@@ -1,25 +1,28 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
-    @include('layouts.headers.guest')
+    <div class="header bg-solid-custom py-7 py-lg-8">
+    <div class="container">
+        <div class="header-body text-center mb-7">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-6">
+                    <h1 class="text-dark">{{ __('Sign In') }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+    </div>-->
+</div>
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0">
-                    <!-- <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-3"><small>{{ __('Sign in with') }}</small></div>
-                        <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
-                                <span class="btn-inner--text">{{ __('Github') }}</span>
-                            </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/google.svg"></span>
-                                <span class="btn-inner--text">{{ __('Google') }}</span>
-                            </a>
-                        </div>
-                    </div> -->
+                <div class="card card-custom bg-secondary shadow">
+                    
                     <div class="card-body px-lg-5 py-lg-5">
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
@@ -65,13 +68,13 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-light">
+                            <a href="{{ route('password.request') }}" class="text-dark">
                                 <small>{{ __('Forgot password?') }}</small>
                             </a>
                         @endif
                     </div>
                     <div class="col-6 text-right">
-                        <a href="{{ route('register') }}" class="text-light">
+                        <a href="{{ route('register') }}" class="text-dark">
                             <small>{{ __('Create new account') }}</small>
                         </a>
                     </div>

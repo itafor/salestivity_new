@@ -3994,6 +3994,30 @@ input[type='button'].btn-block
 {
     transition: opacity .15s linear;
 }
+
+/** Custom CSS **/
+.main-container .card-header{
+    border-bottom: 1px solid #e9ecef !important;
+}
+.main-container .card-body{
+    padding:35px 10px !important;
+}
+.select2-container--bootstrap .select2-selection--single{
+    margin: 0 5px 0 0 !important;
+    padding: 5px !important;
+    line-height: 25px !important;
+    height: 35px !important;
+}
+div.dataTables_wrapper div.dataTables_filter {
+    margin-top: -40px;
+}
+.text-right{text-align:right;}
+.text-left{text-align:left;}
+
+
+
+
+
 @media screen and (prefers-reduced-motion: reduce)
 {
     .fade
@@ -5239,11 +5263,8 @@ input[type='button'].btn-block
 .navbar
 {
     position: relative;
-
     display: flex;
-
-    padding: 1rem 1rem; 
-
+    padding: 10px 15px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
@@ -5646,12 +5667,15 @@ input[type='button'].btn-block
 
 .navbar-dark .navbar-nav .nav-link
 {
-    color: rgba(255, 255, 255, .95);
+    color: #081d97;
+    transition: all ease-in-out .3s;
 }
+
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus
 {
-    color: rgba(255, 255, 255, .65);
+   color: #1dcd08;
+    transition: all ease-in-out .3s;
 }
 .navbar-dark .navbar-nav .nav-link.disabled
 {
@@ -5690,6 +5714,9 @@ input[type='button'].btn-block
 {
     color: rgba(255, 255, 255, .65);
 }
+.navbar-auth{
+    background: #5897fb !important;
+}
 
 .card
 {
@@ -5706,6 +5733,10 @@ input[type='button'].btn-block
     border-radius: .375rem; 
     background-color: #fff;
     background-clip: border-box;
+}
+.card-custom{
+    border-radius:0 !important;
+    border-top:4px solid #5e72e4 !important;
 }
 .card > hr
 {
@@ -7940,7 +7971,7 @@ button.bg-primary:focus
 
 .bg-secondary
 {
-    background-color: #f7fafc !important;
+    background-color: #f2f7ff !important;
 }
 
 a.bg-secondary:hover,
@@ -8031,7 +8062,11 @@ button.bg-dark:focus
 
 .bg-default
 {
-    background-color: #172b4d !important;
+    /** background-color: #172b4d !important; **/
+    background-image: url(../img/bg_001.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-color: #dceef8 ;
 }
 
 a.bg-default:hover,
@@ -9453,12 +9488,12 @@ button.bg-darker:focus
 .shadow,
 .card-profile-image img
 {
-    box-shadow: 0 0 2rem 0 rgba(136, 152, 170, .15) !important;
+    box-shadow: 0 0 35px -7.5px rgba(11,11,12,0.15) !important;
 }
 
 .shadow-lg
 {
-    box-shadow: 0 0 3rem rgba(136, 152, 170, .175) !important;
+    box-shadow: 0 0 55px -15px rgba(11,11,12,0.15) !important;
 }
 
 .shadow-none
@@ -9737,7 +9772,7 @@ button.bg-darker:focus
 .mt--8,
 .my--8
 {
-    margin-top: -8rem !important;
+    margin-top: -12rem !important;
 }
 
 .mr--8,
@@ -14638,7 +14673,7 @@ a.text-light:focus
 
 .text-dark
 {
-    color: #212529 !important;
+    color: #081d97 !important;
 }
 
 a.text-dark:hover,
@@ -15398,6 +15433,9 @@ button.section-darker:hover,
 button.section-darker:focus
 {
     background-color: black !important;
+}
+.bg-solid-custom{
+    background:transparent;
 }
 
 .bg-gradient-primary
@@ -17589,8 +17627,8 @@ a.btn-icon-only
 {
     .main-content .container-fluid
     {
-        padding-right: 39px !important; 
-        padding-left: 39px !important;
+        padding-right: 25px !important; 
+        padding-left: 25px !important;
     }
 }
 
