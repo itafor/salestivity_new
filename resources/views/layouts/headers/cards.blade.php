@@ -1,4 +1,13 @@
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+
+@if ( auth()->user()->name !== '' )
+    @include('users.partials.header', ['title' => __('Welcome') . ' '. auth()->user()->name,
+    ]) 
+
+@else
+    @include('users.partials.header', ['title' => __('Welcome')]) 
+
+@endif
+<div class="header  cards-wrap pb-8 pt-md-0 pt--5">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -92,7 +101,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Invoices</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Unpaid Invoices</h5>
                                     <span class="h2 font-weight-bold mb-0">924</span>
                                 </div>
                                 <div class="col-auto">
@@ -155,7 +164,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Invoices</h5>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Unpaid Invoices</h5>
                                     <span class="h2 font-weight-bold mb-0">924</span>
                                 </div>
                                 <div class="col-auto">
