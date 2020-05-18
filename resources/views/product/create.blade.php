@@ -2,11 +2,11 @@
 @section('content')
 @include('users.partials.header', ['title' => __('Add Product')])  
 
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
+                    <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Add New Product') }}</h3>

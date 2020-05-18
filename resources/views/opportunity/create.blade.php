@@ -10,7 +10,7 @@
 </script>
 
 
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
