@@ -5,7 +5,7 @@
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card shadow">
                     <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -21,7 +21,7 @@
                             @csrf
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Product information') }}</h6>
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -38,7 +38,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
-                                            <select name="category_id" id="category_id" class="form-control" data-toggle="select">
+                                            <select name="category_id" id="category_id" class="form-control border-input" data-toggle="select">
                                                 <option value="">Choose a Category</option>
                                                     @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -56,7 +56,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
-                                            <select name="sub_category_id" id="sub_category_id" class="form-control" data-toggle="select">
+                                            <select name="sub_category_id" id="sub_category_id" class="form-control border-input" data-toggle="select">
                                                 <option value="">Choose a Sub Category</option>
                                                 @foreach($subCategories as $subCategory)
                                                     <option value="{{ $subCategory->id }}">{{ $subCategory->name }}</option>
@@ -84,7 +84,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="description">{{ __('Description') }}</label>
-                                            <input type="textarea" name="description" id="description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Description') }}" value="{{ old('description') }}" required >
+                                            <input type="textarea" name="description" id="description" class="form-control form-control-alternative border-input{{ $errors->has('description') ? ' is-invalid' : '' }}" placeholder="{{ __('Description') }}" value="{{ old('description') }}" required >
 
                                             @if ($errors->has('description'))
                                                 <span class="invalid-feedback" role="alert">
