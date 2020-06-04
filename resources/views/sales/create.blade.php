@@ -5,7 +5,7 @@
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -20,12 +20,12 @@
                         <form method="post" action="{{ route('sales.store') }}" autocomplete="off">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Sales information') }}</h6>
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-product">{{ __('Product') }}</label>
-                                            <select name="product" id="input-product" class="form-control form-control-alternative{{ $errors->has('product') ? ' is-invalid' : '' }}" placeholder="{{ __('Product') }}" value="{{ old('product') }}" >
+                                            <select name="product" id="input-product" class="form-control form-control-alternative border-input {{ $errors->has('product') ? ' is-invalid' : '' }}" placeholder="{{ __('Product') }}" value="{{ old('product') }}" >
                                                 <option value="">Select Product</option>
                                                 @foreach($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -79,7 +79,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('sales_person_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="sales_person">{{ __('Sales Person') }}</label>
-                                            <select name="sales_person_id" id="sales_person" class="form-control form-control-alternative{{ $errors->has('sales_person_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales_person_id') }}" >
+                                            <select name="sales_person_id" id="sales_person" class="form-control form-control-alternative border-input {{ $errors->has('sales_person_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales_person_id') }}" >
                                                 <option value="">Select Sales Person</option>
                                                 @foreach($salesPerson as $sales)
                                                     <option value="{{ $sales->id }}">{{ $sales->name }} {{ $sales->last_name }}</option>
@@ -96,7 +96,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('location_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="location">{{ __('Location') }}</label>
-                                            <select name="location_id" id="location" class="form-control form-control-alternative{{ $errors->has('location_id') ? ' is-invalid' : '' }}" required >
+                                            <select name="location_id" id="location" class="form-control form-control-alternative border-input {{ $errors->has('location_id') ? ' is-invalid' : '' }}" required >
                                                 <option value="">Select Location</option>
                                                 @foreach($locations as $location)
                                                     <option value="{{ $location->id }}">{{ $location->location }}</option>
