@@ -9,7 +9,7 @@
 
         <title>{{ config('app.name', 'Salestivity') }}</title>
         <!-- Favicon -->
-        <link href="{{ asset('argon') }}/img/brand/favicon.png" rel="icon" type="image/png">
+        <link href="{{ asset('argon') }}/img/brand/icon.png" rel="icon" type="image/png">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <!-- Icons -->
@@ -30,6 +30,7 @@
     <link type="text/css" href="{{ url('assets/css/style.css') }}" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
 <!-- Data table stylesheet -->
     <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
@@ -127,18 +128,27 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
         <script type="text/javascript">
-
+            /**
             $('.datatable').DataTable({
             dom: '<"html5buttons" B>lTfgitp',
 
         });
+        **/
 
             $(document).ready(function() {
             $("select").not('.user').select2({
                 theme: "bootstrap"
             });
-            $('.datatable').DataTable();
-        });
+            $('.datatable').DataTable({
+                //dom: '<"html5buttons" B>lTfgitp',
+                "dom": '<lf<t>ip>',
+                "language": {
+                    "paginate": {
+                      "previous": "<i class='las la-angle-double-left'></i>",
+                      "next": "<i class='las la-angle-double-right'></i>"
+                    }
+                }
+            });
 
           var Datepicker = (function() {
     var $datepicker = $('.datepicker');

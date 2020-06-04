@@ -3996,6 +3996,43 @@ input[type='button'].btn-block
 }
 
 /** Custom CSS **/
+.border-input, #fieldHTML select, .row select{
+    border:0.5px solid !important;
+    border-color:inherit;
+}
+fieldset {
+    min-width: 100%;
+    margin: 0 0 25px;
+    padding: 15px 0;
+    border: 0;
+    border-bottom: 1px solid #e8e9ea;
+}
+.file-input{
+    text-align: center !important;
+    border: 3px dashed #dfdfdf!important;
+    box-shadow: none !important;
+    padding: 40px 40% 40px;
+    width: 100%;
+    height: 120px;
+    -webkit-appearance: none;
+}
+.form-group.col-md-6, .form-group.col-md-4{
+    display:inline-block;
+    vertical-align: top
+}
+.form-group.col-md-6{
+    width:49.5%;
+}
+.form-group.col-md-4{
+    width:33.05%;
+}
+.colored-option option{
+    color: #616263;
+}
+.colored-option option:hover{
+    color: #ffffff;
+    background-color: #000000;
+}
 .main-container .card-header{
     border-bottom: 1px solid #e9ecef !important;
 }
@@ -4006,7 +4043,7 @@ input[type='button'].btn-block
     margin: 0 5px 0 0 !important;
     padding: 5px !important;
     line-height: 25px !important;
-    height: 35px !important;
+    height: 46px !important;
 }
 div.dataTables_wrapper div.dataTables_filter {
     margin-top: -40px;
@@ -21032,8 +21069,7 @@ p
 .heading
 {
     font-size: .95rem;
-    font-weight: 600; 
-
+    font-weight: 600;
     letter-spacing: .025em;
     text-transform: uppercase;
 }
@@ -21041,10 +21077,7 @@ p
 .heading-small
 {
     font-size: .75rem;
-
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-
+    padding: 20px;
     letter-spacing: .04em; 
     text-transform: uppercase;
 }
