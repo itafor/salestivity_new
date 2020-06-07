@@ -2,10 +2,10 @@
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sales Location')])
 
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -20,7 +20,7 @@
                         <form method="post" action="{{ route('sales.location.store') }}" autocomplete="off">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Sales Location information') }}</h6>
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('location') ? ' has-danger' : '' }}">
@@ -36,7 +36,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('country_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="country_id">{{ __('Country') }}</label>
-                                            <select name="country_id" id="country_id" class="form-control form-control-alternative{{ $errors->has('country_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country_id') }}" >
+                                            <select name="country_id" id="country_id" class="form-control form-control-alternative border-input {{ $errors->has('country_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country_id') }}" >
                                                 <option value="">Select Country</option>
                                                 @foreach($countries as $country)
                                                 <option value="{{ $country->id }}">{{ $country->country_name }}</option>
@@ -55,7 +55,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('state_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="state_id">{{ __('State') }}</label>
-                                            <select name="state_id" id="state_id" class="form-control form-control-alternative{{ $errors->has('state_id') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state_id') }}" >
+                                            <select name="state_id" id="state_id" class="form-control form-control-alternative border-input {{ $errors->has('state_id') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state_id') }}" >
                                                 <option value="">Select State</option>
                                                     
                                             </select>
@@ -69,7 +69,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('city_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="city_id">{{ __('City') }}</label>
-                                            <select name="city_id" id="city_id" class="form-control form-control-alternative{{ $errors->has('city_id') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city_id') }}" >
+                                            <select name="city_id" id="city_id" class="form-control form-control-alternative border-input {{ $errors->has('city_id') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city_id') }}" >
                                                 <option value="">Select City</option>
                                                     
                                             </select>
@@ -83,7 +83,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="address">{{ __('Address') }}</label>
-                                            <input type="text" name="address" id="address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('Address') }}" value="{{ old('address') }}" required>
+                                            <input type="text" name="address" id="address" class="form-control form-control-alternativeo./j{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('Address') }}" value="{{ old('address') }}" required>
                                             @if ($errors->has('address'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('address') }}</strong>

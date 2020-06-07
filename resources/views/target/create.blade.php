@@ -2,10 +2,10 @@
 @section('content')
 @include('users.partials.header', ['title' => __('Add Target')])
 
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -23,12 +23,12 @@
                             <input type="hidden" value="" name="department_id" id="dept_id">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Target information') }}</h6>
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('sales') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-sales">{{ __('Sales Person') }}</label>
-                                            <select name="sales" id="input-sales" class="form-control form-control-alternative{{ $errors->has('sales') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales') }}" >
+                                            <select name="sales" id="input-sales" class="form-control form-control-alternative border-input {{ $errors->has('sales') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales') }}" >
                                                 <option value="">Select Sales Person</option>
                                                 @foreach($salesPersons as $sales)
                                                     <option value="{{$sales->id}}">{{ $sales->name }}</option>
@@ -44,7 +44,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('manager') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-manager">{{ __('Line Manager') }}</label>
-                                            <select name="manager" id="input-manager" class="form-control form-control-alternative{{ $errors->has('manager') ? ' is-invalid' : '' }}" placeholder="{{ __('Line Manager') }}" value="{{ old('manager') }}" >
+                                            <select name="manager" id="input-manager" class="form-control form-control-alternative border-input {{ $errors->has('manager') ? ' is-invalid' : '' }}" placeholder="{{ __('Line Manager') }}" value="{{ old('manager') }}" >
                                                 <option value="">Select Manager</option>
                                                 @foreach($salesPersons as $sales)
                                                     <option value="{{$sales->id}}">{{ $sales->name }}</option>
@@ -62,7 +62,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-type">{{ __('Target Type') }}</label>
-                                            <select name="type" id="input-type" class="form-control form-control-alternative{{ $errors->has('type') ? ' is-invalid' : '' }}" placeholder="{{ __('Target Type') }}" value="{{ old('type') }}" >
+                                            <select name="type" id="input-type" class="form-control form-control-alternative border-input {{ $errors->has('type') ? ' is-invalid' : '' }}" placeholder="{{ __('Target Type') }}" value="{{ old('type') }}" >
                                                 <option value="">Target Type</option>
                                                 <option value="1">Weekly</option>
                                                 <option value="2">Monthly</option>
@@ -80,7 +80,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-product">{{ __('Product Name') }}</label>
-                                            <select name="product_id" id="input-product" class="form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="{{ old('product_id') }}" >
+                                            <select name="product_id" id="input-product" class="form-control form-control-alternative border-input {{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="{{ old('product_id') }}" >
                                                 <option value="">Select Product</option>
                                                 @foreach($products as $product)
                                                     <option value="{{$product->id}}">{{ $product->name }}</option>
@@ -110,7 +110,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('qty') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="qty">{{ __('Quantity') }}</label>
-                                            <input type="num" name="qty" id="qty" class="form-control form-control-alternative{{ $errors->has('qty') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ old('qty')}}" required>
+                                            <input type="num" name="qty" id="qty" class="form-control form-control-alternative border-input {{ $errors->has('qty') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ old('qty')}}" required>
 
                                             @if ($errors->has('qty'))
                                                 <span class="invalid-feedback" role="alert">

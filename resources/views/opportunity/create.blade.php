@@ -10,10 +10,10 @@
 </script>
 
 
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -28,7 +28,7 @@
                         <form method="post" action="{{ route('opportunity.store') }}" autocomplete="off">
                             @csrf
                             <h6 class="heading-small text-muted mb-4">{{ __('Opportunity information') }}</h6>
-                            <div class="pl-lg-4">
+                            <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('opportunity_name') ? ' has-danger' : '' }}">
@@ -46,7 +46,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
-                                            <select name="account_id" id="customer" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
+                                            <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
                                                 <option value="">Select Account</option>
                                                 @foreach($customers as $customer)
                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -65,7 +65,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('stage') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-stage">{{ __('Stage') }}</label>
-                                            <select name="stage" id="stage" class="form-control form-control-alternative{{ $errors->has('stage') ? ' is-invalid' : '' }}" placeholder="{{ __('Stage') }}" value="{{ old('stage') }}" required >
+                                            <select name="stage" id="stage" class="form-control form-control-alternative border-input {{ $errors->has('stage') ? ' is-invalid' : '' }}" placeholder="{{ __('Stage') }}" value="{{ old('stage') }}" required >
                                                 <option value="">Select a stage</option>
                                                 <option value="Qualification">Qualification</option>
                                                 <option value="Needs Analysis">Needs Analysis</option>
@@ -80,7 +80,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('contact') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-contact">{{ __('Contact') }}</label>
-                                            <select name="contact" id="contact_emails" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}">
+                                            <select name="contact" id="contact_emails" class="form-control form-control-alternative border-input {{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}">
                                                 <!-- Automatically filled according to an account picked using jquery -->
                                                 <option value="">Select Contact</option>
                                             </select>
@@ -125,7 +125,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('initiation_date') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-initiation_date">{{ __('Initiation Date') }}</label>
-                                            <input type="date" name="initiation_date" id="input-initiation_date" class="form-control form-control-alternative{{ $errors->has('initiation_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Initiation Date') }}" value="{{ old('initiation_date') }}" required>
+                                            <input type="date" name="initiation_date" id="input-initiation_date" class="form-control form-control-alternative border-input {{ $errors->has('initiation_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Initiation Date') }}" value="{{ old('initiation_date') }}" required>
 
                                             @if ($errors->has('initiation_date'))
                                                 <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('closure_date') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-closure_date">{{ __('Expected Closure Date') }}</label>
-                                            <input type="date" name="closure_date" id="input-closure_date" class="form-control form-control-alternative{{ $errors->has('closure_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Expected Closure Date') }}" value="{{ old('closure_date') }}" required>
+                                            <input type="date" name="closure_date" id="input-closure_date" class="form-control form-control-alternative border-input {{ $errors->has('closure_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Expected Closure Date') }}" value="{{ old('closure_date') }}" required>
 
                                             @if ($errors->has('closure_date'))
                                                 <span class="invalid-feedback" role="alert">
@@ -165,7 +165,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('status') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-status">{{ __('Status') }}</label>
-                                            <select name="status" id="status" class="form-control form-control-alternative{{ $errors->has('status') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}">
+                                            <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}">
                                                 <option value="Pending">Select Status</option>
                                                 <option value="Pending">Pending</option>
                                                 <option value="Won">Won</option>
