@@ -8,6 +8,8 @@ use App\Product;
 use App\Category;
 use App\SubCategory;
 use Session;
+use Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
@@ -46,29 +48,61 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
+
+        // store the creator's id and main_acct_id
+        if(auth()->check()) {
+            $main_acct_id = auth()->user()->id;
+            $created_by = auth()->user()->id;
+            $userType = 'users';
+        }
+        if(auth()->guard('sub_user')->check()) {
+            // get the sub_user's main_acct_id
+            $main_acct_id = auth()->guard('sub_user')->user()->main_acct_id;
+            $created_by = auth()->guard('sub_user')->user()->id;
+            $userType = 'sub_users';
+        }
         $userId = auth()->user()->id;
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|max:255|min:2',
             'category_id' => 'required'
         ]);
-        $product->name = $request->name;
-        $product->category_id = $request->category_id;
-        $product->sub_category_id = $request->sub_category_id;
-        $product->description = $request->description;
-        $product->standard_price = $request->standard_price;
-        $product->main_acct_id = $userId;
-        $product->save();
+        // $this->validate($request, [
+        //     'name' => 'required|max:255|min:2',
+        //     'category_id' => 'required'
+        // ]);
+
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
+        try {
+            $product->name = $request->name;
+            $product->category_id = $request->category_id;
+            $product->sub_category_id = $request->sub_category_id;
+            $product->description = $request->description;
+            $product->standard_price = $request->standard_price;
+            $product->main_acct_id = $main_acct_id;
+            $product->created_by = $created_by;
+            $product->user_type = $userType;
+            $product->save();
+
+            Alert::success('Product', 'Product has been successfully added');
+            return redirect()->route('product.index');
+        } catch (\Throwable $th) {
+            Alert::error('Unable to save product');
+            return back()->withInput();
+        }
+        
 
         // $cat = $request->category_id;
 
         //$product->category()->sync($cat);
 
 
-        $status = "New Product has been Added ";
-        Session::flash('status', $status);
+        // $status = "New Product has been Added ";
+        // Session::flash('status', $status);
 
-        return redirect()->route('product.index');
     }
 
     /**

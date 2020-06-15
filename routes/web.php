@@ -11,20 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['middleware' => 'auth'], function () {
+Route::get('/', 'HomeController@homepage');
+Route::group(['middleware' => ['auth:sub_user,web']], function () {
+	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
+	
 
-
-	Route::get('email/template', function() {
-		return view('emails/sendinvoice');
-	});
+	// Route::get('email/template', function() {
+	// 	return view('emails/sendinvoice');
+	// });
 
 	// Roles
 	Route::get('roles', 'UsersRoleController@index')->name('role.index');
@@ -201,7 +201,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Only a zeus Admin can access this route
-Route::group(['middleware' => ['zeus'], 'prefix' => 'admin/', 'as' => 'admin.'], function() {
+Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'admin.'], function() {
 	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
 });
 

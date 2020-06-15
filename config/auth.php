@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users', 'subusers'
+        'passwords' => 'users', 'sub_users', 'admins'
     ],
 
     /*
@@ -40,15 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users', 'subusers'
         ],
-        'subuser' => [
+        'sub_user' => [
             'driver' => 'session',
-            'provider' => 'subusers',
+            'provider' => 'sub_users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-            'hash' => false,
+            // 'hash' => false,
         ],
     ],
 
@@ -74,10 +78,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'subusers' => [
+        'sub_users' => [
             'driver' => 'eloquent',
             'model' => App\SubUser::class,
         ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

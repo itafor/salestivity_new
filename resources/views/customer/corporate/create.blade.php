@@ -155,7 +155,7 @@
                                             <select name="country" id="country_id" class="form-control form-control-alternative border-input{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country') }}" required >
                                                 <option value="">Select a country</option>
                                                 @foreach(getCountries() as $country)
-                                                    <option {{ $country->sortname == $location ? "selected" : "" }} value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                                    <option {{ $country->sortname == $location ? "selected" : "" }} value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('country'))
