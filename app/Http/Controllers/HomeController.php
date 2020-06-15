@@ -11,7 +11,18 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('homepage');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function homepage()
+    {
+        // dd(auth()->guard());
+        return view('welcome');
     }
 
     /**
@@ -21,6 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(auth()->guard());
         return view('dashboard');
     }
 }

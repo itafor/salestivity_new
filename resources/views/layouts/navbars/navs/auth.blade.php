@@ -12,9 +12,19 @@
                         <span class="avatar avatar-sm rounded-circle">
                             <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/user-dummy.jpg">
                         </span>
+                        @if(Auth::guard('admin')->check())
+                            <div class="media-body ml-2 d-none d-lg-block">
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('admin')->user()->first_name }}</span>
+                            </div>
+                        @elseif(Auth::guard('sub_user')->check())
                         <div class="media-body ml-2 d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
-                        </div>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('sub_user')->user()->first_name }}</span>
+                            </div>
+                        @else
+                            <div class="media-body ml-2 d-none d-lg-block">
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
+                            </div>
+                        @endif
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">

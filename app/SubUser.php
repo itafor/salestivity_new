@@ -2,28 +2,47 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\SubUser as Authenticatable;
 
 class SubUser extends Authenticatable
 {
-    use SoftDeletes;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use SoftDeletes, Notifiable;
+
+    protected $guard = 'sub_user';
+    protected $table = 'sub_users';
+    protected $guarded = ['id',];
+
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'role', 'reports', 'status', 'department_id', 'unit_id'
+        'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsTo('App\Role', 'role_id');
+    }
+
+    public function dept()
+    {
+        return $this->belongsTo('App\Department', 'department_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo('App\Unit', 'unit_id');
+    }
+
+    public function reportsTo()
+    {
+        return $this->belongsTo('App\User', 'reports_to');
+    }
 }
+
+    
+

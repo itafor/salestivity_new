@@ -27,7 +27,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-name">{{ __('First Name') }}</label>
-                                        <input type="text" name="first_name" id="input-name" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ $user->name }}" >
+                                        <input type="text" name="first_name" id="input-name" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ $user->first_name }}" >
 
                                         @if ($errors->has('first_name'))
                                             <span class="invalid-feedback" role="alert">
