@@ -46,7 +46,7 @@
                                         <td>{{$table->company_name}}</td>
                                         <td>{{$table->email}}</td>
                                         <td>{{$table->phone}}</td>
-                                        <td>{{$table->organization_count}}</td>
+                                        <td>{{ $table->organization_count - 1}}</td>
                                         <!-- <td>{{-- count(array($table->name)) --}}</td> -->
                                         <!-- <td>{{-- strftime('%d-%b-%Y', strtotime($role->created_at)) --}}</td> -->
                                     </tr>

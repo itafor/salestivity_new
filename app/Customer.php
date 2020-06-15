@@ -11,10 +11,13 @@ class Customer extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name','email','main_acct_id',
-                          'industry','phone','website','profession',
-                          'turn_over','employee_count','office_address',
-                         'home_address','customer_type','account_id','account_type'];
+    // protected $fillable = ['name','email','main_acct_id',
+    //                       'industry','phone','website','profession',
+    //                       'turn_over','employee_count','office_address',
+    //                      'home_address','customer_type','account_id','account_type',
+    //                     'user_type', 'created_by'];
+
+    protected $guarded = ['id'];
 
     public function address()
     {
@@ -69,6 +72,20 @@ class Customer extends Model
     }
 
     public static function createIndividualCustomer($data) {
+
+        // store the creator's id and main_acct_id
+        if(auth()->check()) {
+            $main_acct_id = auth()->user()->id;
+            $created_by = auth()->user()->id;
+            $userType = 'users';
+        }
+        if(auth()->guard('sub_user')->check()) {
+            // get the sub_user's main_acct_id
+            $main_acct_id = auth()->guard('sub_user')->user()->main_acct_id;
+            $created_by = auth()->guard('sub_user')->user()->id;
+            $userType = 'sub_users';
+        }
+        // dd($userType);
         $individualCustomer = self::create([
         'name' => $data['first_name'] .' '. $data['last_name'],
         'profession' => $data['profession'],
@@ -76,7 +93,9 @@ class Customer extends Model
         'email' => $data['email'],
         'phone' => $data['phone'],
         'website' => $data['website'],
-        'main_acct_id' => auth()->user()->id,
+        'main_acct_id' => $main_acct_id,
+        'created_by' => $created_by,
+        'user_type' => $userType,
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Individual',
@@ -92,6 +111,20 @@ class Customer extends Model
 
  public static function createCorporateCustomer($data) {
 
+    // if creator is a main user, store 
+    if(auth()->check()) {
+        $main_acct_id = auth()->user()->id;
+        $created_by = auth()->user()->id;
+        $userType = 'users';
+    }
+    if(auth()->guard('sub_user')->check()) {
+        // get the sub_user's main_acct_id
+        $main_acct_id = auth()->guard('sub_user')->user()->main_acct_id;
+        $created_by = auth()->guard('sub_user')->user()->id;
+        $userType = 'sub_users';
+    }
+    // dd($main_acct_id);
+        // dd($data);
         $corporateCustomer = self::create([
         'name' => $data['company_name'],
         'industry' => $data['industry'],
@@ -100,7 +133,9 @@ class Customer extends Model
         'website' => $data['website'],
         'turn_over' => $data['turn_over'],
         'employee_count' => $data['employee_count'],
-        'main_acct_id' => auth()->user()->id,
+        'main_acct_id' => $main_acct_id,
+        'created_by' => $created_by,
+        'user_type' => $userType,
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Corporate',

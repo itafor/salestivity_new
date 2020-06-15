@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Role;
 use App\Department;
+use App\SubUser;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -107,8 +108,9 @@ class UserController extends Controller
     public function indexSubusers()
     {
         $userId = auth()->user()->id;
+        // dd($userId);
         
-        $allUsers = User::where('profile_id', '=', $userId);
+        $allUsers = SubUser::where('main_acct_id', '=', $userId);
         return view('users.index', ['allusers' => $allUsers->paginate(15)]);
     }
     
@@ -127,17 +129,17 @@ class UserController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $user = new User;
-        $user->name = $request->first_name;
+        $user = new SubUser;
+        $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         // dd($user);
         $user->email = $request->email;
         $user->role_id = $request->role_id;
+        $user->reports_to = $request->report;
         $user->department_id = $request->department_id;
         $user->unit_id = $request->unit_id;
-        $user->reports_to = $request->report;
         $user->status = $request->status;
-        $user->profile_id = $userId;
+        $user->main_acct_id = $userId;
         $user->password = Hash::make($request->get('password'));
         // dd($user);
         // $user->password = bcrypt($request->password);
@@ -154,10 +156,11 @@ class UserController extends Controller
     public function editSubUser(Request $request, $id)
     {
         $userId = auth()->user()->id;
-        $user = User::find($id);
+        $user = SubUser::find($id);
         $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
-        $reportsTo = User::where('profile_id', $userId)->get();
+        $reportsTo = SubUser::where('main_acct_id', $userId)->get();
+        // dd($reportsTo);
 
 
         return view('users.editSubUser', compact('roles', 'departments', 'reportsTo', 'user'));
@@ -165,7 +168,7 @@ class UserController extends Controller
 
     public function updateSubUser(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = SubUser::find($id);
         $user->name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
@@ -174,8 +177,9 @@ class UserController extends Controller
         $user->unit_id = $request->input('unit_id');
         $user->reports_to = $request->input('report');
         $user->status = $request->input('status');
-        // $user->password = bcrypt($request->password);
+        
         $user->update();
+        
         return redirect()->route('allSubUsers')->withStatus(__('User successfully updated.'));
     }
 }

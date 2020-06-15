@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+use Auth;
+
 class ZeusMiddleware
 {
     /**
@@ -16,7 +18,8 @@ class ZeusMiddleware
     public function handle($request, Closure $next)
     {
         $message = 'You cannot view this page';
-        if(auth()->user()->role_id == 3) {
+        
+        if(Auth::guard('admin')->user()->role_id == 3) {
 
             return $next($request);
         }

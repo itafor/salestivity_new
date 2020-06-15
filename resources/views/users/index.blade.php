@@ -44,7 +44,7 @@
                             <tbody>
                                 @foreach ($allusers as $user)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->first_name }}</td>
                                         <td>
                                             <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                         </td>
