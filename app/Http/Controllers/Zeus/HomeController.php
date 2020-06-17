@@ -48,12 +48,13 @@ class HomeController extends Controller
         //                     ->get();
                 
         $tables = DB::table('users')
-                ->leftJoin('sub_users', 'users.id', '=', 'sub_users.main_acct_id')
-                ->leftJoin('customers', 'sub_users.id', '=', 'customers.main_acct_id')
-                ->select('users.company_name', 'users.email', 'users.phone', DB::raw("count(users.email) as organization_count"))
-                ->groupBy('users.id')
+                // ->leftJoin('sub_users', 'users.id', '=', 'sub_users.main_acct_id')
+                ->leftJoin('customers', 'users.id', '=', 'customers.main_acct_id')
+                ->select('users.company_name', 'users.email', 'users.phone', DB::raw("count(customer_type) as organization_count"))
+                ->groupBy('users.id',)
                 ->get();
         
+                // dd($tables);
 
         return view('zeus.index', compact('tables'));
     }
