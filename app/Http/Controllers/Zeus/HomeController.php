@@ -54,7 +54,6 @@ class HomeController extends Controller
                 ->groupBy('users.id')
                 ->get();
         
-                // dd($tables);
 
         return view('zeus.index', compact('tables'));
     }
