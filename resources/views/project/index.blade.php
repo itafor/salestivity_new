@@ -40,7 +40,7 @@
                                             <th scope="col">{{ __('Technician') }}</th>
                                             <th scope="col">{{ __('Start Date') }}</th>
                                             <th scope="col">{{ __('End Date') }}</th>
-                                            <th scope="col">{{ __('Notes') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -52,20 +52,29 @@
                                                 <td>{{ $project->technician }}</td>
                                                 <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
                                                 <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
-                                                <td>{{ $project->notes }}</td>
+                                                <td>{{ getCreatedByDetails($project->user_type, $project->created_by)['name'] .' '.
+                                                        getCreatedByDetails($project->user_type, $project->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                               
                                                 <td>
-                                                    <div class="col-4 text-right">
+
+                                                    <div class="btn-group-justified text-center" role="group">
+                                                        <div class="btn-group" role="group">
                                                         <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        </div>  
+
+                                                        <div class="btn-group" role="group">
+                                                        <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                            @csrf
+                                                            <div class="col-4 text-right">
+                                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                            </div>
+                                                        </form>
+                                                        </div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                    @csrf
-                                                    <div class="col-4 text-right">
-                                                        <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                    </div>
-                                                </form>
-                                            </td>
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>

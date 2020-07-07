@@ -47,6 +47,7 @@
                                             <th scope="col">{{ __('Account Type') }}</th>
                                             <th scope="col">{{ __('Email') }}</th>
                                             <th scope="col">{{ __('Phone') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col" class="text-center" >{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -58,7 +59,10 @@
                                                 <td>{{ $customer->customer_type}}</td>
                                                 <td>{{ $customer->email }}</td>
                                                 <td>{{ $customer->phone }}</td>
-                                                
+                                                <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
+                                                     getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
+                                                    }}
+                                                </td>
                                             <td>
                                                 <div class="btn-group-justified text-center" role="group">
                                                     <div class="btn-group" role="group">

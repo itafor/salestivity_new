@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('User Management')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Sales')])
+@include('users.partials.header', ['title' => __('Add Sales Location')])
 
 <script>
     $(document).ready(function(){
@@ -25,7 +25,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Add New Sale') }}</h3>
+                                <h3 class="mb-0">{{ __('Add New Sale Location') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
@@ -53,10 +53,9 @@
                                         <div class="form-group{{ $errors->has('country_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="country_id">{{ __('Country') }}</label>
                                             <select name="country_id" id="country_id" class="form-control form-control-alternative{{ $errors->has('country_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country_id') }}" >
-                                                <option value="{{ $location->country->id }}">{{ $location->country->country_name }}</option>
                                                 @foreach($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                                                 @endforeach   
+                                                    <option {{ $location->country_id == $country->id ? 'selected': '' }} value="{{ $country->id }}">{{ $country->name }}</option>
+                                                @endforeach   
                                             </select>
                                             @if ($errors->has('country_id'))
                                                 <span class="invalid-feedback" role="alert">

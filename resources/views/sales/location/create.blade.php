@@ -39,7 +39,7 @@
                                             <select name="country_id" id="country_id" class="form-control form-control-alternative border-input {{ $errors->has('country_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country_id') }}" >
                                                 <option value="">Select Country</option>
                                                 @foreach($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
                                                  @endforeach   
                                             </select>
                                             @if ($errors->has('country_id'))

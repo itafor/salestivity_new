@@ -9,6 +9,8 @@ use Session;
 use DB;
 use Storage;
 use App\Customer;
+use Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class ProjectController extends Controller
@@ -21,7 +23,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
+        $userId = getActiveGuardType()->main_acct_id;
         $customers = Customer::where('main_acct_id', $userId)->get();
         $projects = Project::where('main_acct_id', $userId)->orderBy('created_at', 'DESC')->get();
         
@@ -35,7 +37,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $customers = Customer::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
         
@@ -51,58 +53,74 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $project = new Project;
-        $userId = auth()->user()->id;
-        $this->validate($request, [
-            'customer_account' => 'required',
-            'product_id' => 'required',
-            'technician' => 'required',
-            'start' => 'required',
-            'end' => 'required',
-            // 'notes' => 'required|max:255',
-			// 'uploads' => 'required',
-						// 'uploads.*' => 'image|file',
-				]);
-				
-				if($request->hasfile('uploads'))
-                {
+        $userId = getActiveGuardType()->main_acct_id;
+        $guard_object = \getActiveGuardType();
 
-					// save each file in the specified folder
+        try {
+            // Validate each inputs
+            $validator = Validator::make($request->all(), [
+                'customer_account' => 'required',
+                'product_id' => 'required',
+                'start' => 'required',
+                'end' => 'required',
+                // 'uploads.*' => 'image|file',
+                ]);
+
+            if ($validator->fails()) {
+                return back()->withInput()->withErrors($validator->errors());
+            }
+
+            //  if input has a file then run this block of code
+            if($request->hasfile('uploads'))
+            {
+    
+                // save each file in the specified folder
                 foreach($request->file('uploads') as $file){
-                        $date = date('Y-m-d');
-                        $name=$file->getClientOriginalName();
-                        // create a folder according to dates
-                        if (!Storage::exists('/public/files/$date')) {
-                            Storage::makeDirectory('/public/files/$date');
-                        } 
-                        $file->move(public_path().'/files/'.$date, $name); 
-                        $data[] = $name; 
-                    }
-                    $project->uploads = json_encode($data); 
-                    $project->main_acct_id = $userId;
-                    $project->customer_account = $request->customer_account;
-                    $project->product_id = $request->product_id;
-                    $project->technician = $request->technician;
-                    $project->start_date = $request->start;
-                    $project->end_date = $request->end;
-                    $project->notes = $request->notes;
-                    $project->save();
-                } else {
-                    $project->main_acct_id = $userId;
-                    $project->customer_account = $request->customer_account;
-                    $project->product_id = $request->product_id;
-                    $project->technician = $request->technician;
-                    $project->start_date = $request->start;
-                    $project->end_date = $request->end;
-                    $project->notes = $request->notes;
-                    $project->save();
+                    $date = date('Y-m-d');
+                    $name=$file->getClientOriginalName();
+                    // create a folder according to dates
+                    if (!Storage::exists('/public/files/$date')) {
+                        Storage::makeDirectory('/public/files/$date');
+                    } 
+                    $file->move(public_path().'/files/'.$date, $name); 
+                    $data[] = $name; 
                 }
+                $project->uploads = json_encode($data); 
+                $project->main_acct_id = $guard_object->main_acct_id;
+                $project->user_type = $guard_object->user_type;
+                $project->created_by = $guard_object->created_by;
+                $project->customer_account = $request->customer_account;
+                $project->product_id = $request->product_id;
+                $project->technician = $request->technician;
+                $project->start_date = $request->start;
+                $project->end_date = $request->end;
+                $project->notes = $request->notes;
+                $project->save();
+            } else {
+                $project->main_acct_id = $guard_object->main_acct_id;
+                $project->user_type = $guard_object->user_type;
+                $project->created_by = $guard_object->created_by;
+                $project->customer_account = $request->customer_account;
+                $project->product_id = $request->product_id;
+                $project->technician = $request->technician;
+                $project->start_date = $request->start;
+                $project->end_date = $request->end;
+                $project->notes = $request->notes;
+                // dd($project);
+                $project->save();
+            }
+        } catch (\Throwable $th) {
+            Alert::error('Add Project', 'This action could not be completed');
+            return back()->withInput();
+        }
+				
 						
 						// dd($data);
 
-        $status = "Project Added";
-				Session::flash('status', $status);
+        $status = "Project has been successfully added";
+		Alert::success('status', $status);
 				
-				return redirect()->route('project.index');
+		return redirect()->route('project.index');
     }
 
     /**
@@ -113,7 +131,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $project = Project::where('main_acct_id', $userId)->first();
         $products = Product::where('main_acct_id', $userId)->get();
         $product = Product::where('id', $project->product_id)->where('main_acct_id', $userId)->first();
@@ -140,7 +158,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {	
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $project = Project::where('main_acct_id', $userId)->where('id', $id)->first();														
 				
         if($request->hasfile('uploads'))
@@ -158,17 +176,14 @@ class ProjectController extends Controller
                 $data[] = $name; 
             }
             $project->uploads = json_encode($data); 
-            $project->main_acct_id = $userId;
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
             $project->technician = $request->technician;
             $project->start_date = $request->start;
             $project->end_date = $request->end;
             $project->notes = $request->notes;
-            // dd($project);
             $project->update();
         } else {
-            $project->main_acct_id = $userId;
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
             $project->technician = $request->technician;
@@ -192,10 +207,14 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $project = Project::find($id);
-        $project->delete();
-
-        Session::flash('status', 'The Project has been successfully deleted');
-        return redirect()->route('project.index');
+        try {
+            $project = Project::find($id);
+            $project->delete();
+        } catch (\Throwable $th) {
+            Alert::error('Delete Project', 'This process could not be completed');
+            return back();
+        }
+        Alert::success('Delete Project', 'Project Deleted');
+        return back();
     }
 }

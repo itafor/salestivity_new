@@ -51,7 +51,7 @@ class HomeController extends Controller
                 // ->leftJoin('sub_users', 'users.id', '=', 'sub_users.main_acct_id')
                 ->leftJoin('customers', 'users.id', '=', 'customers.main_acct_id')
                 ->select('users.company_name', 'users.email', 'users.phone', DB::raw("count(customer_type) as organization_count"))
-                ->groupBy('users.id',)
+                ->groupBy('users.id')
                 ->get();
         
                 // dd($tables);

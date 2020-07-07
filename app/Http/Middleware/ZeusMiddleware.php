@@ -19,7 +19,7 @@ class ZeusMiddleware
     {
         $message = 'You cannot view this page';
         
-        if(Auth::guard('admin')->user()->role_id == 3) {
+        if(Auth::guard('admin')->check()) {
 
             return $next($request);
         }

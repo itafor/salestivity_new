@@ -99,7 +99,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="notes">{{ __('Notes') }}</label>
-                                            <input type="textarea" name="notes" id="notes" class="form-control form-control-alternative border-input{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Notes') }}" value="{{ old('notes') }}" required >
+                                            <input type="textarea" name="notes" id="notes" class="form-control form-control-alternative border-input{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Notes') }}" value="{{ old('notes') }}" >
 
                                             @if ($errors->has('notes'))
                                                 <span class="invalid-feedback" role="alert">

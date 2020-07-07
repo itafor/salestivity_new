@@ -21,8 +21,8 @@
                         <form method="post" action="{{ route('storeuser') }}" autocomplete="off">
                             @csrf
                             
-                            <input type="hidden" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" value="12345" required>
-                            <input type="hidden" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm Password') }}" value="12345" required>
+                            <input type="hidden" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('Password') }}" value="password" required>
+                            <input type="hidden" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm Password') }}" value="password" required>
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             <div class="pl-lg-4">
                             <div class="row">
@@ -147,8 +147,8 @@
                                             <label class="form-control-label" for="input-status">{{ __('Status') }}</label>
                                             <select name="status" id="input-status" class="form-control" data-toggle="select">
                                                 <option value="">Status</option>
-                                                <option value="1">Enabled</option>
-                                                <option value="2">Disabled</option>
+                                                <option value="1">Enable</option>
+                                                <option value="0">Disable</option>
                                             </select> 
                                             @if ($errors->has('report'))
                                                 <span class="invalid-feedback" role="alert">
