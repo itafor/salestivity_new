@@ -21,7 +21,7 @@ class RetailFieldSale extends Model
 
     public function salesPerson()
     {
-        return $this->belongsTo('App\User', 'sales_person_id');
+        return $this->belongsTo('App\SubUser', 'sales_person_id');
     }
 
     public function location()

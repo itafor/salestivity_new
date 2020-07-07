@@ -18,7 +18,7 @@ class AjaxController extends Controller
 {
     public function getContacts($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $contacts = Contact::where('customer_id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['contacts' => $contacts]);
     }
@@ -37,21 +37,21 @@ class AjaxController extends Controller
     public function getDept($id)
     {
 
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $units = Unit::where('dept_id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['units' => $units]);
     }
     
     public function getProductPrice($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['products' => $products]);
     }
      
      public function fetchSelectedProductPrice($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
 
         return response()->json([
@@ -63,7 +63,7 @@ class AjaxController extends Controller
 
      public function fetchRenewalDetails($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->first();
         return response()->json(['renewal' => $renewal]);
     }
@@ -104,7 +104,7 @@ public function getCompanyEmail($id)
     public function getSalesDept($id)
     {
 
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $depts = Department::where('id', $id)->where('main_acct_id', $userId)->get();
         return response()->json(['depts' => $depts]);
     }

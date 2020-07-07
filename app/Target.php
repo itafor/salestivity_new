@@ -10,7 +10,7 @@ class Target extends Model
     use SoftDeletes;
     public function salesPerson()
     {
-        return $this->belongsTo('App\User', 'department_id');
+        return $this->belongsTo('App\SubUser', 'sales_person_id');
     }
 
     public function dept()

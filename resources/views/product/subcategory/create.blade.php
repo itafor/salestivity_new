@@ -12,7 +12,7 @@
                                 <h3 class="mb-0">{{ __('Add New Sub Category') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.index') }}" class="btn btn-sm btn-primary">{{ __('Back to Product list') }}</a>
+                                <a href="{{ route('product.subcategory.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Add Sub Category') }}</h6>
                             <div class="pl-lg-4 pr-lg-4">
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="name">{{ __('Sub Category Name') }}</label>
+                                    <label class="form-control-label" for="name">{{ __('Sub Category Name *') }}</label>
                                     <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Sub Category Name') }}" value="{{ old('name') }}" required autofocus>
 
                                     @if ($errors->has('name'))

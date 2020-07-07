@@ -159,21 +159,23 @@
                                         {{ __('List Products') }}
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('product.category.create') }}">
-                                        {{ __('Add Category') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('product.subcategory.create') }}">
-                                        {{ __('Add Sub Category') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('product.create') }}">
-                                        {{ __('Add Product') }}
-                                    </a>
-                                </li>
+                                @if(!auth()->guard('sub_user')->check())
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('product.category.index') }}">
+                                            {{ __('Category') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('product.subcategory.index') }}">
+                                            {{ __('Sub Category') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('product.create') }}">
+                                            {{ __('Add Product') }}
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </ul>
                     </div>

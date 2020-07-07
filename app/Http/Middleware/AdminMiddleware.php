@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
-class SuperAdminMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,8 +16,10 @@ class SuperAdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $message = 'You are not a super admin';
-        if(auth()->user()->role_id == 1 || Auth::guard('sub_user')->user()->role_id == 1 ) {
+        $message = 'You cannot view this page';
+        
+        if(Auth::user()->role_id === 3 || Auth::user()->role_id == 1
+         || Auth::guard('sub_user')->user()->role_id == 3 || Auth::guard('sub_user')->user()->role_id ==1) {
 
             return $next($request);
         }
