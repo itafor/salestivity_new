@@ -97,10 +97,16 @@ class LoginController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         }
         // Login SubUsers
-        if (Auth::guard('sub_user')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+        if (Auth::guard('sub_user')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1], $request->get('remember'))) {
             
             // dd(Auth::guard('sub_user')->user());
             return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        if (Auth::guard('sub_user')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 0], $request->get('remember'))) {
+            
+            return back()
+                ->withInput($request->only('email', 'remember'))
+                ->withErrors(['email' => 'You are not enabled. Please contanct the admin']);;
         }
 
         return back()

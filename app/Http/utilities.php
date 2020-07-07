@@ -5,6 +5,8 @@ use App\Country;
 use App\Industry;
 use App\State;
 use Carbon\Carbon;
+use App\User;
+use App\SubUser;
 
 
 
@@ -49,4 +51,63 @@ function getCities(){
  if($cities){
  return $cities;
  }
+}
+
+function getActiveGuardType()
+{
+    // get the user guard type
+    if(auth()->check()) {
+        $main_acct_id = auth()->user()->id;
+        $created_by = auth()->user()->id;
+        $userType = 'users';
+        $objectResult = (object) [
+            'main_acct_id' => $main_acct_id,
+            'created_by' => $created_by,
+            'user_type' => $userType
+        ];
+
+        return $objectResult;
+    }
+    if(auth()->guard('sub_user')->check()) {
+        // get the sub_user's main_acct_id
+        $main_acct_id = auth()->guard('sub_user')->user()->main_acct_id;
+        $created_by = auth()->guard('sub_user')->user()->id;
+        $userType = 'sub_users';
+
+        $objectResult = (object) [
+            'main_acct_id' => $main_acct_id,
+            'created_by' => $created_by,
+            'user_type' => $userType
+        ];
+    }
+
+    if(auth()->guard('admin')->check()) {
+        // get the admin's main_acct_id
+        $main_acct_id = auth()->guard('admin')->user()->main_acct_id;
+        $created_by = auth()->guard('admin')->user()->id;
+        $userType = 'admins';
+
+        $objectResult = (object) [
+            'main_acct_id' => $main_acct_id,
+            'created_by' => $created_by,
+            'user_type' => $userType
+        ];
+    }
+}
+
+/**
+ * Get created by name
+ */
+function getCreatedByDetails($userType, $userId)
+{
+    if($userType === 'users'){
+        $user = User::find($userId);
+        // dd(gettype($user));
+        return $user;
+    }
+    if($userType === 'sub_users'){
+        $user = SubUser::find($userId);
+        return $user;
+    }
+    
 }

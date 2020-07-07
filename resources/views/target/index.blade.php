@@ -44,8 +44,8 @@
                                 <tbody>
                                    @foreach($targets as $target)
                                    <tr>
-                                        <td>{{ $target->salesPerson->name }}</td>
-                                        <td>{{ $target->dept->name }}</td>
+                                        <td>{{ $target->salesPerson->name ?? '' }}</td>
+                                        <td>{{ $target->dept->name ?? ''}}</td>
                                         <td>{{ $target->amount }}</td>
                                         <td>{{ $target->amt_achieved }}</td>
                                         <td>{{ $target->percentage }}%</td>

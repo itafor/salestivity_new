@@ -45,7 +45,7 @@
                                        @foreach($locations as $location)
                                        <tr>
                                             <td>{{ $location->location }}</td>
-                                            <td>{{ $location->country->country_name }}</td>
+                                            <td>{{ $location->country->name }}</td>
                                             <td>{{ $location->state->name }}</td>
                                             <td>{{ $location->city->name }}</td>
                                             <td>{{ $location->address }}</td>

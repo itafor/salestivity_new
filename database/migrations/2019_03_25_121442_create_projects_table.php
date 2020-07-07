@@ -17,8 +17,8 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('customer_account');
             $table->integer('product_id');
-            $table->string('technician');
-            $table->string('notes');
+            $table->string('technician')->nullable();
+            $table->string('notes')->nullable();
             $table->string('uploads')->nullable();
             $table->timestamps();
         });

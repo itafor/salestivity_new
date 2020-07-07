@@ -15,8 +15,16 @@ class GeneralUserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $message = 'You are not a user';
-        if(auth()->user()->role_id == 2) {
+        $message = 'You cannot view this page';
+        // if(auth()->guard('sub_user')->check())
+        // {
+        //     return response()->json([
+        //         'message' => $message
+        //     ]);
+        // }
+        // return $next($request);
+        if(auth()->user()->role_id == 2 || auth()->guard('sub_user')->user()->role_id === 2
+        ) {
 
             return $next($request);
         }

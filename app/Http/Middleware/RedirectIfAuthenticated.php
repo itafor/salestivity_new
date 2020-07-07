@@ -18,11 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if ($guard == "admin" && Auth::guard($guard)->check()) {
-            dd($guard);
+            
             return redirect('/admin/home');
         }
         if ($guard == "sub_user" && Auth::guard($guard)->check()) {
-            dd($guard);
+            
             return redirect('/home');
         }
         if (Auth::guard($guard)->check()) {

@@ -15,7 +15,7 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('first_name')->nullable();
+            $table->string('name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
             $table->bigInteger('role_id')->nullable()->unsigned()->index();

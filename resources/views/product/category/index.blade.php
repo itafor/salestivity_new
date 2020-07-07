@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Product Management')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('All Products')]) 
+@include('users.partials.header', ['title' => __('All Categories')]) 
 
       
     <div class="container-fluid mt--7 main-container">
@@ -11,10 +11,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('All Products') }}</h3>
+                                <h3 class="mb-0">{{ __('All Categories') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">{{ __('Add Product') }}</a>
+                                <a href="{{ route('product.category.create') }}" class="btn btn-sm btn-primary">{{ __('Add Category') }}</a>
                             </div>
                         </div>
                     </div>
@@ -34,30 +34,28 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
-                                            <th scope="col">{{ __('Description') }}</th>
-                                            <th scope="col">{{ __('Standard Price') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
+                                            <th scope="col">{{ __('Date Created') }}</th>
                                             <th scope="col" class="text-center">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($products as $product)
+                                        @foreach($categories as $category)
                                           <tr>
-                                            <td>{{ $product->name }}</td>
-                                            <td>{{ $product->description }}</td>
-                                            <td>{{ $product->standard_price }}</td>
-                                            <td>{{ getCreatedByDetails($product->user_type, $product->created_by)['name'] .' '.
-                                                    getCreatedByDetails($product->user_type, $product->created_by)['last_name']
+                                            <td>{{ $category->name }}</td>
+                                            <td>{{ getCreatedByDetails($category->user_type, $category->created_by)['name'] .' '.
+                                                    getCreatedByDetails($category->user_type, $category->created_by)['last_name']
                                                 }}
                                             </td>
+                                            <td>{{ strftime('%e %B %G', strtotime($category->created_at)) }}</td>
                                             <td>
                                                 <div class="btn-group-justified text-center" role="group">
-                                                    <div class="btn-group" role="group">
-                                                        <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    </div>  
+                                                    <!-- <div class="btn-group" role="group">
+                                                        <a href="{{ route('product.category.show', [$category->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                    </div>   -->
 
                                                     <div class="btn-group" role="group">
-                                                        <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                        <form action="{{ route('product.category.destroy', [$category->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                             @csrf
                                                             <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
                                                         </form>

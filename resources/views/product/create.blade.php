@@ -25,7 +25,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="name">{{ __('Product Name') }}</label>
+                                            <label class="form-control-label" for="name">{{ __('Product Name *') }}</label>
                                             <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Name') }}" value="{{ old('name') }}" required autofocus>
 
                                             @if ($errors->has('name'))
@@ -37,12 +37,12 @@
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
+                                            <label class="form-control-label" for="category_id">{{ __('Category *') }}</label>   
                                             <select name="category_id" id="category_id" class="form-control border-input" data-toggle="select">
                                                 <option value="">Choose a Category</option>
                                                     @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
                                             </select>
                                             @if ($errors->has('category_id'))
                                                 <span class="invalid-feedback" role="alert">

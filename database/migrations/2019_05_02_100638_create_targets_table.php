@@ -15,12 +15,12 @@ class CreateTargetsTable extends Migration
     {
         Schema::create('targets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('sales_person_id');
-            $table->integer('department_id');
+            $table->integer('sales_person_id')->nullable();
+            $table->integer('department_id')->nullable();
             $table->integer('amount');
             $table->integer('percentage')->nullable();
-            $table->integer('manager');
-            $table->string('type');
+            $table->integer('manager')->nullable();
+            $table->string('type')->nullable();
             $table->integer('product_id');
             $table->timestamps();
         });

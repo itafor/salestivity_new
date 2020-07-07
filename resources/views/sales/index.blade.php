@@ -37,6 +37,7 @@
                                             <th scope="col">{{ __('Price') }}</th>
                                             <th scope="col">{{ __('Total Amount') }}</th>
                                             <th scope="col">{{ __('Sales Person') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Location') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
@@ -48,7 +49,11 @@
                                             <td>{{ $sale->quantity }}</td>
                                             <td>{{ $sale->price }}</td>
                                             <td>{{ $sale->total_amount }}</td>
-                                            <td>{{ $sale->salesPerson->name }}</td>
+                                            <td>{{ $sale->salesPerson->name }} {{ $sale->salesPerson->last_name  }}</td>
+                                            <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
+                                                    getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']
+                                                }}
+                                            </td>
                                             <td>{{ $sale->location->location }}</td>
                                        <td>   
                                             <span>
