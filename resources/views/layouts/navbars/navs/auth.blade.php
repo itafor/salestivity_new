@@ -18,7 +18,7 @@
                             </div>
                         @elseif(Auth::guard('sub_user')->check())
                         <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('sub_user')->user()->first_name }}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('sub_user')->user()->name }}</span>
                             </div>
                         @else
                             <div class="media-body ml-2 d-none d-lg-block">

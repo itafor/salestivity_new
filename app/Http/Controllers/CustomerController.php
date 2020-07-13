@@ -20,7 +20,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', authUserId())->get();
+        $guard_object = \getActiveGuardType();
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->get();
         return view('customer.index', compact('customers'));
     }
 
@@ -54,7 +55,8 @@ class CustomerController extends Controller
     public function show($id)
     {
 
-        $customer = Customer::where('id',$id)->where('main_acct_id',authUserId())->first();
+        $guard_object = \getActiveGuardType();
+        $customer = Customer::where('id',$id)->where('main_acct_id',$guard_object->main_acct_id)->first();
         $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', authUserId())->first();
         $contacts = Contact::where('customer_id', $id)->where('main_acct_id', authUserId())->get();
         // dd($contacts);
