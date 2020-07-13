@@ -53,21 +53,12 @@ function getCities(){
  }
 }
 
+/**
+ * This function gets the current logged in user guard type
+ */
 function getActiveGuardType()
 {
     // get the user guard type
-    if(auth()->check()) {
-        $main_acct_id = auth()->user()->id;
-        $created_by = auth()->user()->id;
-        $userType = 'users';
-        $objectResult = (object) [
-            'main_acct_id' => $main_acct_id,
-            'created_by' => $created_by,
-            'user_type' => $userType
-        ];
-
-        return $objectResult;
-    }
     if(auth()->guard('sub_user')->check()) {
         // get the sub_user's main_acct_id
         $main_acct_id = auth()->guard('sub_user')->user()->main_acct_id;
@@ -79,6 +70,19 @@ function getActiveGuardType()
             'created_by' => $created_by,
             'user_type' => $userType
         ];
+        return $objectResult;
+    }
+    if(auth()->user()) {
+        $main_acct_id = auth()->user()->id;
+        $created_by = auth()->user()->id;
+        $userType = 'users';
+        $objectResult = (object) [
+            'main_acct_id' => $main_acct_id,
+            'created_by' => $created_by,
+            'user_type' => $userType
+        ];
+
+        return $objectResult;
     }
 
     if(auth()->guard('admin')->check()) {
@@ -92,6 +96,7 @@ function getActiveGuardType()
             'created_by' => $created_by,
             'user_type' => $userType
         ];
+        return $objectResult;
     }
 }
 
