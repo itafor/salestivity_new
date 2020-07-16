@@ -1,3 +1,35 @@
+// $('.datatable').DataTable({
+//     dom: '<"html5buttons" B>lTfgitp',
+
+// });
+
+    $(document).ready(function() {
+        $('.datatable').DataTable({
+                dom: 'lTfgitp',
+            
+            });
+    });
+    $("select").not('.user').select2({
+        theme: "bootstrap"
+    });
+
+  var Datepicker = (function() {
+var $datepicker = $('.datepicker');
+function init($this) {
+var options = {
+    disableTouchKeyboard: true,
+    autoclose: false,
+    format: 'dd/mm/yyyy'
+};
+$this.datepicker(options);
+}
+if ($datepicker.length) {
+$datepicker.each(function() {
+    init($(this));
+});
+}
+})();
+
 // Autofill a unit when a dept is picked while creating a new user.
 function selectDeptAjax(value) {   
     $.get('/getdept/' + value, function (data) {
@@ -438,8 +470,4 @@ $('#container').on('click', '.remove_project_file', function(e) {
     $(this).parent().remove();
     row--;
 });
-
-
-
-
 

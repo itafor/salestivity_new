@@ -34,6 +34,8 @@
 
 <!-- Data table stylesheet -->
     <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
+    <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+    
 
         <style>
         .select2-selection {
@@ -127,48 +129,8 @@
     
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
-        <script type="text/javascript">
-            /**
-            $('.datatable').DataTable({
-            dom: '<"html5buttons" B>lTfgitp',
-
-        });
-        **/
-
-            $(document).ready(function() {
-            $("select").not('.user').select2({
-                theme: "bootstrap"
-            });
-            $('.datatable').DataTable({
-                //dom: '<"html5buttons" B>lTfgitp',
-                "dom": '<lf<t>ip>',
-                "language": {
-                    "paginate": {
-                      "previous": "<i class='las la-angle-double-left'></i>",
-                      "next": "<i class='las la-angle-double-right'></i>"
-                    }
-                }
-            });
-
-          var Datepicker = (function() {
-    var $datepicker = $('.datepicker');
-    function init($this) {
-        var options = {
-            disableTouchKeyboard: true,
-            autoclose: false,
-            format: 'dd/mm/yyyy'
-        };
-        $this.datepicker(options);
-    }
-    if ($datepicker.length) {
-        $datepicker.each(function() {
-            init($(this));
-        });
-    }
-})();
-
-
-        </script>
+        <script>
+            
 
         <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
