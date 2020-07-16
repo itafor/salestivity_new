@@ -64,7 +64,6 @@ class CustomerIndividualController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:255|min:2',
             'last_name' => 'required|max:255|min:2',
@@ -77,11 +76,12 @@ class CustomerIndividualController extends Controller
             'city' => 'required',
             'street' => 'required',
             'country' => 'required',
-        ]);
+            ]);
+            // dd($validator);
 
          if ($validator->fails()) {
-            Alert::warning('Required Fields', 'Please fill in a required fields');
-            return back()->withInput();
+            // Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput()->withErrors($validator->errors());
         }
     
      DB::beginTransaction();

@@ -46,10 +46,14 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ $product->description }}</td>
                                             <td>{{ $product->standard_price }}</td>
-                                            <td>{{ getCreatedByDetails($product->user_type, $product->created_by)['name'] .' '.
-                                                    getCreatedByDetails($product->user_type, $product->created_by)['last_name']
-                                                }}
-                                            </td>
+                                            @if(getCreatedByDetails($product->user_type, $product->created_by) !== null)
+                                                <td>{{ getCreatedByDetails($product->user_type, $product->created_by)['name'] .' '.
+                                                        getCreatedByDetails($product->user_type, $product->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                            @else
+                                                <td>Not Set</td>
+                                            @endif
                                             <td>
                                                 <div class="btn-group-justified text-center" role="group">
                                                     <div class="btn-group" role="group">

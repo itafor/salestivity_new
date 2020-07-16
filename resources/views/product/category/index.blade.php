@@ -43,10 +43,14 @@
                                         @foreach($categories as $category)
                                           <tr>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ getCreatedByDetails($category->user_type, $category->created_by)['name'] .' '.
-                                                    getCreatedByDetails($category->user_type, $category->created_by)['last_name']
-                                                }}
-                                            </td>
+                                            @if(getCreatedByDetails($category->user_type, $category->created_by) !== null)
+                                                <td>{{ getCreatedByDetails($category->user_type, $category->created_by)['name'] .' '.
+                                                        getCreatedByDetails($category->user_type, $category->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                            @else
+                                                <td>Not Set</td>
+                                            @endif
                                             <td>{{ strftime('%e %B %G', strtotime($category->created_at)) }}</td>
                                             <td>
                                                 <div class="btn-group-justified text-center" role="group">

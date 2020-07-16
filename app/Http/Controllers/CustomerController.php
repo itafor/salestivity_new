@@ -59,7 +59,7 @@ class CustomerController extends Controller
         $customer = Customer::where('id',$id)->where('main_acct_id',$guard_object->main_acct_id)->first();
         $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', authUserId())->first();
         $contacts = Contact::where('customer_id', $id)->where('main_acct_id', authUserId())->get();
-        // dd($contacts);
+
         return view('customer.show', compact('customer', 'address', 'contacts'));
     }
 
