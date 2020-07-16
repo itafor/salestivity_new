@@ -43,10 +43,14 @@
                                         @foreach($subCategories as $sub)
                                           <tr>
                                             <td>{{ $sub->name }}</td>
-                                            <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
-                                                    getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
-                                                }}
-                                            </td>
+                                            @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
+                                                <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
+                                                        getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                            @else
+                                                <td>Not Set</td>
+                                            @endif
                                             <td>{{ strftime('%e %B %G', strtotime($sub->created_at)) }}</td>
                                             <td>
                                                 <div class="btn-group-justified text-center" role="group">

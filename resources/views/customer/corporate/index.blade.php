@@ -47,6 +47,7 @@
                                             <th scope="col">{{ __('Email') }}</th>
                                             <th scope="col">{{ __('Phone') }}</th>
                                             <th scope="col">{{ __('Website') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -58,6 +59,14 @@
                                               <td>{{ $customer->email }}</td>
                                               <td>{{ $customer->phone }}</td>
                                               <td>{{ $customer->website }}</td>
+                                              @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
+                                                        getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td>Not Set</td>
+                                                @endif
                                             <td>
                                                 <div class="col-4 text-right">
                                                         <a href="{{ route('customer.show', [$customer->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
