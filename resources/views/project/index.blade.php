@@ -47,7 +47,7 @@
                                     <tbody>
                                         @foreach($projects as $project)
                                             <tr>
-                                                <td>{{ $project->customer->name }}</td>
+                                                <td>{{ $project->customer->name ?? "" }}</td>
                                                 <td>{{ $project->product->name }}</td>
                                                 <td>{{ $project->technician }}</td>
                                                 <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
