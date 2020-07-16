@@ -52,11 +52,14 @@
                                                 <td>{{ $project->technician }}</td>
                                                 <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
                                                 <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
-                                                <td>{{ getCreatedByDetails($project->user_type, $project->created_by)['name'] .' '.
-                                                        getCreatedByDetails($project->user_type, $project->created_by)['last_name']
-                                                    }}
-                                                </td>
-                                               
+                                                @if(getCreatedByDetails($project->user_type, $project->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($project->user_type, $project->created_by)['name'] .' '.
+                                                            getCreatedByDetails($project->user_type, $project->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td></td>
+                                                @endif
                                                 <td>
 
                                                     <div class="btn-group-justified text-center" role="group">

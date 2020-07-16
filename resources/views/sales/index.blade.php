@@ -50,10 +50,14 @@
                                             <td>{{ $sale->price }}</td>
                                             <td>{{ $sale->total_amount }}</td>
                                             <td>{{ $sale->salesPerson->name }} {{ $sale->salesPerson->last_name  }}</td>
-                                            <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
-                                                    getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']
-                                                }}
-                                            </td>
+                                            @if(getCreatedByDetails($sale->user_type, $sale->created_by) !== null)
+                                                <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
+                                                        getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                            @else
+                                                <td>Not Set</td>
+                                            @endif
                                             <td>{{ $sale->location->location }}</td>
                                        <td>   
                                             <span>
