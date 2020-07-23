@@ -73,7 +73,7 @@ class RenewalController extends Controller
         ]);
 
         if ($validator->fails()) {
-            Alert::warning('Required Fields', 'Please fill in a required fields');
+            Alert::warning('Required Fields', 'Please fill in all required fields');
             return back()->withInput();
         }
 

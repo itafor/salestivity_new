@@ -53,21 +53,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($opportunities as $opportunity)
+                                    @if($opportunities->isEmpty())
                                         <tr>
-                                        
-                                            <td>{{ $opportunity->customer->name }}</td>
-                                            <td>{{ $opportunity->name }}</td>
-                                            <td>{{ $opportunity->owner }}</td>
-                                            <td>{{ $opportunity->amount }}</td>
-                                            <td>{{ $opportunity->stage }}</td>
-                                            <td>{{ $opportunity->initiation_date }}</td>
-                                            <td>{{ $opportunity->closure_date }}</td>
-                                            <td>
-                                                <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                            <td colspan="8" style="text-align: center">
+                                                <h3>No data available</h3>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @else
+                                        @foreach($opportunities as $opportunity)
+                                            <tr>
+                                            
+                                                <td>{{ $opportunity->customer->name }}</td>
+                                                <td>{{ $opportunity->name }}</td>
+                                                <td>{{ $opportunity->owner }}</td>
+                                                <td>{{ $opportunity->amount }}</td>
+                                                <td>{{ $opportunity->stage }}</td>
+                                                <td>{{ $opportunity->initiation_date }}</td>
+                                                <td>{{ $opportunity->closure_date }}</td>
+                                                <td>
+                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

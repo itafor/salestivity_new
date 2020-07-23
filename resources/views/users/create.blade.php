@@ -27,13 +27,13 @@
                             <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
+                                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-name">{{ __('First Name') }}</label>
-                                        <input type="text" name="first_name" id="input-name" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required autofocus>
+                                        <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ old('name') }}" required autofocus>
 
-                                        @if ($errors->has('first_name'))
+                                        @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('first_name') }}</strong>
+                                                <strong>{{ $errors->first('name') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -41,7 +41,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-lname">{{ __('Last Name') }}</label>
-                                        <input type="text" name="last_name" id="input-lname" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required autofocus>
+                                        <input type="text" name="last_name" id="input-lname" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required>
 
                                         @if ($errors->has('last_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -131,7 +131,7 @@
                                             <select name="report" id="input-report" class="form-control" data-toggle="select">
                                                 <option value="0">No one</option>
                                                 @foreach($reportsTo as $report)
-                                                    <option value="{{ $report->id }}">{{ $report->name }}</option>
+                                                    <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
                                                 @endforeach
                                             </select> 
 

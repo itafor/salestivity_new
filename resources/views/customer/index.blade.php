@@ -52,34 +52,42 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($customers as $customer)
-                                          <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{ $customer->name }}</td>
-                                                <td>{{ $customer->customer_type}}</td>
-                                                <td>{{ $customer->email }}</td>
-                                                <td>{{ $customer->phone }}</td>
-                                                @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
-                                                    <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
-                                                        getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
-                                                        }}
-                                                    </td>
-                                                @else
-                                                    <td>Not Set</td>
-                                                @endif
-                                            <td>
-                                                <div class="btn-group-justified text-center" role="group">
-                                                    <div class="btn-group" role="group">
-                                                        <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    </div>  
+                                        @if($customers->isEmpty())
+                                            <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            @foreach($customers as $customer)
+                                                <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{ $customer->name }}</td>
+                                                        <td>{{ $customer->customer_type}}</td>
+                                                        <td>{{ $customer->email }}</td>
+                                                        <td>{{ $customer->phone }}</td>
+                                                        @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
+                                                            <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
+                                                                getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
+                                                                }}
+                                                            </td>
+                                                        @else
+                                                            <td>Not Set</td>
+                                                        @endif
+                                                    <td>
+                                                        <div class="btn-group-justified text-center" role="group">
+                                                            <div class="btn-group" role="group">
+                                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            </div>  
 
-                                                    <div class="btn-group" role="group">
-                                                                     <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        @endforeach
-                                          </tr>
+                                                            <div class="btn-group" role="group">
+                                                                            <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>    
                             </div>

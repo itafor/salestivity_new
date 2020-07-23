@@ -40,34 +40,42 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($categories as $category)
-                                          <tr>
-                                            <td>{{ $category->name }}</td>
-                                            @if(getCreatedByDetails($category->user_type, $category->created_by) !== null)
-                                                <td>{{ getCreatedByDetails($category->user_type, $category->created_by)['name'] .' '.
-                                                        getCreatedByDetails($category->user_type, $category->created_by)['last_name']
-                                                    }}
+                                        @if($categories->isEmpty())
+                                            <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
                                                 </td>
-                                            @else
-                                                <td>Not Set</td>
-                                            @endif
-                                            <td>{{ strftime('%e %B %G', strtotime($category->created_at)) }}</td>
-                                            <td>
-                                                <div class="btn-group-justified text-center" role="group">
-                                                    <!-- <div class="btn-group" role="group">
-                                                        <a href="{{ route('product.category.show', [$category->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    </div>   -->
+                                            </tr>
+                                        @else
+                                            @foreach($categories as $category)
+                                            <tr>
+                                                <td>{{ $category->name }}</td>
+                                                @if(getCreatedByDetails($category->user_type, $category->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($category->user_type, $category->created_by)['name'] .' '.
+                                                            getCreatedByDetails($category->user_type, $category->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td>Not Set</td>
+                                                @endif
+                                                <td>{{ strftime('%e %B %G', strtotime($category->created_at)) }}</td>
+                                                <td>
+                                                    <div class="btn-group-justified text-center" role="group">
+                                                        <!-- <div class="btn-group" role="group">
+                                                            <a href="{{ route('product.category.show', [$category->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        </div>   -->
 
-                                                    <div class="btn-group" role="group">
-                                                        <form action="{{ route('product.category.destroy', [$category->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                            @csrf
-                                                            <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                        </form>
+                                                        <div class="btn-group" role="group">
+                                                            <form action="{{ route('product.category.destroy', [$category->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                                @csrf
+                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                          </tr>
-                                        @endforeach
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

@@ -52,6 +52,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if($opportunities->isEmpty())
+                                    <tr>
+                                        <td colspan="8" style="text-align: center">
+                                            <h3>No data available</h3>
+                                        </td>
+                                    </tr>
+                                @else
                                     @foreach($opportunities as $opportunity)
                                         <tr>
                                         
@@ -68,6 +75,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
