@@ -16,26 +16,20 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OpportunityController extends Controller
 {
     public function index()
     {
-        $userId = auth()->user()->id;
+        $userId = getActiveGuardType()->main_acct_id;
         $opportunities = Opportunity::where('main_acct_id', $userId)->get();
-        // $client = new Client(['verify' => false]);
-        // $res = $client->get('http://localhost:8000/getopportunities/1');
-        // $response = $res->getBody()->getContents();
-        // $value = (array) json_decode($response);
-
-        // dd($value);
-
         return view('opportunity.index', compact('opportunities'));
     }
 
     public function create()
     {
-        $userId = auth()->user()->id;
+        $userId = getActiveGuardType()->main_acct_id;
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
@@ -45,7 +39,7 @@ class OpportunityController extends Controller
 
     public function store(Request $request)
     {
-        $userId = auth()->user()->id;
+        $guard_object = getActiveGuardType();
         $input = request()->all();
         // dd($input);
         $rules = [
@@ -69,39 +63,47 @@ class OpportunityController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        $opportunity = new Opportunity;
-        $opportunity->name = $request->opportunity_name;
-        $opportunity->owner = $request->owner;
-        $opportunity->account_id = $request->account_id;
-        $opportunity->amount = $request->amount;
-        $opportunity->probability = $request->probability;
-        $opportunity->stage = $request->stage;
-        $opportunity->initiation_date = $request->initiation_date;
-        $opportunity->closure_date = $request->closure_date;
-        $opportunity->contact = $request->contact;
-        $opportunity->main_acct_id = $userId;
-        $opportunity->status = $request->status;
+        try {
+            $opportunity = new Opportunity;
+            $opportunity->created_by = $guard_object->created_by;
+            $opportunity->user_type = $guard_object->user_type;
+            $opportunity->main_acct_id = $guard_object->main_acct_id;
+            $opportunity->name = $request->opportunity_name;
+            $opportunity->owner = $request->owner;
+            $opportunity->account_id = $request->account_id;
+            $opportunity->amount = $request->amount;
+            $opportunity->probability = $request->probability;
+            $opportunity->stage = $request->stage;
+            $opportunity->initiation_date = $request->initiation_date;
+            $opportunity->closure_date = $request->closure_date;
+            $opportunity->contact = $request->contact;
+            $opportunity->status = $request->status;
 
-        $opportunity->save();
+            $opportunity->save();
 
-        $product = $request->product_id;
-        
+            $product = $request->product_id;
+            
 
-        if(isset($request->category_id)) {
-            $opportunity->products()->attach($product, [
-                'product_category' => implode($request['category_id']),
-                'product_sub_category' => implode($request->sub_category_id),
-                'product_name' => implode($product),
-                'product_qty' => implode($request->quantity),
-                'product_price' => implode($request->price),
-                // 'main_acct_id' => implode($userId),
-                'main_acct_id' => $userId,
-            ]);
+            if(isset($request->category_id)) {
+                $opportunity->products()->attach($product, [
+                    'product_category' => implode($request['category_id']),
+                    'product_sub_category' => implode($request->sub_category_id),
+                    'product_name' => implode($product),
+                    'product_qty' => implode($request->quantity),
+                    'product_price' => implode($request->price),
+                    // 'main_acct_id' => implode($userId),
+                    'main_acct_id' => $guard_object->main_acct_id,
+                ]);
+            }
+            $status = "Opportunity has been saved";
+            Alert::success('Opportunity', $status);
+            return back();
         }
-        $status = "Opportunity has been saved";
-        Session::flash('status', $status);
+        catch(Throwable $th) {
+            Alert::error('Add Project', 'This action could not be completed');
+            return back()->withInput()->withErrors($validator);
+        }
 
-        return redirect()->route('opportunity.index');
     }
     
     /**
@@ -147,24 +149,24 @@ class OpportunityController extends Controller
      */
     public function show($id)
     {
-        $userId = auth()->user()->id;
-        // dd($userId);
+        $userId = \getActiveGuardType()->main_acct_id;
         $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
+        
         return view('opportunity.show', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
-        // return view('opportunity.show', compact('opportunity', 'customers'));
     }
 
     /**
      * Method to modify and update an opportunity's information.
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
 
-        $opportunity = new Opportunity;
+        try {
+            $opportunity = Opportunity::find($id);
         $opportunity->name = $request->input('opportunity_name');
         $opportunity->owner = $request->input('owner');
         $opportunity->account_id = $request->input('account_id');
@@ -175,21 +177,26 @@ class OpportunityController extends Controller
         $opportunity->closure_date = $request->input('closure_date');
         $opportunity->contact = $request->input('contact');
 
-        $opportunity->save();
+        // dd($opportunity);
+        $opportunity->update();
 
         $product = $request->input('product_id');
         
-
-        $opportunity->products()->attach($product, [
-            'product_category' => implode($request->input('category_id')),
-            'product_sub_category' => implode($request->input('sub_category_id')),
-            'product_name' => implode($product),
-            'product_qty' => implode($request->input('quantity')),
-            'product_price' => implode($request->input('price')),
-        ]);
+        if(isset($request->category_id)) {
+            $opportunity->products()->attach($product, [
+                'product_category' => implode($request->input('category_id')),
+                'product_sub_category' => implode($request->input('sub_category_id')),
+                'product_name' => implode($product),
+                'product_qty' => implode($request->input('quantity')),
+                'product_price' => implode($request->input('price')),
+            ]);
+        }
         $status = "Opportunity has been successfully updated";
-        Session::flash('status', $status);
-
-        return redirect()->route('opportunity.index');
+        Alert::success('Opportunity', $status);
+        return back();
+        } catch (\Throwable $th) {
+            Alert::error('The process could not be completed');
+        }
+        
     }
 }

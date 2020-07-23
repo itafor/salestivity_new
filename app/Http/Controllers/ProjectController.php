@@ -56,7 +56,7 @@ class ProjectController extends Controller
         $userId = getActiveGuardType()->main_acct_id;
         $guard_object = \getActiveGuardType();
 
-        try {
+        
             // Validate each inputs
             $validator = Validator::make($request->all(), [
                 'customer_account' => 'required',
@@ -69,6 +69,8 @@ class ProjectController extends Controller
             if ($validator->fails()) {
                 return back()->withInput()->withErrors($validator->errors());
             }
+
+            try {
 
             //  if input has a file then run this block of code
             if($request->hasfile('uploads'))
@@ -111,7 +113,7 @@ class ProjectController extends Controller
             }
         } catch (\Throwable $th) {
             Alert::error('Add Project', 'This action could not be completed');
-            return back()->withInput();
+            return back()->withInput()->withErrors($validator);
         }
 				
 						

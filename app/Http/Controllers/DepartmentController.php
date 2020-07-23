@@ -12,7 +12,8 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $userId = auth()->user()->id;
+        $guard_object = \getActiveGuardType();
+        $userId = $guard_object->main_acct_id;
         $departments = Department::where('main_acct_id', $userId)->get();
         $units = Unit::where('main_acct_id', $userId)->get();
         return view('dept.index', compact('departments', 'units'));
@@ -25,7 +26,8 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        $userId = auth()->user()->id;
+        $guard_object = \getActiveGuardType();
+        $userId = $guard_object->main_acct_id;$guard_object = \getActiveGuardType();
         // store each new category that was added
         $dept = new Department;
         $dept->name = $request->dept;
@@ -65,7 +67,8 @@ class DepartmentController extends Controller
 
     public function show($id)
     {
-        $userId = auth()->user()->id;
+        $guard_object = \getActiveGuardType();
+        $userId = $guard_object->main_acct_id;
 
         $dept = Department::where('id', $id)->where('main_acct_id', $userId)->first();
         $units = Unit::where('dept_id', $dept->id)->get();
@@ -75,7 +78,8 @@ class DepartmentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $userId = auth()->user()->id;
+        $guard_object = \getActiveGuardType();
+        $userId = $guard_object->main_acct_id;
         $dept = Department::where('id', $id)->where('main_acct_id', $userId)->first();
     
         $dept->name = $request->input('dept');

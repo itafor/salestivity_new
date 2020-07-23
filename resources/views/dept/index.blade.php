@@ -30,7 +30,7 @@
                     
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush" >
-                                    <thead class="thead-light">
+                                    <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
                                             <th scope="col">{{ __('Department Head') }}</th>

@@ -11,9 +11,11 @@
         $('#form1 #addProduct').hide();
         $('#form1 select').prop("disabled", true);
 		$('#form1 #account').prop("disabled", true);
-
+        
 		$('#edit').click(function(){
-		$('#form1 input').prop("disabled", false);
+            $('#form1 input').prop("disabled", false);
+            $('#form1 button').show();
+            $('#form1 select').prop("disabled", false);
         $('#form1 button').prop("disabled", false);
         $('#form1 #addProduct').prop("disabled", false);
 		$('#form1 #account').prop("disabled", false);
@@ -62,9 +64,9 @@
                                         <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
                                             <select name="account_id" id="account" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" >
-                                                <option value="">{{ $opportunity->customer->name }}</option>
+                                                
                                                 @foreach($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                    <option {{ $customer->id == $opportunity->customer->id ? 'selected': '' }} value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('account_id'))
@@ -81,9 +83,8 @@
                                         <div class="form-group{{ $errors->has('stage') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-stage">{{ __('Stage') }}</label>
                                             <select name="stage" id="stage" class="form-control form-control-alternative{{ $errors->has('stage') ? ' is-invalid' : '' }}" placeholder="{{ __('Stage') }}" value="{{ old('stage') }}" required >
-                                                <option value="">{{$opportunity->stage}}</option>
-                                                <option value="Qualification">Qualification</option>
-                                                <option value="Needs Analysis">Needs Analysis</option>
+                                                <option {{ $opportunity->stage == 'Qualification' ? 'selected': '' }} value="Qualification">Qualification</option>
+                                                <option {{ $opportunity->stage == 'Needs Analysis' ? 'selected': '' }} value="Needs Analysis">Needs Analysis</option>
                                             </select>
                                             @if ($errors->has('stage'))
                                                 <span class="invalid-feedback" role="alert">
@@ -95,9 +96,9 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('contact') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-contact">{{ __('Contact') }}</label>
-                                            <select name="contact" id="contact" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}" disabled>
+                                            <select name="contact" id="contact" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}">
                                                 <!-- Automatically filled according to an account picked using jquery -->
-                                                    <option value="">{{ $opportunity->contact_person->name }}</option>
+                                                    <option value="{{ $opportunity->contact_person->id }}">{{ $opportunity->contact_person->name }}</option>
                                             </select>
                                             @if ($errors->has('contact'))
                                                 <span class="invalid-feedback" role="alert">
@@ -112,7 +113,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('probability') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-probability">{{ __('Probability(%)') }}</label>
-                                            <input type="text" name="probability" id="input-probability" class="form-control form-control-alternative{{ $errors->has('probability') ? ' is-invalid' : '' }}" placeholder="{{ __('Probability') }}" value="{{ $opportunity->probability }}%">
+                                            <input type="text" name="probability" id="input-probability" class="form-control form-control-alternative{{ $errors->has('probability') ? ' is-invalid' : '' }}" placeholder="{{ __('Probability') }}" value="{{ $opportunity->probability }}">
 
                                             @if ($errors->has('probability'))
                                                 <span class="invalid-feedback" role="alert">
@@ -216,7 +217,7 @@
                                         
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" id="save" class="btn btn-success mt-4">{{ __('Update') }}</button>
                                 </div>
                             </div>
                         </form>

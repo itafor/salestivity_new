@@ -37,52 +37,69 @@
                                     <th scope="col">{{ __('Email') }}</th>
                                     <th scope="col">{{ __('Status') }}</th>
                                     <th scope="col">{{ __('Role') }}</th>
+                                    <th scope="col">{{ __('Author') }}</th>
                                     <th scope="col">{{ __('Creation Date') }}</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($allusers as $user)
+                                @if($allusers->isEmpty())
                                     <tr>
-                                        <td>{{ $user->first_name }}</td>
-                                        <td>
-                                            <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                        <td colspan="8" style="text-align: center">
+                                            <h3>No data available</h3>
                                         </td>
-                                        <td style="color : {{ $user->status === 1 || $user->status === null ? 'green' : 'red' }}">
-                                            {{ ($user->status == 1 || $user->status === null) ? 'Enabled' : 'Disabled' }}
-                                        </td>
-                                        @if(isset($user->roles))
-                                            <td>{{ $user->roles->name }}</td>
-                                        @else
-                                            <td>No role Selected</td>
-                                        @endif
-                                        <td>{{ $user->created_at->format('d/m/Y') }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    @if ($user->id != auth()->id())
-                                                        <form action="{{ route('user.destroy', $user) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
-                                                            <!-- <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button> -->
-                                                        </form>    
-                                                    @else
-                                                        <!-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> -->
-                                                        <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                        
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($allusers as $user)
+                                        <tr>
+                                            <td>{{ $user->name }} {{ $user->last_name }}</td>
+                                            <td>
+                                                <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                            </td>
+                                            <td style="color : {{ $user->status === 1 || $user->status === null ? 'green' : 'red' }}">
+                                                {{ ($user->status == 1 || $user->status === null) ? 'Enabled' : 'Disabled' }}
+                                            </td>
+                                            @if(isset($user->roles))
+                                                <td>{{ $user->roles->name }}</td>
+                                            @else
+                                                <td>No role Selected</td>
+                                            @endif
+                                            @if(getCreatedByDetails($user->user_type, $user->created_by) !== null)
+                                                <td>{{ getCreatedByDetails($user->user_type, $user->created_by)['name'] .' '.
+                                                        getCreatedByDetails($user->user_type, $user->created_by)['last_name']
+                                                    }}
+                                                </td>
+                                            @else
+                                                <td>Not Set</td>
+                                            @endif
+                                            <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                                            <td class="text-right">
+                                                <div class="dropdown">
+                                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        @if ($user->id != auth()->id())
+                                                            <form action="{{ route('user.destroy', $user) }}" method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                
+                                                                <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
+                                                                <!-- <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                                    {{ __('Delete') }}
+                                                                </button> -->
+                                                            </form>    
+                                                        @else
+                                                            <!-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> -->
+                                                            <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

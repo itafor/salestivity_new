@@ -12,7 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BillingAgentController extends Controller
 {
     public function index(){
-    	$userId = auth()->user()->id;
+    	$userId = \getActiveGuardType()->main_acct_id;
         $billing_agents = BillingAgent::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
 
         return view('billing.agents.index', compact('billing_agents'));
@@ -20,7 +20,7 @@ class BillingAgentController extends Controller
 
     public function create(){
 
-    	$userId = auth()->user()->id;
+    	$userId = \getActiveGuardType()->main_acct_id;
         $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
 
         return view('billing.agents.create', compact('customers'));

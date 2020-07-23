@@ -38,44 +38,61 @@
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Cost') }}</th>
                                             <th scope="col">{{ __('Timeline') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($invoices as $invoice)
+                                        @if($invoices->isEmpty())
                                             <tr>
-                                            
-                                                <td>{{ $invoice->customers->name }}</td>
-                                                <td>{{ $invoice->getProductName($invoice->product) }}</td>
-                                                <td>{{ $invoice->cost }}</td>
-                                                <td>{{ $invoice->timeline }}</td>
-                                                <td>{{ $invoice->status }}</td>
-                                                <td>
-                                                <span>
-                                                <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a>
-                                                <!-- <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                    @csrf
-                                                    <div class="col-4 text-right">
-                                                        <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                    </div>
-                                                </form> -->
-                                                </span>
-                                                    <div class="col-4 text-right">
-                                                        
-                                                    </div>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
                                                 </td>
-                                                <td>
-                                                <!-- <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                    @csrf
-                                                    <div class="col-4 text-right">
-                                                        <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                    </div>
-                                                </form> -->
-                                            </td>
                                             </tr>
-                                        @endforeach
+                                        @else
+                                            @foreach($invoices as $invoice)
+                                                <tr>
+                                                
+                                                    <td>{{ $invoice->customers->name }}</td>
+                                                    <td>{{ $invoice->getProductName($invoice->product) }}</td>
+                                                    <td>{{ $invoice->cost }}</td>
+                                                    <td>{{ $invoice->timeline }}</td>
+                                                    @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
+                                                        <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
+                                                                getCreatedByDetails($invoice->user_type, $invoice->created_by)['last_name']
+                                                            }}
+                                                        </td>
+                                                    @else
+                                                        <td>Not Set</td>
+                                                    @endif
+                                                    <td>{{ $invoice->status }}</td>
+                                                    <td>
+                                                    <span>
+                                                    <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                    <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a>
+                                                    <!-- <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                        @csrf
+                                                        <div class="col-4 text-right">
+                                                            <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                        </div>
+                                                    </form> -->
+                                                    </span>
+                                                        <div class="col-4 text-right">
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    <!-- <form action="{{ route('billing.invoice.destroy', [$invoice->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                        @csrf
+                                                        <div class="col-4 text-right">
+                                                            <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                        </div>
+                                                    </form> -->
+                                                </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

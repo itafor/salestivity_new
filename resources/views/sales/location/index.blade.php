@@ -38,27 +38,44 @@
                                             <th scope="col">{{ __('State') }}</th>
                                             <th scope="col">{{ __('City') }}</th>
                                             <th scope="col">{{ __('Address') }}</th>
+                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       @foreach($locations as $location)
-                                       <tr>
-                                            <td>{{ $location->location }}</td>
-                                            <td>{{ $location->country->name }}</td>
-                                            <td>{{ $location->state->name }}</td>
-                                            <td>{{ $location->city->name }}</td>
-                                            <td>{{ $location->address }}</td>
-                                       <td>   
-                                            <span>
-                                                <div class="col-4 text-right">
-                                                    <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    
-                                                </div>
-                                            </span>
-                                        </td>
-                                       </tr>
-                                       @endforeach
+                                        @if($locations->isEmpty())
+                                                <tr>
+                                                    <td colspan="8" style="text-align: center">
+                                                        <h3>No data available</h3>
+                                                    </td>
+                                                </tr>
+                                        @else
+                                            @foreach($locations as $location)
+                                            <tr>
+                                                    <td>{{ $location->location }}</td>
+                                                    <td>{{ $location->country->name }}</td>
+                                                    <td>{{ $location->state->name }}</td>
+                                                    <td>{{ $location->city->name }}</td>
+                                                    <td>{{ $location->address }}</td>
+                                                    @if(getCreatedByDetails($location->user_type, $location->created_by) !== null)
+                                                        <td>{{ getCreatedByDetails($location->user_type, $location->created_by)['name'] .' '.
+                                                                getCreatedByDetails($location->user_type, $location->created_by)['last_name']
+                                                            }}
+                                                        </td>
+                                                    @else
+                                                        <td>Not Set</td>
+                                                    @endif
+                                            <td>   
+                                                    <span>
+                                                        <div class="col-4 text-right">
+                                                            <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

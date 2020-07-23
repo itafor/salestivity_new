@@ -25,13 +25,13 @@
                             <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
+                                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-name">{{ __('First Name') }}</label>
-                                        <input type="text" name="first_name" id="input-name" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ $user->first_name }}" >
+                                        <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ $user->name }}" >
 
-                                        @if ($errors->has('first_name'))
+                                        @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('first_name') }}</strong>
+                                                <strong>{{ $errors->first('name') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -122,9 +122,9 @@
                                             <label class="form-control-label" for="input-unit">{{ __('Unit') }}</label>
                                             <select name="unit_id" id="input-unit" class="form-control" data-toggle="select">
                                                 @if(isset($user->unit_id))
-                                                    <option value="">{{ $user->unit->name }}</option>
+                                                    <option value="{{ $user->unit->id }}">{{ $user->unit->name }}</option>
                                                 @else
-                                                    <option value="">Select a Unit</option>
+                                                    <option disabled value="">Plese select a department</option>
                                                 @endif
                                             </select> 
 
@@ -146,7 +146,7 @@
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
                                                     @if(isset($user->reports_to))
-                                                        <option {{ $user->reportsTo->id  == $report->id ? 'selected' : ''}} value="{{ $report->id }}">{{ $report->name }}</option>
+                                                        <option {{ $user->reportsTo->id  == $report->id ? 'selected' : ''}} value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
                                                     @else    
                                                         <option value="{{ $report->id }}">{{ $report->name }}</option>
                                                     @endif

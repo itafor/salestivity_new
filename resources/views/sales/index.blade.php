@@ -43,32 +43,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       @foreach($sales as $sale)
-                                       <tr>
-                                            <td>{{ $sale->products->name }}</td>
-                                            <td>{{ $sale->quantity }}</td>
-                                            <td>{{ $sale->price }}</td>
-                                            <td>{{ $sale->total_amount }}</td>
-                                            <td>{{ $sale->salesPerson->name }} {{ $sale->salesPerson->last_name  }}</td>
-                                            @if(getCreatedByDetails($sale->user_type, $sale->created_by) !== null)
-                                                <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
-                                                        getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']
-                                                    }}
-                                                </td>
-                                            @else
-                                                <td>Not Set</td>
-                                            @endif
-                                            <td>{{ $sale->location->location }}</td>
-                                       <td>   
-                                            <span>
-                                                <div class="col-4 text-right">
-                                                    <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    
-                                                </div>
-                                            </span>
-                                        </td>
-                                       </tr>
-                                       @endforeach
+                                        @if($sales->isEmpty())
+                                                <tr>
+                                                    <td colspan="8" style="text-align: center">
+                                                        <h3>No data available</h3>
+                                                    </td>
+                                                </tr>
+                                        @else
+                                            @foreach($sales as $sale)
+                                                <tr>
+                                                        <td>{{ $sale->products->name }}</td>
+                                                        <td>{{ $sale->quantity }}</td>
+                                                        <td>{{ $sale->price }}</td>
+                                                        <td>{{ $sale->total_amount }}</td>
+                                                        <td>{{ $sale->salesPerson->name }} {{ $sale->salesPerson->last_name  }}</td>
+                                                        @if(getCreatedByDetails($sale->user_type, $sale->created_by) !== null)
+                                                            <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
+                                                                    getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']
+                                                                }}
+                                                            </td>
+                                                        @else
+                                                            <td>Not Set</td>
+                                                        @endif
+                                                        <td>{{ $sale->location->location }}</td>
+                                                    <td>   
+                                                        <span>
+                                                            <div class="col-4 text-right">
+                                                                <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                                
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
