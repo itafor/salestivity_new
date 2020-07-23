@@ -40,34 +40,42 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($subCategories as $sub)
-                                          <tr>
-                                            <td>{{ $sub->name }}</td>
-                                            @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
-                                                <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
-                                                        getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
-                                                    }}
+                                        @if($subCategories->isEmpty())
+                                            <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
                                                 </td>
-                                            @else
-                                                <td>Not Set</td>
-                                            @endif
-                                            <td>{{ strftime('%e %B %G', strtotime($sub->created_at)) }}</td>
-                                            <td>
-                                                <div class="btn-group-justified text-center" role="group">
-                                                    <!-- <div class="btn-group" role="group">
-                                                        <a href="{{ route('product.subcategory.show', [$sub->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    </div>   -->
+                                            </tr>
+                                        @else
+                                            @foreach($subCategories as $sub)
+                                            <tr>
+                                                <td>{{ $sub->name }}</td>
+                                                @if(getCreatedByDetails($sub->user_type, $sub->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($sub->user_type, $sub->created_by)['name'] .' '.
+                                                            getCreatedByDetails($sub->user_type, $sub->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td>Not Set</td>
+                                                @endif
+                                                <td>{{ strftime('%e %B %G', strtotime($sub->created_at)) }}</td>
+                                                <td>
+                                                    <div class="btn-group-justified text-center" role="group">
+                                                        <!-- <div class="btn-group" role="group">
+                                                            <a href="{{ route('product.subcategory.show', [$sub->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        </div>   -->
 
-                                                    <div class="btn-group" role="group">
-                                                        <form action="{{ route('product.subcategory.destroy', [$sub->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                            @csrf
-                                                            <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                        </form>
+                                                        <div class="btn-group" role="group">
+                                                            <form action="{{ route('product.subcategory.destroy', [$sub->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                                @csrf
+                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                          </tr>
-                                        @endforeach
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

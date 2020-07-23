@@ -45,41 +45,49 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($projects as $project)
-                                            <tr>
-                                                <td>{{ $project->customer->name ?? "" }}</td>
-                                                <td>{{ $project->product->name }}</td>
-                                                <td>{{ $project->technician }}</td>
-                                                <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
-                                                <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
-                                                @if(getCreatedByDetails($project->user_type, $project->created_by) !== null)
-                                                    <td>{{ getCreatedByDetails($project->user_type, $project->created_by)['name'] .' '.
-                                                            getCreatedByDetails($project->user_type, $project->created_by)['last_name']
-                                                        }}
+                                        @if($projects->isEmpty())
+                                                <tr>
+                                                    <td colspan="8" style="text-align: center">
+                                                        <h3>No data available</h3>
                                                     </td>
-                                                @else
-                                                    <td></td>
-                                                @endif
-                                                <td>
+                                                </tr>
+                                        @else
+                                            @foreach($projects as $project)
+                                                <tr>
+                                                    <td>{{ $project->customer->name ?? "" }}</td>
+                                                    <td>{{ $project->product->name }}</td>
+                                                    <td>{{ $project->technician }}</td>
+                                                    <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
+                                                    <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
+                                                    @if(getCreatedByDetails($project->user_type, $project->created_by) !== null)
+                                                        <td>{{ getCreatedByDetails($project->user_type, $project->created_by)['name'] .' '.
+                                                                getCreatedByDetails($project->user_type, $project->created_by)['last_name']
+                                                            }}
+                                                        </td>
+                                                    @else
+                                                        <td>Not Set</td>
+                                                    @endif
+                                                    <td>
 
-                                                    <div class="btn-group-justified text-center" role="group">
-                                                        <div class="btn-group" role="group">
-                                                        <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                        </div>  
+                                                        <div class="btn-group-justified text-center" role="group">
+                                                            <div class="btn-group" role="group">
+                                                            <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            </div>  
 
-                                                        <div class="btn-group" role="group">
-                                                        <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                            @csrf
-                                                            <div class="col-4 text-right">
-                                                                <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                            <div class="btn-group" role="group">
+                                                            <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                                @csrf
+                                                                <div class="col-4 text-right">
+                                                                    <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                                </div>
+                                                            </form>
                                                             </div>
-                                                        </form>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                
-                                            </tr>
-                                        @endforeach
+                                                    </td>
+                                                    
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

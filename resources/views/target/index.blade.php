@@ -34,6 +34,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">{{ __('Sales Person') }}</th>
+                                        <th scope="col">{{ __('Author') }}</th>
                                         <th scope="col">{{ __('Department') }}</th>
                                         <th scope="col">{{ __('Target Amount') }}</th>
                                         <th scope="col">{{ __('Amount Achieved') }}</th>
@@ -42,22 +43,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach($targets as $target)
-                                   <tr>
-                                        <td>{{ $target->salesPerson->name ?? '' }}</td>
-                                        <td>{{ $target->dept->name ?? ''}}</td>
-                                        <td>{{ $target->amount }}</td>
-                                        <td>{{ $target->amt_achieved }}</td>
-                                        <td>{{ $target->percentage }}%</td>
-                                   <td>   
-                                        <span>
-                                            <div class="col-4 text-right">
-                                                <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
-                                            </div>
-                                        </span>
-                                    </td>
-                                   </tr>
-                                   @endforeach
+                                    @if($targets->isEmpty())
+                                        <tr>
+                                            <td colspan="8" style="text-align: center">
+                                                <h3>No data available</h3>
+                                            </td>
+                                        </tr>
+                                    @else
+                                        @foreach($targets as $target)
+                                            <tr>
+                                                <td>{{ $target->salesPerson->name ?? '' }}</td>
+                                                @if(getCreatedByDetails($target->user_type, $target->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($target->user_type, $target->created_by)['name'] .' '.
+                                                            getCreatedByDetails($target->user_type, $target->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td>Not Set</td>
+                                                @endif
+                                                <td>{{ $target->dept->name ?? ''}}</td>
+                                                <td>{{ $target->amount }}</td>
+                                                <td>{{ $target->amt_achieved }}</td>
+                                                <td>{{ $target->percentage }}%</td>
+                                                <td>
+                                                    <span>
+                                                        <div class="col-4 text-right">
+                                                            <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                                        </div>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+
                                 </tbody>
                             </table>
                         </div>                    

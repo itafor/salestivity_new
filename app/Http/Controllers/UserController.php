@@ -10,6 +10,8 @@ use App\Role;
 use App\Department;
 use App\SubUser;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Validator;
 
 class UserController extends Controller
 {
@@ -107,7 +109,7 @@ class UserController extends Controller
 
     public function indexSubusers()
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         // dd($userId);
         
         $allUsers = SubUser::where('main_acct_id', '=', $userId);
@@ -116,36 +118,61 @@ class UserController extends Controller
     
     public function createsubuser()
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         // $roles = Role::where('main_acct_id', $userId)->get();
         $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
-        $reportsTo = User::where('profile_id', $userId)->get();
+        $reportsTo = SubUser::where('main_acct_id', $userId)->get();
         // dd($reportsTo);
         return view('users.create', compact('roles', 'departments', 'reportsTo'));
     }
     
     public function storesubuser(Request $request)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
+        $guard_object = \getActiveGuardType();
+        $input = $request->all();
+        $rules = [
+            
+            'name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+        ];
+        $message = [
+            'name.required' => 'Please input Your First name',
+            'last_name.required' => 'Last name is required',
+            'email.required' => 'Email is required',
+            
+        ];
+        $validator = Validator::make($input, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+        // try
+        // {
 
-        $user = new SubUser;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        // dd($user);
-        $user->email = $request->email;
-        $user->role_id = $request->role_id;
-        $user->reports_to = $request->report;
-        $user->department_id = $request->department_id;
-        $user->unit_id = $request->unit_id;
-        $user->status = $request->status;
-        $user->main_acct_id = $userId;
-        $user->password = Hash::make($request->get('password'));
-        // dd($user);
-        // $user->password = bcrypt($request->password);
-        $user->save();
+            $user = new SubUser;
+            $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->created_by = $guard_object->created_by;
+            $user->user_type = $guard_object->user_type;
+            $user->email = $request->email;
+            $user->role_id = $request->role_id;
+            $user->reports_to = $request->report;
+            $user->department_id = $request->department_id;
+            $user->unit_id = $request->unit_id;
+            $user->status = $request->status;
+            $user->main_acct_id = $userId;
+            $user->password = Hash::make($request->get('password'));
+            // dd($user);
+            // $user->password = bcrypt($request->password);
+            $user->save();
+            Alert::success('User','User successfully created.');
+            return redirect()->route('allSubUsers');
+        // } catch(\Throwable $th) {
+        //     return back()->withInput()->withErrors($validator);
+        // }
 
-        return redirect()->route('allSubUsers')->withStatus(__('User successfully created.'));
         
     }
 
@@ -155,7 +182,7 @@ class UserController extends Controller
      */
     public function editSubUser(Request $request, $id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
         $user = SubUser::find($id);
         $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
@@ -169,7 +196,7 @@ class UserController extends Controller
     public function updateSubUser(Request $request, $id)
     {
         $user = SubUser::find($id);
-        $user->name = $request->input('first_name');
+        $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->role_id = $request->input('role_id');

@@ -41,35 +41,43 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($products as $product)
-                                          <tr>
-                                            <td>{{ $product->name }}</td>
-                                            <td>{{ $product->description }}</td>
-                                            <td>{{ $product->standard_price }}</td>
-                                            @if(getCreatedByDetails($product->user_type, $product->created_by) !== null)
-                                                <td>{{ getCreatedByDetails($product->user_type, $product->created_by)['name'] .' '.
-                                                        getCreatedByDetails($product->user_type, $product->created_by)['last_name']
-                                                    }}
+                                        @if($products->isEmpty())
+                                            <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
                                                 </td>
-                                            @else
-                                                <td>Not Set</td>
-                                            @endif
-                                            <td>
-                                                <div class="btn-group-justified text-center" role="group">
-                                                    <div class="btn-group" role="group">
-                                                        <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    </div>  
+                                            </tr>
+                                        @else
+                                            @foreach($products as $product)
+                                            <tr>
+                                                <td>{{ $product->name }}</td>
+                                                <td>{{ $product->description }}</td>
+                                                <td>{{ $product->standard_price }}</td>
+                                                @if(getCreatedByDetails($product->user_type, $product->created_by) !== null)
+                                                    <td>{{ getCreatedByDetails($product->user_type, $product->created_by)['name'] .' '.
+                                                            getCreatedByDetails($product->user_type, $product->created_by)['last_name']
+                                                        }}
+                                                    </td>
+                                                @else
+                                                    <td>Not Set</td>
+                                                @endif
+                                                <td>
+                                                    <div class="btn-group-justified text-center" role="group">
+                                                        <div class="btn-group" role="group">
+                                                            <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        </div>  
 
-                                                    <div class="btn-group" role="group">
-                                                        <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                            @csrf
-                                                            <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
-                                                        </form>
+                                                        <div class="btn-group" role="group">
+                                                            <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                                @csrf
+                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                          </tr>
-                                        @endforeach
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

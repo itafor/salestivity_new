@@ -52,34 +52,35 @@ class RetailFieldSalesController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $guard_object = \getActiveGuardType();
-            $sale = new RetailFieldSale;
-            
-            $input = $request->all();
-            $rules = [
-     
-                'product' => 'required',
-                'quantity' => 'required',
-                'price' => 'required',
-                'total_amount' => 'required',
-                'sales_person_id' => 'required',
-                'location_id' => 'required',
-            ];
-            $message = [
-                'sales_person_id.required' => 'Sales Person is required',
-                'product.required' => 'Product is required',
-                'price.required' => 'Price is required',
-                'total_amount.required' => 'Amount a product',
-                'location_id.required' => 'Location is required',
-                'quantity.required' => 'Quantity is required',
-                
-            ];
-            $validator = Validator::make($input, $rules, $message);
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator);
-            }
+        
+        $guard_object = \getActiveGuardType();
+        $sale = new RetailFieldSale;
+        
+        $input = $request->all();
+        $rules = [
     
+            'product' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
+            'total_amount' => 'required',
+            'sales_person_id' => 'required',
+            'location_id' => 'required',
+        ];
+        $message = [
+            'sales_person_id.required' => 'Sales Person is required',
+            'product.required' => 'Product is required',
+            'price.required' => 'Price is required',
+            'total_amount.required' => 'Amount a product',
+            'location_id.required' => 'Location is required',
+            'quantity.required' => 'Quantity is required',
+            
+        ];
+        $validator = Validator::make($input, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+    
+        try {
             $sale->main_acct_id = $guard_object->main_acct_id;
             $sale->user_type = $guard_object->user_type;
             $sale->created_by = $guard_object->created_by;
@@ -94,7 +95,7 @@ class RetailFieldSalesController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             Alert::error('Sale', 'The process could not be completed');
-            return back()->withInput();
+            return back()->withInput()->withErrors($validator);
         }
 
         $status = "A new Sale has been successfully added ";
@@ -205,7 +206,7 @@ class RetailFieldSalesController extends Controller
 
         $guard_object = getActiveGuardType();
 
-        try {
+       
             //code...
             $input = $request->all();
             $rules = [
@@ -229,6 +230,7 @@ class RetailFieldSalesController extends Controller
                 return redirect()->back()->withErrors($validator);
             }
     
+        try {
     
             $location = new SalesLocation;
     
@@ -245,7 +247,7 @@ class RetailFieldSalesController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             Alert::error('Sales', 'This process could not be completed');
-            return back()->withInput();
+            return back()->withInput()->withErrors($validator);
         }
 
         $status = "Location has been successfully added ";

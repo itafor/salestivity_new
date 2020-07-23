@@ -30,7 +30,7 @@ class TargetController extends Controller
 
     public function store(Request $request)
     {
-        try {
+       
             $guard_object = \getActiveGuardType();
             
             $input = $request->all();
@@ -55,7 +55,7 @@ class TargetController extends Controller
                 return redirect()->back()->withErrors($validator);
             }
             
-    
+            try {
             $target = new Target;
     
             $target->main_acct_id = $guard_object->main_acct_id;
@@ -75,7 +75,7 @@ class TargetController extends Controller
             $target->save();
         } catch (\Throwable $th) {
             Alert::error('Build Target', 'The process could not be complteed');
-            return back()->withInput();
+            return back()->withInput()->withErrors($validator);
         }
 
 
@@ -104,11 +104,9 @@ class TargetController extends Controller
 
     public function update(Request $request, $id)
     {
-        $userId = \getActiveGuardType()->main_acct_id;
-        
         $input = $request->all();
         $rules = [
- 
+    
             'percent_achieved' => 'required',
             'amt_achieved' => 'required',
             // 'type' => 'required',
@@ -128,25 +126,31 @@ class TargetController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        $user = \getActiveGuardType()->main_acct_id;
-        $target = new Target;
-
-        $target->sales_person_id = $request->input('sales');
-        $target->department_id = $request->input('department_id');
-        $target->amount = $request->input('product_amount');
-        $target->percentage = $request->input('percent_achieved');
-        $target->manager = $request->input('manager');
-        $target->unit_price = $request->input('unit_price');
-        $target->type = $request->input('type');
-        $target->product_id = $request->input('product_id');
-        $target->status = $request->input('status');
-        $target->qty = $request->input('qty');
-        $target->amt_achieved = $request->input('amt_achieved');
-
-        $target->update();
-
-        $status = 'Target has been successfully updated';
-        Alert::success('Target', $status);
-        return redirect()->route('target.index');
+        try {
+            $userId = \getActiveGuardType()->main_acct_id;
+            // Find the target 
+            $target = Target::find($id);
+    
+            $target->sales_person_id = $request->input('sales');
+            $target->department_id = $request->input('department_id');
+            $target->amount = $request->input('product_amount');
+            $target->percentage = $request->input('percent_achieved');
+            $target->manager = $request->input('manager');
+            $target->unit_price = $request->input('unit_price');
+            $target->type = $request->input('type');
+            $target->product_id = $request->input('product_id');
+            $target->status = $request->input('status');
+            $target->qty = $request->input('qty');
+            $target->amt_achieved = $request->input('amt_achieved');
+            
+            $target->update();
+    
+            $status = 'Target has been successfully updated';
+            Alert::success('Target', $status);
+            return redirect()->route('target.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', 'The Process could not be completed');
+            return \back()->withInput()->withErrors($validator);
+        }
     }
 }
