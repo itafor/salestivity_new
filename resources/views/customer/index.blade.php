@@ -39,7 +39,7 @@
                         
 
                             <div class="table-responsive">
-                                <table class="table  table-bordered table-hover datatable">
+                                <table class="table table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
                                             <th scope="col">{{ __('S/N') }}</th>
@@ -47,7 +47,6 @@
                                             <th scope="col">{{ __('Account Type') }}</th>
                                             <th scope="col">{{ __('Email') }}</th>
                                             <th scope="col">{{ __('Phone') }}</th>
-                                            <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col" class="text-center" >{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -66,14 +65,6 @@
                                                         <td>{{ $customer->customer_type}}</td>
                                                         <td>{{ $customer->email }}</td>
                                                         <td>{{ $customer->phone }}</td>
-                                                        @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
-                                                            <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
-                                                                getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
-                                                                }}
-                                                            </td>
-                                                        @else
-                                                            <td>Not Set</td>
-                                                        @endif
                                                     <td>
                                                         <div class="btn-group-justified text-center" role="group">
                                                             <div class="btn-group" role="group">

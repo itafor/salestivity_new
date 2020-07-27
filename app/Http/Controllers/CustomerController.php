@@ -71,9 +71,10 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::where('id',$id)->where('main_acct_id',authUserId())->first();
+        $userId = \getActiveGuardType()->main_acct_id;
+        $customer = Customer::where('id',$id)->where('main_acct_id',$userId)->first();
         if($customer){
-            $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',authUserId())->first();
+            $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',$userId)->first();
                  $cityId = $address->city;
                  $cityName= $address->cityName->name;
 
