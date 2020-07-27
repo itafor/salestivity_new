@@ -14,15 +14,15 @@
                         </span>
                         @if(Auth::guard('admin')->check())
                             <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('admin')->user()->first_name }}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('admin')->user()->name }} {{ auth()->guard('admin')->user()->last_name }}</span>
                             </div>
                         @elseif(Auth::guard('sub_user')->check())
                         <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('sub_user')->user()->name }}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->guard('sub_user')->user()->name }} {{ auth()->guard('sub_user')->user()->last_name }}</span>
                             </div>
                         @else
                             <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</span>
                             </div>
                         @endif
                     </div>

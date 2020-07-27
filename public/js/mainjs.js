@@ -30,6 +30,14 @@ $datepicker.each(function() {
 }
 })();
 
+
+// Autoupdate the usertype while creating a new sub user
+// Primary user must be included in the reports to dropdown
+
+function updateUserType() {
+    
+}
+
 // Autofill a unit when a dept is picked while creating a new user.
 function selectDeptAjax(value) {   
     $.get('/getdept/' + value, function (data) {
