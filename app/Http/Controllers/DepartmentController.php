@@ -27,7 +27,8 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $guard_object = \getActiveGuardType();
-        $userId = $guard_object->main_acct_id;$guard_object = \getActiveGuardType();
+        $userId = $guard_object->main_acct_id;
+        $guard_object = \getActiveGuardType();
         // store each new category that was added
         $dept = new Department;
         $dept->name = $request->dept;

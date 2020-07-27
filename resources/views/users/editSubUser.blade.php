@@ -124,7 +124,7 @@
                                                 @if(isset($user->unit_id))
                                                     <option value="{{ $user->unit->id }}">{{ $user->unit->name }}</option>
                                                 @else
-                                                    <option disabled value="">Plese select a department</option>
+                                                    <option disabled value="">Please select a department</option>
                                                 @endif
                                             </select> 
 

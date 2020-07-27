@@ -71,9 +71,9 @@
                      <td style="width: 200px;"><b>{{ __('Website') }}</b></td>
                      <td>{{ $customer->website }}</td>
                    </tr>
-
+                  
                    <tr>
-                     <td style="width: 200px;"><b>{{ __('industry') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Industry') }}</b></td>
                      <td>{{ $customer->customerIndustry->name }}</td>
                    </tr>
                    @if($customer->customer_type == 'Corporate')
@@ -86,6 +86,17 @@
                      <td>{{ $customer->employee_count }}</td>
                    </tr>
                    @endif
+                   <tr>
+                   <td style="width: 200px;"><b>{{ __('Author') }}</b></td>
+                      @if(getCreatedByDetails($customer->user_type, $customer->created_by) !== null)
+                        <td>{{ getCreatedByDetails($customer->user_type, $customer->created_by)['name'] .' '.
+                            getCreatedByDetails($customer->user_type, $customer->created_by)['last_name']
+                            }}
+                        </td>
+                    @else
+                        <td>Not Set</td>
+                    @endif
+                   </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer Type') }}</b></td>
                      <td>{{ $customer->customer_type }}</td>
