@@ -108,7 +108,7 @@ class CustomerCorporateController extends Controller
      */
     public function show($id)
     {
-        $userId = auth()->user()->id;
+        $userId = \getActiveGuardType()->main_acct_id;
 
         $industries = Industry::all();
         $countries = Country::all();

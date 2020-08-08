@@ -74,7 +74,7 @@
                   
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Industry') }}</b></td>
-                     <td>{{ $customer->customerIndustry->name }}</td>
+                     <td>{{ $customer->customerIndustry->name ?? '' }}</td>
                    </tr>
                    @if($customer->customer_type == 'Corporate')
                    <tr>
@@ -103,19 +103,19 @@
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Country') }}</b></td>
-                     <td>{{ $customer->address->countryName->name }}</td>
+                     <td>{{ $customer->address->countryName->name ?? "" }}</td>
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('State') }}</b></td>
-                     <td>{{ $customer->address->stateName->name }}</td>
+                     <td>{{ $customer->address->stateName->name ?? '' }}</td>
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('City') }}</b></td>
-                     <td>{{ $customer->address->cityName->name }}</td>
+                     <td>{{ $customer->address->cityName->name ?? '' }}</td>
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Street Address') }}</b></td>
-                     <td>{{ $customer->address->street }}</td>
+                     <td>{{ $customer->address->street ?? '' }}</td>
                    </tr>
                     </tbody>
                     @else
