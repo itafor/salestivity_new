@@ -57,8 +57,8 @@ class CustomerController extends Controller
 
         $guard_object = \getActiveGuardType();
         $customer = Customer::where('id',$id)->where('main_acct_id',$guard_object->main_acct_id)->first();
-        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', authUserId())->first();
-        $contacts = Contact::where('customer_id', $id)->where('main_acct_id', authUserId())->get();
+        $address = AddressCustomer::where('customer_id', '=', $id)->where('main_acct_id', $guard_object->main_acct_id)->first();
+        $contacts = Contact::where('customer_id', $id)->where('main_acct_id', $guard_object->main_acct_id)->get();
 
         return view('customer.show', compact('customer', 'address', 'contacts'));
     }
