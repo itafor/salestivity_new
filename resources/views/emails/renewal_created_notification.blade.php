@@ -276,7 +276,7 @@
         </div>
         @php
             $convert = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-        @endphph
+        @endphp
         <div class="row">
             <table class="full">
 				<tr><td width="20%">&nbsp;</td><td>&nbsp;</td></tr>

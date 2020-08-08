@@ -109,7 +109,7 @@ class Customer extends Model
         return $individualCustomer;
     }
 
- public static function createCorporateCustomer($data) {
+public static function createCorporateCustomer($data) {
 
     // if creator is a main user, store 
     if(auth()->check()) {
@@ -157,7 +157,7 @@ public static function createCustomerAddress($customer,$data) {
             $address->city = $data['city'];
             $address->street = $data['street'];
             $address->country = $data['country'];
-            $address->main_acct_id = auth()->user()->id;
+            $address->main_acct_id = getActiveGuardType()->main_acct_id;
             $address->save();
     }
 
@@ -173,7 +173,7 @@ public static function createContact($customer,$data)
                 'name' => $contact['contact_name'],
                 'phone' => $contact['contact_phone'],
                 'email' => $contact['contact_email'],
-                'main_acct_id' => auth()->user()->id,
+                'main_acct_id' => getActiveGuardType()->main_acct_id,
             ]);
         }
     }
@@ -190,7 +190,7 @@ public static function createContact($customer,$data)
         'website' => $data['website'],
         'turn_over' => $data['turn_over'],
         'employee_count' => $data['employee_count'],
-        'main_acct_id' => auth()->user()->id,
+        'main_acct_id' => getActiveGuardType()->main_acct_id,
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Corporate',
@@ -248,7 +248,7 @@ public static function createContact($customer,$data)
                 'name' => $contact['contact_name'],
                 'phone' => $contact['contact_phone'],
                 'email' => $contact['contact_email'],
-                'main_acct_id' => auth()->user()->id,
+                'main_acct_id' => getActiveGuardType()->main_acct_id,
             ]);
         }  
     }
@@ -265,7 +265,7 @@ public static function updateAddress($address,$data){
 
  public static function deleteContacts($customer_id) {
     $contacts = Contact::where('customer_id',$customer_id)
-    ->where('main_acct_id',auth()->user()->id)
+    ->where('main_acct_id',getActiveGuardType()->main_acct_id)
     ->get();
     if($contacts){
       foreach ($contacts as $key => $val) {
@@ -276,7 +276,7 @@ public static function updateAddress($address,$data){
 
  public static function deleteAddress($customer_id) {
     $address = AddressCustomer::where('customer_id',$customer_id)
-    ->where('main_acct_id',auth()->user()->id)
+    ->where('main_acct_id',getActiveGuardType()->main_acct_id)
     ->first();
     if($address){
     $address->delete();

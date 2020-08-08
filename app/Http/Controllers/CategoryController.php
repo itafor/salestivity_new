@@ -57,7 +57,7 @@ class CategoryController extends Controller
             $category->save();
     
             $addNewCategory = new Category;
-            if($request->addCategorys) {
+            if($request->addCategory) {
                 foreach($request->addCategory as $addCategory)
                 {
                     $addNewCategory->name = $addCategory;
@@ -65,8 +65,8 @@ class CategoryController extends Controller
                     $addNewCategory->user_type = $guard_object->user_type;
                     $addNewCategory->main_acct_id = $guard_object->main_acct_id;
     
+                    $addNewCategory->save();
                 }
-                $addNewCategory->save();
             }
         
         } catch (\Throwable $th) {
