@@ -80,14 +80,14 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                         @if ($user->id != auth()->id())
-                                                            <form action="{{ route('user.destroy', $user) }}" method="post">
+                                                        <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
+                                                            <form action="{{ route('deleteSubUSer', [encrypt($user->id)]) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
                                                                 
-                                                                <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
-                                                                <!-- <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
                                                                     {{ __('Delete') }}
-                                                                </button> -->
+                                                                </button>
                                                             </form>    
                                                         @else
                                                             <!-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> -->

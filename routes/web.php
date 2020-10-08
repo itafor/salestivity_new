@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 		Route::post('create/new/user', 'UserController@storesubuser')->name('storeuser');
 		Route::get('subuser/{id}', 'UserController@editSubUser')->name('editSubUser');
 		Route::post('subuser/{id}', 'UserController@updateSubUser')->name('updateSubUser');
+		Route::delete('delete/{id}', 'UserController@deleteSubUSer')->name('deleteSubUSer');
 
 		// Department
 		Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
