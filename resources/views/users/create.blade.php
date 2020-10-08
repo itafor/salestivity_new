@@ -129,7 +129,7 @@
                                         <div class="form-group{{ $errors->has('report') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-report">{{ __('Reports To') }}</label>
                                             <select name="report" id="input-report" class="form-control" data-toggle="select">
-                                                <option value="0">No one</option>
+                                                <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
                                                     <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
                                                 @endforeach

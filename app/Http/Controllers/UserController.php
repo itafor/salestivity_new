@@ -209,4 +209,27 @@ class UserController extends Controller
         
         return redirect()->route('allSubUsers')->withStatus(__('User successfully updated.'));
     }
+
+    public function deleteSubUSer($id)
+    {
+        $id = \decrypt($id);
+        
+        try {
+            $user = SubUser::find($id);
+            if($user)
+            {
+               // set a user to disabled and delete user
+                $user->status = 0;
+                $user->update();
+                // dd($user);
+                $user->delete();
+                return redirect()->route('allSubUsers')->withStatus(__('User successfully deleted.'));
+            }  
+
+        } catch (\Throwable $th) {
+            return redirect()->route('allSubUsers')->withStatus(__('Unable to complete transaction.'));
+        }
+
+
+    }
 }
