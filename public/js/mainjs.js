@@ -67,11 +67,15 @@ $('#input-dept').change(function () {
                     type: "GET",
                     dataType: 'json',
                     success: function(data) {
+                      
+                      if (data.category == '') {
+                         $('#renewal_description').val('');
+                      }
                         $('#productPrice').empty();
                         product_price=data.products.standard_price;
                         $('#productPrice').val((data.products.standard_price).toFixed(2));
                          $('#billingAmount').val((data.products.standard_price).toFixed(2));
-                         $('#renewal_description').val('Product Category: ' + data.category +', '+'Product SubCategory: '+ ' ' + data.subcategory);
+                         $('#renewal_description').val( data.category +', '+ data.subcategory);
                          billinga_amount = (data.products.standard_price).toFixed(2);
                     }
                 });

@@ -35,7 +35,7 @@
 <!-- Data table stylesheet -->
     <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
     <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
-    
+ 
 
         <style>
         .select2-selection {
@@ -83,7 +83,10 @@
         border: 0.5px solid;
         border-radius: 4px;
         }
+
     </style>
+   
+
     @yield('style')
 
 
@@ -115,7 +118,11 @@
         <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> -->
         
-        <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+       
+
+
+
+ <script src="{{ asset('argon') }}/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         @stack('js')
 
         
@@ -133,9 +140,20 @@
         <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@fengyuanchen/datepicker@0.6.5/dist/datepicker.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@fengyuanchen/datepicker@0.6.5/dist/datepicker.min.css" rel="stylesheet"> 
 
+<script type="text/javascript">
+
+$(function() {
+  $('[data-toggle="datepicker"]').datepicker({
+    autoHide: true,
+    zIndex: 2048,
+    format: "dd/mm/yyyy",
+  });
+});
+</script>
     <script src="{{url('js/mainjs.js')}}"></script>
+  
     </body>
 </html>

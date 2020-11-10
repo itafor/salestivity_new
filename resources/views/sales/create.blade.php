@@ -84,7 +84,7 @@
                                                 @foreach($salesPerson as $sales)
                                                     <option value="{{ $sales->id }}">{{ $sales->name }} {{ $sales->last_name }}</option>
                                                 @endforeach
-                                                    <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</option>
+                                                 
                                             </select>
                                             @if ($errors->has('sales_person_id'))
                                                 <span class="invalid-feedback" role="alert">
