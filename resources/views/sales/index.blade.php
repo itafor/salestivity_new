@@ -52,11 +52,12 @@
                                         @else
                                             @foreach($sales as $sale)
                                                 <tr>
-                                                        <td>{{ $sale->products->name }}</td>
+                                                        <td>{{ $sale->products ? $sale->products->name : 'N/A' }}</td>
                                                         <td>{{ $sale->quantity }}</td>
                                                         <td>{{ $sale->price }}</td>
                                                         <td>{{ $sale->total_amount }}</td>
-                                                        <td>{{ $sale->salesPerson->name }} {{ $sale->salesPerson->last_name  }}</td>
+                                                        <td>{{ $sale->salesPerson ? $sale->salesPerson->name : 'N/A' }} {{ $sale->salesPerson ? $sale->salesPerson->last_name :
+                                                        'N/A'  }}</td>
                                                         @if(getCreatedByDetails($sale->user_type, $sale->created_by) !== null)
                                                             <td>{{ getCreatedByDetails($sale->user_type, $sale->created_by)['name'] .' '.
                                                                     getCreatedByDetails($sale->user_type, $sale->created_by)['last_name']

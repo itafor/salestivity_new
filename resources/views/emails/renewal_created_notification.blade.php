@@ -1,152 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salestivity Notification</title>
-
-        <link href="{{  asset('argon/img/brand/favicon.png') }}" rel="icon" type="image/png">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-       
-
-    <style>
-        body {padding: 80px;font-family: "Century Gothic"; }
-        p, h3, h4, h5 {margin: 0}
-        .invoice {font-size: 30px;}
-        .no-margin{margin: 0px; padding: 0px;}
-        .logo {margin-left: 250px;}
-        .date {margin-top: 50px;}
-        td {text-align:left; margin-left: 20px;}
-        .table{border: 1px solid black;}
-        .inc_width {width: 20%;}
-        .total {float: right; margin-right: 200px;}
-        .small_font {font-size: 15px;}
-        .info-table{width:100%;margin:45px 0 0 25px;}
-        .info-table tr{border-bottom:1px solid #f4f4f4; background:#ffffff;}
-        .info-table td{padding:7px 15px;}
-        .info-table td:nth-child(odd){width:180px; font-weight:600;}
-        
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <h5 class="invoice">INVOICE</h5>
-                <h6><strong>DigitalWeb Application Development Limited</strong></h6>
-                <h5>34, Prince Alaba Abiodun, Oniru Street</h5>
-                <p class="no-margin">Victoria Island, Lagos.</p>
-            </div>
-            <div class="col-lg-4">
-                <div class="logo">
-                    <img src="{{ asset('img/dwLogo.png') }}" alt="Logo_DW">
-                </div>
-                    <div class="date">
-                        <table>
-                            <tr>
-                                <td><strong>Sold To:</strong></td>
-                                <td width="82%">  <strong>Nairaland1</strong></td>
-
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Date:</strong></td>
-                                <td width="82%">19-Feb-2020</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Due Date:</strong></td>
-                                <td width="82%">09-Feb-2021</td>
-                            </tr>
-                            
-                        </table>
-                        
-                    </div>
-            </div>
-        </div>
-        <br><br>
-        <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Item</th>
-                            <th>Qty</th>
-                            <th>Description</th>
-                            <th>Unit Cost</th>
-                            <th>Extensions</th>  
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="inc_width">1</td>
-                            <td class="inc_width">1</td>
-                            <td class="inc_width">3 </td>
-                            <td class="inc_width">57,600.00</td>
-                            <td class="inc_width">0</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 offset-md-8">
-                <div>
-                    <table class="tab">
-                        <tr>
-                            <td width="100%">Sub Total:</td>
-                            <td width="100%">57,600.00</td>
-                        </tr>
-                        <tr>
-                            <td width="100%">VAT:</td>
-                            <td width="100%">240,000</td>
-                        </tr>
-                        <tr>
-                            <td width="100%">Total:</td>
-                            <td width="100%">240,000</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <p><strong>Amount in words: &nbsp;&nbsp;&nbsp;  Two hundred and fifty thousand naira only</strong></p>
-                <br><br><br>
-                <span class="small_font">
-                    <strong>Kindly raise check IFO Digitalweb Nigeria Limited or credit our Diamond Bank Account with following details</strong>
-                </span>
-                <div class="col-md-12">
-                    <table class="info-table">
-                        <tr>
-                            <td>Account Name  </td><td> Digitalweb Application Development Limited</td>
-                        </tr>
-                        <tr>
-                            <td>Bank Name   </td><td> Access (Diamond) Bank plc</td>
-                        </tr>
-                        <tr>
-                            <td>Branch </td><td> Plot 730 Adeola Hopewell Street, Victoria Island</td>
-                        </tr>
-                        <tr>
-                            <td>Sort Code </td><td> 063150269</td>
-                        </tr>                        
-                        <tr>
-                            <td>Account Number </td><td> 0044102222</td>
-                        </tr>
-                    </table>
-                    
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</body>
-</html>  -->
-
-
-
-
 <!DOCTYPE html>
 <html lang="en" class="mail-html">
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -274,14 +125,13 @@
 					</tr>
 				</table>
         </div>
-        @php
-            $convert = new NumberFormatter("en", NumberFormatter::SPELLOUT);
-        @endphp
+     
         <div class="row">
             <table class="full">
 				<tr><td width="20%">&nbsp;</td><td>&nbsp;</td></tr>
 				<tr><td width="20%">&nbsp;</td><td>&nbsp;</td></tr>
-				<tr><td width="20%"><strong>Amount in words:</strong></td><td><strong><em>{{ $convert->format($renewal->billingAmount) }} naira only</em></strong></td></tr>				
+				<tr><td width="20%"><strong>Amount in words:</strong></td><td><strong><em> {{convertNumberToWord($renewal->billingAmount)}} naira only</em></strong></td></tr>
+
 			</table>            
         </div>
 		<hr />

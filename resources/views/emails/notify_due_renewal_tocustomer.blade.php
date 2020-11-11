@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Renewal Payment Notifications</title>
+    <title>Recurring Payment Notifications</title>
     
     <style>
     .invoice-box {
@@ -147,21 +147,21 @@
                                 Dear {{$renewal->customers->name}},<br>
                                 <em>
                                 @if($remaingDays == 0)
-                            Kindly be notified that your renewal has expired.<br>
+                            Kindly be notified that your Recurring has expired.<br>
 
                                 Expired Date:
                     ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
                                 
                                     @else
 
-                                   Kindly be notified that your renewal will be due in {{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}
+                                   Kindly be notified that your Recurring will be due in {{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}
                                    
                     ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
 
                                  @endif
 
                                  <br/>
-                                  Please find below renewal details.
+                                  Please find below Recurring details.
                                  
                                 </em>
                             </td>
@@ -171,7 +171,7 @@
             </tr>
         </table>
 
-<h4>Renewal DETAILS</h4>
+<h4>Recurring DETAILS</h4>
         <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>

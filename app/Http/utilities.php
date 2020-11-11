@@ -116,3 +116,9 @@ function getCreatedByDetails($userType, $userId)
     }
     
 }
+
+function convertNumberToWord($number)
+{
+    $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
+return $f->format($number);
+}
