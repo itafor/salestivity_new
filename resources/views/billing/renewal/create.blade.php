@@ -85,7 +85,6 @@
         <label class="form-control-label" for="discount">{{ __('Contact Emails') }} <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button>  <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button></label>
         <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
         </select>
-
         @error('contact_emails')
         <small class="text-danger">{{$message}}</small>
         @enderror
@@ -123,13 +122,10 @@
             <strong>{{ $errors->first('end_date') }}</strong>
         </span>
     @endif
-      
     </div>
-    
   </div>
 
 <div class="row">
-   
     <div class="col">
 <label class="form-control-label" for="discount">{{ __('Description') }}</label>
     <textarea name="description" class="form-control border-input" id="renewal_description"></textarea>
