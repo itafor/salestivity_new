@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Renewal Payment Notifications</title>
+    <title>Recurring Payment Notifications</title>
     
     <style>
     .invoice-box {
@@ -159,7 +159,7 @@
 
                                  @endif
                                  <br/>
-                                  Please find below renewal details.
+                                  Please find below Recurring details.
                                 </em>
                             </td>
                         </tr>
@@ -168,7 +168,7 @@
             </tr>
         </table>
 
-<h4>Renewal DETAILS</h4>
+<h4>Recurring DETAILS</h4>
         <table class="table table-bordered" id="rental_table">
            @if(isset($customerRenewal))
                     <tbody>

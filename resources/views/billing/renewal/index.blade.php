@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Billing')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('All Renewals')]) 
+@include('users.partials.header', ['title' => __('All Recurring')]) 
 
       
     <div class="container-fluid mt--7 main-container">
@@ -11,10 +11,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('All Renewals') }} </h3>
+                                <h3 class="mb-0">{{ __('All Recurring') }} </h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.renewal.create') }}" class="btn btn-sm btn-primary">{{ __('Create Renewal') }}</a>
+                                <a href="{{ route('billing.renewal.create') }}" class="btn btn-sm btn-primary">{{ __('Create Recurring') }}</a>
                             </div>
                         </div>
                     </div>
