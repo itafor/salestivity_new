@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('Add Renewal')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Recurring')])  
+@include('users.partials.header', ['title' => __('Recurring')])  
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">
@@ -95,10 +95,10 @@
 
             <div class="col">
 <label class="form-control-label" for="discount">{{ __('CC') }}</label>
-        <input name="company_email" class="form-control company_email border-input" id="company_email">
-        @if ($errors->has('description'))
+        <input name="company_email" class="form-control company_email border-input" id="company_email" readonly>
+        @if ($errors->has('company_email'))
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $errors->first('description') }}</strong>
+                <strong>{{ $errors->first('company_email') }}</strong>
             </span>
         @endif
     </div>

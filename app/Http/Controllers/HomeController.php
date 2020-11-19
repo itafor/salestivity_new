@@ -21,7 +21,9 @@ class HomeController extends Controller
      */
     public function homepage()
     {
-        // dd(auth()->guard());
+        if(authUser()){
+            return redirect()->route('home');
+        }
         return view('welcome');
     }
 

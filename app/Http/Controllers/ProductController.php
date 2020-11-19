@@ -127,9 +127,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editProduct($id)
     {
-        //
+        $userId = getActiveGuardType()->main_acct_id;
+        $product = Product::orderBy('id', 'DESC')->where([
+            ['main_acct_id', $userId],
+            ['id', $id],
+        ])->first();
+        return view('product.edit', compact('product'));
     }
 
     /**
@@ -139,41 +144,35 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        try {
-            $product = Product::find($id);
-    
+       
             $validator = Validator::make($request->all(), [
-                'name' => 'required|max:255|min:2',
-                'category_id' => 'required',
+            'name' => 'required|max:255|min:2',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'description' => 'required',
+            'standard_price' => 'required',
             ]);
     
             if($validator->fails()){
                 Alert::warning('Product', 'Please fill all required fields');
                 return back()->withInput();
             }
-            // $this->validate($request, [
-            //     'name' => 'required|max:255|min:2',
-            //     'category_id' => 'required',
-            // ]);
-            $product->name = $request->input('name');
-            $product->category_id = $request->input('category_id');
-            $product->sub_category_id = $request->input('sub_category_id');
-            $product->description = $request->input('description');
-            $product->standard_price = $request->input('standard_price');
-            $product->update();
-    
-    
-            $status = "Product has been updated successfully!!!";
+
+        $update_product = Product::updateProduct($request->all());
+       
+       if($update_product){
+        $status = "Product has been updated successfully!!!";
             Alert::success('Product', $status);
-    
-            return redirect()->route('product.index');
-        } catch (\Throwable $th) {
-            //throw $th;
+      return redirect()->route('product.index');
+       
+
+        } else {
             Alert::error('Product', 'The process could not be completed');
             return back()->withInput();
         }
+        
     }
 
     /**

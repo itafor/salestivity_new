@@ -24,7 +24,7 @@
                             <input type="hidden" value="2" name="account_type">
                             <input type="hidden" name="id" value="{{$customer->id}}">
                             
-                            <h6 class="heading-small text-muted mb-4">{{ __('Account information') }}</h6>
+                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Account information') }}</h6> -->
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col-md-4">

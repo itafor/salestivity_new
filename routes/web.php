@@ -96,7 +96,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('product/new', ['as' => 'product.create', 'uses' => 'ProductController@create'])->middleware('user_admin');
 	Route::post('product/new', ['as' => 'product.store', 'uses' => 'ProductController@store'])->middleware('user_admin');
 	Route::get('product/{id}/show', ['as' => 'product.show', 'uses' => 'ProductController@show'])->middleware('user_admin');
-	Route::post('product/{id}', ['as' => 'product.update', 'uses' => 'ProductController@update'])->middleware('user_admin');
+	Route::post('product-update', ['as' => 'product.update', 'uses' => 'ProductController@update'])->middleware('user_admin');
+	Route::get('edit-product/{id}','ProductController@editProduct')->name('product.edit')->middleware('user_admin');
 	Route::get('product/{id}/destroy', ['as' => 'product.destroy', 'uses' => 'ProductController@destroy'])->middleware('user_admin');
 
 	// Categories
@@ -115,6 +116,9 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('product/subcategory/{id}/show', ['as' => 'product.subcategory.show', 'uses' => 'SubCategoryController@show']);
 	Route::post('product/subcategory/{id}/update', ['as' => 'product.subcategory.update', 'uses' => 'SubCategoryController@update']);
 	Route::get('product/subcategory/{id}/destroy', ['as' => 'product.subcategory.destroy', 'uses' => 'SubCategoryController@destroy']);
+
+    Route::get('/get-product-subcategory/{id}', 'SubCategoryController@getProdSubCategory');
+
 	
 	Route::get('contact/{id}/show', ['as' => 'customer.contact.show', 'uses' => 'ContactController@show']);
 	Route::post('contact/{id}', ['as' => 'customer.contact.update', 'uses' => 'ContactController@update']);
