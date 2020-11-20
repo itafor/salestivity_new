@@ -2,6 +2,7 @@
 
 use App\Category;
 use App\City;
+use App\Contact;
 use App\Country;
 use App\Industry;
 use App\State;
@@ -142,4 +143,12 @@ return $f->format($number);
 function authUser()
 {
    return auth()->user();
+}
+
+function customerContacts($customerId)
+{
+    return Contact::where([
+        ['main_acct_id',authUserId()],
+        ['customer_id',$customerId]
+    ])->get();
 }

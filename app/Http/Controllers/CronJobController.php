@@ -45,7 +45,7 @@ class CronJobController extends Controller
 
 
     // public static function renewalsNotificationAt5Percent($percentage = 5)
-    public static function renewalsNotificationAt5Percent($percentage = 98)
+    public static function renewalsNotificationAt5Percent($percentage = 95)
     {
        
        $renewals = self::getRenewals($percentage);
