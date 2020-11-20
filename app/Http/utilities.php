@@ -1,12 +1,14 @@
 <?php
 
+use App\Category;
 use App\City;
 use App\Country;
 use App\Industry;
 use App\State;
-use Carbon\Carbon;
-use App\User;
+use App\SubCategory;
 use App\SubUser;
+use App\User;
+use Carbon\Carbon;
 
 
 
@@ -50,6 +52,20 @@ function getCities(){
  $cities = City::all();
  if($cities){
  return $cities;
+ }
+}
+
+function productCategories(){
+ $categories = Category::where('main_acct_id',authUserId())->get();
+ if($categories){
+ return $categories;
+ }
+}
+
+function productSubCategories(){
+ $sub_categories = SubCategory::where('main_acct_id',authUserId())->get();
+ if($sub_categories){
+ return $sub_categories;
  }
 }
 
@@ -121,4 +137,9 @@ function convertNumberToWord($number)
 {
     $f = new NumberFormatter("en", NumberFormatter::SPELLOUT);
 return $f->format($number);
+}
+
+function authUser()
+{
+   return auth()->user();
 }

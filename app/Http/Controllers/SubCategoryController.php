@@ -42,47 +42,31 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50'
-        ]);
-        if($validator->fails()) {
-            // Alert::warning('Sub Category', 'Please fill the required field appropriately');
-            return back()->withInput()->withErrors($validator->errors());
-        }
 
-        try {
-            $guard_object = getActiveGuardType();
-            $userId = $guard_object->created_by;
-            $subcategory = new SubCategory;
-            $subcategory->name = $request->name;
-            $subcategory->user_type = $guard_object->user_type;
-            $subcategory->created_by = $guard_object->created_by;
-            $subcategory->main_acct_id = $guard_object->main_acct_id;
-            // dd($subcategory);
-            $subcategory->save();
-            
-            $addNewSubCategory = new SubCategory;
-            
-            // store each new category that was added
-            if($request->addSubCategory) {
-                foreach($request->addSubCategory as $addSubCategory)
-                {
-                    $addNewSubCategory->name = $addSubCategory;
-                    $addNewSubCategory->user_type = $guard_object->user_type;
-                    $addNewSubCategory->created_by = $guard_object->created_by;
-                    $addNewSubCategory->main_acct_id = $guard_object->main_acct_id;
-    
-                }
-                $addNewSubCategory->save();
-            }
-        } catch (\Throwable $th) {
+        //dd($request->all());
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|max:50'
+        // ]);
+        // if($validator->fails()) {
+        //     return back()->withInput()->withErrors($validator->errors());
+        // }
+
+        
+
+        $ad_category = SubCategory::createNew($request->all());
+       
+       if($ad_category){
+        $status = 'Sub Category has been created';
+        Alert::success('Add Sub Category', $status);
+        return redirect()->route('product.subcategory.index');
+       
+
+        } else {
             Alert::error('Add Sub Category', 'The process could not be completed');
             return back()->withInput();
         }
 
-        $status = 'Sub Category has been created';
-        Alert::success('Add Sub Category', $status);
-        return redirect()->route('product.subcategory.index');
+        
     }
 
     /**
@@ -105,4 +89,13 @@ class SubCategoryController extends Controller
         // return redirect()->route('product.subcategory.index');
         return back();
     }
+
+    public function getProdSubCategory($id)
+{
+   $prod_sub_categories =  SubCategory::where([
+    ['category_id',$id],
+    ['main_acct_id',authUserId()],
+   ])->orderBy('name','DESC')->get();
+   return response()->json(['prod_sub_categories'=>$prod_sub_categories]);
+} 
 }

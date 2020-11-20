@@ -32,26 +32,35 @@
                             
                             <h6 class="heading-small text-muted mb-4">{{ __('Add Sub Category') }}</h6>
                             <div class="pl-lg-4 pr-lg-4">
-                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="name">{{ __('Sub Category Name *') }}</label>
-                                    <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Sub Category Name') }}" value="{{ old('name') }}" required autofocus>
+                 <div class="col-md-12 pl-1">
+                      <div class="form-group">
+                        <label for="category_id">Advert Category <span class="text-danger">*</span></label>
+                        <select name="category_id" class="form-control" required>
+                          <option>Select a category</option>
+                          @foreach(productCategories() as $category)
+                          <option value="{{$category->id}}">{{$category->name}}</option>
+                          @endforeach
+                        </select>
+                        </div>
+                        @error('category_id')
+                    <small style="color: red; font-size: 14px;"> {{ $message }}</small>
+                    @enderror
+                    </div>
+                  </div>
 
-                                    @if ($errors->has('name'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-<br>
-                                <div class=" field_wrapper form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-    
-                                    <!-- <input type="hidden" value="" name="customer_id[]"> -->
-                                    <!-- Append each new contact form to this div -->   
-                                    </div>
-                                    <div class="ml-auto" style="margin:20px;">
-                                        <!-- <input type="text" name="field_name[]" value="" class="form-control"/> -->
-                                        <a href="javascript:void(0);" class="add_button btn btn-primary" id="addContact"><i class="fa fa-plus-circle"></i> Add New Sub Category</a>
-                                    </div>
+                  <div class="col-md-12">
+                  <label class="form-control-label" for="input-property_type">{{ __('Subcategories') }}</label>
+                  <input type="text" name="subcategories[112211][name]"  class="form-control" required>
+                </div>
+
+                <div style="clear:both"></div>
+                <div id="subcaegoryContainer" class="col-md-12">
+                </div>   
+                <div style="clear:both"></div>
+
+                   <div class="form-group">
+                  <button type="button" id="addMoreSubcategory" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i>  Add more Subcategories</button>
+                </div>
                             
                                 </div>
                                 <div class="text-center">

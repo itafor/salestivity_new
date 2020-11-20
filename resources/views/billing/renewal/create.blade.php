@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('Add Renewal')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Recurring')])  
+@include('users.partials.header', ['title' => __('Recurring')])  
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">

@@ -38,4 +38,22 @@ class Product extends Model
     public function renewalPayment(){
         return $this->hasMany(RenewalPayment::class);
     }
+
+      public static function updateProduct($data)
+    {
+
+     $product  =  self::where([
+            ['id', $data['product_id'] ],
+        ])->update([
+           'category_id' => $data['category_id'],
+           'sub_category_id' => $data['sub_category_id'],
+           'name' => $data['name'],
+           'description' =>  $data['description'],
+           'standard_price' =>  $data['standard_price'],
+        ]); 
+
+        return $product;
+
+    }
+
 }

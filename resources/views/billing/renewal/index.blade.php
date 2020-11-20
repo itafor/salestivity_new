@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Billing')])
 
 @section('content')
-@include('users.partials.header', ['title' => __('All Recurring')]) 
+@include('users.partials.header', ['title' => __('Recurring')]) 
 
       
     <div class="container-fluid mt--7 main-container">

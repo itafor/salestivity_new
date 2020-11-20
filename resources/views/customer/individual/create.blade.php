@@ -22,7 +22,7 @@
                             @csrf
                             
                             <input type="hidden" value="2" name="account_type">
-                            <h6 class="heading-small text-muted mb-4">{{ __('Account information') }}</h6>
+                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Account information') }}</h6> -->
                             <div class="pl-lg-4 pr-lg-4">
                             <fieldset>
                                 <div class="row">
