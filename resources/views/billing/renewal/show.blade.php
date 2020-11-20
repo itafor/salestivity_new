@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('Add Renewal')])
 @section('content')
-@include('users.partials.header', ['title' => __('View Renewal')])  
+@include('users.partials.header', ['title' => __('View Recurring')])  
 
 
 <script>
@@ -28,7 +28,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <h3 class="mb-0 float-left" id="title">{{ __('Renewal') }}</h3>
+                                <h3 class="mb-0 float-left" id="title">{{ __('Recurring') }}</h3>
                                  <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
                             </div>
          @if(isset($renewal))

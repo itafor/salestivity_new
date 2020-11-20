@@ -56,8 +56,8 @@ class AjaxController extends Controller
 
         return response()->json([
             'products' => $products,
-            'category' => $products->category->name,
-            'subcategory' => $products->sub_category->name
+            'category' => $products->category ? $products->category->name : 'N/A',
+            'subcategory' => $products->sub_category ? $products->sub_category->name : 'N/A',
         ]);
     }
 

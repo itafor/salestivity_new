@@ -315,19 +315,19 @@
                             </div>
                         <a class="nav-link" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
-                            <span class="nav-link-text">{{ __('Renewals') }}</span>
+                            <span class="nav-link-text">{{ __('Recurring') }}</span>
                         </a>
                         <div class="collapse" id="navbar-invoicing-renewals">
                             <ul class="nav nav-sm flex-column">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                             <a class="nav-link" href="{{ route('billing.renewal.index') }}">
-                                                {{ __('List Renewals') }}
+                                                {{ __('List Recurring') }}
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('billing.renewal.create') }}">
-                                                {{ __('Add Renewals') }}
+                                                {{ __('Add Recurring') }}
                                             </a>
                                         </li> 
                                 </ul>

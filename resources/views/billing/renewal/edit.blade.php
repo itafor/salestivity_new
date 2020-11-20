@@ -1,26 +1,20 @@
 @extends('layouts.app', ['title' => __('Edit Renewal')])
 @section('content')
-@include('users.partials.header', ['title' => __('Edit Renewal')])  
+@include('users.partials.header', ['title' => __('Recurring')])  
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{ __('Edit Renewal') }}</h3>
-                            </div>
-                            <div class="col-4 text-right">
-                                <a href="{{ route('billing.renewal.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-<form method="post" action="{{ route('billing.renewal.update') }}" autocomplete="off">
+<div class="card">
+  <div class="card-header">
+    <div class="float-left">Edit Recurring</div>
+    <div class="float-right">
+        <a href="{{route('billing.renewal.index')}}">Back to List</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <form method="post" action="{{ route('billing.renewal.update') }}" autocomplete="off">
      @csrf
-     <h6 class="heading-small text-muted mb-4">{{ __('Renewal information') }}</h6>
   <div class="form-row">
     <input type="hidden" name="renewal_id" value="{{$renewal->id}}">
     <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }} col-md-6" >
@@ -81,6 +75,7 @@
   
 
 
+
    
 <div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
@@ -93,6 +88,42 @@
     @endif
 </div> 
     </div>
+
+       <div class="row mt-2">
+    <div class="col">
+        <label class="form-control-label" for="discount">{{ __('Contact Emails') }} 
+            <!-- <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button> 
+             <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button> -->
+         </label>
+        <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
+            @if($renewal->contacts)
+                @foreach($renewal->contacts as $contactEmail)
+                    <option value="{{$contactEmail->contact->id}}" selected="selected">{{$contactEmail->contact->email}}</option>
+                @endforeach
+            @endif
+
+           <!--   @if(customerContacts($renewal->customer_id))
+                @foreach(customerContacts($renewal->customer_id) as $contact)
+                    <option value="{{$contact->id}}">{{$contact->email}}</option>
+                @endforeach
+            @endif -->
+        </select>
+        @error('contact_emails')
+        <small class="text-danger">{{$message}}</small>
+        @enderror
+        </div>
+  </div>
+
+              <div class="col">
+<label class="form-control-label" for="discount">{{ __('CC') }}</label>
+        <input name="company_email" class="form-control company_email border-input" value="{{$renewal->customers->email}}" id="company_email" readonly>
+        @if ($errors->has('company_email'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('company_email') }}</strong>
+            </span>
+        @endif
+    </div>
+
     <div class="form-row">
 <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }} col-md-12" >
     <label class="form-control-label" for="discount">{{ __('Description') }}</label>
@@ -112,7 +143,7 @@
   <div class="form-row">
 <div class="form-group{{ $errors->has('start_date') ? ' has-danger' : '' }} col-md-6">
     <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-    <input type="text" name="start_date" id="start_date" class="datepicker form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}" data-date-format="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($renewal->start_date)->format('d/m/Y')}}" required>
+    <input type="text" name="start_date" id="start_date" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{\Carbon\Carbon::parse($renewal->start_date)->format('d/m/Y')}}" required>
 
     @if ($errors->has('start_date'))
         <span class="invalid-feedback" role="alert">
@@ -123,7 +154,7 @@
     
 <div class="form-group{{ $errors->has('end_date') ? ' has-danger' : '' }} col-md-6" >
     <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-    <input type="text" name="end_date" id="end_date" class="datepicker form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}" data-date-format="dd/mm/yyyy" value="{{\Carbon\Carbon::parse($renewal->end_date)->format('d/m/Y')}}" required>
+    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{\Carbon\Carbon::parse($renewal->end_date)->format('d/m/Y')}}" required>
 
     @if ($errors->has('end_date'))
         <span class="invalid-feedback" role="alert">
@@ -135,11 +166,11 @@
   </div>
  
     <div class="text-center">
-    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+    <button type="submit" class="btn btn-success mt-4" disabled="disabled">{{ __('Save') }}</button>
     </div>
 </form>
-                    </div>
-                </div>
+  </div>
+</div>
             </div>
         </div>
         

@@ -34,6 +34,7 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
+                                            <th scope="col">{{ __('Category') }}</th>
                                             <th scope="col">{{ __('Created By') }}</th>
                                             <th scope="col">{{ __('Date Created') }}</th>
                                             <th scope="col" class="text-center">{{ __('Action') }}</th>
@@ -50,6 +51,7 @@
                                             @foreach($subCategories as $sub)
                                             <tr>
                                                 <td>{{ $sub->name }}</td>
+                                                <td>{{ $sub->category ? $sub->category->name : 'N/A'  }}</td>
                                                 @if(getCreatedByDetails($sub->user_type, $sub->created_by) !== null)
                                                     <td>{{ getCreatedByDetails($sub->user_type, $sub->created_by)['name'] .' '.
                                                             getCreatedByDetails($sub->user_type, $sub->created_by)['last_name']

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Renewal Payment Notifications</title>
+    <title>Recurring Payment Notifications</title>
     
     <style>
     .invoice-box {
@@ -148,7 +148,7 @@
                                 <em>
                                   We wish to inform you that the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> has been recorded for the payment of <strong>{{$renewal->product->name}}</strong>
                                  <br/>
-                                  Please find below renewal details.
+                                  Please find below Recurring details.
                                 </em>
                             </td>
                         </tr>
@@ -157,7 +157,7 @@
             </tr>
         </table>
 
-<h4>Renewal DETAILS</h4>
+<h4>Recurring DETAILS</h4>
         <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>
