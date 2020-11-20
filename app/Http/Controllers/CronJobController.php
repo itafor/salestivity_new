@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 
 class CronJobController extends Controller
 {
-    // public static function renewalsNotificationAt15Percent($percentage = 15)
+  
     public static function renewalsNotificationAt15Percent($percentage = 85)
     {
        
