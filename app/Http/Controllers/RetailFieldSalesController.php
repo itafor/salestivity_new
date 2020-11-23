@@ -80,6 +80,8 @@ class RetailFieldSalesController extends Controller
             return redirect()->back()->withErrors($validator);
         }
     
+        $totalAmount = $input['quantity'] * $input['price'];
+
         try {
             $sale->main_acct_id = $guard_object->main_acct_id;
             $sale->user_type = $guard_object->user_type;
@@ -87,7 +89,7 @@ class RetailFieldSalesController extends Controller
             $sale->product_id = $request->product;
             $sale->quantity = $request->quantity;
             $sale->price = $request->price;
-            $sale->total_amount = $request->total_amount;
+            $sale->total_amount = $totalAmount;
             $sale->sales_person_id = $request->sales_person_id;
             $sale->location_id = $request->location_id;
             
