@@ -40,7 +40,7 @@ function updateUserType() {
 
 // Autofill a unit when a dept is picked while creating a new user.
 function selectDeptAjax(value) {   
-    $.get('/getdept/' + value, function (data) {
+    $.get(baseUrl+'/getdept/' + value, function (data) {
         console.log(data.units);
         $('#input-unit').html("");
         $('#input-unit').append("<option value=''>Select Unit</option>");
@@ -542,3 +542,51 @@ $('#container').on('click', '.remove_project_file', function(e) {
         });
     }
 });
+
+
+// Calculate percentage achieved
+let unit_price = 0;
+let quantity = 0;
+let achieved_amount = 0;
+$(document).on('keyup', '#unit-input', function(e){
+    e.preventDefault();
+    unit_price = $(this).val();
+     $('#input-percentage').val('');
+if(unit_price <=0){
+     $(this).val('');
+}
+ });
+
+$(document).on('keyup', '#qty', function(e){
+    e.preventDefault();
+    quantity = $(this).val();
+     $('#input-percentage').val('');
+     $('#total_amount').val('');
+if(quantity <=0){
+     $(this).val('');
+}
+ });
+
+$(document).on('keyup', '#input-achieve_amount', function(e){
+    e.preventDefault();
+    achieved_amount = $(this).val();
+    let target_amount = unit_price * quantity;
+    let percentage = (target_amount/achieved_amount) * 100;
+   
+    $('#input-percentage').val(percentage);
+if(achieved_amount <=0){
+     $(this).val('');
+}
+ });
+
+//auto fill total amount when adding sales when price and quantity are filled
+$(document).on('keyup', '#input-price', function(e){
+    e.preventDefault();
+    let price = $(this).val();
+    let total_amount = price * quantity;
+  
+    $('#total_amount').val(total_amount);
+if(price <=0 || quantity <=0){
+     $(this).val('');
+}
+ });

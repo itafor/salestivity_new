@@ -203,11 +203,6 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('getcities/{id}', 'AjaxController@getCity');
 	Route::get('mails', 'RenewalController@mail');
 
-	//cron jobs
-	Route::get('renewals_notificationAt_15_Percent', 'CronJobController@renewalsNotificationAt15Percent');
-	Route::get('renewals_notificationAt_5_Percent', 'CronJobController@renewalsNotificationAt5Percent');
-	Route::get('renewals_notificationAt_0_Percent', 'CronJobController@renewalsNotificationAt0Percent');
-
 });
 
 // Only a zeus Admin can access this route
@@ -215,3 +210,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
 });
 
+//cron jobs
+	Route::get('renewals_notificationAt_15_Percent', 'CronJobController@renewalsNotificationAt15Percent');
+	Route::get('renewals_notificationAt_5_Percent', 'CronJobController@renewalsNotificationAt5Percent');
+	Route::get('renewals_notificationAt_0_Percent', 'CronJobController@renewalsNotificationAt0Percent');
