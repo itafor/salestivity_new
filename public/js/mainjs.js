@@ -40,7 +40,7 @@ function updateUserType() {
 
 // Autofill a unit when a dept is picked while creating a new user.
 function selectDeptAjax(value) {   
-    $.get('/getdept/' + value, function (data) {
+    $.get(baseUrl+'/getdept/' + value, function (data) {
         console.log(data.units);
         $('#input-unit').html("");
         $('#input-unit').append("<option value=''>Select Unit</option>");
@@ -551,7 +551,7 @@ let achieved_amount = 0;
 $(document).on('keyup', '#unit-input', function(e){
     e.preventDefault();
     unit_price = $(this).val();
-    console.log(unit_price);
+     $('#input-percentage').val('');
 if(unit_price <=0){
      $(this).val('');
 }
@@ -560,7 +560,8 @@ if(unit_price <=0){
 $(document).on('keyup', '#qty', function(e){
     e.preventDefault();
     quantity = $(this).val();
-    console.log(quantity);
+     $('#input-percentage').val('');
+     $('#total_amount').val('');
 if(quantity <=0){
      $(this).val('');
 }
