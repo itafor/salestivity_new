@@ -23,13 +23,15 @@ class TargetController extends Controller
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
+         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $salesPersons = SubUser::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
-        return view('target.create', compact('salesPersons', 'products'));
+        return view('target.create', compact('salesPersons', 'products','departments'));
     }
 
     public function store(Request $request)
     {
+        //dd($request->all());
        
             $guard_object = \getActiveGuardType();
             
@@ -55,7 +57,7 @@ class TargetController extends Controller
                 return redirect()->back()->withErrors($validator);
             }
             
-            try {
+            
             $target = new Target;
     
             $target->main_acct_id = $guard_object->main_acct_id;
@@ -73,8 +75,8 @@ class TargetController extends Controller
             $target->qty = $request->qty;
             
             $target->save();
-        } catch (\Throwable $th) {
-            Alert::error('Build Target', 'The process could not be complteed');
+      if(!$target){
+            Alert::error('Build Target', 'The process could not be completed');
             return back()->withInput()->withErrors($validator);
         }
 
