@@ -36,6 +36,7 @@
                                         <th scope="col">{{ __('Sales Person') }}</th>
                                         <th scope="col">{{ __('Author') }}</th>
                                         <th scope="col">{{ __('Department') }}</th>
+                                        <th scope="col">{{ __('Unit') }}</th>
                                         <th scope="col">{{ __('Target Amount') }}</th>
                                         <th scope="col">{{ __('Amount Achieved') }}</th>
                                         <th scope="col">{{ __('Percentage Achieved') }}</th>
@@ -62,6 +63,7 @@
                                                     <td>Not Set</td>
                                                 @endif
                                                 <td>{{ $target->dept->name ?? ''}}</td>
+                                                <td>{{ $target->unit->name ?? ''}}</td>
                                                 <td>{{ $target->amount }}</td>
                                                 <td>{{ $target->amt_achieved }}</td>
                                                 <td>{{ $target->percentage }}%</td>

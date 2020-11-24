@@ -33,16 +33,20 @@ class TargetController extends Controller
     {
         //dd($request->all());
        
+       $data = $request->all();
+
             $guard_object = \getActiveGuardType();
             
             $input = $request->all();
             $rules = [
      
                 'sales' => 'required',
-                // 'manager' => 'required',
-                // 'type' => 'required',
+                'unit_id' => 'required',
+                'percentage' => 'required',
+                 'qty' => 'required',
                 'product_id' => 'required',
                 'product_amount' => 'required',
+                'achieve_amount' => 'required',
             ];
             $message = [
                 'sales.required' => 'Sales Person is required',
@@ -57,6 +61,7 @@ class TargetController extends Controller
                 return redirect()->back()->withErrors($validator);
             }
             
+            $percentage_amount = ($data['product_amount'] / $data['achieve_amount']) * 100;
             
             $target = new Target;
     
@@ -65,14 +70,16 @@ class TargetController extends Controller
             $target->created_by = $guard_object->created_by;
             $target->sales_person_id = $request->sales;
             $target->department_id = $request->department_id;
+            $target->unit_id = $request->unit_id;
             $target->amount = $request->product_amount;
-            $target->percentage = $request->percentage;
+            $target->percentage = $percentage_amount;
             $target->manager = $request->manager;
             $target->unit_price = $request->unit_price;
             $target->type = $request->type;
             $target->product_id = $request->product_id;
             $target->status = $request->status;
             $target->qty = $request->qty;
+            $target->amt_achieved = $request->achieve_amount;
             
             $target->save();
       if(!$target){

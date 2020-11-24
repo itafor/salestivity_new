@@ -132,7 +132,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('unit_price') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="unit-input">{{ __('Unit Price') }}</label>
-                                            <input type="text" name="unit_price" id="unit-input" class="form-control form-control-alternative{{ $errors->has('unit_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit Price') }}" value="{{ old('unit_price') }}" required>
+                                            <input type="number" name="unit_price" id="unit-input" class="form-control form-control-alternative{{ $errors->has('unit_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Unit Price') }}" value="{{ old('unit_price') }}" required>
 
                                             @if ($errors->has('unit_price'))
                                                 <span class="invalid-feedback" role="alert">
@@ -144,7 +144,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('qty') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="qty">{{ __('Quantity') }}</label>
-                                            <input type="num" name="qty" id="qty" class="form-control form-control-alternative border-input {{ $errors->has('qty') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ old('qty')}}" required>
+                                            <input type="number" name="qty" id="qty" class="form-control form-control-alternative border-input {{ $errors->has('qty') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ old('qty')}}" required>
 
                                             @if ($errors->has('qty'))
                                                 <span class="invalid-feedback" role="alert">
@@ -156,7 +156,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('product_amount') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-amount">{{ __('Amount') }}</label>
-                                            <input type="number" name="product_amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('product_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ old('product_amount') }}" required>
+                                            <input type="number" name="product_amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('product_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ old('product_amount') }}" required readonly="readonly">
                                             @if ($errors->has('product_amount'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('product_amount') }}</strong>
@@ -166,9 +166,20 @@
                                     </div>
 
                                      <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('achieve_amount') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-achieve_amount">{{ __('Achieve Amount') }}</label>
+                                            <input type="number" name="achieve_amount" id="input-achieve_amount" class="form-control form-control-alternative{{ $errors->has('achieve_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('achieve_amount') }}" value="{{ old('achieve_amount') }}" required>
+                                            @if ($errors->has('achieve_amount'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('achieve_amount') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                     <div class="col-xl-12">
                                         <div class="form-group{{ $errors->has('percentage') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-percentage">{{ __('Percentage') }}</label>
-                                            <input type="number" name="percentage" id="input-percentage" class="form-control form-control-alternative{{ $errors->has('percentage') ? ' is-invalid' : '' }}" placeholder="{{ __('Percentage') }}" value="{{ old('percentage') }}" required>
+                                            <input type="number" name="percentage" id="input-percentage" class="form-control form-control-alternative{{ $errors->has('percentage') ? ' is-invalid' : '' }}" placeholder="{{ __('Percentage') }}" value="{{ old('percentage') }}" required readonly="readonly">
                                             @if ($errors->has('percentage'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('percentage') }}</strong>

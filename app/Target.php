@@ -18,6 +18,11 @@ class Target extends Model
         return $this->belongsTo('App\Department', 'department_id');
     }
 
+    public function unit()
+    {
+        return $this->belongsTo('App\Unit', 'unit_id','id');
+    }
+
     public function getName($id)
     {
         $sales = User::find($id);

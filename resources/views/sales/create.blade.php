@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <form method="post" action="{{ route('sales.store') }}" autocomplete="off">
                             @csrf
-                            <h6 class="heading-small text-muted mb-4">{{ __('Sales information') }}</h6>
+                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Sales information') }}</h6> -->
                             <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
                                     <div class="col-xl-6">
@@ -66,7 +66,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('total_amount') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-amount">{{ __('Total Amount') }}</label>
-                                            <input type="text" name="total_amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('total_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ old('total_amount') }}" required>
+                                            <input type="text" name="total_amount" id="total_amount" class="form-control form-control-alternative{{ $errors->has('total_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ old('total_amount') }}" required readonly="readonly">
                                             @if ($errors->has('total_amount'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('total_amount') }}</strong>
