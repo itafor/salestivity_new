@@ -4,6 +4,7 @@ use App\Category;
 use App\City;
 use App\Contact;
 use App\Country;
+use App\Customer;
 use App\Industry;
 use App\State;
 use App\SubCategory;
@@ -151,4 +152,9 @@ function customerContacts($customerId)
         ['main_acct_id',authUserId()],
         ['customer_id',$customerId]
     ])->get();
+}
+
+function allCustomers()
+{
+   return Customer::all();
 }
