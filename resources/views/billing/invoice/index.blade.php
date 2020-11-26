@@ -40,7 +40,7 @@
                                             <th scope="col">{{ __('Timeline') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
-                                            <th scope="col">{{ __('Action') }}</th>
+                                            <th scope="col" colspan="2">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
