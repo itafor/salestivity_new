@@ -61,6 +61,8 @@ $('#input-dept').change(function () {
     let billinga_amount =0;
         $('#product_id').change(function(){
             var product_id = $(this).val();
+                $('#discount').val('');
+            
             if(product_id !='' && !isNaN(parseFloat(product_id))){
                 $.ajax({
                     url: baseUrl+'/fetch-product-price/'+product_id,
@@ -84,6 +86,7 @@ $('#input-dept').change(function () {
                 $('#productPrice').val('');
                 $('#billingAmount').val('');
                 $('#renewal_description').val('');
+                $('#discount').val('');
                 product_price=0;
                 billinga_amount =0;
             }

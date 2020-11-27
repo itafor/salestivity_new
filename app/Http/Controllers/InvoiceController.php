@@ -86,6 +86,7 @@ class InvoiceController extends Controller
             $invoice->cost = $request->cost;
             $invoice->discount = $request->discount;
             $invoice->status = $request->status;
+            $invoice->billingAmount = $request->billingAmount;
             $invoice->save();
 
             $status = "New Invoice has been Added ";

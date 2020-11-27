@@ -46,9 +46,7 @@
                                         <th scope="col">{{ __('Name') }}</th>
                                         <th scope="col">{{ __('Owner') }}</th>
                                         <th scope="col">{{ __('Amount') }}</th>
-                                        <th scope="col">{{ __('Stage') }}</th>
-                                        <th scope="col">{{ __('Date Initiated') }}</th>
-                                        <th scope="col">{{ __('Closure Date') }}</th>
+                                       
                                         <th scope="col">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
@@ -63,13 +61,12 @@
                                         @foreach($opportunities as $opportunity)
                                             <tr>
                                             
-                                                <td>{{ $opportunity->customer->name }}</td>
+                                                
+                                                <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
                                                 <td>{{ $opportunity->name }}</td>
-                                                <td>{{ $opportunity->owner }}</td>
-                                                <td>{{ $opportunity->amount }}</td>
-                                                <td>{{ $opportunity->stage }}</td>
-                                                <td>{{ $opportunity->initiation_date }}</td>
-                                                <td>{{ $opportunity->closure_date }}</td>
+                                                 <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
+                                                 <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
+                                              
                                                 <td>
                                                     <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                 </td>

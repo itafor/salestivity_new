@@ -158,7 +158,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('opportunity/new', ['as' => 'opportunity.create', 'uses' => 'OpportunityController@create']);
 	Route::post('opportunity/new', ['as' => 'opportunity.store', 'uses' => 'OpportunityController@store']);
 	Route::get('opportunity/{id}/show', ['as' => 'opportunity.show', 'uses' => 'OpportunityController@show']);
-	Route::post('opportunity/{id}', ['as' => 'opportunity.update', 'uses' => 'OpportunityController@update']);
+	Route::get('edit_opportunity/{id}', 'OpportunityController@edit')->name('opportunity.edit');
+	Route::post('opportunity-update', ['as' => 'opportunity.update', 'uses' => 'OpportunityController@update']);
 	Route::get('opportunity/{id}', ['as' => 'opportunity.destroy', 'uses' => 'OpportunityController@destroy']);
 	Route::get('getopportunities/{id}', ['as' => 'opportunity.view', 'uses' => 'OpportunityController@getOpportunities']);
 
