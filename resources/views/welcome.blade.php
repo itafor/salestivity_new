@@ -1,6 +1,7 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
+
    <div class="header bg-solid-custom py-7 py-lg-8">
     <div class="container">
         <div class="header-body text-center mb-7">

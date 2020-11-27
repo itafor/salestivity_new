@@ -18,7 +18,12 @@ class Opportunity extends Model
 
     public function contact_person()
     {
-        return $this->belongsTo('App\Contact', 'contact');
+        return $this->belongsTo('App\Contact', 'contact_id','id');
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo('App\SubUser', 'owner_id','id');
     }
 
     public function products()

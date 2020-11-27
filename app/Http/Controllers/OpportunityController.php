@@ -41,7 +41,7 @@ class OpportunityController extends Controller
     {
         $guard_object = getActiveGuardType();
         $input = request()->all();
-        // dd($input);
+        //dd($input);
         $rules = [
  
             'opportunity_name' => 'required',
@@ -63,24 +63,23 @@ class OpportunityController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        try {
+        
             $opportunity = new Opportunity;
             $opportunity->created_by = $guard_object->created_by;
             $opportunity->user_type = $guard_object->user_type;
             $opportunity->main_acct_id = $guard_object->main_acct_id;
             $opportunity->name = $request->opportunity_name;
-            $opportunity->owner = $request->owner;
+            $opportunity->owner_id = $request->owner_id;
             $opportunity->account_id = $request->account_id;
             $opportunity->amount = $request->amount;
             $opportunity->probability = $request->probability;
-            $opportunity->stage = $request->stage;
             $opportunity->initiation_date = $request->initiation_date;
             $opportunity->closure_date = $request->closure_date;
-            $opportunity->contact = $request->contact;
+            $opportunity->contact_id = $request->contact_id;
             $opportunity->status = $request->status;
 
             $opportunity->save();
-
+            if($opportunity){
             $product = $request->product_id;
             
 
@@ -99,10 +98,10 @@ class OpportunityController extends Controller
             Alert::success('Opportunity', $status);
             return back();
         }
-        catch(Throwable $th) {
+        
             Alert::error('Add Project', 'This action could not be completed');
             return back()->withInput()->withErrors($validator);
-        }
+        
 
     }
     
