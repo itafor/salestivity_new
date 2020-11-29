@@ -63,6 +63,11 @@ class OpportunityController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
+         if(compareEndStartDate($request->initiation_date,$request->closure_date) == false){
+            Alert::error('Invalid Closure Date', 'Please ensure that the Closure Date is after the Initiation Date');
+         return back()->withInput();
+        }
+
         
             $opportunity = new Opportunity;
             $opportunity->created_by = $guard_object->created_by;
@@ -177,6 +182,12 @@ class OpportunityController extends Controller
     public function update(Request $request)
     {
         //dd($request->all());
+
+         if(compareEndStartDate($request->initiation_date,$request->closure_date) == false){
+            Alert::error('Invalid Closure Date', 'Please ensure that the Closure Date is after the Initiation Date');
+         return back()->withInput();
+        }
+        
          $guard_object = getActiveGuardType();
         
             $opportunity = Opportunity::find($request->input('opportunity_id'));

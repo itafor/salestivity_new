@@ -60,8 +60,10 @@ class TargetController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator);
             }
+
+            $target_amount = $data['unit_price'] * $data['qty'];
             
-            $percentage_amount = ($data['product_amount'] / $data['achieve_amount']) * 100;
+            $percentage_amount = ($data['achieve_amount'] / $target_amount) * 100;
             
             $target = new Target;
     
