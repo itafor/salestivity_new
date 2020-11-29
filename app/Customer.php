@@ -163,6 +163,9 @@ public static function createCustomerAddress($customer,$data) {
 
 public static function createContact($customer,$data)
     {
+
+        self::addCustomerToContact($customer);
+
     if($data['contacts'][112211]['contact_email'] !=null )
    {
         foreach($data['contacts'] as $contact){
@@ -198,9 +201,15 @@ public static function createContact($customer,$data)
 
         $customer = self::where('id', $data['id'])->first();
         $address = AddressCustomer::where('customer_id', $data['id'])->first();
+        $contactExist = Contact::where('email', $customer->email)->first();
+
 
         self::updateAddress($address,$data);
         self::updateContacts($data,$customer);
+
+         if(!$contactExist){
+            self::addCustomerToContact($customer);
+        }
     }
 
      public static function updateIndividualCustomerAcount($data)
@@ -218,9 +227,14 @@ public static function createContact($customer,$data)
 
         $customer = self::where('id', $data['id'])->first();
         $address = AddressCustomer::where('customer_id', $data['id'])->first();
+        $contactExist = Contact::where('email', $customer->email)->first();
 
         self::updateAddress($address,$data);
         self::updateContacts($data,$customer);
+
+        if(!$contactExist){
+            self::addCustomerToContact($customer);
+        }
     }
 
     public static function updateContacts($data,$customer)
@@ -281,6 +295,17 @@ public static function updateAddress($address,$data){
     if($address){
     $address->delete();
   }
+}
+
+public static function addCustomerToContact($customer)
+{
+    Contact::create([
+    'customer_id' => $customer->id,
+    'name' => $customer->first_name ? $customer->first_name : $customer->name,
+    'phone' => $customer->phone,
+    'email' => $customer->email,
+    'main_acct_id' => getActiveGuardType()->main_acct_id,
+    ]);
 }
 
 }

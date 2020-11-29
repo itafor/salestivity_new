@@ -41,19 +41,19 @@ class OpportunityController extends Controller
     {
         $guard_object = getActiveGuardType();
         $input = request()->all();
-        // dd($input);
+        //dd($input);
         $rules = [
  
             'opportunity_name' => 'required',
             'account_id' => 'required',
-            'stage' => 'required',
+            'status' => 'required',
             'initiation_date' => 'required',
             'closure_date' => 'required'
         ];
         $message = [
             'opportunity_name.required' => 'Opportunity name is required',
             'account_id.required' => 'Please choose an account',
-            'stage.required' => 'Please select a stage',
+            'status.required' => 'Please select a status',
             'initiation_date.required' => 'Pick an Initiation date',
             'closure.required' => 'Pick a Closure date',
             
@@ -63,24 +63,28 @@ class OpportunityController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        try {
+         if(compareEndStartDate($request->initiation_date,$request->closure_date) == false){
+            Alert::error('Invalid Closure Date', 'Please ensure that the Closure Date is after the Initiation Date');
+         return back()->withInput();
+        }
+
+        
             $opportunity = new Opportunity;
             $opportunity->created_by = $guard_object->created_by;
             $opportunity->user_type = $guard_object->user_type;
             $opportunity->main_acct_id = $guard_object->main_acct_id;
             $opportunity->name = $request->opportunity_name;
-            $opportunity->owner = $request->owner;
+            $opportunity->owner_id = $request->owner_id;
             $opportunity->account_id = $request->account_id;
             $opportunity->amount = $request->amount;
             $opportunity->probability = $request->probability;
-            $opportunity->stage = $request->stage;
-            $opportunity->initiation_date = $request->initiation_date;
-            $opportunity->closure_date = $request->closure_date;
-            $opportunity->contact = $request->contact;
+            $opportunity->initiation_date =  Carbon::parse(formatDate($request->initiation_date, 'd/m/Y', 'Y-m-d'));
+            $opportunity->closure_date = Carbon::parse(formatDate($request->closure_date, 'd/m/Y', 'Y-m-d'));
+            $opportunity->contact_id = $request->contact_id;
             $opportunity->status = $request->status;
 
             $opportunity->save();
-
+            if($opportunity){
             $product = $request->product_id;
             
 
@@ -99,10 +103,10 @@ class OpportunityController extends Controller
             Alert::success('Opportunity', $status);
             return back();
         }
-        catch(Throwable $th) {
+        
             Alert::error('Add Project', 'This action could not be completed');
             return back()->withInput()->withErrors($validator);
-        }
+        
 
     }
     
@@ -130,8 +134,8 @@ class OpportunityController extends Controller
         
         } elseif ($id == 4) {
 
-            $user = Auth::user()->name;
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('owner', $user)->get();
+            $user = Auth::user()->id;
+            $opportunities = Opportunity::where('main_acct_id', $userId)->where('owner_id', $user)->get();
             return view('opportunity.myopp', compact('opportunities'));
         
         }elseif ($id == 5) {
@@ -159,27 +163,47 @@ class OpportunityController extends Controller
         return view('opportunity.show', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
     }
 
+    public function edit($id)
+    {
+        $userId = \getActiveGuardType()->main_acct_id;
+        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
+        $customers = Customer::where('main_acct_id', $userId)->get();
+        $categories = Category::where('main_acct_id', $userId)->get();
+        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
+        $products = Product::where('main_acct_id', $userId)->get();
+        
+        //dd($opportunity);
+        return view('opportunity.edit', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
+    }
+
     /**
      * Method to modify and update an opportunity's information.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        //dd($request->all());
 
-        try {
-            $opportunity = Opportunity::find($id);
+         if(compareEndStartDate($request->initiation_date,$request->closure_date) == false){
+            Alert::error('Invalid Closure Date', 'Please ensure that the Closure Date is after the Initiation Date');
+         return back()->withInput();
+        }
+        
+         $guard_object = getActiveGuardType();
+        
+            $opportunity = Opportunity::find($request->input('opportunity_id'));
         $opportunity->name = $request->input('opportunity_name');
-        $opportunity->owner = $request->input('owner');
+        $opportunity->owner_id = $request->input('owner_id');
         $opportunity->account_id = $request->input('account_id');
         $opportunity->amount = $request->input('amount');
         $opportunity->probability = $request->input('probability');
-        $opportunity->stage = $request->input('stage');
-        $opportunity->initiation_date = $request->input('initiation_date');
-        $opportunity->closure_date = $request->input('closure_date');
-        $opportunity->contact = $request->input('contact');
+        $opportunity->status = $request->input('status');
+        $opportunity->initiation_date = Carbon::parse(formatDate($request->initiation_date, 'd/m/Y', 'Y-m-d'));
+        $opportunity->closure_date = Carbon::parse(formatDate($request->closure_date, 'd/m/Y', 'Y-m-d'));
+        $opportunity->contact_id = $request->input('contact');
 
         // dd($opportunity);
         $opportunity->update();
-
+        //dd($opportunity);
         $product = $request->input('product_id');
         
         if(isset($request->category_id)) {
@@ -189,14 +213,15 @@ class OpportunityController extends Controller
                 'product_name' => implode($product),
                 'product_qty' => implode($request->input('quantity')),
                 'product_price' => implode($request->input('price')),
+                'main_acct_id' => $guard_object->main_acct_id,
             ]);
         }
         $status = "Opportunity has been successfully updated";
         Alert::success('Opportunity', $status);
         return back();
-        } catch (\Throwable $th) {
-            Alert::error('The process could not be completed');
-        }
+       
+            // Alert::error('The process could not be completed');
+        
         
     }
 }

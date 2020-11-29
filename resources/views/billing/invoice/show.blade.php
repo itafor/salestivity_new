@@ -83,6 +83,17 @@
                                     @endif
                                 </div>
 
+                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="cost">{{ __('Billing Amount') }}</label>
+                                    <input type="number" name="cost" id="cost" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('billingAmount') }}" value="{{ $invoice->billingAmount }}" required >
+
+                                    @if ($errors->has('billingAmount'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('billingAmount') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
                                 <div class="form-group{{ $errors->has('status') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="status">{{ __('Status') }}</label>
                                     <select name="status" id="" class="form-control">

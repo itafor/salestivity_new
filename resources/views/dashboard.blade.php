@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+
+
 @section('content')
     @include('layouts.headers.cards')
     
@@ -279,6 +281,7 @@
             </div>
         </div>
 
+{{addMainAccountOwnerToSubUser()}}
         @include('layouts.footers.auth')
     </div>
 @endsection

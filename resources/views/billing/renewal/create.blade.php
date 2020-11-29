@@ -24,7 +24,7 @@
 <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
     <select name="customer_id" id="customer" class=" form-control selectOption">
         <option selected>Choose a Customer</option>
-        @foreach($customers as $key => $customer)
+        @foreach(allCustomers() as $key => $customer)
             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
         @endforeach
     </select>
@@ -95,7 +95,7 @@
 
             <div class="col">
 <label class="form-control-label" for="discount">{{ __('CC') }}</label>
-        <input name="company_email" class="form-control company_email border-input" id="company_email" readonly>
+        <input name="company_email" class="form-control company_email border-input" value="{{authUser()->email}}" id="company_email***" readonly>
         @if ($errors->has('company_email'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('company_email') }}</strong>

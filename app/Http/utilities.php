@@ -4,6 +4,7 @@ use App\Category;
 use App\City;
 use App\Contact;
 use App\Country;
+use App\Customer;
 use App\Industry;
 use App\State;
 use App\SubCategory;
@@ -151,4 +152,29 @@ function customerContacts($customerId)
         ['main_acct_id',authUserId()],
         ['customer_id',$customerId]
     ])->get();
+}
+
+function allCustomers()
+{
+   return Customer::all();
+}
+
+function mySubUsers()
+{
+    return SubUser::where('main_acct_id', authUserId())->get();
+}
+
+function addMainAccountOwnerToSubUser()
+{
+    $emailExist = SubUser::where('email',authUser()->email)->first();
+    if(!$emailExist){
+    $user = new SubUser;
+    $user->name = authUser()->name;
+    $user->last_name = authUser()->last_name;
+    $user->email = authUser()->email;
+    $user->main_acct_id = authUser()->id;
+    $user->password = Hash::make('password');
+    $user->save();
+    }
+   
 }
