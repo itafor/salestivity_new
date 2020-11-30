@@ -574,7 +574,7 @@ $(document).on('keyup', '#input-achieve_amount', function(e){
     e.preventDefault();
     achieved_amount = $(this).val();
     let target_amount = unit_price * quantity;
-    let percentage = (target_amount/achieved_amount) * 100;
+    let percentage = (achieved_amount / target_amount) * 100;
    
     $('#input-percentage').val(percentage);
 if(achieved_amount <=0){
