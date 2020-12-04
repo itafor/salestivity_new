@@ -146,10 +146,15 @@
                                         <div class="form-group{{ $errors->has('owner_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="owner_id">{{ __('Owner') }}</label>
                                             <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" >
+                                                @if(count(mySubUsers()) >=1)
                                                 @foreach(mySubUsers() as $owner)
                                                     <option value="{{ $owner->id }}" {{$owner->email == authUser()->email ? 'selected':''}}>{{ $owner->name }} {{ $owner->last_name }}</option>
                                                 @endforeach
-                                                 
+                                                 @else
+
+                                                 <option value="{{subuser(authUser()->email)['id']}}">{{subuser(authUser()->email)['name']}} {{subuser(authUser()->email)['last_name']}}</option>
+
+                                                 @endif
                                             </select>
                                             @if ($errors->has('owner_id'))
                                                 <span class="invalid-feedback" role="alert">
