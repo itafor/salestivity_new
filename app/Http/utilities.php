@@ -178,3 +178,8 @@ function addMainAccountOwnerToSubUser()
     }
    
 }
+
+function subuser($email)
+{
+    return SubUser::where('email', $email)->first();
+}

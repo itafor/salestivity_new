@@ -68,11 +68,13 @@ class OpportunityController extends Controller
          return back()->withInput();
         }
 
+         $my_parent_user = authUser()->parent_user;
+        $my_subusers = authUser()->subUsers;
         
             $opportunity = new Opportunity;
             $opportunity->created_by = $guard_object->created_by;
             $opportunity->user_type = $guard_object->user_type;
-            $opportunity->main_acct_id = $guard_object->main_acct_id;
+            $opportunity->main_acct_id = authUserId();
             $opportunity->name = $request->opportunity_name;
             $opportunity->owner_id = $request->owner_id;
             $opportunity->account_id = $request->account_id;
@@ -82,6 +84,7 @@ class OpportunityController extends Controller
             $opportunity->closure_date = Carbon::parse(formatDate($request->closure_date, 'd/m/Y', 'Y-m-d'));
             $opportunity->contact_id = $request->contact_id;
             $opportunity->status = $request->status;
+            $opportunity->parent_user_id =  $guard_object->user_type == 'users' ? null :  $my_parent_user->id;
 
             $opportunity->save();
             if($opportunity){
@@ -118,32 +121,64 @@ class OpportunityController extends Controller
         $userId = auth()->user()->id;
         $today = Carbon::now();
 
+        $my_parent_user = authUser()->parent_user;
+        $my_subusers = authUser()->subUsers;
+        $guard_object = getActiveGuardType();
+
         if($id == 1){
-            $opportunities = Opportunity::where('main_acct_id', $userId)->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+            ])->orWhere([
+                ['parent_user_id', $userId]
+            ])->get();
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
             
-            $opportunities = Opportunity::where('main_acct_id', $userId)->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+            ])->orWhere([
+                ['parent_user_id', $userId]
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
             return view('opportunity.currentmonth', compact('opportunities'));
         }
          elseif($id == 3) {
 
-            $opportunities = Opportunity::where('main_acct_id', $userId)->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+            ])->orWhere([
+                ['parent_user_id', $userId]
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
             return view('opportunity.nextmonth', compact('opportunities'));
         
         } elseif ($id == 4) {
 
             $user = Auth::user()->id;
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('owner_id', $user)->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+            ])->orWhere([
+                ['parent_user_id', $userId]
+            ])->where('owner_id', $user)->get();
             return view('opportunity.myopp', compact('opportunities'));
         
         }elseif ($id == 5) {
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('status', '=', 'Won')->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+                ['status', '=', 'Closed Won']
+            ])->orWhere([
+                ['parent_user_id', $userId],
+                ['status', '=', 'Closed Won']
+            ])->get();
             return view('opportunity.won', compact('opportunities'));
         
         } else {
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('status', '=', 'Lost')->get();
+            $opportunities = Opportunity::where([
+                ['main_acct_id', $userId],
+                ['status', '=', 'Closed Lost']
+            ])->orWhere([
+                ['parent_user_id', $userId],
+                ['status', '=', 'Closed Lost']
+            ])->get();
             return view('opportunity.lost', compact('opportunities'));
         }
     }
@@ -154,7 +189,8 @@ class OpportunityController extends Controller
     public function show($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
+        $opportunity = Opportunity::where('id', $id)->first();
+        //dd($opportunity);
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
@@ -166,7 +202,7 @@ class OpportunityController extends Controller
     public function edit($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
+        $opportunity = Opportunity::where('id', $id)->first();
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
