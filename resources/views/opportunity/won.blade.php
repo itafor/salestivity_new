@@ -75,6 +75,10 @@
                                 </tbody>
                             </table>
                         </div>
+
+                         <h2>Users that reports to me</h2>
+
+                        @include('inc.usersThatReportToMe')
                     </div>
                 </div>
             </div>
