@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Opportunity;
-use App\Customer;
-use App\Contact;
 use App\Category;
-use App\SubCategory;
+use App\Contact;
+use App\Customer;
+use App\Opportunity;
 use App\Product;
-use Validator;
-use Session;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use Carbon\Carbon;
+use App\SubCategory;
+use App\SubUser;
 use Auth;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Session;
+use Validator;
 
 class OpportunityController extends Controller
 {
@@ -68,6 +68,8 @@ class OpportunityController extends Controller
          return back()->withInput();
         }
 
+         $my_parent_user = authUser()->parent_user;
+        $my_subusers = authUser()->subUsers;
         
             $opportunity = new Opportunity;
             $opportunity->created_by = $guard_object->created_by;
@@ -82,6 +84,7 @@ class OpportunityController extends Controller
             $opportunity->closure_date = Carbon::parse(formatDate($request->closure_date, 'd/m/Y', 'Y-m-d'));
             $opportunity->contact_id = $request->contact_id;
             $opportunity->status = $request->status;
+            $opportunity->parent_user_id =  $guard_object->user_type == 'users' ? null :  $my_parent_user->id;
 
             $opportunity->save();
             if($opportunity){
@@ -113,48 +116,190 @@ class OpportunityController extends Controller
     /**
      * Method that populates the table according to what is selected .
      */
-    public function getOpportunities($id)
+ public function getOpportunities($id)
     {
-        $userId = auth()->user()->id;
+         $userId = auth()->user()->id;
         $today = Carbon::now();
 
+        $guard_object = getActiveGuardType();
+
+        if($guard_object->user_type == 'users'){
+
         if($id == 1){
-            $opportunities = Opportunity::where('main_acct_id', $userId)->get();
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->get();
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
             
-            $opportunities = Opportunity::where('main_acct_id', $userId)->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
             return view('opportunity.currentmonth', compact('opportunities'));
         }
          elseif($id == 3) {
 
-            $opportunities = Opportunity::where('main_acct_id', $userId)->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
             return view('opportunity.nextmonth', compact('opportunities'));
         
         } elseif ($id == 4) {
 
-            $user = Auth::user()->id;
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('owner_id', $user)->get();
+            $user = SubUser::where('email',Auth::user()->email)->first();
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->where('owner_id', $user->id)->get();
             return view('opportunity.myopp', compact('opportunities'));
         
         }elseif ($id == 5) {
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('status', '=', 'Won')->get();
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->where('status', '=', 'Won')->get();
             return view('opportunity.won', compact('opportunities'));
         
         } else {
-            $opportunities = Opportunity::where('main_acct_id', $userId)->where('status', '=', 'Lost')->get();
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->where('status', '=', 'Lost')->get();
             return view('opportunity.lost', compact('opportunities'));
         }
+        }else{
+
+            if($id == 1){
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->get();
+            return view('opportunity.all', compact('opportunities'));
+        
+        } elseif($id == 2) {
+            
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+            return view('opportunity.currentmonth', compact('opportunities'));
+        }
+         elseif($id == 3) {
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+            return view('opportunity.nextmonth', compact('opportunities'));
+        
+        } elseif ($id == 4) {
+
+            $user = SubUser::where('email',Auth::user()->email)->first();
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('owner_id', $user->id)->get();
+            return view('opportunity.myopp', compact('opportunities'));
+        
+        }elseif ($id == 5) {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Won')->get();
+            return view('opportunity.won', compact('opportunities'));
+        
+        } else {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Lost')->get();
+            return view('opportunity.lost', compact('opportunities'));
+        }
+        }
+       
+
     }
 
+
+ public function viewLowerLevelUserOpp($user_Id)
+    {
+        $userId = getActiveGuardType()->main_acct_id;
+        $opportunities = Opportunity::where('main_acct_id', $userId)->get();
+        $user = SubUser::find($user_Id);
+        return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
+    }
+
+// view opportunities of users that reports to other users that report to you
+public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
+    {
+         $userId = $user_id;
+        $user = SubUser::find($user_id);
+
+        $today = Carbon::now();
+
+        $guard_object = getActiveGuardType();
+
+        if($id == 1){
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->get();
+            return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
+        
+        } elseif($id == 2) {
+            
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+            return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
+        }
+         elseif($id == 3) {
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+            return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
+        
+        } elseif ($id == 4) {
+
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('owner_id', $userId)->get();
+            return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
+        
+        }elseif ($id == 5) {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Won')->get();
+            return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
+        
+        } else {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Lost')->get();
+            return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
+        }
+    }
     /**
      * Shows Information about a particular opportunity
      */
     public function show($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
+        $opportunity = Opportunity::where('id', $id)->first();
+        //dd($opportunity);
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();
@@ -166,7 +311,7 @@ class OpportunityController extends Controller
     public function edit($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $opportunity = Opportunity::where('main_acct_id', $userId)->where('id', $id)->first();
+        $opportunity = Opportunity::where('id', $id)->first();
         $customers = Customer::where('main_acct_id', $userId)->get();
         $categories = Category::where('main_acct_id', $userId)->get();
         $subCategories = SubCategory::where('main_acct_id', $userId)->get();

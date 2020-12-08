@@ -61,4 +61,9 @@ class User extends Authenticatable
     public function renewalPayment(){
         return $this->hasMany(RenewalPayment::class);
     }
+
+     public function subUsers(){
+        return $this->hasMany(SubUser::class,'main_acct_id','id');
+    }
+
 }

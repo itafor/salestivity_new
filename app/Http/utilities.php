@@ -178,3 +178,20 @@ function addMainAccountOwnerToSubUser()
     }
    
 }
+
+function subuser($email)
+{
+    return SubUser::where('email', $email)->first();
+}
+
+function users_that_reports_to_main_user()
+{
+    $guard_object = getActiveGuardType();
+    if($guard_object->user_type == 'users'){
+        $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
+
+       return $get_main_user_from_subuser->users_that_report_tome;
+    }
+
+    return authUser()->users_that_report_tome;
+}

@@ -42,6 +42,16 @@ class SubUser extends Authenticatable
     {
         return $this->belongsTo('App\User', 'reports_to');
     }
+
+      public function parent_user()
+    {
+        return $this->belongsTo('App\User', 'main_acct_id','id');
+    }
+
+    public function users_that_report_tome()
+    {
+        return $this->hasMany('App\SubUser', 'reports_to','id');
+    }
 }
 
     

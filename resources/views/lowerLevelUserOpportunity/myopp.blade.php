@@ -10,7 +10,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('My Opportunities') }}</h3>
+                                <h3 class="mb-0">{{$user->name}} {{$user->last_name}}'s {{ __('Opportunities') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('opportunity.create') }}" class="btn btn-sm btn-primary">{{ __('Add Opportunity') }}</a>
@@ -23,15 +23,15 @@
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        Won
+                                       Own By {{$user->name}} {{$user->last_name}}
                                     </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=1]) }}">All Opportunities</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=2]) }}">Closing this month</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=3]) }}">Closing next month</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=4]) }}">Own By Me</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=5]) }}">Won</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=6]) }}">Lost</a>
+                                   <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=1, $user->id]) }}">All Opportunities</a>
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=2, $user->id]) }}">Closing this month</a>
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=3, $user->id]) }}">Closing next month</a>
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=4, $user->id]) }}">Own By {{$user->name}} {{$user->last_name}}</a>
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=5, $user->id]) }}">Won</a>
+                                        <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=6, $user->id]) }}">Lost</a>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         <th scope="col">{{ __('Owner') }}</th>
                                         <th scope="col">{{ __('Amount') }}</th>
                                        
-                                        <th scope="col">{{ __('Action') }}</th>
+                                        <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,18 +57,20 @@
                                                 <h3>No data available</h3>
                                             </td>
                                         </tr>
-                                    @else
+                                        @else
                                         @foreach($opportunities as $opportunity)
                                             <tr>
                                             
-                                                
                                                 <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
                                                 <td>{{ $opportunity->name }}</td>
                                                  <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
                                                  <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
                                               
+                                              
+                                                
                                                 <td>
                                                     <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        <!-- <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a> -->
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -78,9 +80,9 @@
                         </div>
 <hr>
                         
-                         <h2>Users that reports to me</h2>
+                         <h2>Users that reports to {{$user->name}} {{$user->last_name}}</h2>
 
-                        @include('inc.usersThatReportToMainUser')
+                        @include('inc.usersThatReportToSubusers')
                     </div>
                 </div>
             </div>
