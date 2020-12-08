@@ -23,7 +23,7 @@
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        My Opportunities
+                                       Own By {{$user->name}} {{$user->last_name}}
                                     </button>
                                    <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('lower.level.useropportunity.view', [$id=1, $user->id]) }}">All Opportunities</a>
