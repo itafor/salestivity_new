@@ -163,6 +163,10 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('opportunity/{id}', ['as' => 'opportunity.destroy', 'uses' => 'OpportunityController@destroy']);
 	Route::get('getopportunities/{id}', ['as' => 'opportunity.view', 'uses' => 'OpportunityController@getOpportunities']);
 
+	Route::get('lower-level-user-opportunities/{user_id}', ['as' => 'lowerLevelUserOpp.view', 'uses' => 'OpportunityController@viewLowerLevelUserOpp']);
+
+
+Route::get('lower-level-users-opportunities/{id}/{userId}', ['as' => 'lower.level.useropportunity.view', 'uses' => 'OpportunityController@getOpportunitiesOfLowerLevelUsers']);
 	// Target Management
 	Route::get('targets', ['as' => 'target.index', 'uses' => 'TargetController@index']);
 	Route::get('target/new', ['as' => 'target.create', 'uses' => 'TargetController@create']);

@@ -184,7 +184,7 @@ function subuser($email)
     return SubUser::where('email', $email)->first();
 }
 
-function users_that_reports_to_me()
+function users_that_reports_to_main_user()
 {
     $guard_object = getActiveGuardType();
     if($guard_object->user_type == 'users'){

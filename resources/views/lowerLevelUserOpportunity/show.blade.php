@@ -35,14 +35,12 @@
       <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Opportunity Details') }} </h3>
+                                <h3 class="mb-0">{{$user->name}} {{$user->last_name}}'s {{ __('Opportunity Details') }} </h3>
                             </div>
                             <div class="col-4 text-right">
-                              @if(getActiveGuardType()->created_by == $opportunity->created_by)
                                 <a href="{{ route('opportunity.edit',[$opportunity->id]) }}" class="btn btn-sm btn-info">{{ __('Edit') }}</a>
-                                @endif
                                 &nbsp;&nbsp;
-                               <!--  <a href="{{ route('opportunity.view',[$opportunity->id]) }}" class="btn btn-sm btn-primary">{{ __('Back To List') }}</a> -->
+                                <a href="{{ route('opportunity.view',[$opportunity->id]) }}" class="btn btn-sm btn-primary">{{ __('Back To List') }}</a>
                             </div>
                         </div>
                     </div>

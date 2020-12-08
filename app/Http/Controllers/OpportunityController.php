@@ -226,6 +226,72 @@ class OpportunityController extends Controller
 
     }
 
+
+ public function viewLowerLevelUserOpp($user_Id)
+    {
+        $userId = getActiveGuardType()->main_acct_id;
+        $opportunities = Opportunity::where('main_acct_id', $userId)->get();
+        $user = SubUser::find($user_Id);
+        return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
+    }
+
+// view opportunities of users that reports to other users that report to you
+public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
+    {
+         $userId = $user_id;
+        $user = SubUser::find($user_id);
+
+        $today = Carbon::now();
+
+        $guard_object = getActiveGuardType();
+
+        if($id == 1){
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->get();
+            return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
+        
+        } elseif($id == 2) {
+            
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+            return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
+        }
+         elseif($id == 3) {
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+            return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
+        
+        } elseif ($id == 4) {
+
+
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('owner_id', $userId)->get();
+            return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
+        
+        }elseif ($id == 5) {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Won')->get();
+            return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
+        
+        } else {
+            $opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where('status', '=', 'Lost')->get();
+            return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
+        }
+    }
     /**
      * Shows Information about a particular opportunity
      */

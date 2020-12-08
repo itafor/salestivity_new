@@ -9,14 +9,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(users_that_reports_to_me()->isEmpty())
+                                @if($user->users_that_report_tome->isEmpty())
                                     <tr>
                                         <td colspan="8" style="text-align: center">
                                             <h3>No user found</h3>
                                         </td>
                                     </tr>
                                 @else
-                                    @foreach (users_that_reports_to_me() as $user)
+                                    @foreach ($user->users_that_report_tome as $user)
                                         <tr>
                                             <td>{{ $user->name }} {{ $user->last_name }}</td>
                                             <td>
@@ -33,7 +33,7 @@
                                                 <td>Not Set</td>
                                             @endif
                                             <td>
-                                                <a href="#"> <button class="btn btn-success btn-sm">View opportunities</button> </a>
+                                                <a href="{{route('lowerLevelUserOpp.view',[$user->id])}}"> <button class="btn btn-success btn-sm">View opportunities</button> </a>
                                             </td>
                                       
                                             
