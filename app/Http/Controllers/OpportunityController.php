@@ -121,15 +121,37 @@ class OpportunityController extends Controller
          $userId = auth()->user()->id;
         $today = Carbon::now();
 
+       
         $guard_object = getActiveGuardType();
 
         if($guard_object->user_type == 'users'){
 
+            // this array holds the ids of the parent user and that of the subusers till third level
+             $parentUserAndSubUsersThatReportToThem = [];
+
+            $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
+
+             $usersThatreportsToMe = $get_main_user_from_subuser->users_that_report_tome->pluck('id')->toArray();
+
+             $parentUserAndSubUsersThatReportToThem[] = $usersThatreportsToMe;
+
+             foreach ($usersThatreportsToMe as $key => $uid) {
+                    $subUser = SubUser::where('id', $uid)->first();
+                    $subusersThatreportToThisSubUser = $subUser->users_that_report_tome->pluck('id')->toArray();
+                    if($subusersThatreportToThisSubUser){
+                    $parentUserAndSubUsersThatReportToThem[] = $subusersThatreportToThisSubUser;
+                    }
+             }
+
+             //dd($parentUserAndSubUsersThatReportToThem);
+
+             array_push($parentUserAndSubUsersThatReportToThem, $userId);
+        // dd($usersThatreportsToMe);
+
         if($id == 1){
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','users']
-            ])->get();
+            // fetch the opportunity of the parent user and that of the subusers till third level
+            $opportunities = Opportunity::whereIn('created_by', $parentUserAndSubUsersThatReportToThem)->get();
+
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
@@ -174,11 +196,12 @@ class OpportunityController extends Controller
         }
         }else{
 
+             $usersThatreportsToMe = authUser()->users_that_report_tome->pluck('id')->toArray();
+
+             array_push($usersThatreportsToMe, $userId);
+
             if($id == 1){
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->get();
+            $opportunities = Opportunity::whereIn('created_by',$usersThatreportsToMe)->get();
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
