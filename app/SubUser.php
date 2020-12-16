@@ -52,6 +52,11 @@ class SubUser extends Authenticatable
     {
         return $this->hasMany('App\SubUser', 'reports_to','id');
     }
+
+    public function users_that_report_tome_ids()
+    {
+        return $this->hasMany('App\SubUser', 'reports_to','id')->pluck('id')->toArray();
+    }
 }
 
     

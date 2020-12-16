@@ -81,9 +81,7 @@
                             </table>
                         </div>
                         <hr>
-                         <h2>Users that reports to me</h2>
-
-                        @include('inc.usersThatReportToMainUser')
+                        
                     </div>                    
                 </div>
             </div>

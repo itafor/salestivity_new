@@ -23,7 +23,7 @@
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        View Opportunites
+                                        All Opportunites
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=1]) }}">All Opportunities</a>
@@ -49,45 +49,48 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush" >
-                                    <thead class="thead-dark">
-                                        <!-- <tr>
-                                            <th scope="col">{{ __('Account') }}</th>
-                                            <th scope="col">{{ __('Name') }}</th>
-                                            <th scope="col">{{ __('Owner') }}</th>
-                                            <th scope="col">{{ __('Amount') }}</th>
-                                            <th scope="col">{{ __('Stage') }}</th>
-                                            <th scope="col">{{ __('Date Initiated') }}</th>
-                                            <th scope="col">{{ __('Estimated Closure Date') }}</th>
-                                        </tr> -->
-                                    </thead>
-                                    <tbody>
+                                           <table class="table align-items-center table-flush" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">{{ __('Account') }}</th>
+                                        <th scope="col">{{ __('Name') }}</th>
+                                        <th scope="col">{{ __('Owner') }}</th>
+                                        <th scope="col">{{ __('Amount') }}</th>
+                                       
+                                        <th scope="col">{{ __('Action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if($opportunities->isEmpty())
+                                        <tr>
+                                            <td colspan="8" style="text-align: center">
+                                                <h3>No data available</h3>
+                                            </td>
+                                        </tr>
+                                    @else
                                         @foreach($opportunities as $opportunity)
-                                            <!-- <tr>
+                                            <tr>
                                             
-                                                <td>{{-- $opportunity->customer->name --}}</td>
-                                                <td>{{-- $opportunity->name --}}</td>
-                                                <td>{{-- $opportunity->owner --}}</td>
-                                                <td>{{-- $opportunity->amount --}}</td>
-                                                <td>{{-- $opportunity->stage --}}</td>
-                                                <td>{{-- $opportunity->initiation_date --}}</td>
-                                                <td>{{-- $opportunity->closure_date --}}</td>
+                                                
+                                                <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
+                                                <td>{{ $opportunity->name }}</td>
+                                                 <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
+                                                 <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
+                                              
                                                 <td>
-                                                    <div class="col-4 text-right">
-                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                        <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a>
-                                                    </div>
+                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                 </td>
-                                            </tr> -->
+                                            </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
+                                    @endif
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                         <hr>
-                        <h2>Users that reports to me</h2>
+                        <!-- <h2>Users that reports to me</h2>
 
-                        @include('inc.usersThatReportToMainUser')
+                        @include('inc.usersThatReportToMainUser') -->
                     </div>
                 </div>
             </div>

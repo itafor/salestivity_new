@@ -23,7 +23,7 @@
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        My Opportunites
+                                        All Opportunites
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=1]) }}">All Opportunities</a>
@@ -78,9 +78,7 @@
                         </div>
 <hr>
                         
-                         <h2>Users that reports to me</h2>
-
-                        @include('inc.usersThatReportToMainUser')
+                         
                     </div>
                 </div>
             </div>
