@@ -30,7 +30,7 @@ class OpportunityController extends Controller
         if($guard_object->user_type == 'users'){
 
             // this array holds the ids of subusers that report to parent  user
-             $parentUserAndSubUsersThatReportToThem = array();
+             $parentUserAndSubUsersThatReportToThem = array('0'=>[0]);
 
             $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
 
@@ -58,6 +58,8 @@ class OpportunityController extends Controller
                     $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'users']
+            ])->where([
+                ['user_type', 'sub_users']
             ])->get();
 
              // fetch the opportunities of  subusers under parent users
@@ -65,9 +67,48 @@ class OpportunityController extends Controller
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
             return view('opportunity.index', compact('opportunities'));
+            }else if($guard_object->user_type == 'sub_users'){
+
+                    // this array holds the ids of subusers that report to parent  user
+             $topLevelSubUserAndSubUsersThatReportToThem = array('0'=>[0]);
+
+            $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
+
+             $usersThatreportsToParentUser = authUser()->users_that_report_tome->pluck('id')->toArray();
+
+            foreach($usersThatreportsToParentUser as $subuserid) {
+
+                     $subUser = SubUser::where('id', $subuserid)->first();
+                    $subusersThatreportToThisSubUser = $subUser->users_that_report_tome->pluck('id')->toArray();
+                    
+                    if($subusersThatreportToThisSubUser){
+                    $topLevelSubUserAndSubUsersThatReportToThem[] = $subusersThatreportToThisSubUser;
+                    }
+
+             }
+ 
+        
+             $combinedArray = call_user_func_array('array_merge', $topLevelSubUserAndSubUsersThatReportToThem);
+
+             $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
+
+                  $parent_user_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'sub_users']
+            ])->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users']
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+        
+        return view('opportunity.index', compact('opportunities'));
+
             }
 
-        return view('opportunity.index', compact('opportunities'));
     }
 
     public function create()
@@ -169,7 +210,7 @@ class OpportunityController extends Controller
         if($guard_object->user_type == 'users'){
 
             // this array holds the ids of subusers that report to parent  user
-             $parentUserAndSubUsersThatReportToThem = array();
+             $parentUserAndSubUsersThatReportToThem = array('0'=>[0]);
 
             $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
 
@@ -201,9 +242,13 @@ class OpportunityController extends Controller
             ])->get();
 
              // fetch the opportunities of  subusers under parent users
-            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->get();
-            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users']
+            ])->get();
 
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+           // dd($opportunities);
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
@@ -214,7 +259,9 @@ class OpportunityController extends Controller
             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
 
 
-             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
@@ -227,7 +274,9 @@ class OpportunityController extends Controller
                 ['user_type','users']
             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
 
-             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
@@ -249,7 +298,10 @@ class OpportunityController extends Controller
                 ['user_type','users']
             ])->where('status', '=', 'Closed Won')->get();
 
-            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where('status', '=', 'Closed Won')->get();
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser) ->where([
+                ['user_type', 'sub_users'],
+                ['status', '=', 'Closed Won']
+            ])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
@@ -261,7 +313,10 @@ class OpportunityController extends Controller
                 ['user_type','users']
             ])->where('status', '=', 'Closed Lost')->get();
 
-            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where('status', '=', 'Closed Won')->get();
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['status', '=', 'Closed Lost'],
+                ['user_type', '=', 'sub_users']
+            ])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
@@ -269,28 +324,76 @@ class OpportunityController extends Controller
         }
         }else{
 
-             $usersThatreportsToMe = authUser()->users_that_report_tome->pluck('id')->toArray();
+                   // this array holds the ids of subusers that report to parent  user
+             $topLevelSubUserAndSubUsersThatReportToThem = array('0'=>[0]);
 
-             array_push($usersThatreportsToMe, $userId);
+            $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
+
+             $usersThatreportsToParentUser = authUser()->users_that_report_tome->pluck('id')->toArray();
+
+            foreach($usersThatreportsToParentUser as $subuserid) {
+
+                     $subUser = SubUser::where('id', $subuserid)->first();
+                    $subusersThatreportToThisSubUser = $subUser->users_that_report_tome->pluck('id')->toArray();
+
+                    if($subusersThatreportToThisSubUser){
+                    $topLevelSubUserAndSubUsersThatReportToThem[] = $subusersThatreportToThisSubUser;
+                    }
+             }
+ 
+        
+             $combinedArray = call_user_func_array('array_merge', $topLevelSubUserAndSubUsersThatReportToThem);
+
+             $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
+
 
             if($id == 1){
-            $opportunities = Opportunity::whereIn('created_by',$usersThatreportsToMe)->get();
+            
+            $parent_user_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'sub_users']
+            ])->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users']
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
             return view('opportunity.all', compact('opportunities'));
         
         } elseif($id == 2) {
             
-            $opportunities = Opportunity::where([
+            $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type','sub_users']
             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
             return view('opportunity.currentmonth', compact('opportunities'));
         }
          elseif($id == 3) {
 
-            $opportunities = Opportunity::where([
+            $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type','sub_users']
             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users']
+            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
             return view('opportunity.nextmonth', compact('opportunities'));
         
         } elseif ($id == 4) {
@@ -304,90 +407,109 @@ class OpportunityController extends Controller
             return view('opportunity.myopp', compact('opportunities'));
         
         }elseif ($id == 5) {
-            $opportunities = Opportunity::where([
+            $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type','sub_users']
-            ])->where('status', '=', 'Won')->get();
+            ])->where('status', '=', 'Closed Won')->get();
+
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users'],
+                ['status', '=', 'Closed Won']
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
             return view('opportunity.won', compact('opportunities'));
         
         } else {
-            $opportunities = Opportunity::where([
+
+             $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type','sub_users']
-            ])->where('status', '=', 'Lost')->get();
+            ])->where('status', '=', 'Closed Lost')->get();
+
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users'],
+                ['status', '=', 'Closed Lost']
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
             return view('opportunity.lost', compact('opportunities'));
         }
-        }
+    }
        
 
     }
 
 
- public function viewLowerLevelUserOpp($user_Id)
-    {
-        $userId = getActiveGuardType()->main_acct_id;
-        $opportunities = Opportunity::where('main_acct_id', $userId)->get();
-        $user = SubUser::find($user_Id);
-        return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
-    }
+//  public function viewLowerLevelUserOpp($user_Id)
+//     {
+//         $userId = getActiveGuardType()->main_acct_id;
+//         $opportunities = Opportunity::where('main_acct_id', $userId)->get();
+//         $user = SubUser::find($user_Id);
+//         return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
+//     }
 
-// view opportunities of users that reports to other users that report to you
-public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
-    {
-         $userId = $user_id;
-        $user = SubUser::find($user_id);
+// // view opportunities of users that reports to other users that report to you
+// public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
+//     {
+//          $userId = $user_id;
+//         $user = SubUser::find($user_id);
 
-        $today = Carbon::now();
+//         $today = Carbon::now();
 
-        $guard_object = getActiveGuardType();
+//         $guard_object = getActiveGuardType();
 
-        if($id == 1){
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->get();
-            return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
+//         if($id == 1){
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->get();
+//             return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
         
-        } elseif($id == 2) {
+//         } elseif($id == 2) {
             
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
-            return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
-        }
-         elseif($id == 3) {
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+//             return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
+//         }
+//          elseif($id == 3) {
 
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
-            return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
+//             return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
         
-        } elseif ($id == 4) {
+//         } elseif ($id == 4) {
 
 
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->where('owner_id', $userId)->get();
-            return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->where('owner_id', $userId)->get();
+//             return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
         
-        }elseif ($id == 5) {
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->where('status', '=', 'Won')->get();
-            return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
+//         }elseif ($id == 5) {
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->where('status', '=', 'Won')->get();
+//             return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
         
-        } else {
-            $opportunities = Opportunity::where([
-                ['created_by', $userId],
-                ['user_type','sub_users']
-            ])->where('status', '=', 'Lost')->get();
-            return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
-        }
-    }
+//         } else {
+//             $opportunities = Opportunity::where([
+//                 ['created_by', $userId],
+//                 ['user_type','sub_users']
+//             ])->where('status', '=', 'Lost')->get();
+//             return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
+//         }
+//     }
     /**
      * Shows Information about a particular opportunity
      */
