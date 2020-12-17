@@ -48,21 +48,21 @@ class OpportunityController extends Controller
 
                 $i++;
              }
- 
                 //combine a multidimensional array to one single array
              $combinedArray = call_user_func_array('array_merge', $parentUserAndSubUsersThatReportToThem);
 
              $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
 
-                    $parent_user_opportunities = Opportunity::where([
+               $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'users']
-            ])->where([
-                ['user_type', 'sub_users']
             ])->get();
 
              // fetch the opportunities of  subusers under parent users
-            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->get();
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users']
+            ])->get();
+
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
             return view('opportunity.index', compact('opportunities'));
