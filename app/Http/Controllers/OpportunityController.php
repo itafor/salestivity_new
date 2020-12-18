@@ -48,7 +48,6 @@ class OpportunityController extends Controller
 
                 $i++;
              }
- 
                 //combine a multidimensional array to one single array
              $combinedArray = call_user_func_array('array_merge', $parentUserAndSubUsersThatReportToThem);
 
