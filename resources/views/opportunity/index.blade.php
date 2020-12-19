@@ -88,9 +88,9 @@
                             </div>
                         </div>
                         <hr>
-                        <h2>Users that reports to me</h2>
+                        <!-- <h2>Users that reports to me</h2>
 
-                        @include('inc.usersThatReportToMainUser')
+                        @include('inc.usersThatReportToMainUser') -->
                     </div>
                 </div>
             </div>
