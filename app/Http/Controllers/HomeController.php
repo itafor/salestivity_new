@@ -41,7 +41,7 @@ class HomeController extends Controller
         
              $userId = auth()->user()->id;
         $today = Carbon::now();
-
+       $data['current_month'] = $today->format('M');
         $guard_object = getActiveGuardType();
 
         if($guard_object->user_type == 'users'){
@@ -84,9 +84,49 @@ class HomeController extends Controller
                 ['status', '!=', 'Closed Lost'],
             ])->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get();
 
-            $opportunities = $parent_user_last_month_opportunities->merge($users_that_reports_to_parent_user_last_month_opportunities);
 
-            $data['opportunities_count'] = count($opportunities); 
+             $parent_user_current_month_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'users'],
+                ['status', '!=', 'Closed Won'],
+                ['status', '!=', 'Closed Lost'],
+            ])->whereBetween('created_at', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_current_month_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users'],
+                ['status', '!=', 'Closed Won'],
+                ['status', '!=', 'Closed Lost'],
+            ])->whereBetween('created_at', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+            $current_month_opportunities = $parent_user_current_month_opportunities->merge($users_that_reports_to_parent_user_current_month_opportunities);
+
+            $current_month_opportunities_amt_sum = $parent_user_current_month_opportunities->merge($users_that_reports_to_parent_user_current_month_opportunities)->sum('amount');
+            
+
+
+            $last_month_opportunities = $parent_user_last_month_opportunities->merge($users_that_reports_to_parent_user_last_month_opportunities);
+
+             $last_month_opportunities_amt_sum = $parent_user_last_month_opportunities->merge($users_that_reports_to_parent_user_last_month_opportunities)->sum('amount');
+
+
+
+            $data['last_month_opportunities_count'] = count($last_month_opportunities); 
+            $data['last_month_opportunities_amt_sum'] = $last_month_opportunities_amt_sum;
+
+            $data['current_month_opportunities_count'] = count($current_month_opportunities); 
+            $data['current_month_opportunities_amt_sum'] = $current_month_opportunities_amt_sum;
+
+            $data['last_month_plus_current_month_opp_count'] = count($current_month_opportunities) + count($last_month_opportunities);
+
+            $data['last_month_plus_current_month_opp_amt_sum'] =  $last_month_opportunities_amt_sum + $current_month_opportunities_amt_sum;
+
+            $opp_amt_difference =  ($data['current_month_opportunities_amt_sum'] - $data['last_month_opportunities_amt_sum']) / abs($data['last_month_opportunities_amt_sum']);
+
+            $data['opp_percentage_change'] =  $opp_amt_difference * 100;
+
+            $data['formatted_opp_percentage_change'] = round($data['opp_percentage_change'], 2);
+
 
             return view('dashboard', $data);
 
