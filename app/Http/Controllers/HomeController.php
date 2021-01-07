@@ -72,7 +72,7 @@ class HomeController extends Controller
              $combinedArray = call_user_func_array('array_merge', $parentUserAndSubUsersThatReportToThem);
 
              $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
-
+// ....................Last month Open opportunities...........................................
                $parent_user_last_month_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'users'],
@@ -93,7 +93,7 @@ class HomeController extends Controller
 
             $data['last_month_opportunities_count'] = count($last_month_opportunities); 
             $data['last_month_opportunities_amt_sum'] = $last_month_opportunities_amt_sum;
-// .............................................................................................
+// .............................Current Month Open Opportunities.............................................
 
              $parent_user_current_month_opportunities = Opportunity::where([
                 ['created_by', $userId],
@@ -121,12 +121,12 @@ class HomeController extends Controller
 
             $data['last_month_plus_current_month_opp_amt_sum'] =  $last_month_opportunities_amt_sum + $current_month_opportunities_amt_sum;
 
-            $opp_amt_difference =  ($data['current_month_opportunities_amt_sum'] - $data['last_month_opportunities_amt_sum']) / abs($data['last_month_opportunities_amt_sum']);
+            $opp_amt_difference =  ($data['current_month_opportunities_amt_sum'] - $data['last_month_opportunities_amt_sum']) / abs($data['last_month_opportunities_amt_sum'] == 0 ? 1 : $data['last_month_opportunities_amt_sum']);
 
             $data['opp_percentage_change'] =  $opp_amt_difference * 100;
 
             $data['formatted_opp_percentage_change'] = round($data['opp_percentage_change'], 2);
-// --------------------------------------------------------------------------------------------------
+// ----------------------------------------Year To Date Open Opportunities----------------------------------------
 
              $parent_user_YTD_opportunities = Opportunity::where([
                 ['created_by', $userId],
@@ -148,6 +148,79 @@ class HomeController extends Controller
             $data['ytd_opportunities_amt_sum'] = $parent_user_YTD_opportunities->merge($users_that_reports_to_parent_user_YTD_opportunities)->sum('amount');
         $data['ytd_opp_count'] = count($ytd_opportunities);
 // ...........................................................................................
+
+
+
+
+
+        // ....................Last month Won opportunities...........................................
+               $parent_user_last_month_won_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'users'],
+                ['status', 'Closed Won'],
+            ])->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_last_month_won_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users'],
+                ['status', 'Closed Won'],
+            ])->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get();
+
+              $last_month_won_opportunities = $parent_user_last_month_won_opportunities->merge($users_that_reports_to_parent_user_last_month_won_opportunities);
+
+             $last_month_won_opportunities_amt_sum = $parent_user_last_month_won_opportunities->merge($users_that_reports_to_parent_user_last_month_won_opportunities)->sum('amount');
+
+            $data['last_month_won_opportunities_count'] = count($last_month_won_opportunities); 
+            $data['last_month_won_opportunities_amt_sum'] = $last_month_won_opportunities_amt_sum;
+// .............................Current Month Won Opportunities.............................................
+
+             $parent_user_current_month_won_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'users'],
+                ['status', 'Closed Won'],
+            ])->whereBetween('created_at', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_current_month_won_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users'],
+                ['status', 'Closed Won'],
+            ])->whereBetween('created_at', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
+
+            $current_month_won_opportunities = $parent_user_current_month_won_opportunities->merge($users_that_reports_to_parent_user_current_month_won_opportunities);
+
+            $current_month_won_opportunities_amt_sum = $parent_user_current_month_won_opportunities->merge($users_that_reports_to_parent_user_current_month_won_opportunities)->sum('amount');
+            
+
+            $data['current_month_won_opportunities_count'] = count($current_month_won_opportunities); 
+            $data['current_month_won_opportunities_amt_sum'] = $current_month_won_opportunities_amt_sum;
+
+            $data['last_month_plus_current_month_won_opp_count'] = count($current_month_won_opportunities) + count($last_month_won_opportunities);
+
+            $data['last_month_plus_current_month_won_opp_amt_sum'] =  $last_month_won_opportunities_amt_sum + $current_month_won_opportunities_amt_sum;
+
+            $won_opp_amt_difference =  ($data['current_month_won_opportunities_amt_sum'] - $data['last_month_won_opportunities_amt_sum']) / abs($data['last_month_won_opportunities_amt_sum'] == 0 ? 1 :$data['last_month_won_opportunities_amt_sum']);
+
+            $data['won_opp_percentage_change'] = round($won_opp_amt_difference * 100, 2);
+
+// ----------------------------------------Year To Date Won Opportunities----------------------------------------
+
+             $parent_user_YTD_won_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type', 'users'],
+                ['status', 'Closed Won'],
+            ])->whereYear('created_at', $curr_year)->get();
+
+             // fetch the opportunities of  subusers under parent users
+            $users_that_reports_to_parent_user_YTD_won_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['user_type', 'sub_users'],
+                ['status', 'Closed Won'],
+            ])->whereYear('created_at', $curr_year)->get();
+
+        $ytd_won_opportunities = $parent_user_YTD_won_opportunities->merge($users_that_reports_to_parent_user_YTD_won_opportunities);
+            
+
+            $data['ytd_won_opportunities_amt_sum'] = $parent_user_YTD_won_opportunities->merge($users_that_reports_to_parent_user_YTD_won_opportunities)->sum('amount');
+        $data['ytd_won_opp_count'] = count($ytd_won_opportunities);
 
             return view('dashboard', $data);
 
@@ -176,7 +249,7 @@ class HomeController extends Controller
 
              $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
 
-
+// ....................Last month Open opportunities...........................................
               $parent_user_last_month_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'sub_users'],
@@ -197,7 +270,7 @@ class HomeController extends Controller
 
             $data['last_month_opportunities_count'] = count($last_month_opportunities); 
             $data['last_month_opportunities_amt_sum'] = $last_month_opportunities_amt_sum;
-// .............................................................................................
+// .............................Current Month Open opportunities.......................................
 $parent_user_current_month_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'sub_users'],
@@ -230,7 +303,7 @@ $parent_user_current_month_opportunities = Opportunity::where([
 
             $data['formatted_opp_percentage_change'] = round($data['opp_percentage_change'], 2);
             
-// --------------------------------------------------------------------------------------------------
+// ------------------------Year To Date Open opportunities------------------------------------------------------
                   $parent_user_YTD_opportunities = Opportunity::where([
                 ['created_by', $userId],
                 ['user_type', 'sub_users'],
