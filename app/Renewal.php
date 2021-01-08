@@ -15,7 +15,7 @@ class Renewal extends Model
         'product','start_date',
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
-        'description','status'
+        'description','status','userType'
     	];
 
     public function customers()
@@ -42,6 +42,8 @@ class Renewal extends Model
     }
 
     public static function createNew($data) {
+
+        $guard_object = getActiveGuardType();
         $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
        
         $discountValue = $data['discount'] == '' ? 0 : $data['discount'];
@@ -56,6 +58,7 @@ class Renewal extends Model
         'discount' => $data['discount'],
         'billingAmount' =>  $finalPrice,  //$data['billingAmount'],
         'billingBalance' => $finalPrice,  //$data['billingAmount'],
+        'userType' => $guard_object->user_type == 'users' ? 'Primary_user' : 'Sub_user',
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),

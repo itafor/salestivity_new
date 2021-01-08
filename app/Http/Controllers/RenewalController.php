@@ -33,10 +33,12 @@ class RenewalController extends Controller
      */
     public function index()
     {
+         $guard_object = getActiveGuardType();
         $userId = auth()->user()->id;
-        $renewals = Renewal::where('main_acct_id', $userId)
-        ->orderby('end_date','asc')
-        ->get();
+        $renewals = Renewal::where([
+            ['main_acct_id', $userId],
+            ['userType', $guard_object->user_type == 'users' ? 'Primary_user' : 'Sub_user'],
+        ])->orderby('end_date','asc')->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
@@ -47,9 +49,13 @@ class RenewalController extends Controller
      */
     public function create()
     {
+         $guard_object = getActiveGuardType();
+
         $userId = auth()->user()->id;
         $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
+        $products = Product::where([
+            ['main_acct_id', $userId],
+        ])->get();
         return view('billing.renewal.create', compact('customers', 'products'));
     }
 
