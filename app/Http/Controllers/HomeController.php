@@ -262,17 +262,60 @@ class HomeController extends Controller
           // dd($data['ytd_outstanding_renewal_amt']);
 
         // ......................Paid Renewal (Recurring) current mmonth......................
-        // $current_month_paid_renewal = Renewal::where([
-        //     ['status', 'Paid'],
-        //     ['main_acct_id', $userId],
-        //     ['userType', 'Primary_user'],
-        // ])->whereMonth('created_at', $curr_momth)->get();
+        $current_month_paid_renewal = Renewal::where([
+            ['status', 'Paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Primary_user'],
+        ])->whereMonth('created_at', $curr_momth)->get();
 
 
-        //  $data['current_month_paid_renewal_amt'] = $current_month_paid_renewal->sum('billingBalance');
+         $data['current_month_paid_renewal_amt'] = $current_month_paid_renewal->sum('billingBalance');
 
-        //   $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
+          $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
        
+         // ......................paid Renewal (Recurring) current mmonth......................
+        $currentMonthpartially_paid_renewal = Renewal::where([
+            ['status', 'Partly paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Primary_user'],
+        ])->whereMonth('created_at', $curr_momth)->get();
+
+         $current_month_completely_paid_renewal = Renewal::where([
+            ['status', 'Paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Primary_user'],
+        ])->whereMonth('created_at', $curr_momth)->get();
+      
+
+     $data['current_month_partially_paid_renewal_amt'] = $currentMonthpartially_paid_renewal->sum('billingAmount') - $currentMonthpartially_paid_renewal->sum('billingBalance');
+
+     $data['current_month_completely_paid_renewal_amt'] = $current_month_completely_paid_renewal->sum('billingAmount'); 
+
+     $data['paid_recurring_amount_for_current_month'] = $data['current_month_partially_paid_renewal_amt'] + $data['current_month_completely_paid_renewal_amt'];
+
+    $data['paid_recurring_count_for_current_month'] = count($current_month_completely_paid_renewal) + count($currentMonthpartially_paid_renewal);
+
+     // ......................paid Renewal (Recurring) Year to Date ......................
+        $yearToDatepartially_paid_renewal = Renewal::where([
+            ['status', 'Partly paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Primary_user'],
+        ])->whereYear('created_at', $curr_year)->get();
+
+         $year_to_date_completely_paid_renewal = Renewal::where([
+            ['status', 'Paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Primary_user'],
+        ])->whereYear('created_at', $curr_year)->get();
+      
+
+     $data['yeartodate_partially_paid_renewal_amt'] = $yearToDatepartially_paid_renewal->sum('billingAmount') - $yearToDatepartially_paid_renewal->sum('billingBalance');
+
+     $data['year_to_date_completely_paid_renewal_amt'] = $year_to_date_completely_paid_renewal->sum('billingAmount'); 
+
+     $data['paid_recurring_amount_for_year_to_date'] = $data['yeartodate_partially_paid_renewal_amt'] + $data['year_to_date_completely_paid_renewal_amt'];
+
+    $data['paid_recurring_count_for_year_to_date'] = count($year_to_date_completely_paid_renewal) + count($yearToDatepartially_paid_renewal);
 
 
      return view('dashboard', $data);
@@ -486,6 +529,49 @@ $parent_user_current_month_opportunities = Opportunity::where([
          $data['ytd_outstanding_renewal_amt'] = $ytd_partly_paid_renewal->sum('billingBalance') + $ytd_pending_renewal->sum('billingAmount');
 
           $data['ytd__outstanding_renewal_count'] = count($ytd_partly_paid_renewal->merge($ytd_pending_renewal));
+  // ......................paid Renewal (Recurring) current mmonth......................
+        $currentMonthpartially_paid_renewal = Renewal::where([
+            ['status', 'Partly paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Sub_user'],
+        ])->whereMonth('created_at', $curr_momth)->get();
+
+         $current_month_completely_paid_renewal = Renewal::where([
+            ['status', 'Paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Sub_user'],
+        ])->whereMonth('created_at', $curr_momth)->get();
+      
+
+     $data['current_month_partially_paid_renewal_amt'] = $currentMonthpartially_paid_renewal->sum('billingAmount') - $currentMonthpartially_paid_renewal->sum('billingBalance');
+
+     $data['current_month_completely_paid_renewal_amt'] = $current_month_completely_paid_renewal->sum('billingAmount'); 
+
+     $data['paid_recurring_amount_for_current_month'] = $data['current_month_partially_paid_renewal_amt'] + $data['current_month_completely_paid_renewal_amt'];
+
+    $data['paid_recurring_count_for_current_month'] = count($current_month_completely_paid_renewal) + count($currentMonthpartially_paid_renewal);
+
+      // ......................paid Renewal (Recurring) Year to Date ......................
+        $yearToDatepartially_paid_renewal = Renewal::where([
+            ['status', 'Partly paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Sub_user'],
+        ])->whereYear('created_at', $curr_year)->get();
+
+         $year_to_date_completely_paid_renewal = Renewal::where([
+            ['status', 'Paid'],
+            ['main_acct_id', $userId],
+            ['userType', 'Sub_user'],
+        ])->whereYear('created_at', $curr_year)->get();
+      
+
+     $data['yeartodate_partially_paid_renewal_amt'] = $yearToDatepartially_paid_renewal->sum('billingAmount') - $yearToDatepartially_paid_renewal->sum('billingBalance');
+
+     $data['year_to_date_completely_paid_renewal_amt'] = $year_to_date_completely_paid_renewal->sum('billingAmount'); 
+
+     $data['paid_recurring_amount_for_year_to_date'] = $data['yeartodate_partially_paid_renewal_amt'] + $data['year_to_date_completely_paid_renewal_amt'];
+
+    $data['paid_recurring_count_for_year_to_date'] = count($year_to_date_completely_paid_renewal) + count($yearToDatepartially_paid_renewal);
 
         return view('dashboard', $data);
 
