@@ -54,7 +54,7 @@ class HomeController extends Controller
 
             $get_main_user_from_subuser = SubUser::where('email',authUser()->email)->first();
 
-             $usersThatreportsToParentUser = $get_main_user_from_subuser->users_that_report_tome->pluck('id')->toArray();
+             $usersThatreportsToParentUser = $get_main_user_from_subuser == '' ? [] : $get_main_user_from_subuser->users_that_report_tome->pluck('id')->toArray();
 
              $arrayLenght = count($usersThatreportsToParentUser);
              $i = 0;

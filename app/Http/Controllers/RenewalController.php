@@ -144,9 +144,7 @@ class RenewalController extends Controller
     {
         $userId = auth()->user()->id;
         $renewalPayments='';
-        $renewal = Renewal::where('id',$id)
-        ->where('main_acct_id', $userId)
-        ->whereNull('deleted_at')->first();
+        $renewal = Renewal::where('id',$id)->whereNull('deleted_at')->first();
        
         if($renewal){
          $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();

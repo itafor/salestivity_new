@@ -15,6 +15,15 @@ class Invoice extends Model
         return $this->belongsTo('App\Customer', 'customer');
     }
 
+     public function prod()
+    {
+        return $this->belongsTo('App\Product', 'product','id');
+    }
+
+     public function invoicePayment(){
+        return $this->hasMany(InvoicePayment::class,'invoice_id','id');
+    }
+
     public function getCustomerName($id)
     {
         $invoice = Invoice::where('customer', $id)->get()->first();

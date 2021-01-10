@@ -134,6 +134,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::post('billing/invoice/{id}', ['as' => 'billing.invoice.update', 'uses' => 'InvoiceController@update']);
 	Route::get('billing/invoice/{id}', ['as' => 'billing.invoice.destroy', 'uses' => 'InvoiceController@destroy']);
 
+	Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
+
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
 	Route::get('billing/renewal/new', ['as' => 'billing.renewal.create', 'uses' => 'RenewalController@create']);

@@ -113,11 +113,11 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         $customers = Customer::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
-
-        $payments = Payment::where('customer_id', $invoice->customer)->where('status', '!=', 'Renewal')->get();
+// dd($invoice->invoicePayment);
+        // $payments = Payment::where('customer_id', $invoice->customer)->where('status', '!=', 'Renewal')->get();
         
         
-        return view('billing.invoice.show', compact('invoice', 'customers', 'products', 'payments'));
+        return view('billing.invoice.show', compact('invoice'));
         // dd($payment_type->invoicesMorph);
 
         // $arr1 = [];
