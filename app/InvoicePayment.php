@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -69,4 +70,14 @@ class InvoicePayment extends Model
       			$getInvoice->save();
       		}	
        }
+
+
+  public static function deleteInvoicePaymentHistory($invoiceId) {
+    $payments = self::where('invoice_id',$invoiceId)->get();
+    if($payments){
+      foreach ($payments as $key => $val) {
+        $val->delete();
+    }
+  }
+}
 }

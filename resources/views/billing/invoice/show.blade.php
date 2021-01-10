@@ -3,24 +3,6 @@
 @include('users.partials.header', ['title' => __('View Invoice')])  
 
 
-<script>
-        $(document).ready(function(){
-            /*Disable all input type="text" box*/
-            $('#form1 input').prop("disabled", true);
-            $('#pay').prop("disabled", true);
-            $('#form1 button').hide();
-
-            $('#edit').click(function(){
-            $('#form1 input').prop("disabled", false);
-            $('#form1 select').prop("disabled", false);
-            $('#form1 button').show();
-            $('#title').html('Edit Renewal');
-            $('#edit').toggle();
-            })
-            
-        });
-    </script> 
-
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -40,16 +22,16 @@
             </button>
         </a>
         @else
-               <a onclick="invoicePayment({{$invoice->id}})" >
+               <a onclick="invoice_payment({{$invoice->id}})" >
                 <button class="btn btn-sm btn-primary" >
-            {{ __('Payment') }}
+            {{ __('Record Payment') }}
             </button>
         </a>
 
         @endif
 
              @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
-            <a onclick="deletePaidinvoiceAlert()">
+            <a onclick="editPaidinvoiceAlert()">
             <button class="btn btn-sm btn-primary" >
             {{ __('Edit') }}
             </button>
@@ -62,9 +44,15 @@
             </a>
             @endif
 
-
-             <a onclick="deleteData('billing','invoice',{{$invoice->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-
+              @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
+               <a onclick="deletePaidinvoiceAlert()">
+            <button class="btn btn-sm btn-danger" >
+            {{ __('Delete') }}
+            </button>
+            </a>
+                @else
+             <a onclick="return confirm_delete()" href="{{route('items.destroy',['invoice',$invoice->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+              @endif
             </div>
             @endif
                         </div>
@@ -95,7 +83,7 @@
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
-                     <td>&#8358;{{ number_format($invoice->productPrice,2) }}
+                     <td>&#8358;{{ number_format($invoice->cost,2) }}
                      </td>
                    </tr>
 
@@ -116,11 +104,7 @@
                      <td>&#8358;{{ number_format($invoice->billingBalance,2) }}
                      </td>
                    </tr>
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Discription') }}</b></td>
-                     <td>{{ $invoice->description }}
-                     </td>
-                   </tr>
+                   
 
                     @if($invoice->status == 'Paid')
                     <tr>

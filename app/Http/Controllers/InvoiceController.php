@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Invoice;
-use App\Customer;
-use App\Product;
 use App\Category;
-use App\SubCategory;
+use App\Customer;
+use App\Invoice;
+use App\InvoicePayment;
+use App\Mail\InvoicePaid;
 use App\Payment;
+use App\Product;
+use App\SubCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class InvoiceController extends Controller
 {
@@ -87,6 +90,7 @@ class InvoiceController extends Controller
             $invoice->discount = $request->discount;
             $invoice->status = $request->status;
             $invoice->billingAmount = $request->billingAmount;
+            $invoice->billingBalance = $request->billingAmount;
             $invoice->save();
 
             $status = "New Invoice has been Added ";
@@ -118,26 +122,49 @@ class InvoiceController extends Controller
         
         
         return view('billing.invoice.show', compact('invoice'));
-        // dd($payment_type->invoicesMorph);
-
-        // $arr1 = [];
-        // foreach($payment_type->invoicesMorph as $invoice){
-        //     $arr1[] = $invoice->customers->name;
-        // };
-        // dd($arr1);
-
-        // $arr = [];
-        // $lost = [];
-        // foreach($payments as $payment){
-        //     $list[] = $payment->product;
-        //     foreach($payment->product as $product) {
-        //         // dd($payment->product);
-        //     $arr[] = $product->name;
-        // };
-    // };
-    // dd($list);
-        // dd($arr);
+      
     }
+
+      public function pay(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'productPrice' => 'required|numeric',
+            'billingAmount' => 'required|numeric',
+            'amount_paid' => 'required|numeric',
+            'billingbalance' => 'required',
+            'customer_id' => 'required|numeric',
+            'product_id' => 'required|numeric',
+            'invoice_id' => 'required|numeric',
+            'payment_date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in a required fields');
+            return back()->withInput();
+        }
+
+        DB::beginTransaction();
+        try{
+         $paid_invoice =  InvoicePayment::createNew($request->all());
+             $toEmail = $paid_invoice->customer->email;
+
+            Mail::to($toEmail)->send(new InvoicePaid($paid_invoice));
+      
+            DB::commit();
+        }
+        catch(Exception $e){
+            DB::rollback();
+            
+            Alert::error('Invoice Payment', 'An attempt to record invoice payment failed');
+         return back()->withInput();
+            
+        }
+        
+        Alert::success('invoice Payment', 'Invoice payment recorded successfully');
+        return redirect()->route('billing.invoice.show',$request->invoice_id);
+    }
+
 
      /**
      * Display the specified resource.
@@ -241,66 +268,60 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function pay(Request $request)
-    {
-        $userId = \getActiveGuardType()->main_acct_id;
-        $guard_object = \getActiveGuardType();
-        $input = $request->all();
-        $rules = [
+    // public function pay(Request $request)
+    // {
+    //     $userId = \getActiveGuardType()->main_acct_id;
+    //     $guard_object = \getActiveGuardType();
+    //     $input = $request->all();
+    //     $rules = [
             
-            'cost' => 'required',
-            'category_id' => 'required',
-            'product' => 'required',
-            'amount' => 'required'
-        ];
-        $message = [
-            'cost.required' => 'Please input cost',
-            'category_id.required' => 'Category is required',
-            'product.required' => 'Please choose a Product',
-            'amount.required' => 'Please input an amount',
+    //         'cost' => 'required',
+    //         'category_id' => 'required',
+    //         'product' => 'required',
+    //         'amount' => 'required'
+    //     ];
+    //     $message = [
+    //         'cost.required' => 'Please input cost',
+    //         'category_id.required' => 'Category is required',
+    //         'product.required' => 'Please choose a Product',
+    //         'amount.required' => 'Please input an amount',
             
-        ];
-        $validator = Validator::make($input, $rules, $message);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
+    //     ];
+    //     $validator = Validator::make($input, $rules, $message);
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator);
+    //     }
+    
+
+    //     $payment = new Payment;
         
-        // $this->validate($request, [
-        //     'cost' => 'required',
-        //     'category_id' => 'required',
-        //     'product' => 'required',
-        //     'amount' => 'required'
-        // ]);
+    //     $payment->created_by = $guard_object->created_by;
+    //     $payment->user_type = $guard_object->user_type;
+    //     $payment->main_acct_id = $userId;
+    //     $payment->customer_id = $request->customer_id;
+    //     $invoice_id = $request->invoice_id;
+    //     $payment->cost = $request->cost;
+    //     $payment->category_id = $request->category_id;
+    //     $payment->sub_category_id = $request->sub_category_id;
+    //     $payment->amount = $request->amount;
+    //     $payment->discount = $request->discount;
+    //     $payment->status = $request->status;
 
-        $payment = new Payment;
-        
-        $payment->created_by = $guard_object->created_by;
-        $payment->user_type = $guard_object->user_type;
-        $payment->main_acct_id = $userId;
-        $payment->customer_id = $request->customer_id;
-        $invoice_id = $request->invoice_id;
-        $payment->cost = $request->cost;
-        $payment->category_id = $request->category_id;
-        $payment->sub_category_id = $request->sub_category_id;
-        $payment->amount = $request->amount;
-        $payment->discount = $request->discount;
-        $payment->status = $request->status;
+    //     $calcDiscount = ($payment->discount/100) * $request->cost;
+    //     $discountCost = $request->cost - $calcDiscount;
+    //     $payment->outstanding = ($request->amount) - ($discountCost);
 
-        $calcDiscount = ($payment->discount/100) * $request->cost;
-        $discountCost = $request->cost - $calcDiscount;
-        $payment->outstanding = ($request->amount) - ($discountCost);
+    //     $payment->save();
 
-        $payment->save();
-
-        $product = $request->product;
+    //     $product = $request->product;
         
         
-        $payment->invoicesMorph()->sync($invoice_id);
-        $payment->product()->sync($product);
+    //     $payment->invoicesMorph()->sync($invoice_id);
+    //     $payment->product()->sync($product);
 
-        $status = "Payment has been Registerd ";
-        Alert::success('Payment', $status);
+    //     $status = "Payment has been Registerd ";
+    //     Alert::success('Payment', $status);
 
-        return redirect()->route('billing.invoice.index');
-    }
+    //     return redirect()->route('billing.invoice.index');
+    // }
 }

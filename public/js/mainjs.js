@@ -267,6 +267,11 @@ function completelypayAlert(){
 
 //display payment completed status, when a payment button is clicked
 function deletePaidRenewalAlert(){
+  swal("You can't delete the selected renewal because some payments has been recorded!")
+}
+
+//display payment completed status, when a payment button is clicked
+function editPaidRenewalAlert(){
   swal("You can't edit the selected renewal because some payments has been recorded!")
 }
 
@@ -593,3 +598,38 @@ if(price <=0 || quantity <=0){
      $(this).val('');
 }
  });
+
+//invoice payment: display invoice payment details on a modal
+function invoice_payment (id) {
+    //$('#modal-form form')[0].reset();
+    $('#invoice-payment-modal-form').modal("show");
+
+    $.ajax({
+        url: baseUrl+'/fetch-invoice-details/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.invoice)
+           $('.modal-title').text('invoice Payment')
+           $('#customer_id').val(data.invoice.customer)
+           $('#product_id').val(data.invoice.product)
+           // $('#main_acct_id').val(data.invoice.main_acct_id)
+           $('#productPrice').val(data.invoice.cost)
+           $('#billingAmount').val(data.invoice.billingBalance)
+           $('#discount').val(data.invoice.discount)
+           $('#invoice_id').val(data.invoice.id)
+                    }
+                });
+}
+
+function editPaidinvoiceAlert(){
+  swal("You can't edit the selected invoice because some payments has been recorded!")
+}
+
+function deletePaidinvoiceAlert(){
+  swal("You can't delete the selected invoice because some payments has been recorded!")
+}
+
+function confirm_delete() {
+  return confirm('Are you sure?');
+}

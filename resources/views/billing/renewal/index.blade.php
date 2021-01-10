@@ -57,7 +57,7 @@
                                                         <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
 
                                                         @endif
-                                                        <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                                                      
                                                     </div>
                                                 </td>
                                             </tr>

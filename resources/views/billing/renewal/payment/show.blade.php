@@ -6,7 +6,7 @@
     <table class="table align-items-center table-flush">
         <thead>
             <tr>
-                <th scope="col">{{ __('Products') }}</th>
+                <th scope="col">{{ __('Product') }}</th>
                 <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Discount') }}</th>
                 <th scope="col">{{ __('Billing AMT') }}</th>

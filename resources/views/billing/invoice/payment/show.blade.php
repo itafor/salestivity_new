@@ -6,7 +6,7 @@
     <table class="table align-items-center table-flush">
         <thead>
             <tr>
-                <th scope="col">{{ __('Products') }}</th>
+                <th scope="col">{{ __('Product') }}</th>
                 <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Billing AMT') }}</th>
                 <th scope="col">{{ __('Amount Paid') }}</th>
@@ -32,7 +32,7 @@
             <tr>
                 <td colspan="8">
                 <h5>No payment record found</h5> 
-            <a onclick="renewalPayment({{$invoice->id}})" >
+            <a onclick="invoice_payment({{$invoice->id}})" >
                 <button class="btn btn-sm btn-primary" >
             {{ __('Make Payment') }}
             </button>
