@@ -1,5 +1,5 @@
 <div class="col-8">
-	<h2 class="mb-0">{{ __('Payments') }}</h2>
+	<h2 class="mb-0">{{ __('Payments History') }}</h2>
 </div>
 					
 <div class="table-responsive">

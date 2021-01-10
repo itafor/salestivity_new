@@ -13,8 +13,8 @@ class RenewalPayment extends Model
 
       protected $fillable = [
         'productPrice','billingAmount', 'amount_paid','billingbalance','discount',
-        'payment_date','customer_id','product_id','main_acct_id','renewal_id',
-        'status'
+        'payment_date','customer_id','product_id','main_acct_id','renewal_id','created_by_id',
+        'status','user_type'
     ];
 
     public function user(){
@@ -36,7 +36,9 @@ class RenewalPayment extends Model
      public static function createNew($data){
 
     	$renewalPayment = self::create([
-		'main_acct_id' =>  auth()->user()->id,
+		'main_acct_id' => getActiveGuardType()->main_acct_id,
+    'created_by_id' =>  getActiveGuardType()->created_by,
+    'user_type' => getActiveGuardType()->user_type,
 		'productPrice' => $data['productPrice'],
 		'discount' => $data['discount'],
 		'billingAmount' => $data['billingAmount'],
@@ -58,9 +60,7 @@ class RenewalPayment extends Model
     }
 
   public static function updatePaymentStatus($renewalPayment){
-       		$getPayment = self::where('id', $renewalPayment->id)
-       						->where('customer_id',$renewalPayment->customer_id)
-       						->where('main_acct_id',auth()->user()->id)->first();
+       		$getPayment = self::where('id', $renewalPayment->id)->first();
 	if($getPayment){
 		$getPayment->status = $renewalPayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
 		$getPayment->save();
@@ -68,10 +68,10 @@ class RenewalPayment extends Model
  }
 
   public static function updateRenewalBillingBalance($data, $renewalPayment){
-       		$getRenewal = Renewal::where('id', $renewalPayment->renewal_id)
-       						->where('main_acct_id',auth()->user()->id)->first();
+       		$getRenewal = Renewal::where('id', $renewalPayment->renewal_id)->first();
        		if($getRenewal){
             $getRenewal->billingbalance = $renewalPayment->billingbalance;
+             $getRenewal->amount_paid += $renewalPayment->amount_paid;
       			$getRenewal->status = $renewalPayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
       			$getRenewal->save();
       		}	

@@ -37,7 +37,7 @@ class RenewalController extends Controller
         $userId = auth()->user()->id;
         $renewals = Renewal::where([
             ['main_acct_id', $userId],
-            ['userType', $guard_object->user_type == 'users' ? 'Primary_user' : 'Sub_user'],
+            ['userType', getActiveGuardType()->user_type],
         ])->orderby('end_date','asc')->get();
         return view('billing.renewal.index', compact('renewals'));
     }
@@ -147,7 +147,7 @@ class RenewalController extends Controller
         $renewal = Renewal::where('id',$id)->whereNull('deleted_at')->first();
        
         if($renewal){
-         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
+         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->get();
         }
          
        

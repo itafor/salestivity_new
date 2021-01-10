@@ -14,7 +14,7 @@ class InvoicePayment extends Model
       protected $fillable = [
         'productPrice','billingAmount', 'amount_paid','billingbalance','discount',
         'payment_date','customer_id','product_id','created_by_id','invoice_id',
-        'status','user_type'
+        'status','user_type','amount_paid'
     ];
 
      public function product(){
@@ -66,6 +66,7 @@ class InvoicePayment extends Model
        		$getInvoice = Invoice::where('id', $invicePayment->invoice_id)->first();
        		if($getInvoice){
             $getInvoice->billingbalance = $invicePayment->billingbalance;
+            $getInvoice->amount_paid += $invicePayment->amount_paid;
       			$getInvoice->status = $invicePayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
       			$getInvoice->save();
       		}	

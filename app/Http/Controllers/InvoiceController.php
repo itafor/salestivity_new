@@ -26,12 +26,12 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $userId = getActiveGuardType()->main_acct_id;
-        $invoices = Invoice::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
-        // dd($invoices->customer()->customer);
+        $invoices = Invoice::where([
+            ['created_by', getActiveGuardType()->created_by],
+            ['user_type', getActiveGuardType()->user_type]
+        ])->orderBy('created_at', 'DESC')->get();
 
-        return view('billing.invoice.index', compact('invoices', 'customers'));
+        return view('billing.invoice.index', compact('invoices'));
     }
 
     /**

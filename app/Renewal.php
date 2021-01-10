@@ -15,7 +15,7 @@ class Renewal extends Model
         'product','start_date',
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
-        'description','status','userType'
+        'description','status','userType','created_by_id','amount_paid'
     	];
 
     public function customers()
@@ -51,14 +51,15 @@ class Renewal extends Model
         $finalPrice = $data['productPrice'] - $discountedPrice;
 
     	$renewal = self::create([
-    	'main_acct_id' => auth()->user()->id,
+    	'main_acct_id' => getActiveGuardType()->main_acct_id,
+        'created_by_id' =>  getActiveGuardType()->created_by,
         'customer_id' => $data['customer_id'],
         'product' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
         'billingAmount' =>  $finalPrice,  //$data['billingAmount'],
         'billingBalance' => $finalPrice,  //$data['billingAmount'],
-        'userType' => $guard_object->user_type == 'users' ? 'Primary_user' : 'Sub_user',
+        'userType' => getActiveGuardType()->user_type,
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
@@ -73,7 +74,7 @@ class Renewal extends Model
     public static function updateRenewal($data)
     {
         self::where('id', $data['renewal_id'])->update([
-        'main_acct_id' => auth()->user()->id,
+        'main_acct_id' => getActiveGuardType()->main_acct_id,
         'customer_id' => $data['customer_id'],
         'product' => $data['product'],
         'productPrice' => $data['productPrice'],
