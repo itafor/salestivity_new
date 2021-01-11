@@ -26,6 +26,10 @@ class Opportunity extends Model
         return $this->belongsTo('App\SubUser', 'owner_id','id');
     }
 
+    public function opp_product(){
+        return $this->hasMany(OpportunityProduct::class,'opportunity_id','id');
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Product', 'opportunity_product', 'opportunity_id', 'product_id')

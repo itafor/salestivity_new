@@ -136,7 +136,7 @@ class UserController extends Controller
             
             'name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:sub_users',
         ];
         $message = [
             'name.required' => 'Please input Your First name',

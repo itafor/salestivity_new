@@ -3,24 +3,6 @@
 @include('users.partials.header', ['title' => __('View Recurring')])  
 
 
-<script>
-        $(document).ready(function(){
-            /*Disable all input type="text" box*/
-            $('#form1 input').prop("disabled", true);
-            $('#pay').prop("disabled", true);
-            $('#form1 button').hide();
-
-            $('#edit').click(function(){
-            $('#form1 input').prop("disabled", false);
-            $('#form1 select').prop("disabled", false);
-            $('#form1 button').show();
-            $('#title').html('Edit Renewal');
-            $('#edit').toggle();
-            })
-            
-        });
-	</script> 
-
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -49,7 +31,7 @@
         @endif
 
              @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
-            <a onclick="deletePaidRenewalAlert()">
+            <a onclick="editPaidRenewalAlert()">
             <button class="btn btn-sm btn-primary" >
             {{ __('Edit') }}
             </button>
@@ -62,9 +44,16 @@
             </a>
             @endif
 
+             @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
+            <a onclick="deletePaidRenewalAlert()">
+            <button class="btn btn-sm btn-danger" >
+            {{ __('Delete') }}
+            </button>
+            </a>
 
-             <a onclick="deleteData('billing','renewal',{{$renewal->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-
+              @else
+             <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewal',$renewal->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+              @endif
             </div>
             @endif
                         </div>
@@ -109,6 +98,11 @@
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
                      <td>&#8358;{{ number_format($renewal->billingAmount,2) }}
+                     </td>
+                   </tr>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Amount Paid') }}</b></td>
+                     <td>&#8358;{{ number_format($renewal->amount_paid,2) }}
                      </td>
                    </tr>
                     <tr>

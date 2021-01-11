@@ -6,9 +6,12 @@ use App\City;
 use App\Contact;
 use App\Customer;
 use App\Department;
+use App\Invoice;
+use App\InvoicePayment;
 use App\Opportunity;
 use App\Product;
 use App\Renewal;
+use App\RenewalPayment;
 use App\State;
 use App\Unit;
 use Carbon\Carbon;
@@ -16,6 +19,23 @@ use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
+
+ public function destroyItems($itemModel, $id)
+    {
+        if($itemModel == 'renewal'){
+        $renewal = Renewal::find($id);
+         RenewalPayment::deletePaymentHistory($renewal->id);
+         $renewal->delete();
+    return redirect()->route('billing.renewal.index')->with('success','Renewal deleted!!');
+    }elseif ($itemModel == 'invoice') {
+         $invoice = Invoice::find($id);
+        // dd($invoice);
+         InvoicePayment::deleteInvoicePaymentHistory($invoice->id);
+         $invoice->delete();
+    return redirect()->route('billing.invoice.index')->with('success','Invoice deleted!!');
+    }
+}
+
     public function getContacts($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
@@ -52,7 +72,7 @@ class AjaxController extends Controller
      public function fetchSelectedProductPrice($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $products = Product::where('id', $id)->where('main_acct_id', $userId)->first();
+        $products = Product::where('id', $id)->first();
 
         return response()->json([
             'products' => $products,
@@ -64,8 +84,14 @@ class AjaxController extends Controller
      public function fetchRenewalDetails($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $renewal = Renewal::where('id', $id)->where('main_acct_id', $userId)->first();
+        $renewal = Renewal::where('id', $id)->first();
         return response()->json(['renewal' => $renewal]);
+    }
+
+     public function fetchInvoiceDetails($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+        return response()->json(['invoice' => $invoice]);
     }
     
     public function validateSelectedPaymentDate($selected_date){

@@ -1,28 +1,18 @@
-@extends('layouts.app', ['title' => __('Add Product')])
-@section('content')
-@include('users.partials.header', ['title' => __('Product')])  
 
-<div class="container-fluid mt--7 main-container">
-        <div class="row">
-            <div class="col-xl-12 order-xl-1">
-                <div class="card shadow">
-                    <div class="card-header bg-white">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{ __('Add New Product') }}</h3>
-                            </div>
-                            <div class="col-4 text-right">
-                                <a href="{{ route('product.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" action="{{ route('product.store') }}" autocomplete="off">
+<!-- Modal -->
+<div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{{ route('product.store') }}" autocomplete="off">
                             @csrf
                             
                             <div class="pl-lg-4 pr-lg-4">
                                 <div class="row">
-                                
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
@@ -62,7 +52,7 @@
                                         <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="name">{{ __('Product Name *') }}</label>
-                                            <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Name') }}" value="{{ old('name') }}" required autofocus>
+                                            <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Name') }}" value="{{ old('name') }}" required >
 
                                             @if ($errors->has('name'))
                                                 <span class="invalid-feedback" role="alert">
@@ -74,7 +64,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('standard_price') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="standard_price">{{ __('Standard Price') }}</label>
-                                            <input type="number" name="standard_price" id="standard_price" class="form-control form-control-alternative{{ $errors->has('standard_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Standard Price') }}" value="{{ old('standard_price') }}" required autofocus>
+                                            <input type="number" name="standard_price" id="standard_price" class="form-control form-control-alternative{{ $errors->has('standard_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Standard Price') }}" value="{{ old('standard_price') }}" required >
 
                                             @if ($errors->has('standard_price'))
                                                 <span class="invalid-feedback" role="alert">
@@ -108,12 +98,11 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        @include('layouts.footers.auth')
+      </div>
+     <!--  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
     </div>
-
-@endsection
+  </div>
+</div>

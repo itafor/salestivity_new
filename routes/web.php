@@ -118,6 +118,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('product/subcategory/{id}/destroy', ['as' => 'product.subcategory.destroy', 'uses' => 'SubCategoryController@destroy']);
 
     Route::get('/get-product-subcategory/{id}', 'SubCategoryController@getProdSubCategory');
+    Route::get('/get-product-by-subcategoryid/{id}', 'SubCategoryController@getProdBySubCategoryId');
 
 	
 	Route::get('contact/{id}/show', ['as' => 'customer.contact.show', 'uses' => 'ContactController@show']);
@@ -131,8 +132,11 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('billing/invoice/{id}/show', ['as' => 'billing.invoice.show', 'uses' => 'InvoiceController@show']);
 	Route::get('billing/invoice/{id}/manage', ['as' => 'billing.invoice.manage', 'uses' => 'InvoiceController@manage']);
 	Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
-	Route::post('billing/invoice/{id}', ['as' => 'billing.invoice.update', 'uses' => 'InvoiceController@update']);
+	Route::post('billing/invoice/update', ['as' => 'billing.invoice.update', 'uses' => 'InvoiceController@update']);
+	Route::get('billing/invoice/{id}/edit', ['as' => 'billing.invoice.edit', 'uses' => 'InvoiceController@edit']);
 	Route::get('billing/invoice/{id}', ['as' => 'billing.invoice.destroy', 'uses' => 'InvoiceController@destroy']);
+
+	Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
 
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
@@ -143,7 +147,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::post('billing/renewal/pay', ['as' => 'billing.renewal.pay', 'uses' => 'RenewalController@pay']);
 	Route::get('billing/renewal/{id}/show', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
 	Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
-	Route::get('billing/renewal/{id}', ['as' => 'billing.renewal.destroy', 'uses' => 'RenewalController@destroy']);
+	Route::get('item/{item_model}/{id}', ['as' => 'items.destroy', 'uses' => 'AjaxController@destroyItems']);
 
 	// Billing Agent
 	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');
@@ -197,6 +201,7 @@ Route::get('lower-level-users-opportunities/{id}/{userId}', ['as' => 'lower.leve
 	Route::get('/increase-start-date-by-oneyear/{selected_date}', 'AjaxController@increaseStartDatebyOneYear');
 	Route::get('fetch-product-price/{id}', 'AjaxController@fetchSelectedProductPrice');
 	Route::get('fetch-renewal-details/{id}', 'AjaxController@fetchRenewalDetails');
+	Route::get('fetch-invoice-details/{id}', 'AjaxController@fetchInvoiceDetails');
 	Route::get('get-contact-emails/{id}', 'AjaxController@getContactEmails');
 	Route::get('get-company-email/{id}', 'AjaxController@getCompanyEmail');
 
