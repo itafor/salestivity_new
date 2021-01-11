@@ -118,6 +118,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('product/subcategory/{id}/destroy', ['as' => 'product.subcategory.destroy', 'uses' => 'SubCategoryController@destroy']);
 
     Route::get('/get-product-subcategory/{id}', 'SubCategoryController@getProdSubCategory');
+    Route::get('/get-product-by-subcategoryid/{id}', 'SubCategoryController@getProdBySubCategoryId');
 
 	
 	Route::get('contact/{id}/show', ['as' => 'customer.contact.show', 'uses' => 'ContactController@show']);

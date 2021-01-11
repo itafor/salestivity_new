@@ -551,6 +551,27 @@ $('#container').on('click', '.remove_project_file', function(e) {
     }
 });
 
+    $('#sub_category_id').change(function(){
+    var sub_category_id = $(this).val();
+    if(sub_category_id){
+        $('#product_id').empty();
+        $('<option>').val('').text('Loading...').appendTo('#product_id');
+        $.ajax({
+            url: baseUrl+'/get-product-by-subcategoryid/'+sub_category_id,
+            type: "GET",
+            dataType: 'json',
+            success: function(data) {
+              console.log(data.products);
+                $('#product_id').empty();
+                $('<option>').val('').text('Select Product').appendTo('#product_id');
+                $.each(data.products, function(k, v) {
+                    $('<option>').val(v.id).text(v.name).appendTo('#product_id');
+                });
+            }
+        });
+    }
+});
+
 
 // Calculate percentage achieved
 let unit_price = 0;

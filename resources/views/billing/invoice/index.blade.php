@@ -55,7 +55,7 @@
                                                 <tr>
                                                 
                                                     <td>{{ $invoice->customers->name }}</td>
-                                                    <td>{{ $invoice->getProductName($invoice->product) }}</td>
+                                                    <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
                                                     <td>{{ $invoice->cost }}</td>
                                                     <td>{{ $invoice->timeline }}</td>
                                                     @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)

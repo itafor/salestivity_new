@@ -26,12 +26,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::where([
+        $data['invoices'] = Invoice::where([
             ['created_by', getActiveGuardType()->created_by],
             ['user_type', getActiveGuardType()->user_type]
         ])->orderBy('created_at', 'DESC')->get();
 
-        return view('billing.invoice.index', compact('invoices'));
+
+        return view('billing.invoice.index', $data);
     }
 
     /**
@@ -42,9 +43,15 @@ class InvoiceController extends Controller
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
-        return view('billing.invoice.create', compact('customers', 'products'));
+        $data['customers'] = Customer::where('main_acct_id', $userId)->get();
+        $data['products'] = Product::where('main_acct_id', $userId)->get();
+       
+        $data['categories'] = Category::where([
+            ['created_by', getActiveGuardType()->created_by],
+            ['user_type', getActiveGuardType()->user_type],
+        ])->get();
+
+        return view('billing.invoice.create', $data);
     }
 
     /**
@@ -57,19 +64,23 @@ class InvoiceController extends Controller
     {
         $guard_object = \getActiveGuardType();
         $input = $request->all();
-            
+            // dd($input);
         $rules = [
             
             'customer' => 'required',
             'product' => 'required',
             'timeline' => 'required',
             'cost' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
         ];
         $message = [
             'customer.required' => 'Customer name is required',
             'product.required' => 'Please choose a Product',
             'timeline.required' => 'Please pick a timeline',
             'cost.required' => 'Please input cost',
+            'category_id.required' => 'Product category is required',
+            'sub_category_id.required' => 'Product subcategory is required',
             
         ];
         $validator = Validator::make($input, $rules, $message);
@@ -77,14 +88,14 @@ class InvoiceController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        try 
-            {
             $invoice = new Invoice;
             $invoice->created_by = $guard_object->created_by;
             $invoice->user_type = $guard_object->user_type;
             $invoice->main_acct_id = $guard_object->main_acct_id;
             $invoice->customer = $request->customer;
-            $invoice->product = $request->product;
+            $invoice->category_id = $request->category_id;
+            $invoice->subcategory_id = $request->sub_category_id;
+            $invoice->product_id = $request->product;
             $invoice->timeline = $request->timeline;
             $invoice->cost = $request->cost;
             $invoice->discount = $request->discount;
@@ -93,15 +104,16 @@ class InvoiceController extends Controller
             $invoice->billingBalance = $request->billingAmount;
             $invoice->save();
 
-            $status = "New Invoice has been Added ";
+            if($invoice){
+                  $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);
-            
 
             return redirect()->route('billing.invoice.index');
-        } catch (\Throwable $th) {
+            }
+
             Alert::error('Invoice', 'This action could not be completed');
             return back()->withInput()->withErrors($validator);
-        }
+        
         
     }
 

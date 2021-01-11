@@ -27,7 +27,54 @@
                             @csrf
                             <input type="hidden" name="status" value="Not Confirmed">
                             <div class="pl-lg-4 pr-lg-4">
+                                  <div class="row">
+                                
+                                    <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
+                                            <select name="category_id" id="category_id" class="form-control border-input" data-toggle="select">
+                                                <option value="">Choose a Category</option>
+                                                    @foreach($categories as $category)
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
+                                            </select>
+                                            @if ($errors->has('category_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('category_id') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                      <div class="col-xl-6">
+                                        <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
+                                            <select name="sub_category_id" id="sub_category_id" class="form-control border-input" data-toggle="select">
+                                                <option value="">Choose a Sub Category</option>
+                                              
+                                            </select>     
+                                            @if ($errors->has('sub_category_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('sub_category_id') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                </div>
                                 <div class="row">
+                             <div class="col-6">
+                                           <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
+                                  <label class="form-control-label" for="product">{{ __('Product') }}</label>
+                                  <!-- <div class="col-sm-6" data-toggle="select"> -->
+                                    <select name="product" id="product_id" class="form-control " data-toggle="select">
+                                        <option value="">Choose a Product</option>
+                                           
+                                    </select>
+                                  <!-- </div> -->
+                                </div>  
+                                </div>
+
                                     <div class="col-6">
                                             <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
@@ -43,19 +90,7 @@
                                 </div>
                                     </div>
 
-                                    <div class="col-6">
-                                           <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
-                                  <label class="form-control-label" for="product">{{ __('Product') }}</label>
-                                  <!-- <div class="col-sm-6" data-toggle="select"> -->
-                                    <select name="product" id="product_id" class="form-control " data-toggle="select">
-                                        <option value="">Choose a Product</option>
-                                            @foreach($products as $key => $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                        @endforeach
-                                    </select>
-                                  <!-- </div> -->
-                                </div>  
-                                    </div>
+                                   
 
                                 </div>
 
