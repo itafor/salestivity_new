@@ -165,10 +165,21 @@
                      <td style="width: 120px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $paid_invoice->customer->name }}</td>
                    </tr>
+                 <tr>
+                     <td style="width: 120px;"><b>{{ __('Category') }}</b></td>
+                     <td>{{ $paid_invoice->invoice->category ? $paid_invoice->invoice->category->name : 'N/A' }}
+                     </td>
+                   </tr>
+
+                     <tr>
+                     <td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
+                     <td>{{ $paid_invoice->invoice->subcategory ? $paid_invoice->invoice->subcategory->name : 'N/A' }}
+                     </td>
+                   </tr>
 
                      <tr>
                      <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
-                     <td>{{ $paid_invoice->product? $paid_invoice->product->name:'N/A' }}
+                     <td>{{ $paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A' }}
                      </td>
                    </tr>
 
@@ -191,27 +202,13 @@
                    </tr>
                     
 
-                    @if($paid_invoice->status == 'Paid')
+                   
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
-                     <td class="text-success">{{ $paid_invoice->status }}
+                     <td class="text-dark">{{ $paid_invoice->invoice ? $paid_invoice->invoice->status : 'N/A' }}
                      </td>
                    </tr>
-                    @elseif($paid_invoice->status == 'Partly paid')
-                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
-                     <td class="text-warning">
-                        {{ $paid_invoice->status }}
-                     </td>
-                   </tr>
-                     @else
-                      <tr>
-                     <td style="width: 120px;"><b>{{ __('Status') }}</b></td>
-                     <td class="text-danger">
-                         {{ $paid_invoice->status }}
-                     </td>
-                   </tr>
-                     @endif
+                    
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>

@@ -633,7 +633,7 @@ function invoice_payment (id) {
            console.log(data.invoice)
            $('.modal-title').text('invoice Payment')
            $('#customer_id').val(data.invoice.customer)
-           $('#product_id').val(data.invoice.product)
+           $('#product_id').val(data.invoice.product_id)
            // $('#main_acct_id').val(data.invoice.main_acct_id)
            $('#productPrice').val(data.invoice.cost)
            $('#billingAmount').val(data.invoice.billingBalance)

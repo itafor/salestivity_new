@@ -43,8 +43,13 @@ class InvoiceController extends Controller
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $data['customers'] = Customer::where('main_acct_id', $userId)->get();
-        $data['products'] = Product::where('main_acct_id', $userId)->get();
+
+        $data['customers'] = Customer::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+
+      $data['products'] = Product::where('main_acct_id', $userId)->get();
        
         $data['categories'] = Category::where([
             ['created_by', getActiveGuardType()->created_by],
@@ -139,7 +144,7 @@ class InvoiceController extends Controller
 
       public function pay(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'productPrice' => 'required|numeric',
             'billingAmount' => 'required|numeric',
@@ -203,7 +208,19 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['invoice'] = Invoice::find($id);
+
+          $data['categories'] = Category::where([
+            ['created_by', getActiveGuardType()->created_by],
+            ['user_type', getActiveGuardType()->user_type],
+        ])->get();
+
+      $data['customers'] = Customer::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+
+        return view('billing.invoice.edit',$data);
     }
 
     /**
@@ -213,48 +230,53 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $input = $request->all();
-        $rules = [
-            
+       // dd($input);
+              $rules = [
+            'invoice_id' => 'required',
             'customer' => 'required',
             'product' => 'required',
             'timeline' => 'required',
             'cost' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
         ];
         $message = [
             'customer.required' => 'Customer name is required',
             'product.required' => 'Please choose a Product',
             'timeline.required' => 'Please pick a timeline',
             'cost.required' => 'Please input cost',
-            
+            'category_id.required' => 'Product category is required',
+            'sub_category_id.required' => 'Product subcategory is required',
+            'invoice_id.required' => 'Invoice ID is required',
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-        try {
-            $invoice = Invoice::find($id);
 
-        
+
+            $invoice = Invoice::find($input['invoice_id']);
             $invoice->customer = $request->input('customer');
-            $invoice->product = $request->input('product');
+            $invoice->category_id = $request->category_id;
+            $invoice->subcategory_id = $request->sub_category_id;
+            $invoice->product_id = $request->input('product');
             $invoice->timeline = $request->input('timeline');
             $invoice->cost = $request->input('cost');
             $invoice->status = $request->input('status');
-            // dd($invoice);
             $invoice->update();
+            if($invoice){
             $status = "Invoice has been been updated ";
             Alert::success('Invoice', $status);
-        
 
             return redirect()->route('billing.invoice.show', $invoice->id);
-            
-        } catch (\Throwable $th) {
+            }
+        
             Alert::error('Invoice', 'The action could not be completed');
             return back()->withInput()->withErrors($validator);
-        }
+        
         
     }
 

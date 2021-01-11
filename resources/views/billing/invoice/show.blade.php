@@ -37,7 +37,7 @@
             </button>
             </a>
             @else
-            <a href="{{ route('billing.renewal.edit', ['id'=>$invoice->id]) }}">
+            <a href="{{ route('billing.invoice.edit', ['id'=>$invoice->id]) }}">
             <button class="btn btn-sm btn-primary">
             {{ __('Edit') }}
             </button>

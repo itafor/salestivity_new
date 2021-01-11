@@ -1,6 +1,6 @@
-@extends('layouts.app', ['title' => __('Add Invoice')])
+@extends('layouts.app', ['title' => __('Edit Invoice')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Invoice')])  
+@include('users.partials.header', ['title' => __('Edit Invoice')])  
 
 <script>
     $(document).ready(function() {
@@ -15,7 +15,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Add New Invoice') }}</h3>
+                                <h3 class="mb-0">{{ __('Update Invoice') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('billing.invoice.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
@@ -23,9 +23,10 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('billing.invoice.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('billing.invoice.update') }}" autocomplete="off">
                             @csrf
                             <input type="hidden" name="status" value="Not Confirmed">
+                            <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
                             <div class="pl-lg-4 pr-lg-4">
                                   <div class="row">
                                 
@@ -35,7 +36,7 @@
                                             <select name="category_id" id="category_id" class="form-control border-input" data-toggle="select">
                                                 <option value="">Choose a Category</option>
                                                     @foreach($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        <option value="{{ $category->id }}" {{$invoice->category_id == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
                                                     @endforeach
                                             </select>
                                             @if ($errors->has('category_id'))
@@ -50,7 +51,7 @@
                                         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
                                             <select name="sub_category_id" id="sub_category_id" class="form-control border-input" data-toggle="select">
-                                                <option value="">Choose a Sub Category</option>
+                                                <option value="{{$invoice->subcategory ? $invoice->subcategory->id : ''}}">{{$invoice->subcategory ? $invoice->subcategory->name : ''}}</option>
                                               
                                             </select>     
                                             @if ($errors->has('sub_category_id'))
@@ -68,7 +69,7 @@
                                   <label class="form-control-label" for="product">{{ __('Product') }}</label>
                                   <!-- <div class="col-sm-6" data-toggle="select"> -->
                                     <select name="product" id="product_id" class="form-control " data-toggle="select">
-                                        <option value="">Choose a Product</option>
+                                        <option value="{{$invoice->prod ? $invoice->prod->id : ''}}">{{$invoice->prod ? $invoice->prod->name : ''}}</option>
                                            
                                     </select>
                                   <!-- </div> -->
@@ -78,12 +79,11 @@
                                     <div class="col-6">
                                             <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
-                                  <!-- <div class="col-sm-6" data-toggle="select"> -->
-                                  <!-- pass in the customer_id to the pivot table ie customer_invoice -->
+                                  
                                     <select name="customer" id="customer" class="form-control" onchange="myFunction(event)">
                                         <option value="">Choose a Customer</option>
                                             @foreach($customers as $key => $customer)
-                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                <option value="{{ $customer->id }}" {{$customer->id == $invoice->customer ? 'selected' : ''}}>{{ $customer->name }}</option>
                                             @endforeach
                                     </select>
                                  
@@ -98,7 +98,7 @@
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
-                                    <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
+                                    <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ $invoice->cost }}" required >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cost') }}</strong>
@@ -110,7 +110,7 @@
                                     <div class="col-6">
                                           <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
-                                    <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" required >
+                                    <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ $invoice->discount }}" required >
                                     @if ($errors->has('discount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('discount') }}</strong>
@@ -124,8 +124,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="discount">{{ __('Billing Amount(in)') }}</label>
-                                    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
+                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }}</label>
+                                    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{ $invoice->billingAmount }}" required readonly="">
                                     @if ($errors->has('billingAmount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('billingAmount') }}</strong>
@@ -138,7 +138,7 @@
                                              
                                 <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
-                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ old('timeline') }}" required>
+                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ $invoice->timeline }}" required>
 
                                     @if ($errors->has('timeline'))
                                         <span class="invalid-feedback" role="alert">
