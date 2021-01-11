@@ -267,6 +267,11 @@ function completelypayAlert(){
 
 //display payment completed status, when a payment button is clicked
 function deletePaidRenewalAlert(){
+  swal("You can't delete the selected renewal because some payments has been recorded!")
+}
+
+//display payment completed status, when a payment button is clicked
+function editPaidRenewalAlert(){
   swal("You can't edit the selected renewal because some payments has been recorded!")
 }
 
@@ -546,6 +551,27 @@ $('#container').on('click', '.remove_project_file', function(e) {
     }
 });
 
+    $('#sub_category_id').change(function(){
+    var sub_category_id = $(this).val();
+    if(sub_category_id){
+        $('#product_id').empty();
+        $('<option>').val('').text('Loading...').appendTo('#product_id');
+        $.ajax({
+            url: baseUrl+'/get-product-by-subcategoryid/'+sub_category_id,
+            type: "GET",
+            dataType: 'json',
+            success: function(data) {
+              console.log(data.products);
+                $('#product_id').empty();
+                $('<option>').val('').text('Select Product').appendTo('#product_id');
+                $.each(data.products, function(k, v) {
+                    $('<option>').val(v.id).text(v.name).appendTo('#product_id');
+                });
+            }
+        });
+    }
+});
+
 
 // Calculate percentage achieved
 let unit_price = 0;
@@ -593,3 +619,59 @@ if(price <=0 || quantity <=0){
      $(this).val('');
 }
  });
+
+//invoice payment: display invoice payment details on a modal
+function invoice_payment (id) {
+    //$('#modal-form form')[0].reset();
+    $('#invoice-payment-modal-form').modal("show");
+
+    $.ajax({
+        url: baseUrl+'/fetch-invoice-details/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.invoice)
+           $('.modal-title').text('invoice Payment')
+           $('#customer_id').val(data.invoice.customer)
+           $('#product_id').val(data.invoice.product_id)
+           // $('#main_acct_id').val(data.invoice.main_acct_id)
+           $('#productPrice').val(data.invoice.cost)
+           $('#billingAmount').val(data.invoice.billingBalance)
+           $('#discount').val(data.invoice.discount)
+           $('#invoice_id').val(data.invoice.id)
+                    }
+                });
+}
+
+function editPaidinvoiceAlert(){
+  swal("You can't edit the selected invoice because some payments has been recorded!")
+}
+
+function deletePaidinvoiceAlert(){
+  swal("You can't delete the selected invoice because some payments has been recorded!")
+}
+
+function confirm_delete() {
+  return confirm('Are you sure?');
+}
+
+$(function() {
+  
+  $(document).on('click', '#checkAll', function() {
+  
+    if ($(this).val() == 'Check All') {
+      $('.button input').prop('checked', true);
+      $(this).val('Uncheck All');
+    } else {
+      $('.button input').prop('checked', false);
+      $(this).val('Check All');
+    }
+  });
+  
+});
+
+function add_product() {
+    //$('#modal-form form')[0].reset();
+    $('#addProduct').modal("show");
+
+  }

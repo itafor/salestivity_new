@@ -21,9 +21,13 @@ class ProductController extends Controller
     public function index()
     {
         // Get the main acct id from the logged in guard
-        $userId = getActiveGuardType()->main_acct_id;
-        $products = Product::orderBy('id', 'DESC')->where('main_acct_id', $userId)->get();
-        return view('product.index', compact('products'));
+       
+        $data['products'] = Product::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+
+        return view('product.index', $data);
     }
 
     /**
@@ -34,11 +38,13 @@ class ProductController extends Controller
     public function create()
     {
 
-        $userId = getActiveGuardType()->main_acct_id;
-        $categories = Category::where('main_acct_id', $userId)->get();
-        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
-        // dd($categories);
-        return view('product.create', compact('categories', 'subCategories'));
+       
+        $data['categories'] = Category::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+        
+        return view('product.create', $data);
     }
 
     /**
@@ -96,7 +102,7 @@ class ProductController extends Controller
         }
         
         Alert::success('Product', 'Product has been successfully added');
-        return redirect()->route('product.index');
+        return back()->with('success','Product added');
 
         // $cat = $request->category_id;
         //$product->category()->sync($cat);
@@ -113,12 +119,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $userId = getActiveGuardType()->main_acct_id;
-        $product = Product::where('id', $id)->where('main_acct_id', $userId)->latest()->first();
-        // dd($product);
-        $categories = Category::all();
-        $subCategories = SubCategory::all();
-        return view('product.show', compact('product', 'categories', 'subCategories'));
+       
+        $data['product'] = Product::find($id);
+      
+        return view('product.show', $data);
     }
 
     /**
@@ -129,12 +133,10 @@ class ProductController extends Controller
      */
     public function editProduct($id)
     {
-        $userId = getActiveGuardType()->main_acct_id;
-        $product = Product::orderBy('id', 'DESC')->where([
-            ['main_acct_id', $userId],
-            ['id', $id],
-        ])->first();
-        return view('product.edit', compact('product'));
+        
+        $data['product'] = Product::find($id);
+
+        return view('product.edit', $data);
     }
 
     /**

@@ -33,10 +33,12 @@ class RenewalController extends Controller
      */
     public function index()
     {
+         $guard_object = getActiveGuardType();
         $userId = auth()->user()->id;
-        $renewals = Renewal::where('main_acct_id', $userId)
-        ->orderby('end_date','asc')
-        ->get();
+        $renewals = Renewal::where([
+            ['main_acct_id', $userId],
+            ['userType', getActiveGuardType()->user_type],
+        ])->orderby('end_date','asc')->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
@@ -47,9 +49,13 @@ class RenewalController extends Controller
      */
     public function create()
     {
+         $guard_object = getActiveGuardType();
+
         $userId = auth()->user()->id;
         $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
+        $products = Product::where([
+            ['main_acct_id', $userId],
+        ])->get();
         return view('billing.renewal.create', compact('customers', 'products'));
     }
 
@@ -138,12 +144,10 @@ class RenewalController extends Controller
     {
         $userId = auth()->user()->id;
         $renewalPayments='';
-        $renewal = Renewal::where('id',$id)
-        ->where('main_acct_id', $userId)
-        ->whereNull('deleted_at')->first();
+        $renewal = Renewal::where('id',$id)->whereNull('deleted_at')->first();
        
         if($renewal){
-         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->where('main_acct_id', $userId)->get();
+         $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->get();
         }
          
        
@@ -219,12 +223,6 @@ class RenewalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $renewal = Renewal::find($id);
-         RenewalPayment::deletePaymentHistory($renewal->id);
-         $renewal->delete();
-    }
 
     /**
      * Display the specified resource.

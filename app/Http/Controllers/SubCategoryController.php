@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Product;
 use App\SubCategory;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
@@ -94,8 +95,20 @@ class SubCategoryController extends Controller
 {
    $prod_sub_categories =  SubCategory::where([
     ['category_id',$id],
-    ['main_acct_id',authUserId()],
+    ['created_by', getActiveGuardType()->created_by],
+    ['user_type', getActiveGuardType()->user_type],
    ])->orderBy('name','DESC')->get();
    return response()->json(['prod_sub_categories'=>$prod_sub_categories]);
 } 
+
+public function getProdBySubCategoryId($id)
+{
+   $products =  Product::where([
+     ['sub_category_id',$id],
+     ['created_by', getActiveGuardType()->created_by],
+     ['user_type', getActiveGuardType()->user_type],
+   ])->orderBy('name','DESC')->get();
+   return response()->json(['products'=>$products]);
+} 
+
 }
