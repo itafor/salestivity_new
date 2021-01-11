@@ -49,7 +49,6 @@ class InvoiceController extends Controller
         ['user_type', getActiveGuardType()->user_type],
       ])->get();
 
-      $data['products'] = Product::where('main_acct_id', $userId)->get();
        
         $data['categories'] = Category::where([
             ['created_by', getActiveGuardType()->created_by],

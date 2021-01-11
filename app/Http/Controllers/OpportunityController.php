@@ -6,6 +6,7 @@ use App\Category;
 use App\Contact;
 use App\Customer;
 use App\Opportunity;
+use App\OpportunityProduct;
 use App\Product;
 use App\SubCategory;
 use App\SubUser;
@@ -112,26 +113,37 @@ class OpportunityController extends Controller
 
     public function create()
     {
-        $userId = getActiveGuardType()->main_acct_id;
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $categories = Category::where('main_acct_id', $userId)->get();
-        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
-        return view('opportunity.create', compact('customers', 'categories', 'subCategories', 'products'));
+         $data['categories'] = Category::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+
+        $data['customers'] = Customer::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+       
+        $data['products'] = Product::where([
+        ['created_by', getActiveGuardType()->created_by],
+        ['user_type', getActiveGuardType()->user_type],
+      ])->get();
+
+        return view('opportunity.create', $data);
     }
 
     public function store(Request $request)
     {
         $guard_object = getActiveGuardType();
         $input = request()->all();
-       
+       //dd($input);
         $rules = [
  
             'opportunity_name' => 'required',
             'account_id' => 'required',
             'status' => 'required',
             'initiation_date' => 'required',
-            'closure_date' => 'required'
+            'closure_date' => 'required',
+            'products' => 'required',
         ];
         $message = [
             'opportunity_name.required' => 'Opportunity name is required',
@@ -139,6 +151,7 @@ class OpportunityController extends Controller
             'status.required' => 'Please select a status',
             'initiation_date.required' => 'Pick an Initiation date',
             'closure.required' => 'Pick a Closure date',
+            'products.required' => 'Please add a product',
             
         ];
         $validator = Validator::make($input, $rules, $message);
@@ -171,20 +184,16 @@ class OpportunityController extends Controller
 
             $opportunity->save();
             if($opportunity){
-            $product = $request->product_id;
-            
 
-            if(isset($request->category_id)) {
-                $opportunity->products()->attach($product, [
-                    'product_category' => implode($request['category_id']),
-                    'product_sub_category' => implode($request->sub_category_id),
-                    'product_name' => implode($product),
-                    'product_qty' => implode($request->quantity),
-                    'product_price' => implode($request->price),
-                    // 'main_acct_id' => implode($userId),
-                    'main_acct_id' => $guard_object->main_acct_id,
-                ]);
+            if(isset($input['products']) && $input['products'] !='') {
+                foreach ($input['products'] as $key => $prodId) {
+                    $opp_product = new OpportunityProduct();
+                    $opp_product->product_id = $prodId;
+                    $opp_product->opportunity_id = $opportunity->id;
+                    $opp_product->save();
+                }
             }
+
             $status = "Opportunity has been saved";
             Alert::success('Opportunity', $status);
             return back();

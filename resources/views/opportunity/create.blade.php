@@ -25,6 +25,9 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if($errors->any())
+                                {!! implode('', $errors->all('<div style="color: red;">:message</div>')) !!}
+                            @endif
                         <form method="post" action="{{ route('opportunity.store') }}" autocomplete="off">
                             @csrf
                             <!-- <h6 class="heading-small text-muted mb-4">{{ __('Opportunity information') }}</h6> -->
@@ -186,16 +189,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                        <div class="col-md-12">
+                             <h4 class="float-left">Products  <input id="checkAll" type="checkbox" value="Check All"></h4>
 
-                                <br><br><br>
-                                <div class="field_wrapper">
-                                    
-                                </div>
+                                    <a onclick="add_product()" >
+                                        <button type="button" class="float-right btn btn-sm btn-primary" >
+                                    <i class="fa fa-plus"></i>
+                                    </button>
+                                </a>
+                        </div>
+                    </div>
+                                 <div class="row">
+                                    <div class="col-xl-12 button">
+                                        @if($products)
+                                @foreach($products as $product)
+                                        <label>
+                            <input type="checkbox" name="products[]" value="{{$product->id}}">
+                                  {{$product->name}} </label>
+                                  
+                            @endforeach
+                            @error('products')
+                                    <small class="error text-danger">{{ $message }}</small>
+                                @enderror
+                                  @else
+                                  <small>No product found</small>
+                                  @endif
 
-                                <div class="ml-auto" style="margin:20px;">
-                                    <!-- <input type="text" name="field_name[]" value="" class="form-control"/> -->
-                                    <a href="javascript:void(0);" class="add_button btn btn-primary" id="addContact"><i class="fa fa-plus-circle"></i> Add Product</a>
-                                        
+                                    </div>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
@@ -206,135 +227,11 @@
                 </div>
             </div>
         </div>
+
+
         
+        @include('product.more_product')
         @include('layouts.footers.auth')
     </div>
-<script>
-    function selectAccountAjax(value) {
-        $.get('/getcontact/' + value, function (data) {
-            // console.log(data.contacts);
-            $('#contact').html("");
-            // $('#contact').append("<option value=''>Select Contact</option>");
-            jQuery.each(data.contacts, function (i, val) {
-                $('#contact').prop("disabled", false);
-                $('#contact').append("<option value='" + val.id + "'>" + val.name + "</option>");
-            });
-        });
-    }
 
-    $('#account').change(function () {
-        selectAccountAjax($(this).val());
-    });
-
-
-
-$(document).ready(function(){
-    $('.js-example-basic-multiple').select2();
-    var maxField = 10; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = 		
-    
-                            '<div>'+
-                            '<h2>Add Product(s)</h2>' +
-								'<div class="row" id="fieldHTML">'+
-									'<div class="col-xl-6">' +
-										'<div class="form-group{{ $errors->has("category") ? " has-danger" : "" }}">' +
-											'<label class="form-control-label" for="input-category">{{ __('Category') }}</label>' +
-											'<select name="category_id[]" id="category" class="form-control form-control-alternative{{ $errors->has('category_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Category') }}" value="{{ old('category_id') }}">' +
-                                                '<option value="">Select Category</option>' +
-                                                '@foreach($categories as $category)'+
-                                                    '<option value="{{$category->id}}">{{ $category->name }}</option>'+
-                                                '@endforeach'+
-                                            '</select>' +
-                                        '</div>' +
-                                        '@if ($errors->has('category_id'))'+
-                                                '<span class="invalid-feedback" role="alert">'+
-                                                    '<strong>{{ $errors->first('category_id') }}</strong>'+
-                                                '</span>' +
-                                        '@endif'+
-									'</div>	' +
-									'<div class="col-xl-6">' +
-										'<div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}"> ' + 
-											'<label class="form-control-label" for="sub_category">{{ __('Sub Category') }}</label>' +
-											'<select name="sub_category_id[]" id="sub_category" class="form-control form-control-alternative{{ $errors->has('sub_category_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sub Category') }}" value="{{ old('sub_category_id') }}">' +
-                                                '<option value="">Select Sub Category</option>' +
-                                                '@foreach($subCategories as $subCategory)'+
-                                                    '<option value="{{$subCategory->id}}">{{ $subCategory->name }}</option>'+
-                                                '@endforeach'+
-                                            '</select>' +
-                                        '</div>' +
-                                        '@if ($errors->has('sub_category_id'))'+
-                                                '<span class="invalid-feedback" role="alert">'+
-                                                    '<strong>{{ $errors->first('sub_category_id') }}</strong>'+
-                                                '</span>' +
-                                        '@endif'+
-										'</div>' +
-                                    
-								'</div>' +
-								'<div class="row">' + 
-									'<div class="col-xl-6">' + 
-										'<div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">' +
-											'<label class="form-control-label" for="product">{{ __('Product') }}</label>' +
-											'<select name="product_id[]" id="product" class="js-example-basic-multiple form-control form-control-alternative{{ $errors->has('product_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Product') }}" value="{{ old('product_id') }}">' +
-                                                '<option value="">Select Product</option>' +
-                                                '@foreach($products as $product)'+
-                                                    '<option value="{{$product->id}}">{{ $product->name }}</option>'+
-                                                '@endforeach'+
-                                            '</select>' +
-												
-											'@if ($errors->has('product_id'))'+
-                                                '<span class="invalid-feedback" role="alert">' +
-                                                    '<strong>{{ $errors->first('product_id') }}</strong>'+
-                                                '</span>'+
-                                            '@endif'+
-										'</div>'+
-									'</div>	' +
-									'<div class="col-xl-6">' +
-										'<div class="form-group{{ $errors->has('Quantity') ? ' has-danger' : '' }}">' +
-											'<label class="form-control-label" for="quantity">{{ __('Quantity') }}</label>'+
-											'<input type="number" name="quantity[]" id="quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" required >'+
-											'@if ($errors->has('quantity'))'+
-                                                '<span class="invalid-feedback" role="alert">'+
-                                                    '<strong>{{ $errors->first('quantity') }}</strong>'+
-                                                '</span>'+
-                                            '@endif'+
-										'</div>'+
-									'</div>'+
-									'<div class="col-xl-6">' +
-										'<div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">' +
-											'<label class="form-control-label" for="price">{{ __('Price') }}</label>'+
-											'<input type="number" name="price[]" id="price" class="form-control form-control-alternative{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ __('Price') }}" required >'+
-											'@if ($errors->has('price'))'+
-                                                '<span class="invalid-feedback" role="alert">'+
-                                                    '<strong>{{ $errors->first('price') }}</strong>'+
-                                                '</span>'+
-                                            '@endif'+
-										'</div>'+
-									'</div>'+
-									'</div>' +
-									'<a href="javascript:void(0);" class="remove_button"><i class="fa fa-times"></i></a>'+ 
-								'</div>'; //New input field html
-    var x = 1; //Initial field counter is 1
-    
-    //Once add button is clicked
-    $(addButton).click(function(){
-        //Check maximum number of input fields
-        if(x < maxField){ 
-            x++; //Increment field counter
-            $(wrapper).append(fieldHTML); //Add field html
-        }
-    });
-    
-    //Once remove button is clicked
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
-    });
-});
-
-
-
-</script>
 @endsection
