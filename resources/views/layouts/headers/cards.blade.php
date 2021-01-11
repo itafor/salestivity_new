@@ -72,7 +72,7 @@
                                 </div> -->
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"> &#8596;<!--  <i class="fas fa-arrow-down"></i> -->  0 %</span>
+                                <span class="text-warning mr-2"> <i class="fas fa-arrow-up"></i>  0 %</span>
                                 <span class="text-nowrap">Since last month </span>
                             </p>
                         </div>
@@ -94,7 +94,7 @@
                                 </div> -->
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 0 won opp. since last month</span>
+                                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 0 open opp. since last month</span>
                                 <span class="text-nowrap"><!-- since last month --> </span>
                             </p>
                         </div>
@@ -207,7 +207,7 @@
                                 </div> -->
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2">  &#8596; <!-- <i class="fas fa-arrow-down"></i>  --> 0 %</span>
+                                <span class="text-warning mr-2">   <i class="fas fa-arrow-up"></i>  0 %</span>
                                 <span class="text-nowrap">Since last month </span>
                             </p>
                         </div>
