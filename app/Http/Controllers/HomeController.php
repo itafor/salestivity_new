@@ -123,11 +123,12 @@ class HomeController extends Controller
 
             $data['last_month_plus_current_month_opp_amt_sum'] =  $last_month_opportunities_amt_sum + $current_month_opportunities_amt_sum;
 
-            $opp_amt_difference = $data['last_month_opportunities_amt_sum'] == 0 ? 1 :  ($data['current_month_opportunities_amt_sum'] - $data['last_month_opportunities_amt_sum']) / abs($data['last_month_opportunities_amt_sum']);
+            $opp_amt_difference = $data['last_month_opportunities_amt_sum'] == 0 ? 0 :  ($data['current_month_opportunities_amt_sum'] - $data['last_month_opportunities_amt_sum']) / abs($data['last_month_opportunities_amt_sum']);
 
             $data['opp_percentage_change'] =  $opp_amt_difference * 100;
 
             $data['formatted_opp_percentage_change'] = round($data['opp_percentage_change'], 2);
+            //dd($data['last_month_opportunities_amt_sum']);
 // ----------------------------------------Year To Date Open Opportunities----------------------------------------
 
              $parent_user_YTD_opportunities = Opportunity::where([
@@ -200,10 +201,10 @@ class HomeController extends Controller
 
             $data['last_month_plus_current_month_won_opp_amt_sum'] =  $last_month_won_opportunities_amt_sum + $current_month_won_opportunities_amt_sum;
 
-            $won_opp_amt_difference = $data['last_month_won_opportunities_amt_sum'] == 0 ? 1 :  ($data['current_month_won_opportunities_amt_sum'] - $data['last_month_won_opportunities_amt_sum']) / abs($data['last_month_won_opportunities_amt_sum']);
+            $won_opp_amt_difference = $data['last_month_won_opportunities_amt_sum'] == 0 ? 0 :  ($data['current_month_won_opportunities_amt_sum'] - $data['last_month_won_opportunities_amt_sum']) / abs($data['last_month_won_opportunities_amt_sum']);
 
             $data['won_opp_percentage_change'] = round($won_opp_amt_difference * 100, 2);
-
+               // dd($data['last_month_won_opportunities_amt_sum']);
 // ----------------------------------------Year To Date Won Opportunities----------------------------------------
 
              $parent_user_YTD_won_opportunities = Opportunity::where([
