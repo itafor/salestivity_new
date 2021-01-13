@@ -148,7 +148,7 @@ function renewalPayment (id) {
            console.log(data.renewal)
            $('.modal-title').text('Renewal Payment')
            $('#customer_id').val(data.renewal.customer_id)
-           $('#product_id').val(data.renewal.product)
+           $('#product_id').val(data.renewal.product_id)
            // $('#main_acct_id').val(data.renewal.main_acct_id)
            $('#productPrice').val(data.renewal.productPrice)
            $('#billingAmount').val(data.renewal.billingBalance)

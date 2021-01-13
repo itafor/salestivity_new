@@ -15,7 +15,8 @@ class Renewal extends Model
         'product','start_date',
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
-        'description','status','userType','created_by_id','amount_paid'
+        'description','status','userType','created_by_id','amount_paid',
+        'category_id','subcategory_id','product_id'
     	];
 
     public function customers()
@@ -40,7 +41,21 @@ class Renewal extends Model
     public function renewalPayment(){
         return $this->hasMany(RenewalPayment::class,'renewal_id','id');
     }
+    
+    public function prod()
+    {
+        return $this->belongsTo('App\Product', 'product_id','id');
+    }
 
+     public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id','id');
+    }
+
+    public function subcategory()
+    {
+        return $this->belongsTo('App\SubCategory', 'subcategory_id','id');
+    }
     public static function createNew($data) {
 
         $guard_object = getActiveGuardType();
@@ -54,7 +69,9 @@ class Renewal extends Model
     	'main_acct_id' => getActiveGuardType()->main_acct_id,
         'created_by_id' =>  getActiveGuardType()->created_by,
         'customer_id' => $data['customer_id'],
-        'product' => $data['product'],
+        'category_id' => $data['category_id'],
+        'subcategory_id' => $data['sub_category_id'],
+        'product_id' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
         'billingAmount' =>  $finalPrice,  //$data['billingAmount'],
