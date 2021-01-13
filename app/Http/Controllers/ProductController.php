@@ -136,6 +136,11 @@ class ProductController extends Controller
         
         $data['product'] = Product::find($id);
 
+        if( $data['product']->category == '' ||  $data['product']->sub_category =='' ){
+             Alert::warning('old Data', 'Product not linked with category or sub category');
+        return back();
+        }
+
         return view('product.edit', $data);
     }
 
