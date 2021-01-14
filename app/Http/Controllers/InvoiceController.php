@@ -27,8 +27,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $data['invoices'] = Invoice::where([
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type]
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('created_at', 'DESC')->get();
 
 
@@ -45,14 +44,12 @@ class InvoiceController extends Controller
         $userId = \getActiveGuardType()->main_acct_id;
 
         $data['customers'] = Customer::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
        
         $data['categories'] = Category::where([
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
         return view('billing.invoice.create', $data);
@@ -210,13 +207,11 @@ class InvoiceController extends Controller
         $data['invoice'] = Invoice::find($id);
 
           $data['categories'] = Category::where([
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
       $data['customers'] = Customer::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
         return view('billing.invoice.edit',$data);

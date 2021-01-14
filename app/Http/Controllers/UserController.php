@@ -187,6 +187,8 @@ class UserController extends Controller
         $roles = Role::all();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $reportsTo = SubUser::where('main_acct_id', $userId)->get();
+       // dd($reportsTo);
+
         // dd($reportsTo);
 
 
@@ -200,8 +202,6 @@ class UserController extends Controller
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->role_id = $request->input('role_id');
-        $user->department_id = $request->input('department_id');
-        $user->unit_id = $request->input('unit_id');
         $user->reports_to = $request->input('report');
         $user->status = $request->input('status');
         

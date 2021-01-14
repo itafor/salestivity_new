@@ -23,8 +23,7 @@ class ProductController extends Controller
         // Get the main acct id from the logged in guard
        
         $data['products'] = Product::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
         return view('product.index', $data);
@@ -40,8 +39,7 @@ class ProductController extends Controller
 
        
         $data['categories'] = Category::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
         
         return view('product.create', $data);

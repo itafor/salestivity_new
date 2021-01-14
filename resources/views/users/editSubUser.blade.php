@@ -95,47 +95,6 @@
                                 </div>
                             </div>
 
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('department_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-dept">{{ __('Department') }}</label>
-                                            <select name="department_id" id="input-dept" class="form-control" data-toggle="select">
-                                                <option value="">Select a Department</option>
-                                                @foreach($departments as $dept)
-                                                    @if(isset($user->department_id))
-                                                        <option {{ $user->dept->id  == $dept->id ? 'selected' : ''}} value="{{ $dept->id }}">{{ $dept->name }}</option>
-                                                    @else
-                                                        <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select> 
-
-                                            @if ($errors->has('dept'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('dept') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('unit_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-unit">{{ __('Unit') }}</label>
-                                            <select name="unit_id" id="input-unit" class="form-control" data-toggle="select">
-                                                @if(isset($user->unit_id))
-                                                    <option value="{{ $user->unit->id }}">{{ $user->unit->name }}</option>
-                                                @else
-                                                    <option disabled value="">Please select a department</option>
-                                                @endif
-                                            </select> 
-
-                                            @if ($errors->has('unit_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('unit_id') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="row">
                                     <div class="col-xl-6">
@@ -145,7 +104,7 @@
                                             <select name="report" id="input-report" class="form-control" data-toggle="select">
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
-                                                    @if(isset($user->reports_to))
+                                                    @if($user->reports_to != '')
                                                         <option {{ $user->reportsTo->id  == $report->id ? 'selected' : ''}} value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
                                                     @else    
                                                         <option value="{{ $report->id }}">{{ $report->name }}</option>
