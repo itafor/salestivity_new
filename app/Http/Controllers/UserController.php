@@ -159,8 +159,6 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->role_id = $request->role_id;
             $user->reports_to = $request->report;
-            $user->department_id = $request->department_id;
-            $user->unit_id = $request->unit_id;
             $user->status = $request->status;
             $user->main_acct_id = $userId;
             $user->password = Hash::make($request->get('password'));
