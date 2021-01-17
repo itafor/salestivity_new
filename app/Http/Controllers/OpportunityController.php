@@ -114,18 +114,15 @@ class OpportunityController extends Controller
     public function create()
     {
          $data['categories'] = Category::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
         $data['customers'] = Customer::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
        
         $data['products'] = Product::where([
-        ['created_by', getActiveGuardType()->created_by],
-        ['user_type', getActiveGuardType()->user_type],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
         return view('opportunity.create', $data);
@@ -536,28 +533,30 @@ class OpportunityController extends Controller
      */
     public function show($id)
     {
-        $userId = \getActiveGuardType()->main_acct_id;
         $opportunity = Opportunity::where('id', $id)->first();
-        //dd($opportunity);
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $categories = Category::where('main_acct_id', $userId)->get();
-        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
         
-        return view('opportunity.show', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
+        return view('opportunity.show', compact('opportunity'));
     }
 
     public function edit($id)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $opportunity = Opportunity::where('id', $id)->first();
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $categories = Category::where('main_acct_id', $userId)->get();
-        $subCategories = SubCategory::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
+        $data['opportunity'] = Opportunity::where('id', $id)->first();
+
+        $data['customers'] = Customer::where([
+         ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+   $data['categories'] = Category::where([
+         ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+        $data['products'] = Product::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
         
         //dd($opportunity);
-        return view('opportunity.edit', compact('opportunity','customers', 'categories', 'subCategories', 'products'));
+        return view('opportunity.edit', $data);
     }
 
     /**
@@ -565,7 +564,8 @@ class OpportunityController extends Controller
      */
     public function update(Request $request)
     {
-        //dd($request->all());
+         $input = request()->all();
+        // dd($input);
 
          if(compareEndStartDate($request->initiation_date,$request->closure_date) == false){
             Alert::error('Invalid Closure Date', 'Please ensure that the Closure Date is after the Initiation Date');
@@ -590,16 +590,15 @@ class OpportunityController extends Controller
         //dd($opportunity);
         $product = $request->input('product_id');
         
-        if(isset($request->category_id)) {
-            $opportunity->products()->attach($product, [
-                'product_category' => implode($request->input('category_id')),
-                'product_sub_category' => implode($request->input('sub_category_id')),
-                'product_name' => implode($product),
-                'product_qty' => implode($request->input('quantity')),
-                'product_price' => implode($request->input('price')),
-                'main_acct_id' => $guard_object->main_acct_id,
-            ]);
-        }
+       if(isset($input['products']) && $input['products'] !='') {
+                foreach ($input['products'] as $key => $prodId) {
+                    $opp_product = new OpportunityProduct();
+                    $opp_product->product_id = $prodId;
+                    $opp_product->opportunity_id = $opportunity->id;
+                    $opp_product->save();
+                }
+            }
+
         $status = "Opportunity has been successfully updated";
         Alert::success('Opportunity', $status);
         return back();

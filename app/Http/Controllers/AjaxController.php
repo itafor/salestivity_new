@@ -9,6 +9,7 @@ use App\Department;
 use App\Invoice;
 use App\InvoicePayment;
 use App\Opportunity;
+use App\OpportunityProduct;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
@@ -16,6 +17,7 @@ use App\State;
 use App\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AjaxController extends Controller
 {
@@ -33,7 +35,12 @@ class AjaxController extends Controller
          InvoicePayment::deleteInvoicePaymentHistory($invoice->id);
          $invoice->delete();
     return redirect()->route('billing.invoice.index')->with('success','Invoice deleted!!');
-    }
+    }elseif ($itemModel == 'opportunityProduct') {
+         $oppProd = OpportunityProduct::find($id);
+         $oppProd->delete();
+        Alert::success('Product', 'Deleted');
+        return back();
+}
 }
 
     public function getContacts($id)

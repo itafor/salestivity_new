@@ -44,7 +44,7 @@
                                         @foreach($renewals as $renewal)
                                             <tr>
                                                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
-                                                <td>{{ $renewal->product_name? $renewal->product_name->name:'N/A' }}</td>
+                                               <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
                                                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
                                                 
                                                 <td>

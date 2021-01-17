@@ -40,7 +40,7 @@ class SubUser extends Authenticatable
 
     public function reportsTo()
     {
-        return $this->belongsTo('App\User', 'reports_to');
+        return $this->belongsTo('App\SubUser', 'reports_to');
     }
 
       public function parent_user()

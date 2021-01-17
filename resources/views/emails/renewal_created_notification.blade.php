@@ -91,6 +91,8 @@
                 <table class="table table-bordered full">
                     <thead class="thead-dark">
                         <tr>
+                            <th width="80px">Category</th>
+                            <th width="80px">Sub Category</th>
                             <th width="80px">Item</th>
                             <th width="100px">Qty</th>
                             <th>Description</th>
@@ -100,7 +102,9 @@
                     </thead>
                     <tbody>
                         <tr class="table-content">
-                            <td>{{ $renewal->product_name->name }} </td>
+                     <td>{{ $renewal->category? $renewal->category->name:'N/A' }}</td>
+                     <td>{{ $renewal->subcategory? $renewal->subcategory->name:'N/A' }}</td>
+                      <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
                             <td>1</td>
                             <td>{{ $renewal->description }}</td>
                             <td>{{ number_format($renewal->billingAmount, 2) }}</td>
