@@ -189,17 +189,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                        <div class="col-md-12">
-                             <h4 class="float-left">Products  <input id="checkAll" type="checkbox" value="Check All"></h4>
+                                
+                       @include('product.add_new')
 
-                                    <a onclick="add_product()" >
-                                        <button type="button" class="float-right btn btn-sm btn-primary" >
-                                    <i class="fa fa-plus"></i>
-                                    </button>
-                                </a>
-                        </div>
-                    </div>
                                  <div class="row">
                                     <div class="col-xl-12 button">
                                         @if($products)

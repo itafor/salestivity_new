@@ -51,12 +51,12 @@ class RenewalController extends Controller
     {
          $guard_object = getActiveGuardType();
 
-        $userId = auth()->user()->id;
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where([
-            ['main_acct_id', $userId],
+        $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['products'] = Product::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
-        return view('billing.renewal.create', compact('customers', 'products'));
+        return view('billing.renewal.create', $data);
     }
 
     /**
@@ -76,6 +76,8 @@ class RenewalController extends Controller
             'productPrice' => 'required|numeric',
             'billingAmount' => 'required|numeric',
             'description' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
         ]);
 
         if ($validator->fails()) {

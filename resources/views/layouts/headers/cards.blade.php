@@ -12,534 +12,232 @@
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
-                      @if($formatted_opp_percentage_change > 0)
-                      <div class="col-xl-3 col-lg-6">
+          <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
-                            <div class="row">
-                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>   {{abs($formatted_opp_percentage_change)}}%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                @elseif($formatted_opp_percentage_change < 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
+                 <h5 class="card-title text-uppercase mb-0">Open Opportunities</h5> 
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}}) </h5> 
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
+                                     <span class="text-nowrap"> Current Month ({{$current_month}}) <!-- ({{$current_month_opportunities_count}}) --> :</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_opportunities_amt_sum, 2)}} </span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i>  {{abs($formatted_opp_percentage_change)}}%</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-                @elseif($last_month_opportunities_amt_sum == 0 && $current_month_opportunities_amt_sum == 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
+                            @if($formatted_opp_percentage_change > 0)
+                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}}) </h5> 
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
+                                <span class="text-nowrap">Since last month : </span>
+                                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>   {{abs($formatted_opp_percentage_change)}}%</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
+                            @elseif($formatted_opp_percentage_change < 0)
+                             <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Since last month : </span>
+                                    <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i>  {{abs($formatted_opp_percentage_change)}}%</span>
+                                </div>
+                            </div>
+                             @elseif($last_month_opportunities_amt_sum == 0 && $current_month_opportunities_amt_sum == 0)
+                              <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Since last month : </span>
                                 <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>  0 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                 @elseif($last_month_opportunities_amt_sum == 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}}) </h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
+                             @elseif($last_month_opportunities_amt_sum == 0)
+                               <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Since last month : </span>
                                 <span class="text-success mr-2"> <i class="fas fa-arrow-up"></i>  100 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                 @elseif($last_month_opportunities_amt_sum ==  $current_month_opportunities_amt_sum)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
+                                </div>
+                            </div>
+                             @elseif($last_month_opportunities_amt_sum ==  $current_month_opportunities_amt_sum)
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}}) </h5> 
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
+                                 <span class="text-nowrap">Since last month : </span>
+                                 <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 0 %</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 0 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                @else
-     <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
+                            @else
+                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$last_month_plus_current_month_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_opp_amt_sum, 2)}}</span>
+                                 <span class="text-nowrap">Since last month : </span>
+                                 <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{$formatted_opp_percentage_change}} %</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{$formatted_opp_percentage_change}} %</span>
-                                <span class="text-nowrap">since last month </span>
-                            </p>
+                            @endif
+
+                              <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+                                    <span class="h4 font-weight-bold mb-0"> &#8358; {{number_format($ytd_opportunities_amt_sum, 2)}} </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                @endif
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Open Opportunities ({{$current_month_opportunities_count}})  </h5>
-                                    <span class="h2 font-weight-bold mb-0">  &#8358; {{number_format($current_month_opportunities_amt_sum, 2)}}</span>
-
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0  text-sm">
-                                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span> -->
-                                <span class=""> </span>
-                                <span class="text-nowrap text-muted">Since current month ({{$current_month}})</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">OPEN OPPORTUNITIES ({{$ytd_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($ytd_opportunities_amt_sum, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    
                 <!-- Won opportunities -->
-                 @if($won_opp_percentage_change > 0)
-                      <div class="col-xl-3 col-lg-6">
+                
+                <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                    <h5 class="card-title text-uppercase mb-0">Won Opportunities</h5>
                             <div class="row">
-                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
+                               <div class="col">
+                                 <span class="text-nowrap">Current month ({{$current_month}}) <!-- ({{$current_month_won_opportunities_count}}) --> : </span>
+                                <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_won_opportunities_amt_sum, 2)}}</span>
                                 </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
+                      @if($won_opp_percentage_change > 0)
+                            <div class="row">
+                               <div class="col">
+                                <span class="text-nowrap">Since last month : </span> 
                                 <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>   {{abs($won_opp_percentage_change)}}%</span>
-                                <span class="text-nowrap">Since last month</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                @elseif($won_opp_percentage_change < 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
+                      @elseif($won_opp_percentage_change < 0)
+                             <div class="row">
+                               <div class="col">
+                                <span class="text-nowrap">Since last month : </span> 
                                 <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i>  {{abs($won_opp_percentage_change)}}%</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                 @elseif($last_month_won_opportunities_amt_sum == 0 && $current_month_won_opportunities_amt_sum == 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  0 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    @elseif($last_month_won_opportunities_amt_sum == 0 && $current_month_won_opportunities_amt_sum == 0)
+                            <div class="row">
+                               <div class="col">
+                                <span class="text-nowrap">Since last month : </span> 
+                               <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  0 %</span>
+                                </div>
+                            </div>
                  @elseif($last_month_won_opportunities_amt_sum == 0)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
-                                </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  100 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
+                <div class="row">
+                       <div class="col">
+                        <span class="text-nowrap">Since last month : </span> 
+                       <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  100 %</span>
                         </div>
                     </div>
-                </div>
-                     @elseif($last_month_won_opportunities_amt_sum == $current_month_won_opportunities_amt_sum)
-          <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
-                                </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  0 %</span>
-                                <span class="text-nowrap">Since last month </span>
-                            </p>
+
+             @elseif($last_month_won_opportunities_amt_sum == $current_month_won_opportunities_amt_sum)
+                    <div class="row">
+                       <div class="col">
+                        <span class="text-nowrap">Since last month : </span> 
+                        <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i>  0 %</span>
                         </div>
                     </div>
-                </div>
-                @else
-     <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
+
+                    @else
+                    <div class="row">
+                       <div class="col">
+                        <span class="text-nowrap">Since last month : </span> 
+                        <span class="text-success mr-2">   <i class="fas fa-arrow-up"></i> {{$won_opp_percentage_change}} %</span>
+                        </div>
+                    </div>
+
+                    @endif
+                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$last_month_plus_current_month_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($last_month_plus_current_month_won_opp_amt_sum, 2)}}</span>
+                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+                                    <span class="h4 font-weight-bold mb-0"> &#8358; {{number_format($ytd_won_opportunities_amt_sum, 2)}}</span>
                                 </div>
-                              <!--   <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-percent"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 0 won opp. since last month</span>
-                                <span class="text-nowrap"> </span>
-                            </p>
                         </div>
                     </div>
                 </div>
 
-                @endif
-                <div class="col-xl-3 col-lg-6">
+                    <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won Opportunities ({{$current_month_won_opportunities_count}})  </h5>
-                                    <span class="h2 font-weight-bold mb-0">  &#8358; {{number_format($current_month_won_opportunities_amt_sum, 2)}}</span>
+                        <h5 class="card-title text-uppercase mb-0">Paid Recurring</h5>
 
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0  text-sm">
-                                <!-- <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span> -->
-                                <span class=""> </span>
-                                <span class="text-nowrap text-muted">Since current month ({{$current_month}})</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Won OPPORTUNITIES ({{$ytd_won_opp_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($ytd_won_opportunities_amt_sum, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Recurring ({{$current_month_outstanding_renewal_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_renewal_amt, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since Current Month ({{$current_month}})</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-               <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Recurring ({{$ytd__outstanding_renewal_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_renewal_amt, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                  <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Paid Recurring ({{$paid_recurring_count_for_current_month}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_current_month, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since Current Month ({{$current_month}})</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                                <span class="text-nowrap">Current Month ({{$current_month}}) : </span>
 
-                 <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Paid Recurring ({{$paid_recurring_count_for_year_to_date}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_year_to_date, 2)}}</span>
+                                    <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_current_month, 2)}}</span>
                                 </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
+                             <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+
+                                    <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_year_to_date, 2)}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-6">
+               
+                <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-0">Outstanding Recurring </h5>
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Paid Invoice ({{$current_month_paid_invoice_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($current_month_paid_invoice_amount, 2)}}</span>
+                                <span class="text-nowrap">Current Month ({{$current_month}}) : </span>
+                               <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_renewal_amt, 2)}}</span>
                                 </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since Current Month ({{$current_month}})</span>
-                            </p>
+                             <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Year to date ({{$formated_current_yr}}) : </span>
+                               <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_renewal_amt, 2)}}</span>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-6">
+         
+              
+                <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                 <h5 class="card-title text-uppercase mb-0">Paid Invoice </h5>
+
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Paid Invoice ({{$ytd_paid_invoice_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($ytd_paid_invoice_amount, 2)}}</span>
+                                <span class="text-nowrap">Current Month ({{$current_month}})</span>
+
+                                 <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($current_month_paid_invoice_amount, 2)}}</span>
                                 </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
+                            <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}})</span>
+
+                                 <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($ytd_paid_invoice_amount, 2)}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-6">
+            
+                <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-0">Outstanding Invoice </h5>
+
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Invoice ({{$current_month_outstanding_invoice_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_invoice_amount, 2)}}</span>
+                                <span class="text-nowrap">Current Month ({{$current_month}})</span>
+
+                                    <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_invoice_amount, 2)}}</span>
                                 </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
                             </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since Current Month ({{$current_month}})</span>
-                            </p>
+                            <div class="row">
+                                <div class="col">
+                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+                                    
+                                    <span class="h3 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_invoice_amount, 2)}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-             <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Outstanding Invoice ({{$ytd_outstanding_invoice_count}})</h5>
-                                    <span class="h2 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_invoice_amount, 2)}}</span>
-                                </div>
-                               <!--  <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
-                                <span class="text-nowrap">Since {{$formated_current_yr}} (YTD)</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-              <!--   <div class="col-xl-3 col-lg-6">
+        
+              <!--   <div class="col-xl-4 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">

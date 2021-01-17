@@ -95,8 +95,7 @@ class SubCategoryController extends Controller
 {
    $prod_sub_categories =  SubCategory::where([
     ['category_id',$id],
-    ['created_by', getActiveGuardType()->created_by],
-    ['user_type', getActiveGuardType()->user_type],
+    ['main_acct_id', getActiveGuardType()->main_acct_id],
    ])->orderBy('name','DESC')->get();
    return response()->json(['prod_sub_categories'=>$prod_sub_categories]);
 } 
@@ -105,8 +104,7 @@ public function getProdBySubCategoryId($id)
 {
    $products =  Product::where([
      ['sub_category_id',$id],
-     ['created_by', getActiveGuardType()->created_by],
-     ['user_type', getActiveGuardType()->user_type],
+     ['main_acct_id', getActiveGuardType()->main_acct_id],
    ])->orderBy('name','DESC')->get();
    return response()->json(['products'=>$products]);
 } 

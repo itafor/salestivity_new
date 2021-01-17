@@ -435,7 +435,7 @@
                                         </ul>
                                     </li>
 
-                                    <li class="nav-item">
+                                  {{-- <li class="nav-item">
                                         <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                                             <span class="nav-link-text">{{ __('Department') }}</span>
                                         </a>
@@ -457,7 +457,7 @@
                                                 </ul>
                                             </div>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                 </ul>        
                             </ul>
                         </div>   
