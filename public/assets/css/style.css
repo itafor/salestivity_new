@@ -476,6 +476,9 @@ width: 150px;
         top: 20em;
         z-index: 300;
     }*/
+.dashboardReport{
+padding-bottom: 23px;
+}
 
 @media only screen and (max-width: 600px) {
 section{
