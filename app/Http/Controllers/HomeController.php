@@ -150,6 +150,7 @@ class HomeController extends Controller
 
             $data['ytd_opportunities_amt_sum'] = $parent_user_YTD_opportunities->merge($users_that_reports_to_parent_user_YTD_opportunities)->sum('amount');
         $data['ytd_opp_count'] = count($ytd_opportunities);
+        $data['total_open_opportunity_count'] =  count($last_month_opportunities) +  $data['ytd_opp_count'];
 // ...........................................................................................
 
 
@@ -204,6 +205,8 @@ class HomeController extends Controller
             $won_opp_amt_difference = $data['last_month_won_opportunities_amt_sum'] == 0 ? 0 :  ($data['current_month_won_opportunities_amt_sum'] - $data['last_month_won_opportunities_amt_sum']) / abs($data['last_month_won_opportunities_amt_sum']);
 
             $data['won_opp_percentage_change'] = round($won_opp_amt_difference * 100, 2);
+
+
                // dd($data['last_month_won_opportunities_amt_sum']);
 // ----------------------------------------Year To Date Won Opportunities----------------------------------------
 
@@ -224,6 +227,8 @@ class HomeController extends Controller
 
          $data['ytd_won_opportunities_amt_sum'] =  $ytd_won_opportunities->sum('amount');
         $data['ytd_won_opp_count'] = count($ytd_won_opportunities);
+
+         $data['total_won_opportunity_count'] = count($last_month_won_opportunities) +  $data['ytd_won_opp_count'];
 
         // ......................Outstanding Renewal (Recurring) current mmonth......................
         $current_month_partly_paid_renewal = Renewal::where([
@@ -385,7 +390,7 @@ class HomeController extends Controller
 
          $data['ytd_outstanding_invoice_amount'] = $year_to_date_partly_paid_invoice->sum('billingBalance') + $year_to_date_pending_invoice->sum('billingAmount');
 
-         $data['ytd_outstanding_invoice_count'] = count($year_to_date_partly_paid_invoice) + count( $year_to_date_pending_invoice);
+         $data['ytd_outstanding_invoice_count'] = count($year_to_date_partly_paid_invoice) + count($year_to_date_pending_invoice);
 
          // dd($data['ytd_outstanding_invoice_count']);
 
