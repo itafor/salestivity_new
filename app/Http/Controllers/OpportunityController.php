@@ -463,74 +463,7 @@ class OpportunityController extends Controller
     }
 
 
-//  public function viewLowerLevelUserOpp($user_Id)
-//     {
-//         $userId = getActiveGuardType()->main_acct_id;
-//         $opportunities = Opportunity::where('main_acct_id', $userId)->get();
-//         $user = SubUser::find($user_Id);
-//         return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
-//     }
 
-// // view opportunities of users that reports to other users that report to you
-// public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
-//     {
-//          $userId = $user_id;
-//         $user = SubUser::find($user_id);
-
-//         $today = Carbon::now();
-
-//         $guard_object = getActiveGuardType();
-
-//         if($id == 1){
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->get();
-//             return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
-        
-//         } elseif($id == 2) {
-            
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
-//             return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
-//         }
-//          elseif($id == 3) {
-
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
-//             return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
-        
-//         } elseif ($id == 4) {
-
-
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('owner_id', $userId)->get();
-//             return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
-        
-//         }elseif ($id == 5) {
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('status', '=', 'Won')->get();
-//             return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
-        
-//         } else {
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('status', '=', 'Lost')->get();
-//             return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
-//         }
-//     }
-    /**
-     * Shows Information about a particular opportunity
-     */
     public function show($id)
     {
         $opportunity = Opportunity::where('id', $id)->first();
@@ -646,7 +579,7 @@ class OpportunityController extends Controller
             'account_id.required' => 'Please choose an account',
             'status.required' => 'Please select a status',
             'init_date_from.required' => 'Please enter initiation start date',
-            'init_date_to.required' => 'Please enter initiation start date',
+            'init_date_to.required' => 'Please enter initiation end date',
             'closure_date_from.required' => 'Please enter Closure start date',
             'closure_date_to.required' => 'Please enter Closure end date',
             'amount_from.required' => 'Please enter starting amount',
@@ -669,7 +602,7 @@ class OpportunityController extends Controller
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
-        $data['report_details'] = Opportunity::join('sub_users as owner','owner.id','=','opportunities.owner_id')
+        $data['opportunities_report_details'] = Opportunity::join('sub_users as owner','owner.id','=','opportunities.owner_id')
                                 ->join('customers as account','account.id','=','opportunities.account_id')
                                 ->where([
                                   ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
@@ -681,7 +614,7 @@ class OpportunityController extends Controller
                         ->whereBetween('opportunities.amount',[$request->amount_from, $request->amount_to])
                         ->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
 
-                                dd($data['report_details']);
+                               // dd($data['opportunities_report_details']);
 
         return view('opportunity.report', $data);
     }
