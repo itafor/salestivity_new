@@ -165,12 +165,12 @@
 
 
                 <div class="col-xl-4 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0"  style="padding-bottom: 24px;">
+                    <div class="card card-stats mb-4 mb-xl-0 dashboardReport">
                         <div class="card-body">
 
                 <div class="row">
                    <div class="col">
-                      <h3 class="card-title text-uppercase mb-0  float-left">Paid Invoice </h3>
+                      <h3 class="card-title text-uppercase mb-0  float-left">Paid Invoice({{$ytd_paid_invoice_count}})</h3>
                          <div class="icon icon-shape bg-info text-white rounded-circle shadow float-right">
                                 <i class="fas fa-file-invoice"></i>
                           </div>
@@ -196,7 +196,7 @@
                 </div>
             
                 <div class="col-xl-4 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card card-stats mb-4 mb-xl-0 dashboardReport">
                         <div class="card-body">
                       
 
@@ -230,7 +230,7 @@
         
 
                     <div class="col-xl-4 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card card-stats mb-4 mb-xl-0 dashboardReport">
                         <div class="card-body">
 
                 <div class="row">
@@ -263,7 +263,7 @@
                 </div>
                
                 <div class="col-xl-4 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card card-stats mb-4 mb-xl-0 dashboardReport">
                         <div class="card-body">
                         
 
