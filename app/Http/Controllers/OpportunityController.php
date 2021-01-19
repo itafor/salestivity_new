@@ -607,4 +607,50 @@ class OpportunityController extends Controller
         
         
     }
+
+  public function report()
+    {
+         $data['categories'] = Category::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+        $data['customers'] = Customer::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+       
+        $data['products'] = Product::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+        return view('opportunity.report', $data);
+    }
+
+      public function getReport(Request $request)
+    {
+//dd($request->all());
+         $data['categories'] = Category::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+        $data['customers'] = Customer::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+       
+        $data['products'] = Product::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+        $data['report_details'] = Opportunity::join('sub_users as owner','owner.id','=','opportunities.owner_id')
+                                ->join('customers as account','account.id','=','opportunities.account_id')
+                                ->where([
+                                  ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                                  ['owner.id', $request->owner_id],
+                                  ['account.id', $request->account_id],
+                     $request->status !='All' ? ['opportunities.status', $request->status] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                                  
+                                ])->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
+                                dd($data['report_details']);
+
+        return view('opportunity.report', $data);
+    }
 }

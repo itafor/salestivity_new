@@ -390,11 +390,23 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#navbar-reporting"  role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-ruler-pencil text-primary"></i>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#navbar-opportunity-report" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-compass text-primary" aria-hidden="true"></i>
                         <span class="nav-link-text">{{ __('Reporting') }}</span>
                     </a>
+
+                    <div class="collapse" id="navbar-opportunity-report">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('opportunity.create.report') }}">
+                                        {{ __('Opportunities') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
                 </li>
 
                 @if(auth()->user()->role_id == 1)
