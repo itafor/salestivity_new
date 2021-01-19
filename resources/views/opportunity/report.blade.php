@@ -50,8 +50,8 @@
 
              <label class="control-label col-sm-4" for="date">Amount:</label>
             <div class="col-md-12">
-                <input id="amount1" type="number" min="1" class="form-control" name="training_start_date" value="" placeholder="From">
-                <input id="amount2" type="number" min="1" class="form-control" name="training_end_date" value="" placeholder="To">
+                <input id="amount1" type="number" min="1" class="form-control" name="amount_from" value="" placeholder="From">
+                <input id="amount2" type="number" min="1" class="form-control" name="amount_to" value="" placeholder="To">
             </div>
       
   </div>
@@ -59,16 +59,16 @@
   <div class="form-group col-md-4">
             <label class="control-label col-sm-6" for="date">Initiation Date:</label>
             <div class="col-md-12">
-                <input id="date1" type="text" class="form-control" name="training_start_date" value="" placeholder="From" data-toggle="datepicker"> 
-                <input id="date2" type="text" class="form-control" name="training_end_date" value="" placeholder="To" data-toggle="datepicker">
+                <input id="date1" type="text" class="form-control" name="init_date_from" value="" placeholder="From" data-toggle="datepicker"> 
+                <input id="date2" type="text" class="form-control" name="init_date_to" value="" placeholder="To" data-toggle="datepicker">
             </div>
 </div>
      <div class="form-group col-md-4">
 
              <label class="control-label col-sm-6" for="date">Closure Date:</label>
             <div class="col-md-12">
-                <input id="date1" type="text" class="form-control" name="training_start_date" value="" placeholder="From" data-toggle="datepicker">
-                <input id="date2" type="text" class="form-control" name="training_end_date" value="" placeholder="To" data-toggle="datepicker">
+                <input id="date1" type="text" class="form-control" name="closure_date_from" value="" placeholder="From" data-toggle="datepicker">
+                <input id="date2" type="text" class="form-control" name="closure_date_to" value="" placeholder="To" data-toggle="datepicker">
             </div>
       
   </div>

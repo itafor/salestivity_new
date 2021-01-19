@@ -625,18 +625,47 @@ class OpportunityController extends Controller
         return view('opportunity.report', $data);
     }
 
-      public function getReport(Request $request)
+    public function getReport(Request $request)
     {
-//dd($request->all());
-         $data['categories'] = Category::where([
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-      ])->get();
+
+ $data = $request->all();
+          $rules = [
+ 
+            'owner_id' => 'required',
+            'account_id' => 'required',
+            'status' => 'required',
+            'init_date_from' => 'required',
+            'init_date_to' => 'required',
+            'closure_date_from' => 'required',
+            'closure_date_to' => 'required',
+            'amount_from' => 'required',
+            'amount_to' => 'required',
+        ];
+        $message = [
+            'owner_id.required' => 'Please select a sales person',
+            'account_id.required' => 'Please choose an account',
+            'status.required' => 'Please select a status',
+            'init_date_from.required' => 'Please enter initiation start date',
+            'init_date_to.required' => 'Please enter initiation start date',
+            'closure_date_from.required' => 'Please enter Closure start date',
+            'closure_date_to.required' => 'Please enter Closure end date',
+            'amount_from.required' => 'Please enter starting amount',
+            'amount_to.required' => 'Please enter ending amount',
+            
+        ];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+    
+     $init_date_from = Carbon::parse(formatDate($data['init_date_from'], 'd/m/Y', 'Y-m-d'));
+     $init_date_to = Carbon::parse(formatDate($data['init_date_to'], 'd/m/Y', 'Y-m-d'));
+
+    $closure_date_from   = Carbon::parse(formatDate($data['closure_date_from'], 'd/m/Y', 'Y-m-d'));
+    $closure_date_to   = Carbon::parse(formatDate($data['closure_date_to'], 'd/m/Y', 'Y-m-d'));
 
         $data['customers'] = Customer::where([
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-      ])->get();
-       
-        $data['products'] = Product::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
@@ -644,11 +673,14 @@ class OpportunityController extends Controller
                                 ->join('customers as account','account.id','=','opportunities.account_id')
                                 ->where([
                                   ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
-                                  ['owner.id', $request->owner_id],
-                                  ['account.id', $request->account_id],
-                     $request->status !='All' ? ['opportunities.status', $request->status] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
-                                  
-                                ])->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
+                       $request->account_id !='All' ?  ['account.id', $request->account_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                      $request->owner_id !='All' ? ['owner.id', $request->owner_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                      $request->status !='All' ? ['opportunities.status', $request->status] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id]])
+                        ->whereBetween('opportunities.initiation_date',[$init_date_from, $init_date_to])
+                        ->whereBetween('opportunities.closure_date',[$closure_date_from, $closure_date_to])
+                        ->whereBetween('opportunities.amount',[$request->amount_from, $request->amount_to])
+                        ->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
+
                                 dd($data['report_details']);
 
         return view('opportunity.report', $data);
