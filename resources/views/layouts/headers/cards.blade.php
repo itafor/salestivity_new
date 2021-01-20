@@ -17,7 +17,7 @@
                         <div class="card-body">
                 <div class="row">
                  <div class="col">
-                            <h3 class="card-title text-uppercase mb-0 float-left">Open Opportunities({{$total_open_opportunity_count}})  </h3>
+                            <h3 class="card-title text-uppercase mb-0 float-left">Open Opportunities </h3>
                     
                              <div class="icon icon-shape bg-danger text-white rounded-circle shadow float-right">
                                         <i class="fas fa-door-open"></i>
@@ -26,8 +26,8 @@
                 </div>
                             <div class="row">
                                 <div class="col">
-                                     <span class="text-nowrap"> Current Month ({{$current_month}}) </span>
-                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_opportunities_amt_sum, 2)}} </span>
+                                     <span class="text-nowrap"> {{$current_month}} ({{$current_month_opportunities_count}}) : </span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_opportunities_amt_sum, 2)}} </span>
                                 </div>
                             </div>
 
@@ -77,8 +77,8 @@
 
                               <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
-                                    <span class="h4 font-weight-bold mb-0"> &#8358; {{number_format($ytd_opportunities_amt_sum, 2)}} </span>
+                                <span class="text-nowrap">Year to Date ({{$ytd_opp_count}}) : </span>
+                                    <span class="h4 font-weight-bold mb-0"> &#8358;{{number_format($ytd_opportunities_amt_sum, 2)}} </span>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                    
                         <div class="row">
                  <div class="col">
-                             <h3 class="card-title text-uppercase mb-0 float-left">Won Opportunities({{$total_won_opportunity_count}})</h3>
+                             <h3 class="card-title text-uppercase mb-0 float-left">Won Opportunities</h3>
                     
                              <div class="icon icon-shape bg-success text-white rounded-circle shadow float-right">
                                        <i class="fas fa-trophy"></i>
@@ -103,8 +103,8 @@
                 </div>
                             <div class="row">
                                <div class="col">
-                                 <span class="text-nowrap">Current month ({{$current_month}}) : </span>
-                                <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_won_opportunities_amt_sum, 2)}}</span>
+                                 <span class="text-nowrap">{{$current_month}} ({{$current_month_won_opportunities_count}}) :  </span>
+                                <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_won_opportunities_amt_sum, 2)}}</span>
                                 </div>
                             </div>
                       @if($won_opp_percentage_change > 0)
@@ -155,8 +155,8 @@
                     @endif
                              <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
-                                    <span class="h4 font-weight-bold mb-0"> &#8358; {{number_format($ytd_won_opportunities_amt_sum, 2)}}</span>
+                                <span class="text-nowrap">Year to Date ({{$ytd_won_opp_count}}) : </span>
+                                    <span class="h4 font-weight-bold mb-0"> &#8358;{{number_format($ytd_won_opportunities_amt_sum, 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
 
                 <div class="row">
                    <div class="col">
-                      <h3 class="card-title text-uppercase mb-0  float-left">Paid Invoice({{$ytd_paid_invoice_count}})</h3>
+                      <h3 class="card-title text-uppercase mb-0  float-left">Paid Invoice</h3>
                          <div class="icon icon-shape bg-info text-white rounded-circle shadow float-right">
                                 <i class="fas fa-file-invoice"></i>
                           </div>
@@ -179,16 +179,16 @@
 
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Current Month({{$current_month}})</span>
+                                <span class="text-nowrap">{{$current_month}} ({{$current_month_paid_invoice_count}}) : </span>
 
-                                 <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_paid_invoice_amount, 2)}}</span>
+                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_paid_invoice_amount, 2)}}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}})</span>
+                                <span class="text-nowrap">Year to Date ({{$ytd_paid_invoice_count}}) : </span>
 
-                                 <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($ytd_paid_invoice_amount, 2)}}</span>
+                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_paid_invoice_amount, 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
 
                 <div class="row">
                  <div class="col">
-                  <h3 class="card-title text-uppercase mb-0 float-left">Outstanding Invoice({{$ytd_outstanding_invoice_count}}) </h3>
+                  <h3 class="card-title text-uppercase mb-0 float-left">Outstanding Invoice </h3>
 
                              <div class="icon icon-shape bg-yellow text-white rounded-circle shadow float-right">
                                         <i class="fas fa-file-invoice"></i>
@@ -212,16 +212,16 @@
 
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Current Month ({{$current_month}})</span>
+                                <span class="text-nowrap">{{$current_month}} ({{$current_month_outstanding_invoice_count}}) : </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_invoice_amount, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_outstanding_invoice_amount, 2)}}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+                                <span class="text-nowrap">Year to Date ({{$ytd_outstanding_invoice_count}}) : </span>
                                     
-                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_invoice_amount, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_outstanding_invoice_amount, 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +235,7 @@
 
                 <div class="row">
                  <div class="col">
-                        <h3 class="card-title text-uppercase mb-0 float-left">Paid Recurring({{$paid_recurring_count_for_year_to_date}})</h3>
+                        <h3 class="card-title text-uppercase mb-0 float-left">Paid Recurring</h3>
                            
                     
                              <div class="icon icon-shape bg-info text-white rounded-circle shadow float-right">
@@ -246,16 +246,16 @@
 
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Current Month ({{$current_month}}) : </span>
+                                <span class="text-nowrap">{{$current_month}} ({{$paid_recurring_count_for_current_month}}): </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_current_month, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($paid_recurring_amount_for_current_month, 2)}}</span>
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$formated_current_yr}}) : </span>
+                                <span class="text-nowrap">Year to Date ({{$paid_recurring_count_for_year_to_date}}) : </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($paid_recurring_amount_for_year_to_date, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($paid_recurring_amount_for_year_to_date, 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +269,7 @@
 
                  <div class="row">
                  <div class="col">
-                        <h3 class="card-title text-uppercase mb-0 float-left">Outstanding Recurring({{$ytd__outstanding_renewal_count}})</h3>
+                        <h3 class="card-title text-uppercase mb-0 float-left">Outstanding Recurring</h3>
                            
                              <div class="icon icon-shape bg-yellow text-white rounded-circle shadow float-right">
                                        <i class="fa fa-credit-card"></i>
@@ -278,14 +278,14 @@
                 </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Current Month ({{$current_month}}) : </span>
-                               <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($current_month_outstanding_renewal_amt, 2)}}</span>
+                                <span class="text-nowrap">{{$current_month}} ({{$current_month_outstanding_renewal_count}}) : </span>
+                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_outstanding_renewal_amt, 2)}}</span>
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to date ({{$formated_current_yr}}) : </span>
-                               <span class="h4 font-weight-bold mb-0">&#8358; {{number_format($ytd_outstanding_renewal_amt, 2)}}</span>
+                                <span class="text-nowrap">Year to date ({{$ytd__outstanding_renewal_count}}) : </span>
+                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_outstanding_renewal_amt, 2)}}</span>
                                 </div>
                             </div>
                             

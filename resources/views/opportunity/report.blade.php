@@ -21,7 +21,7 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Sales Person</label>
-            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} selectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
+            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
              @if(isset($selectedSalesPerson) && $selectedSalesPerson !='')
               <option value="{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->id }}">{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->name.' '.$selectedSalesPerson->last_name }}</option>
                @endif
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group col-md-4">
       <label for="inputPassword4">Account</label>
-                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }} selectOption" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
+                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
                    @if(isset($selectedAccount) && $selectedAccount !='')
               <option value="{{$selectedAccount == 'All' ? 'All' : $selectedAccount->id }}">{{$selectedAccount == 'All' ? 'All' : $selectedAccount->name }}</option>
                @endif
