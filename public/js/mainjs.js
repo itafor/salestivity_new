@@ -9,7 +9,7 @@
             
             });
     });
-    $("select").not('.user').select2({
+    $("select").not(':user, :reportselectOption').select2({
         theme: "bootstrap"
     });
 
@@ -674,4 +674,12 @@ function add_product() {
     //$('#modal-form form')[0].reset();
     $('#addProduct').modal("show");
 
+  }
+
+  function resetOpportunityReport(){
+   $(':input','#opportunityReportForm')
+  .not(':button, :submit, :reset, :hidden')
+  .val('')
+  .prop('checked', false)
+  .prop('selected', false);
   }

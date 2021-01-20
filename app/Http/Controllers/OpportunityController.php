@@ -463,74 +463,7 @@ class OpportunityController extends Controller
     }
 
 
-//  public function viewLowerLevelUserOpp($user_Id)
-//     {
-//         $userId = getActiveGuardType()->main_acct_id;
-//         $opportunities = Opportunity::where('main_acct_id', $userId)->get();
-//         $user = SubUser::find($user_Id);
-//         return view('lowerLevelUserOpportunity.index', compact('opportunities','user'));
-//     }
 
-// // view opportunities of users that reports to other users that report to you
-// public function getOpportunitiesOfLowerLevelUsers($id, $user_id)
-//     {
-//          $userId = $user_id;
-//         $user = SubUser::find($user_id);
-
-//         $today = Carbon::now();
-
-//         $guard_object = getActiveGuardType();
-
-//         if($id == 1){
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->get();
-//             return view('lowerLevelUserOpportunity.all', compact('opportunities','user'));
-        
-//         } elseif($id == 2) {
-            
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
-//             return view('lowerLevelUserOpportunity.currentmonth', compact('opportunities','user'));
-//         }
-//          elseif($id == 3) {
-
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
-//             return view('lowerLevelUserOpportunity.nextmonth', compact('opportunities','user'));
-        
-//         } elseif ($id == 4) {
-
-
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('owner_id', $userId)->get();
-//             return view('lowerLevelUserOpportunity.myopp', compact('opportunities','user'));
-        
-//         }elseif ($id == 5) {
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('status', '=', 'Won')->get();
-//             return view('lowerLevelUserOpportunity.won', compact('opportunities','user'));
-        
-//         } else {
-//             $opportunities = Opportunity::where([
-//                 ['created_by', $userId],
-//                 ['user_type','sub_users']
-//             ])->where('status', '=', 'Lost')->get();
-//             return view('lowerLevelUserOpportunity.lost', compact('opportunities','user'));
-//         }
-//     }
-    /**
-     * Shows Information about a particular opportunity
-     */
     public function show($id)
     {
         $opportunity = Opportunity::where('id', $id)->first();
@@ -606,5 +539,123 @@ class OpportunityController extends Controller
             // Alert::error('The process could not be completed');
         
         
+    }
+
+      public function getSelectedAccount($id){
+    $account = Customer::where('id',$id)
+                    ->where('main_acct_id',getActiveGuardType()->main_acct_id)->first();
+                    if($account){
+                      return $account;
+            }
+  }
+
+       public function getSelectedSalesPerson($id){
+    $sales_person = SubUser::where('id',$id)
+                    ->where('main_acct_id',getActiveGuardType()->main_acct_id)->first();
+                    if($sales_person){
+                      return $sales_person;
+            }
+  }
+
+  public function report()
+    {
+        
+    $data['selectedSalesPerson'] = '';
+    $data['selectedAccount'] = '';
+    $data['selectedstatus'] = '';
+    $data['selectedAmountFrom'] = '';
+    $data['selectedAmountTo'] = '';
+    $data['selectedInitDateFrom'] = '';
+    $data['selectedInitDateTo'] = '';
+    $data['selectedClosureDateFrom'] = '';
+    $data['selectedClosureDateTo'] = '';
+
+
+
+        $data['customers'] = Customer::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+       
+      
+
+        return view('opportunity.report', $data);
+    }
+
+    public function getReport(Request $request)
+    {
+
+ $data = $request->all();
+          $rules = [
+ 
+            'owner_id' => 'required',
+            'account_id' => 'required',
+            'status' => 'required',
+            'init_date_from' => 'required',
+            'init_date_to' => 'required',
+            'closure_date_from' => 'required',
+            'closure_date_to' => 'required',
+            'amount_from' => 'required',
+            'amount_to' => 'required',
+        ];
+        $message = [
+            'owner_id.required' => 'Please select a sales person',
+            'account_id.required' => 'Please choose an account',
+            'status.required' => 'Please select a status',
+            'init_date_from.required' => 'Please enter initiation start date',
+            'init_date_to.required' => 'Please enter initiation end date',
+            'closure_date_from.required' => 'Please enter Closure start date',
+            'closure_date_to.required' => 'Please enter Closure end date',
+            'amount_from.required' => 'Please enter starting amount',
+            'amount_to.required' => 'Please enter ending amount',
+            
+        ];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+    
+     $init_date_from = Carbon::parse(formatDate($data['init_date_from'], 'd/m/Y', 'Y-m-d'));
+     $init_date_to = Carbon::parse(formatDate($data['init_date_to'], 'd/m/Y', 'Y-m-d'));
+
+    $closure_date_from   = Carbon::parse(formatDate($data['closure_date_from'], 'd/m/Y', 'Y-m-d'));
+    $closure_date_to   = Carbon::parse(formatDate($data['closure_date_to'], 'd/m/Y', 'Y-m-d'));
+
+    //   if($init_date_to < $init_date_from){
+    //     return back()->withInput()->with('error','initiation end date should always be ahead of initiation start date');
+    // }
+
+
+        $data['customers'] = Customer::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+         $data['selectedSalesPerson'] = $request->owner_id !='All' ? $this->getSelectedSalesPerson($request->owner_id) : 'All';
+
+         $data['selectedAccount'] =  $request->account_id !='All' ? $this->getSelectedAccount($request->account_id) : 'All';
+    $data['selectedstatus'] = $request->status;
+    $data['selectedAmountFrom'] = $request->amount_from;
+    $data['selectedAmountTo'] = $request->amount_to;
+    $data['selectedInitDateFrom'] = $init_date_from;
+    $data['selectedInitDateTo'] = $init_date_to;
+    $data['selectedClosureDateFrom'] = $closure_date_from;
+    $data['selectedClosureDateTo'] = $closure_date_to;
+
+
+        $data['opportunities_report_details'] = Opportunity::join('sub_users as owner','owner.id','=','opportunities.owner_id')
+                        ->join('customers as account','account.id','=','opportunities.account_id')
+                        ->where([
+                          ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                       $request->account_id !='All' ?  ['account.id', $request->account_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                      $request->owner_id !='All' ? ['owner.id', $request->owner_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                      $request->status !='All' ? ['opportunities.status', $request->status] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id]])
+                        ->whereBetween('opportunities.initiation_date',[$init_date_from, $init_date_to])
+                        ->whereBetween('opportunities.closure_date',[$closure_date_from, $closure_date_to])
+                        ->whereBetween('opportunities.amount',[$request->amount_from, $request->amount_to])
+                        ->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
+
+            //dd($data['selectedAccount']);
+
+        return view('opportunity.report', $data);
     }
 }

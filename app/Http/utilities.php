@@ -58,14 +58,14 @@ function getCities(){
 }
 
 function productCategories(){
- $categories = Category::where('main_acct_id',authUserId())->get();
+ $categories = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
  if($categories){
  return $categories;
  }
 }
 
 function productSubCategories(){
- $sub_categories = SubCategory::where('main_acct_id',authUserId())->get();
+ $sub_categories = SubCategory::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
  if($sub_categories){
  return $sub_categories;
  }
@@ -149,7 +149,7 @@ function authUser()
 function customerContacts($customerId)
 {
     return Contact::where([
-        ['main_acct_id',authUserId()],
+        ['main_acct_id',getActiveGuardType()->main_acct_id],
         ['customer_id',$customerId]
     ])->get();
 }
@@ -161,7 +161,7 @@ function allCustomers()
 
 function mySubUsers()
 {
-    return SubUser::where('main_acct_id', authUserId())->get();
+    return SubUser::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 }
 
 function addMainAccountOwnerToSubUser()
