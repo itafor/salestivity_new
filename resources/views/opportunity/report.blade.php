@@ -16,20 +16,15 @@
 </div>
 @endif
 
-
-
-<!-- @if ($errors->any())
-<div class="alert alert-danger">
-    <button type="button" class="close" data-dismiss="alert">×</button> 
-    Please check the form below for errors
-</div>
-@endif -->
         <form method="post" action="{{ route('opportunity.get.report') }}" autocomplete="off">
              @csrf
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Sales Person</label>
-            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" >
+            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required >
+             @if(isset($selectedSalesPerson) && $selectedSalesPerson !='')
+              <option value="{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->id }}">{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->name.' '.$selectedSalesPerson->last_name }}</option>
+               @endif
             <option value="All">All</option>
             @foreach(mySubUsers() as $owner)
                 <option value="{{ $owner->id }}"> {{ $owner->name }} {{ $owner->last_name }}  </option>
@@ -38,7 +33,10 @@
     </div>
     <div class="form-group col-md-4">
       <label for="inputPassword4">Account</label>
-                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" >
+                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
+                   @if(isset($selectedAccount) && $selectedAccount !='')
+              <option value="{{$selectedAccount == 'All' ? 'All' : $selectedAccount->id }}">{{$selectedAccount == 'All' ? 'All' : $selectedAccount->name }}</option>
+               @endif
                 <option value="All">All</option>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -47,7 +45,10 @@
     </div>
      <div class="form-group col-md-4">
       <label for="inputPassword4">Stage</label>
-            <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}">
+            <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}" required>
+                  @if(isset($selectedstatus) && $selectedstatus !='')
+              <option value="{{$selectedstatus}}">{{$selectedstatus}}</option>
+               @endif
             <option value="All">All</option>
             <option value="Prospecting">Prospecting</option>
             <option value="Qualifying">Qualifying</option>
@@ -65,8 +66,8 @@
 
              <label class="control-label col-sm-4" for="date">Amount:</label>
             <div class="col-md-12">
-                <input id="amount1" type="number" min="1" class="form-control" name="amount_from" value="" placeholder="From">
-                <input id="amount2" type="number" min="1" class="form-control" name="amount_to" value="" placeholder="To">
+                <input id="amount1" type="number" min="1" class="form-control" name="amount_from" value="{{$selectedAmountFrom !='' ? $selectedAmountFrom : ''}}" placeholder="From" required>
+                <input id="amount2" type="number" min="1" class="form-control" name="amount_to" value="{{$selectedAmountTo !='' ? $selectedAmountTo : ''}}" placeholder="To" required>
             </div>
       
   </div>
@@ -74,25 +75,25 @@
   <div class="form-group col-md-4">
             <label class="control-label col-sm-6" for="date">Initiation Date:</label>
             <div class="col-md-12">
-                <input id="date1" type="text" class="form-control" name="init_date_from" value="" placeholder="From" data-toggle="datepicker"> 
-                <input id="date2" type="text" class="form-control" name="init_date_to" value="" placeholder="To" data-toggle="datepicker">
+                <input id="date1" type="text" class="form-control" name="init_date_from" value="{{$selectedInitDateFrom !='' ? \Carbon\Carbon::parse($selectedInitDateFrom)->format('d/m/Y') : ''}}" placeholder="From" data-toggle="datepicker" required> 
+                <input id="date2" type="text" class="form-control" name="init_date_to" value="{{$selectedInitDateTo !='' ? \Carbon\Carbon::parse($selectedInitDateTo)->format('d/m/Y') : ''}}" placeholder="To" data-toggle="datepicker" required>
             </div>
 </div>
      <div class="form-group col-md-4">
 
              <label class="control-label col-sm-6" for="date">Closure Date:</label>
             <div class="col-md-12">
-                <input id="date1" type="text" class="form-control" name="closure_date_from" value="" placeholder="From" data-toggle="datepicker">
-                <input id="date2" type="text" class="form-control" name="closure_date_to" value="" placeholder="To" data-toggle="datepicker">
+                <input id="date1" type="text" class="form-control" name="closure_date_from" value="{{$selectedClosureDateFrom !='' ? \Carbon\Carbon::parse($selectedClosureDateFrom)->format('d/m/Y') : ''}}" placeholder="From" data-toggle="datepicker" required>
+                <input id="date2" type="text" class="form-control" name="closure_date_to" value="{{$selectedClosureDateTo !='' ? \Carbon\Carbon::parse($selectedClosureDateTo)->format('d/m/Y') : ''}}" placeholder="To" data-toggle="datepicker" required>
             </div>
       
   </div>
 </div>
 
  <div class="text-right">
-     <button type="button" class="btn btn-warning">Reset</button>
+     <button type="button" class="btn btn-warning btn-sm">Reset</button>
 
-        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
+        <button type="submit" class="btn btn-primary btn-sm">{{ __('Search') }}</button>
     </div>
   
 </form>

@@ -541,19 +541,42 @@ class OpportunityController extends Controller
         
     }
 
+      public function getSelectedAccount($id){
+    $account = Customer::where('id',$id)
+                    ->where('main_acct_id',getActiveGuardType()->main_acct_id)->first();
+                    if($account){
+                      return $account;
+            }
+  }
+
+       public function getSelectedSalesPerson($id){
+    $sales_person = SubUser::where('id',$id)
+                    ->where('main_acct_id',getActiveGuardType()->main_acct_id)->first();
+                    if($sales_person){
+                      return $sales_person;
+            }
+  }
+
   public function report()
     {
-         $data['categories'] = Category::where([
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-      ])->get();
+        
+    $data['selectedSalesPerson'] = '';
+    $data['selectedAccount'] = '';
+    $data['selectedstatus'] = '';
+    $data['selectedAmountFrom'] = '';
+    $data['selectedAmountTo'] = '';
+    $data['selectedInitDateFrom'] = '';
+    $data['selectedInitDateTo'] = '';
+    $data['selectedClosureDateFrom'] = '';
+    $data['selectedClosureDateTo'] = '';
+
+
 
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
        
-        $data['products'] = Product::where([
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-      ])->get();
+      
 
         return view('opportunity.report', $data);
     }
@@ -598,14 +621,31 @@ class OpportunityController extends Controller
     $closure_date_from   = Carbon::parse(formatDate($data['closure_date_from'], 'd/m/Y', 'Y-m-d'));
     $closure_date_to   = Carbon::parse(formatDate($data['closure_date_to'], 'd/m/Y', 'Y-m-d'));
 
+    //   if($init_date_to < $init_date_from){
+    //     return back()->withInput()->with('error','initiation end date should always be ahead of initiation start date');
+    // }
+
+
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
+         $data['selectedSalesPerson'] = $request->owner_id !='All' ? $this->getSelectedSalesPerson($request->owner_id) : 'All';
+
+         $data['selectedAccount'] =  $request->account_id !='All' ? $this->getSelectedAccount($request->account_id) : 'All';
+    $data['selectedstatus'] = $request->status;
+    $data['selectedAmountFrom'] = $request->amount_from;
+    $data['selectedAmountTo'] = $request->amount_to;
+    $data['selectedInitDateFrom'] = $init_date_from;
+    $data['selectedInitDateTo'] = $init_date_to;
+    $data['selectedClosureDateFrom'] = $closure_date_from;
+    $data['selectedClosureDateTo'] = $closure_date_to;
+
+
         $data['opportunities_report_details'] = Opportunity::join('sub_users as owner','owner.id','=','opportunities.owner_id')
-                                ->join('customers as account','account.id','=','opportunities.account_id')
-                                ->where([
-                                  ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
+                        ->join('customers as account','account.id','=','opportunities.account_id')
+                        ->where([
+                          ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
                        $request->account_id !='All' ?  ['account.id', $request->account_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
                       $request->owner_id !='All' ? ['owner.id', $request->owner_id] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id],
                       $request->status !='All' ? ['opportunities.status', $request->status] : ['opportunities.main_acct_id', getActiveGuardType()->main_acct_id]])
@@ -614,7 +654,7 @@ class OpportunityController extends Controller
                         ->whereBetween('opportunities.amount',[$request->amount_from, $request->amount_to])
                         ->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
 
-                               // dd($data['opportunities_report_details']);
+            //dd($data['selectedAccount']);
 
         return view('opportunity.report', $data);
     }
