@@ -9,7 +9,7 @@
             
             });
     });
-    $("select").not(':user, :reportselectOption').select2({
+    $("select").not('.reportselectOption, .user').select2({
         theme: "bootstrap"
     });
 
