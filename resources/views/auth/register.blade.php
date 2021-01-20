@@ -19,9 +19,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card card-custom bg-secondary shadow">
-                    <div class="card-header bg-transparent pb-5">
+                    <!-- <div class="card-header bg-transparent pb-5">
                         
-                    </div>
+                    </div> -->
                     <div class="card-body px-lg-5 py-lg-5">
                        
                         <form role="form" method="POST" action="{{ route('register') }}">
@@ -94,19 +94,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('subdomain') ? ' has-danger' : '' }}">
-                                <div class="input-group input-group-alternative mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                    </div>
-                                    <input class="form-control{{ $errors->has('subdomain') ? ' is-invalid' : '' }}" placeholder="{{ __('Preferred Sub-domain Name') }}" type="text" name="subdomain" value="{{ old('subdomain') }}" required>
-                                </div>
-                                @if ($errors->has('subdomain'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('subdomain') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                          
                             <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
