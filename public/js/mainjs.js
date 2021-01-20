@@ -9,7 +9,7 @@
             
             });
     });
-    $("select").not('.user').select2({
+    $("select").not(':user, :reportselectOption').select2({
         theme: "bootstrap"
     });
 
@@ -677,12 +677,9 @@ function add_product() {
   }
 
   function resetOpportunityReport(){
-     $('#opportunityReportForm').each (function(){  
-    this.reset();
- }); 
-      $('.selectOption').val(function () {
-        return $(this).find('option').filter(function () {
-            return $(this).prop('defaultSelected');
-        }).val();
-    });
+   $(':input','#opportunityReportForm')
+  .not(':button, :submit, :reset, :hidden')
+  .val('')
+  .prop('checked', false)
+  .prop('selected', false);
   }
