@@ -48,7 +48,7 @@
     </div>
      <div class="form-group col-md-4">
       <label for="inputPassword4">Stage</label>
-            <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}" required>
+            <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Status') }}" value="{{ old('status') }}" required>
                   @if(isset($selectedstatus) && $selectedstatus !='')
               <option value="{{$selectedstatus}}">{{$selectedstatus}}</option>
                @endif
