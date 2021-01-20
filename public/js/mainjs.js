@@ -675,3 +675,14 @@ function add_product() {
     $('#addProduct').modal("show");
 
   }
+
+  function resetOpportunityReport(){
+     $('#opportunityReportForm').each (function(){  
+    this.reset();
+ }); 
+      $('.selectOption').val(function () {
+        return $(this).find('option').filter(function () {
+            return $(this).prop('defaultSelected');
+        }).val();
+    });
+  }

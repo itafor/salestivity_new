@@ -16,15 +16,16 @@
 </div>
 @endif
 
-        <form method="post" action="{{ route('opportunity.get.report') }}" autocomplete="off">
+        <form method="post" action="{{ route('opportunity.get.report') }}" autocomplete="off" id="opportunityReportForm">
              @csrf
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Sales Person</label>
-            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required >
+            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} selectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
              @if(isset($selectedSalesPerson) && $selectedSalesPerson !='')
               <option value="{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->id }}">{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->name.' '.$selectedSalesPerson->last_name }}</option>
                @endif
+            <option value="">Select</option>
             <option value="All">All</option>
             @foreach(mySubUsers() as $owner)
                 <option value="{{ $owner->id }}"> {{ $owner->name }} {{ $owner->last_name }}  </option>
@@ -33,10 +34,12 @@
     </div>
     <div class="form-group col-md-4">
       <label for="inputPassword4">Account</label>
-                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
+                <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }} selectOption" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
                    @if(isset($selectedAccount) && $selectedAccount !='')
               <option value="{{$selectedAccount == 'All' ? 'All' : $selectedAccount->id }}">{{$selectedAccount == 'All' ? 'All' : $selectedAccount->name }}</option>
                @endif
+               
+            <option value="">Select</option>
                 <option value="All">All</option>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -49,6 +52,7 @@
                   @if(isset($selectedstatus) && $selectedstatus !='')
               <option value="{{$selectedstatus}}">{{$selectedstatus}}</option>
                @endif
+            <option value="">Select</option>
             <option value="All">All</option>
             <option value="Prospecting">Prospecting</option>
             <option value="Qualifying">Qualifying</option>
@@ -91,7 +95,7 @@
 </div>
 
  <div class="text-right">
-     <button type="button" class="btn btn-warning btn-sm">Reset</button>
+     <button type="button" class="btn btn-warning btn-sm" onclick="resetOpportunityReport()">Reset</button>
 
         <button type="submit" class="btn btn-primary btn-sm">{{ __('Search') }}</button>
     </div>
