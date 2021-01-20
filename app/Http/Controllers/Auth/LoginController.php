@@ -135,4 +135,23 @@ class LoginController extends Controller
 
     //     return redirect()->intended('/home');
     // }
+
+        /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+        
+      Auth::guard('admin')->logout();
+      Auth::guard('sub_user')->logout();
+      Auth::guard('web')->logout();
+        
+      $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/');
+    }
 }
