@@ -233,14 +233,12 @@ class HomeController extends Controller
         // ......................Outstanding Renewal (Recurring) current mmonth......................
         $current_month_partly_paid_renewal = Renewal::where([
             ['status', 'Partly paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $current_month_pending_renewal = Renewal::where([
             ['status', 'Pending'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
       
 
@@ -251,14 +249,12 @@ class HomeController extends Controller
            // ......................Outstanding Renewal (Recurring) year to date......................
         $ytd_partly_paid_renewal = Renewal::where([
             ['status', 'Partly paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $ytd_pending_renewal = Renewal::where([
             ['status', 'Pending'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
       
 
@@ -271,8 +267,7 @@ class HomeController extends Controller
         // ......................Paid Renewal (Recurring) current mmonth......................
         $current_month_paid_renewal = Renewal::where([
             ['status', 'Paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
 
@@ -283,14 +278,12 @@ class HomeController extends Controller
          // ......................paid Renewal (Recurring) current mmonth......................
         $currentMonthpartially_paid_renewal = Renewal::where([
             ['status', 'Partly paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $current_month_completely_paid_renewal = Renewal::where([
             ['status', 'Paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
       
 
@@ -305,14 +298,12 @@ class HomeController extends Controller
      // ......................paid Renewal (Recurring) Year to Date ......................
         $yearToDatepartially_paid_renewal = Renewal::where([
             ['status', 'Partly paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $year_to_date_completely_paid_renewal = Renewal::where([
             ['status', 'Paid'],
-            ['created_by_id', getActiveGuardType()->created_by],
-            ['userType', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
       
 
@@ -327,14 +318,12 @@ class HomeController extends Controller
  // ......................paid Invoice for current mmonth......................
         $currentMonthpartially_paid_invoice = Invoice::where([
             ['status', 'Partly paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $current_month_completely_paid_invoice = Invoice::where([
             ['status', 'Paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $data['current_month_paid_invoice_amount'] = $currentMonthpartially_paid_invoice->sum('amount_paid') + $current_month_completely_paid_invoice->sum('amount_paid');
@@ -344,14 +333,12 @@ class HomeController extends Controller
  // ......................paid Invoice year tod date......................
         $year_to_date_partially_paid_invoice = Invoice::where([
             ['status', 'Partly paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $year_to_date_completely_paid_invoice = Invoice::where([
             ['status', 'Paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $data['ytd_paid_invoice_amount'] = $year_to_date_partially_paid_invoice->sum('amount_paid') + $year_to_date_completely_paid_invoice->sum('amount_paid');
@@ -361,14 +348,12 @@ class HomeController extends Controller
          // ......................outstanding Invoice for current mmonth......................
         $current_Monthpartly_paid_invoice = Invoice::where([
             ['status', 'Partly paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $current_month_pending_invoice = Invoice::where([
             ['status', 'Pending'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereMonth('created_at', $curr_momth)->get();
 
          $data['current_month_outstanding_invoice_amount'] = $current_Monthpartly_paid_invoice->sum('billingBalance') + $current_month_pending_invoice->sum('billingAmount');
@@ -378,14 +363,12 @@ class HomeController extends Controller
             // ......................outstanding Invoice since ytd......................
         $year_to_date_partly_paid_invoice = Invoice::where([
             ['status', 'Partly paid'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $year_to_date_pending_invoice = Invoice::where([
             ['status', 'Pending'],
-            ['created_by', getActiveGuardType()->created_by],
-            ['user_type', getActiveGuardType()->user_type],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
         ])->whereYear('created_at', $curr_year)->get();
 
          $data['ytd_outstanding_invoice_amount'] = $year_to_date_partly_paid_invoice->sum('billingBalance') + $year_to_date_pending_invoice->sum('billingAmount');
