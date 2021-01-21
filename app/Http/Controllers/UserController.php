@@ -2,19 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Hash;
-
-use App\Role;
 use App\Department;
+use App\Http\Requests\UserRequest;
+use App\Mail\SendSubuserEmailVerificationLink;
+use App\Role;
 use App\SubUser;
+use App\User;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 
 class UserController extends Controller
 {
+
+      public function __construct()
+    {
+        $this->middleware(['auth','verified','subuserVerified'])->except(['resendSubuserEmailEmailVerification','verifySubuserEmail','subUserEmailverified']);
+    }
+
+    public function verifySubuserEmail()
+    {
+        return view('auth.verifySubuser');
+    }
+
+    public function resendSubuserEmailEmailVerification(){
+
+       $subuser =  Auth::guard('sub_user')->user();
+
+       $toEmail = $subuser->email;
+
+      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($subuser));
+
+      session(['emailResent' => 'resentToSubuser']);
+
+        return redirect()->route('subuser.verify.email');
+
+    }
+
+     public function subUserEmailverified()
+    {
+       $subuserId = Auth::guard('sub_user')->user()->id;
+      
+        $subuser = SubUser::where('id',$subuserId)->first();
+        $subuser->email_verified_at = Carbon::now();
+        $subuser->save();
+
+        return redirect()->route('home');
+    }
     /**
      * Display a listing of the users
      *
@@ -165,6 +203,11 @@ class UserController extends Controller
             // dd($user);
             // $user->password = bcrypt($request->password);
             $user->save();
+
+            $toEmail = $user->email;
+            
+          Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));
+
             Alert::success('User','User successfully created.');
             return redirect()->route('allSubUsers');
         // } catch(\Throwable $th) {

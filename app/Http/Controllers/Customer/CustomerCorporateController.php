@@ -19,6 +19,11 @@ use Stevebauman\Location\Facades\Location;
 
 class CustomerCorporateController extends Controller
 {
+
+      public function __construct()
+    {
+        $this->middleware(['auth','verified'])->except('homepage');
+    }
     /**
      * Display a listing of the resource.
      *
