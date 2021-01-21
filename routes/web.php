@@ -14,13 +14,17 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@homepage');
 Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	
+Route::get('verify-your-email', 'UserController@verifySubuserEmail')->name('subuser.verify.email');
+Route::get('sub-user-email-link', 'UserController@resendSubuserEmailEmailVerification')->name('subuser.resend.emaillink');
+Route::get('subuser-email-verified', 'UserController@subUserEmailverified')->name('subuser.email.verified');
+
 
 	// Route::get('email/template', function() {
 	// 	return view('emails/sendinvoice');
