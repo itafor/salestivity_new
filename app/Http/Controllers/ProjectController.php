@@ -15,6 +15,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware(['auth','verified','subuserVerified'])->except(['homepage']);
+    }
     
     /**
      * Display a listing of the resource.

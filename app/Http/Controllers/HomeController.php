@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('homepage');
+        $this->middleware(['auth','verified','subuserVerified'])->except(['homepage']);
     }
 
     /**
@@ -32,6 +32,8 @@ class HomeController extends Controller
         }
         return view('welcome');
     }
+
+     
 
     /**
      * Show the application dashboard.

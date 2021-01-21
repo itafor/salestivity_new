@@ -21,6 +21,12 @@ use Validator;
 
 class OpportunityController extends Controller
 {
+
+  public function __construct()
+    {
+        $this->middleware(['auth','verified','subuserVerified'])->except('homepage');
+    }
+
     public function index()
     {
         $userId = auth()->user()->id;
