@@ -14,6 +14,7 @@ use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
 use App\State;
+use App\SubUser;
 use App\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -155,4 +156,14 @@ public function getCompanyEmail($id)
     }
 
 
+    public function checkUserLevel($id)
+    {
+        $user = SubUser::where([
+            ['id', $id],
+            ['level', '!=',null]
+        ])->first();
+        return response()->json(['user' => $user]);
+    }
+
+    
 }

@@ -47,6 +47,8 @@ Route::get('subuser-email-verified', 'UserController@subUserEmailverified')->nam
 		Route::get('subuser/{id}', 'UserController@editSubUser')->name('editSubUser');
 		Route::post('subuser/{id}', 'UserController@updateSubUser')->name('updateSubUser');
 		Route::delete('delete/{id}', 'UserController@deleteSubUSer')->name('deleteSubUSer');
+		Route::get('check-user-level/{id}', 'AjaxController@checkUserLevel')->name('user.level.check');
+
 
 		// Department
 		Route::get('dept/new', ['as' => 'dept.create', 'uses' => 'DepartmentController@create']);
