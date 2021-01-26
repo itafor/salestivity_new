@@ -186,8 +186,11 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-        // try
-        // {
+       
+       $validate_Level = $this->validateLevel($request->report, $request->level);
+       if($validate_Level){
+        return $validate_Level;
+       }
 
             $user = new SubUser;
             $user->name = $request->name;
@@ -211,9 +214,7 @@ class UserController extends Controller
 
             Alert::success('User','User successfully created.');
             return redirect()->route('allSubUsers');
-        // } catch(\Throwable $th) {
-        //     return back()->withInput()->withErrors($validator);
-        // }
+        
 
         
     }
@@ -239,17 +240,11 @@ class UserController extends Controller
 
     public function updateSubUser(Request $request, $id)
     {
-      $userToReportTo = SubUser::where([
-        ['id', $request->report],
-        ['level','!=',null]
-      ])->first();
-       //dd($userToReportTo);
-         if ($userToReportTo == null) {
-          return redirect()->back()->withStatus(__('The selected  user to be reported to has not been assigned to a level!'));
-                }
-           if ($userToReportTo && $userToReportTo->level >= $request->level) {
-          return redirect()->back()->withStatus(__('A user can only report to another user with a lower level number i.e 2 can report to 1!'));
-            }
+
+      $validate_Level = $this->validateLevel($request->report, $request->level);
+       if($validate_Level){
+        return $validate_Level;
+       }
 
         $user = SubUser::find($id);
         $user->name = $request->input('name');
@@ -286,5 +281,19 @@ class UserController extends Controller
         }
 
 
+    }
+
+    public function validateLevel($userId, $level) {
+        $userToReportTo = SubUser::where([
+        ['id', $userId],
+        ['level','!=',null]
+      ])->first();
+       //dd($userToReportTo);
+         if ($userToReportTo == null) {
+          return redirect()->back()->withStatus(__('The selected  user to be reported to has not been assigned to a level!'));
+                }
+           if ($userToReportTo && $userToReportTo->level >= $level) {
+          return redirect()->back()->withInput()->withStatus(__('A user can only report to another user with a lower level number i.e 2 can report to 1!'));
+            }
     }
 }

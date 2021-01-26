@@ -282,6 +282,7 @@
         </div>
 
 {{addMainAccountOwnerToSubUser()}}
+{{updatePrimaryUserLevel()}}
         @include('layouts.footers.auth')
     </div>
 @endsection

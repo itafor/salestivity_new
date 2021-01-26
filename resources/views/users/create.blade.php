@@ -18,6 +18,8 @@
                         </div>
                     </div>
                     <div class="card-body">
+                      @include('alerts.errorStatus')
+                        
                         <form method="post" action="{{ route('storeuser') }}" autocomplete="off">
                             @csrf
                             
@@ -90,10 +92,10 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-email">{{ __('Level') }}</label>
+                                    <div class="form-group{{ $errors->has('level') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-level">{{ __('Level') }}</label>
                                         <select name="level" class="form-control" id="level">
-                                            <option>Select Level</option>
+                                            <option value="">Select Level</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -115,7 +117,7 @@
                                             <select name="report" id="userId" class="form-control" data-toggle="select">
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
-                                                    <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
+                                                    <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }} ({{$report->level}})</option>
                                                 @endforeach
                                             </select> 
 

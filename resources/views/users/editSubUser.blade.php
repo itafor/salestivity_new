@@ -18,16 +18,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                            <div class="col-12">
-                        @if (session('status'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                    </div>
+                      @include('alerts.errorStatus')
                         <form method="post" action="{{ route('updateSubUser', [$user]) }}" autocomplete="off">
                             @csrf
                             
@@ -105,8 +96,8 @@
                                     </div>
                                 </div>
                                    <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-email">{{ __('Level') }}</label>
+                                    <div class="form-group{{ $errors->has('level') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-level">{{ __('Level') }}</label>
                                        <select name="level" class="form-control" id="level" required>
                                             <option value="{{$user->level}}">{{$user->level}}</option>
                                             <option value="1">1</option>
@@ -133,9 +124,9 @@
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
                                                     @if($user->reports_to != '')
-                                                        <option {{ $user->reportsTo->id  == $report->id ? 'selected' : ''}} value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>
+                                                        <option {{ $user->reportsTo->id  == $report->id ? 'selected' : ''}} value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }} ({{ $report->level }})</option>
                                                     @else    
-                                                        <option value="{{ $report->id }}">{{ $report->name }}</option>
+                                                        <option value="{{ $report->id }}">{{ $report->name }} ({{ $report->level }})</option>
                                                     @endif
                                                 @endforeach
                                             </select> 
