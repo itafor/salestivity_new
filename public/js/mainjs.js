@@ -683,3 +683,28 @@ function add_product() {
   .prop('checked', false)
   .prop('selected', false);
   }
+
+  //Check user level
+
+  $('#userId').change(function(){
+      var user_id = $(this).val();
+    let level = parseInt($('#level').val());
+
+      if(user_id){
+          $.ajax({
+              url: baseUrl+'/check-user-level/'+user_id,
+              type: "GET",
+              dataType: 'json',
+              success: function(data) {
+                if (data.user == null) {
+                  swal("The selected  user has not been assigned to a level!");
+
+                }
+
+            if (data.user && data.user.level >= level) {
+                  swal("A user can only report to another user with a lower level number i.e 2 can report to 1!")
+            }
+              }
+          });
+      }
+  });

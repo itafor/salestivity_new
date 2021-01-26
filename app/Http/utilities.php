@@ -166,6 +166,8 @@ function mySubUsers()
 
 function addMainAccountOwnerToSubUser()
 {
+    if (getActiveGuardType()->user_type == 'users') {
+   
     $emailExist = SubUser::where('email',authUser()->email)->first();
     if(!$emailExist){
     $user = new SubUser;
@@ -173,9 +175,26 @@ function addMainAccountOwnerToSubUser()
     $user->last_name = authUser()->last_name;
     $user->email = authUser()->email;
     $user->main_acct_id = authUser()->id;
-    $user->password = Hash::make('password');
+    $user->password = Hash::make('password1xxx');
     $user->save();
     }
+}
+   
+}
+
+function updatePrimaryUserLevel()
+{
+    if (getActiveGuardType()->user_type == 'users') {
+   
+    $primary_user = SubUser::where('email',authUser()->email)->first();
+    if($primary_user && $primary_user->level == null){
+
+    $primary_user->level = 1;
+    $primary_user->password = Hash::make('password1xxx');
+
+    $primary_user->save();
+    }
+}
    
 }
 
