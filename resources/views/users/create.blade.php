@@ -26,7 +26,7 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-xl-6">
+                                <div class="col-xl-4">
                                     <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-name">{{ __('First Name') }}</label>
                                         <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ old('name') }}" required autofocus>
@@ -38,7 +38,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-xl-6">
+                                <div class="col-xl-4">
                                     <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-lname">{{ __('Last Name') }}</label>
                                         <input type="text" name="last_name" id="input-lname" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required>
@@ -50,10 +50,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                                
-                            <div class="row">
-                                <div class="col-xl-6">
+                                <div class="col-xl-4">
                                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
                                         <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
@@ -65,6 +62,10 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                                
+                            <div class="row">
+                                
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('role_id') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-role">{{ __('Role') }}</label>
@@ -88,13 +89,30 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-email">{{ __('Level') }}</label>
+                                        <select name="level" class="form-control" id="level">
+                                            <option>Select Level</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+
+                                        @if ($errors->has('level'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('level') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
 
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('report') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-report">{{ __('Reports To') }}</label>
-                                            <select name="report" id="input-report" class="form-control" data-toggle="select">
+                                            <select name="report" id="userId" class="form-control" data-toggle="select">
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
                                                     <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }}</option>

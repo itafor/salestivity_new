@@ -196,6 +196,7 @@ class UserController extends Controller
             $user->user_type = $guard_object->user_type;
             $user->email = $request->email;
             $user->role_id = $request->role_id;
+            $user->level = $request->level;
             $user->reports_to = $request->report;
             $user->status = $request->status;
             $user->main_acct_id = $userId;
@@ -238,11 +239,24 @@ class UserController extends Controller
 
     public function updateSubUser(Request $request, $id)
     {
+      $userToReportTo = SubUser::where([
+        ['id', $request->report],
+        ['level','!=',null]
+      ])->first();
+       //dd($userToReportTo);
+         if ($userToReportTo == null) {
+          return redirect()->back()->withStatus(__('The selected  user to be reported to has not been assigned to a level!'));
+                }
+           if ($userToReportTo && $userToReportTo->level >= $request->level) {
+          return redirect()->back()->withStatus(__('A user can only report to another user with a lower level number i.e 2 can report to 1!'));
+            }
+
         $user = SubUser::find($id);
         $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->role_id = $request->input('role_id');
+        $user->level = $request->input('level');
         $user->reports_to = $request->input('report');
         $user->status = $request->input('status');
         
