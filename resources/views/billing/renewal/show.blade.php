@@ -30,7 +30,7 @@
 
         @endif
 
-             @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
+          {{--  @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
             <a onclick="editPaidRenewalAlert()">
             <button class="btn btn-sm btn-primary" >
             {{ __('Edit') }}
@@ -42,7 +42,7 @@
             {{ __('Edit') }}
             </button>
             </a>
-            @endif
+            @endif --}}
 
              @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
             <a onclick="deletePaidRenewalAlert()">
@@ -151,6 +151,11 @@
                      @endif
 
                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Duration Type') }}</b></td>
+                <td>{{ $renewal->duration_type ? $renewal->duration_type : 'N/A' }}</td>           
+              </tr>
+
+                <tr>
                      <td style="width: 200px;"><b>{{ __('Start Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
               </tr>

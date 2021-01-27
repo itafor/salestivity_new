@@ -180,9 +180,22 @@
                      <td>{{ $renewal->customers->name }}</td>
                    </tr>
 
+                     
+                      <tr>
+                     <td style="width: 120px;"><b>{{ __('Category') }}</b></td>
+                     <td>{{ $renewal->category ? $renewal->category->name : 'N/A' }}
+                     </td>
+                   </tr>
+
+                     <tr>
+                     <td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
+                     <td>{{ $renewal->subcategory ? $renewal->subcategory->name : 'N/A' }}
+                     </td>
+                   </tr>
+
                      <tr>
                      <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
-                     <td>{{ $renewal->product_name ? $renewal->product_name->name:'N/A' }}
+                     <td>{{ $renewal->prod ? $renewal->prod->name : 'N/A' }}
                      </td>
                    </tr>
 

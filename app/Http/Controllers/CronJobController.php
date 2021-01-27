@@ -13,124 +13,81 @@ use Illuminate\Support\Facades\Mail;
 class CronJobController extends Controller
 {
   
-    public static function renewalsNotificationAt15Percent($percentage = 85)
+    public static function annualRenewalsNotification()
     {
        
-           $renewals = self::getRenewals($percentage);
-       if(count($renewals) >=1){
-      //dd($renewals);
-         $renewalsWithcontacts = [];
-         $remaingDays = 0;
+      $renewals = Renewal::where([
+        ['billingBalance','>',0],
+        ['duration_type','Annually']
+      ])
+      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
+     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+     ->get();
+// dd($renewals);
 
-        foreach($renewals as $renewal) {
-              if($renewal->remaingdays >=1){
-          if($renewal->contacts->isEmpty()){
-          $toEmail = $renewal->customers->email;
-          if($toEmail){
+       foreach($renewals as $renewal) {
+           if($renewal->remaingdays == 339){
+               $renewalContacts = $renewal->contacts;
+                     self::notifyCustomer($renewal);
+               if($renewalContacts){
+           self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+          }
+          }elseif ($renewal->remaingdays == 3) {
+            $renewalContacts = $renewal->contacts;
+                    self::notifyCustomer($renewal);
+                     if($renewalContacts){
+           self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+          }
+          }elseif ($renewal->remaingdays == 5) {
+           $renewalContacts = $renewal->contacts;
+                     self::notifyCustomer($renewal);
+                      if($renewalContacts){
+           self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+          }
+          }
+        }
+
+         
+
+ }
+
+
+public static function notifyCustomer($renewal){
+  
+          $customerEmail = $renewal->customers->email;
+          if($customerEmail){
           $remaingDays = (string)$renewal->remaingdays;
-            Mail::to($toEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaingDays));
+            Mail::to($customerEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaingDays));
           }
-        }else{
-          $renewalsWithcontacts = $renewal->contacts;
-            $getContacts = new CronJobController();
-    $getContacts->sendNotificationToContactsAttachedToRenewal($renewalsWithcontacts,$renewal);
-          }
-
-       }  
-      }
-    return 'Done';
-    }
-  }
-
-
-
-    // public static function renewalsNotificationAt5Percent($percentage = 5)
-    public static function renewalsNotificationAt5Percent($percentage = 95)
-    {
-       
-       $renewals = self::getRenewals($percentage);
-       if(count($renewals) >=1){
-      // dd($renewals);
-         $renewalsWithcontacts = [];
-         $remaingDays = 0;
-
-        foreach($renewals as $renewal) {
-              if($renewal->remaingdays >=1){
-        	if($renewal->contacts->isEmpty()){
-        	$toEmail = $renewal->customers->email;
-        	if($toEmail){
-        	$remaingDays = (string)$renewal->remaingdays;
-            Mail::to($toEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaingDays));
-        	}
-        }else{
-        	$renewalsWithcontacts = $renewal->contacts;
-            $getContacts = new CronJobController();
-    $getContacts->sendNotificationToContactsAttachedToRenewal($renewalsWithcontacts,$renewal);
-          }
-
-       }  
-      }
-		return 'Done';
-}
-
-  }
-
-    // public static function renewalsNotificationAt0Percent($percentage = 0)
-    public static function renewalsNotificationAt0Percent($percentage = 100)
-    {
-       
-        $renewals = self::getRenewals($percentage);
-       if(count($renewals) >=1){
-      // dd($renewals);
-         $renewalsWithcontacts = [];
-         $remaingDays = 0;
-
-        foreach($renewals as $renewal) {
-              if($renewal->remaingdays ==0){
-          if($renewal->contacts->isEmpty()){
-          $toEmail = $renewal->customers->email;
-          if($toEmail){
-          $remaingDays = (string)$renewal->remaingdays;
-            Mail::to($toEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaingDays));
-          }
-        }else{
-          $renewalsWithcontacts = $renewal->contacts;
-            $getContacts = new CronJobController();
-    $getContacts->sendNotificationToContactsAttachedToRenewal($renewalsWithcontacts,$renewal);
-          }
-
-       }  
-      }
-    return 'Done';
-}
-  }
-
-
-  public static function getRenewals($percentage) {
-	$renewals = Renewal::where('billingBalance','>',0)
-     ->whereRaw('TIMESTAMPDIFF(DAY, CURDATE(),renewals.end_date ) =  ROUND(ABS(TIMESTAMPDIFF(DAY, renewals.start_date,renewals.end_date ) * ('.$percentage.'/100) ),0)')->with(['contacts','customers'])
-         ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
-         ->get();
-       return $renewals;
 }
 
 
-  public function sendNotificationToContactsAttachedToRenewal($renewalsWithcontacts,$renewal) {
+  public static function sendNotificationToContactsAttachedToRenewal($renewalsWithcontacts) {
 
-
-      $remaing_days = (string)$renewal->remaingdays;
-
-     $customerEmail = $renewal->customers->email;
-    Mail::to($customerEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaing_days));
 
   	   foreach ($renewalsWithcontacts as $key => $contact) {
 
-		            $customerContact=Contact::where('id',$contact->contact_id)->first();
+                $customerContact=Contact::where('id',$contact->contact_id)->first();
+		            $renewal=Renewal::where('id',$contact->renewal_id)
+                 ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+                 ->first();
+                 $remaing_days = $renewal->remaingdays;
 
 		         NotifyDueRenewalJob::dispatch($renewal,$customerContact,$remaing_days)
 		    ->delay(now()->addSeconds(5));
 
 		    }
   }
+
+
+
+
+//   public static function getRenewals($percentage) {
+//   $renewals = Renewal::where('billingBalance','>',0)
+//      ->whereRaw('TIMESTAMPDIFF(DAY, CURDATE(),renewals.end_date ) =  ROUND(ABS(TIMESTAMPDIFF(DAY, renewals.start_date,renewals.end_date ) * ('.$percentage.'/100) ),0)')->with(['contacts','customers'])
+//          ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+//          ->get();
+//        return $renewals;
+// }
 
 }

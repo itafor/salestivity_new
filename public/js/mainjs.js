@@ -708,3 +708,15 @@ function add_product() {
           });
       }
   });
+
+//renewal duration type
+  $('#duration_type').change(function(){
+    var durationType = $(this).val();
+    if(durationType !=''){
+        $("#startdate, #end_date").removeAttr('readonly');
+        durationType == 'Annually' ?  $("#end_date").attr('readonly','readonly') : $("#startdate, #end_date").val('');
+ }else{
+  $("#startdate, #end_date").val('');
+  $("#startdate, #end_date").attr('readonly','readonly');
+ }
+});
