@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id'
+        'category_id','subcategory_id','product_id','duration_type'
     	];
 
     public function customers()
@@ -74,6 +74,7 @@ class Renewal extends Model
         'product_id' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
+        'duration_type' => $data['duration_type'],
         'billingAmount' =>  $finalPrice,  //$data['billingAmount'],
         'billingBalance' => $finalPrice,  //$data['billingAmount'],
         'userType' => getActiveGuardType()->user_type,

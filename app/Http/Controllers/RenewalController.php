@@ -82,6 +82,7 @@ class RenewalController extends Controller
             'description' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
+            'duration_type' =>'required'
         ]);
 
         if ($validator->fails()) {

@@ -72,7 +72,7 @@
 
      <div class="col">
 <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
-    <select name="customer_id" id="customer" class=" form-control selectOption">
+    <select name="customer_id" id="customer" class=" form-control selectOption" required>
         <option selected>Choose a Customer</option>
         @foreach(allCustomers() as $key => $customer)
             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -143,8 +143,27 @@
     </div>
 
     <div class="col">
+<label class="form-control-label" for="duration_type">{{ __('Duration Type') }}</label>
+        <select name="duration_type" class="form-control" id="duration_type" required>
+            <option  value="">Choose</option>
+            <option  value="Annually">Annually</option>
+            <option  value="Monthly">Monthly</option>
+        </select>
+
+        @if ($errors->has('duration_type'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('duration_type') }}</strong>
+            </span>
+        @endif
+    </div>
+
+  </div>
+
+        <div class="row">
+
+    <div class="col">
 <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required>
+        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required readonly>
 
         @if ($errors->has('start_date'))
             <span class="invalid-feedback" role="alert">
@@ -154,7 +173,7 @@
     </div>
     <div class="col">
 <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required>
+    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required readonly>
 
     @if ($errors->has('end_date'))
         <span class="invalid-feedback" role="alert">
