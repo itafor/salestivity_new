@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Jobs\NotifyDueRenewalJob;
+use App\Mail\NotifyDueRenewalEmail;
 use App\Mail\NotifyDueRenewalToCustomer;
 use App\Renewal;
 use Illuminate\Http\Request;
@@ -73,8 +74,9 @@ public static function notifyCustomer($renewal){
                  ->first();
                  $remaing_days = $renewal->remaingdays;
 
-		         NotifyDueRenewalJob::dispatch($renewal,$customerContact,$remaing_days)
-		    ->delay(now()->addSeconds(5));
+            $toEmail = $customerContact->email;
+
+   Mail::to($toEmail)->send(new NotifyDueRenewalEmail($renewal,$customerContact,$remaing_days));
 
 		    }
   }

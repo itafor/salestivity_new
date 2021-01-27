@@ -35,7 +35,7 @@ class SendRenewalPaymentNotice extends Mailable
     public function build()
     {
         return $this->view('emails.send_renewal_payment_notice')
-         ->from('noreply@salestivity.com')
+         ->from('noreply@salestivity.com', 'Salestivity')
         ->subject('Renewal Payment Notification');
     }
 }

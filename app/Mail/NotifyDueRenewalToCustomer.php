@@ -32,7 +32,7 @@ class NotifyDueRenewalToCustomer extends Mailable
     public function build()
     {
         return $this->view('emails.notify_due_renewal_tocustomer')
-         ->from('noreply@salestivity.com')
+         ->from('noreply@salestivity.com', 'Salestivity')
         ->subject('Due Renewal Notification')
         ->cc('billing@digitalwebglobal.com','digitalwebglobal');
     }
