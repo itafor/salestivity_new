@@ -30,7 +30,7 @@ class SendSubuserEmailVerificationLink extends Mailable
     public function build()
     {
         return $this->view('emails.subuserEmailVerificationlink')
-        ->from('noreply@salestivity.com')
+        ->from('noreply@salestivity.com', 'Salestivity')
         ->subject('Verify Email Address');
     }
 }

@@ -19,9 +19,9 @@ class NotifyDueRenewalEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($customerRenewal,$customerContact,$remaing_days)
+    public function __construct($renewal,$customerContact,$remaing_days)
     {
-        $this->customerRenewal = $customerRenewal;
+        $this->customerRenewal = $renewal;
         $this->customerContact = $customerContact;
        $this->remaing_days = $remaing_days;
         // dd($this->remaing_days);
@@ -35,8 +35,7 @@ class NotifyDueRenewalEmail extends Mailable
     public function build()
     {
         return $this->view('emails.notify_due_renewal_email')
-        ->from('noreply@salestivity.com')
-        ->subject('Due Renewal Notification')
-        ->cc('billing@digitalwebglobal.com','digitalwebglobal');
+        ->from('noreply@salestivity.com', 'Salestivity')
+        ->subject('Due Renewal Notification');
     }
 }
