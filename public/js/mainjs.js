@@ -713,10 +713,20 @@ function add_product() {
   $('#duration_type').change(function(){
     var durationType = $(this).val();
     if(durationType !=''){
-        $("#startdate, #end_date").removeAttr('readonly');
-        durationType == 'Annually' ?  $("#end_date").attr('readonly','readonly') : $("#startdate, #end_date").val('');
+        $("#startdate, #end_date").removeAttr('disabled');
+        durationType == 'Annually' ?  $("#end_date").attr('disabled','disabled') : $("#startdate, #end_date").val('');
+        durationType == 'Annually' ?  $("#AnnualReminderDuration").show() :  $("#AnnualReminderDuration").hide(); $("#first_duration, #second_duration, #third_duration").val('') ;
  }else{
   $("#startdate, #end_date").val('');
-  $("#startdate, #end_date").attr('readonly','readonly');
+  $("#startdate, #end_date").attr('disabled','disabled');
+  $("#AnnualReminderDuration").hide();
+  $("#first_duration, #second_duration, #third_duration").val('');
+
  }
 });
+
+  function removeDisabledAttr(){
+    $("#end_date").removeAttr('disabled');
+    $("#submitRenewalButton").hide();
+    $("#loader").show();
+  }

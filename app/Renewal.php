@@ -29,6 +29,12 @@ class Renewal extends Model
         return $this->hasMany('App\renewalContactEmail', 'renewal_id','id');
     }
 
+     public function duration()
+    {
+        return $this->hasOne('App\RenewalReminderDuration', 'renewal_id','id');
+    }
+
+
     public function payments()
     {
         return $this->morphToMany('App\Payment', 'payable');
@@ -85,6 +91,7 @@ class Renewal extends Model
 
         if($renewal){
            self::createRenewalContactEmail($renewal,$contactEmails);
+           self::createRenewalReminderDuration($data, $renewal);
         }
     	return $renewal;
     }
@@ -117,6 +124,17 @@ class Renewal extends Model
     }
 
   }
+
+ }
+
+  public static function createRenewalReminderDuration($data, $renewal) {
+
+       $reminderDuration = new RenewalReminderDuration();
+       $reminderDuration->renewal_id = $renewal->id;
+       $reminderDuration->first_duration = $data['first_duration'] ? $data['first_duration'] : null;
+       $reminderDuration->second_duration = $data['second_duration'] ? $data['second_duration'] : null;
+       $reminderDuration->third_duration = $data['third_duration'] ? $data['third_duration'] : 0;
+       $reminderDuration->save();
 
  }
 }
