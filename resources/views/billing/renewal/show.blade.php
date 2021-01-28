@@ -150,10 +150,7 @@
                    </tr>
                      @endif
 
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Duration Type') }}</b></td>
-                <td>{{ $renewal->duration_type ? $renewal->duration_type : 'N/A' }}</td>           
-              </tr>
+                 
 
                 <tr>
                      <td style="width: 200px;"><b>{{ __('Start Date') }}</b></td>
@@ -163,6 +160,15 @@
                      <td style="width: 200px;"><b>{{ __('End Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
               </tr>
+                 <tr>
+                     <td style="width: 200px;"><b>{{ __('Duration Type') }}</b></td>
+                <td>{{ $renewal->duration_type ? $renewal->duration_type : 'N/A' }}</td>           
+              </tr>
+
+               <tr>
+                 <td style="width: 200px;"><b>{{ __('Reminder Durations') }}</b></td>
+                 <td> First : {{$renewal->duration->first_duration ? $renewal->duration->first_duration.'days' : 'N/A' }}, Second: {{$renewal->duration->second_duration ? $renewal->duration->second_duration.'days' : 'N/A' }}, Third: {{$renewal->duration ? $renewal->duration->third_duration.'days' : 'N/A' }} </td>
+                 </tr>
 
                     </tbody>
                     @else
