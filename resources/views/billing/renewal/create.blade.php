@@ -144,7 +144,7 @@
 
     <div class="col">
 <label class="form-control-label" for="duration_type">{{ __('Duration Type') }}</label>
-        <select name="duration_type" class="form-control" id="duration_type" required>
+        <select name="duration_type" class="form-control" id="duration_typexx" required>
             <option  value="">Choose</option>
             <option  value="Annually">Annually</option>
             <option  value="Monthly">Monthly</option>
@@ -163,7 +163,7 @@
 
     <div class="col">
 <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required readonly>
+        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required >
 
         @if ($errors->has('start_date'))
             <span class="invalid-feedback" role="alert">
@@ -173,7 +173,7 @@
     </div>
     <div class="col">
 <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required readonly>
+    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required >
 
     @if ($errors->has('end_date'))
         <span class="invalid-feedback" role="alert">

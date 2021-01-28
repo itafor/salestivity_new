@@ -177,11 +177,24 @@
                      <td>{{ $customerRenewal->customers->name }}</td>
                    </tr>
 
-                     <tr>
-                     <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
-                     <td>{{ $customerRenewal->product_name? $customerRenewal->product_name->name:'N/A' }}
+                    <tr>
+                     <td style="width: 120px;"><b>{{ __('Category') }}</b></td>
+                     <td>{{ $customerRenewal->category ? $customerRenewal->category->name : 'N/A' }}
+                     </td>
                    </tr>
 
+                     <tr>
+                     <td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
+                     <td>{{ $customerRenewal->subcategory ? $customerRenewal->subcategory->name : 'N/A' }}
+                     </td>
+                   </tr>
+
+                     <tr>
+                     <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
+                     <td>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}
+                     </td>
+                   </tr>
+                   
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Billing Amount') }}</b></td>
                      <td>&#8358;{{ number_format($customerRenewal->billingAmount,2) }}
