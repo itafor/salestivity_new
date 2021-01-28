@@ -147,7 +147,7 @@
         <select name="duration_type" class="form-control" id="duration_type" required>
             <option  value="">Choose</option>
             <option  value="Annually">Annually</option>
-            <option  value="Monthly">Monthly</option>
+            <!-- <option  value="Monthly">Monthly</option> -->
         </select>
 
         @if ($errors->has('duration_type'))
@@ -159,11 +159,13 @@
 
   </div>
 
+   
+
         <div class="row">
 
     <div class="col">
 <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
-        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required readonly>
+        <input type="text" name="start_date" id="startdate" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required disabled>
 
         @if ($errors->has('start_date'))
             <span class="invalid-feedback" role="alert">
@@ -173,11 +175,45 @@
     </div>
     <div class="col">
 <label class="form-control-label" for="end_date">{{ __('End Date') }}</label>
-    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required readonly>
+    <input type="text" name="end_date" id="end_date" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required disabled>
 
     @if ($errors->has('end_date'))
         <span class="invalid-feedback" role="alert">
             <strong>{{ $errors->first('end_date') }}</strong>
+        </span>
+    @endif
+    </div>
+  </div>
+
+         <div class="row" style="display: none;" id="AnnualReminderDuration">
+
+    <div class="col">
+<label class="form-control-label" for="first_duration">{{ __('First Reminder Duration') }}</label>
+        <input type="number" min="1" name="first_duration" id="first_duration" class="form-control form-control-alternative{{ $errors->has('first_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 50 days to due date') }}"  value="{{ old('first_duration') }}" >
+
+        @if ($errors->has('first_duration'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('first_duration') }}</strong>
+            </span>
+        @endif
+    </div>
+    <div class="col">
+<label class="form-control-label" for="second_duration">{{ __('Second Reminder Duration') }}</label>
+    <input type="number" min="1" name="second_duration" id="second_duration" class="form-control form-control-alternative{{ $errors->has('second_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 25 days to due date') }}"  value="{{ old('second_duration') }}" >
+
+    @if ($errors->has('second_duration'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('second_duration') }}</strong>
+        </span>
+    @endif
+    </div>
+       <div class="col">
+<label class="form-control-label" for="third_duration">Third Reminder Duration (Expired)</label>
+    <input type="number" min="0" name="third_duration" id="third_duration" class="form-control form-control-alternative{{ $errors->has('third_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 0 days to due date') }}"  value="" >
+
+    @if ($errors->has('third_duration'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('third_duration') }}</strong>
         </span>
     @endif
     </div>
@@ -197,7 +233,8 @@
   </div>
 
 <div class="text-center">
-    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+    <button onclick="removeDisabledAttr()" type="submit" class="btn btn-success mt-4" id="submitRenewalButton">{{ __('Save') }}</button>
+   <img src="{{URL::asset('/img/ajax-loader.gif')}}" alt="spinner" style="display: none;" id="loader">
 </div>
 
 </form>

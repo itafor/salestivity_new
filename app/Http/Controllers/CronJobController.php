@@ -24,22 +24,24 @@ class CronJobController extends Controller
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
      ->get();
-// dd($renewals);
+ //dd($renewals);
 
        foreach($renewals as $renewal) {
-           if($renewal->remaingdays == 339){
+        $duration = $renewal->duration;
+      //dd($duration);
+           if($duration->first_duration && $duration->first_duration == $renewal->remaingdays){
                $renewalContacts = $renewal->contacts;
                      self::notifyCustomer($renewal);
                if($renewalContacts){
            self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
           }
-          }elseif ($renewal->remaingdays == 3) {
+          }elseif ($duration->second_duration && $duration->second_duration == $renewal->remaingdays) {
             $renewalContacts = $renewal->contacts;
                     self::notifyCustomer($renewal);
                      if($renewalContacts){
            self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
           }
-          }elseif ($renewal->remaingdays == 5) {
+          }elseif ($duration->third_duration == $renewal->remaingdays) {
            $renewalContacts = $renewal->contacts;
                      self::notifyCustomer($renewal);
                       if($renewalContacts){
