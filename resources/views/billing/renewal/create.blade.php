@@ -185,8 +185,9 @@
     </div>
   </div>
 
-         <div class="row" style="display: none;" id="AnnualReminderDuration">
+<h3 style="display: none;" id="AnnualReminderDurationHeading">Annual Reminder durations </h3>
 
+     <div class="row" style="display: none;" id="AnnualReminderDuration">
     <div class="col">
 <label class="form-control-label" for="first_duration">{{ __('First Reminder Duration') }}</label>
         <input type="number" min="1" name="first_duration" id="first_duration" class="form-control form-control-alternative{{ $errors->has('first_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 50 days to due date') }}"  value="{{ old('first_duration') }}" >
@@ -208,7 +209,7 @@
     @endif
     </div>
        <div class="col">
-<label class="form-control-label" for="third_duration">Third Reminder Duration (Expired)</label>
+<label class="form-control-label" for="third_duration">Third Reminder Duration</label>
     <input type="number" min="0" name="third_duration" id="third_duration" class="form-control form-control-alternative{{ $errors->has('third_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 0 days to due date') }}"  value="" >
 
     @if ($errors->has('third_duration'))

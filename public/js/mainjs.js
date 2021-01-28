@@ -709,24 +709,34 @@ function add_product() {
       }
   });
 
-//renewal duration type
+//select renewal duration type
   $('#duration_type').change(function(){
     var durationType = $(this).val();
     if(durationType !=''){
         $("#startdate, #end_date").removeAttr('disabled');
         durationType == 'Annually' ?  $("#end_date").attr('disabled','disabled') : $("#startdate, #end_date").val('');
         durationType == 'Annually' ?  $("#AnnualReminderDuration").show() :  $("#AnnualReminderDuration").hide(); $("#first_duration, #second_duration, #third_duration").val('') ;
+  durationType == 'Annually' ?  $("#AnnualReminderDurationHeading").show() :  $("#AnnualReminderDurationHeading").hide();
  }else{
   $("#startdate, #end_date").val('');
   $("#startdate, #end_date").attr('disabled','disabled');
   $("#AnnualReminderDuration").hide();
+  $("#AnnualReminderDurationHeading").hide();
   $("#first_duration, #second_duration, #third_duration").val('');
 
  }
 });
-
+//Remove disabled attr from enddate and hide renewal submit button
   function removeDisabledAttr(){
     $("#end_date").removeAttr('disabled');
     $("#submitRenewalButton").hide();
     $("#loader").show();
   }
+
+  $("#first_duration, #second_duration, #third_duration").on('keyup', function(){
+     let data = $(this).val();
+     if(data >= 365 || data <= -1 ||  isNaN(parseInt(data))){
+      alert('Invalid number entered! Please enter a number between 0 and 364');
+      $("#first_duration, #second_duration, #third_duration").val('');
+     }
+  })
