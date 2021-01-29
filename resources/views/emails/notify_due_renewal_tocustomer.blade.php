@@ -146,7 +146,7 @@
                             <td colspan="2">
                                 Dear {{$renewal->customers->name}},<br>
                                 <em>
-                                @if($remaingDays == 0)
+                                @if($remaingDays <= 0)
                             Kindly be notified that your Recurring has expired.<br>
 
                                 Expired Date:
