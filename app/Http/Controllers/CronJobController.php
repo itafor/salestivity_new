@@ -24,7 +24,6 @@ class CronJobController extends Controller
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
      ->get();
- //dd($renewals);
 
        foreach($renewals as $renewal) {
         $duration = $renewal->duration;
@@ -50,8 +49,30 @@ class CronJobController extends Controller
           }
         }
 
-         
+ }
 
+
+    public static function dueUnpaidRenewalsMonthlyNotification()
+    {
+       
+      $renewals = Renewal::where([
+        ['billingBalance','>',0],
+      ])
+      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
+     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+     ->get();
+ //dd($renewals);
+
+       foreach($renewals as $renewal) {
+            if($renewal->remaingdays <= 0){
+                    $renewalContacts = $renewal->contacts;
+                     self::notifyCustomer($renewal);
+               if($renewalContacts){
+           self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+          }
+      }
+           
+    }
  }
 
 

@@ -146,7 +146,7 @@
                             <td colspan="2">
                               Dear {{$customerContact->name}},<br>
                                 <em>
-                                    @if($remaing_days == 0)
+                                    @if($remaing_days <= 0)
                             Kindly be notified that your renewal has expired.<br>
                                    
                                Expired Date: ( {{ date("jS F, Y", strtotime($customerRenewal->end_date)) }} )
