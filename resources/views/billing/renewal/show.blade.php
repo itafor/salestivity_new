@@ -167,7 +167,7 @@
 
                <tr>
                  <td style="width: 200px;"><b>{{ __('Reminder Durations') }}</b></td>
-                 <td> First : {{$renewal->duration->first_duration ? $renewal->duration->first_duration.'days' : 'N/A' }}, Second: {{$renewal->duration->second_duration ? $renewal->duration->second_duration.'days' : 'N/A' }}, Third: {{$renewal->duration ? $renewal->duration->third_duration.'days' : 'N/A' }} </td>
+                 <td> First : {{$renewal->duration ? $renewal->duration->first_duration.'days' : 'N/A' }}, Second: {{$renewal->duration ? $renewal->duration->second_duration.'days' : 'N/A' }}, Third: {{$renewal->duration ? $renewal->duration->third_duration.'days' : 'N/A' }} </td>
                  </tr>
 
                     </tbody>
