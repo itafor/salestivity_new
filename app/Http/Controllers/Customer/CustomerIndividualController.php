@@ -76,7 +76,6 @@ class CustomerIndividualController extends Controller
             'industry' => 'required',
             'email' => 'required|max:255',
             'phone' => 'required|max:11',
-            'website' => 'required',
             'state' => 'required',
             'city' => 'required',
             'street' => 'required',

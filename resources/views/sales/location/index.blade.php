@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Location')])
+@extends('layouts.app', ['title' => __('Location Management')])
 @section('content')
 @include('users.partials.header', ['title' => __('All Location')]) 
 
