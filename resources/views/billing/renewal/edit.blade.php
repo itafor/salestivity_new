@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Edit Renewal')])
+@extends('layouts.app', ['title' => __('Recurring Management')])
 @section('content')
 @include('users.partials.header', ['title' => __('Recurring')])  
 

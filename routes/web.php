@@ -230,4 +230,5 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 
 //cron jobs
 	Route::get('annaul_renewal_notification', 'CronJobController@annualRenewalsNotification');
+	Route::get('due_unpaid_renewals_monthly_notification', 'CronJobController@dueUnpaidRenewalsMonthlyNotification');
 	
