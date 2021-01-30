@@ -24,7 +24,6 @@ class CronJobController extends Controller
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
      ->get();
- //dd($renewals);
 
        foreach($renewals as $renewal) {
         $duration = $renewal->duration;
