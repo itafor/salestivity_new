@@ -40,7 +40,7 @@ class CronJobController extends Controller
                      if($renewalContacts){
            self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
           }
-          }elseif ($duration->third_duration == $renewal->remaingdays) {
+          }elseif ($duration && $duration->third_duration == $renewal->remaingdays) {
            $renewalContacts = $renewal->contacts;
                      self::notifyCustomer($renewal);
                       if($renewalContacts){
