@@ -28,13 +28,13 @@ class CronJobController extends Controller
        foreach($renewals as $renewal) {
         $duration = $renewal->duration;
       //dd($duration);
-           if($duration->first_duration && $duration->first_duration == $renewal->remaingdays){
+           if($duration && $duration->first_duration == $renewal->remaingdays){
                $renewalContacts = $renewal->contacts;
                      self::notifyCustomer($renewal);
                if($renewalContacts){
            self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
           }
-          }elseif ($duration->second_duration && $duration->second_duration == $renewal->remaingdays) {
+          }elseif ($duration && $duration->second_duration == $renewal->remaingdays) {
             $renewalContacts = $renewal->contacts;
                     self::notifyCustomer($renewal);
                      if($renewalContacts){
