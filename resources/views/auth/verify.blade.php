@@ -1,5 +1,4 @@
-@extends('layouts.app', ['class' => 'bg-default'])
-
+@extends('layouts.app', ['title' => __('Email Address Verification')])
 @section('content')
    <div class="header bg-solid-custom py-7 py-lg-8">
     <div class="container">
@@ -29,7 +28,8 @@
                         <div>
                             @if (session('resent'))
                                 <div class="alert alert-success" role="alert">
-                                    {{ __('A fresh verification link has been sent to your email address.') }}
+                                    {{ __('A fresh verification link has been sent to your email address') }}
+                                    ({{Auth::user()->email}}).
                                 </div>
                             @endif
                             
