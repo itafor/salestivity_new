@@ -11,8 +11,8 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
+// Route::get('testing-time', function () {
+//    echo date('m/d/Y H:i:s', 1611243565);
 // });
 Auth::routes(['verify' => true]);
 
@@ -20,16 +20,15 @@ Route::get('/', 'HomeController@homepage');
 Route::group(['middleware' => ['auth:sub_user,web']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
-	
+	//subuser Email verification
 Route::get('verify-your-email', 'UserController@verifySubuserEmail')->name('subuser.verify.email');
-Route::get('sub-user-email-link', 'UserController@resendSubuserEmailEmailVerification')->name('subuser.resend.emaillink');
-Route::get('subuser-email-verified', 'UserController@subUserEmailverified')->name('subuser.email.verified');
+Route::get('email/verification-link', 'UserController@resendEmailVerificationink')->name('resend.email.verification.link');
+Route::get('email-verified', 'UserController@emailverified')->name('email.verified');
 
+//primary user email verification
+Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser.verify.email');
 
-	// Route::get('email/template', function() {
-	// 	return view('emails/sendinvoice');
-	// });
-
+	
 	// Roles
 	Route::get('roles', 'UsersRoleController@index')->name('role.index');
 	// Route::get('new/role', 'UsersRoleController@create')->name('role.create');

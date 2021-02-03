@@ -108,11 +108,11 @@
                     <table>
                         <tr>
                             <td colspan="2">
-                                Hello {{$subUser->name}},
+                                Hello,
                                 <p>
                                 Please click the button below to verify your email address.
                                 <br>
-                                <a href="{{route('subuser.email.verified')}}">
+                                <a href="{{route('email.verified')}}">
                                 <button class="btn btn-primary">Verify Email Address</button>
                                 </a>
                                 <br>

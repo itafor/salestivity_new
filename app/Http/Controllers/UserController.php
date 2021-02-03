@@ -21,17 +21,40 @@ class UserController extends Controller
 
       public function __construct()
     {
-        $this->middleware(['auth','verified','subuserVerified'])->except(['resendSubuserEmailEmailVerification','verifySubuserEmail','subUserEmailverified']);
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['resendEmailVerificationink','verifySubuserEmail','emailverified','verifyMainuserEmail']);
     }
 
     public function verifySubuserEmail()
     {
+        if(Auth::guard('sub_user')->user()->email_verified_at == null){
         return view('auth.verifySubuser');
+        }
+        return redirect()->route('home');
     }
 
-    public function resendSubuserEmailEmailVerification(){
+   public function verifyMainuserEmail()
+    {
+        if(Auth::user()->email_verified_at == null){
+             return view('auth.verify_main_user_email');
+        }
+        return redirect()->route('home');
+    }
 
-       $subuser =  Auth::guard('sub_user')->user();
+    public function resendEmailVerificationink(){
+
+        if(getActiveGuardType()->user_type == 'users'){
+             $user =  Auth::user();
+
+       $toEmail = $user->email;
+
+      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));
+
+      session(['emailResentToUser' => 'resentToMainuser']);
+
+        return redirect()->route('mainuser.verify.email');
+
+    }elseif (getActiveGuardType()->user_type == 'sub_users') {
+           $subuser =  Auth::guard('sub_user')->user();
 
        $toEmail = $subuser->email;
 
@@ -40,11 +63,21 @@ class UserController extends Controller
       session(['emailResent' => 'resentToSubuser']);
 
         return redirect()->route('subuser.verify.email');
-
     }
+   
+}
 
-     public function subUserEmailverified()
+ public function emailverified()
     {
+        if(getActiveGuardType()->user_type == 'users'){
+       
+        $userId = Auth::User()->id;
+        $user = User::where('id',$userId)->first();
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        return redirect()->route('home');
+        }elseif (getActiveGuardType()->user_type == 'sub_users') {
        $subuserId = Auth::guard('sub_user')->user()->id;
       
         $subuser = SubUser::where('id',$subuserId)->first();
@@ -53,6 +86,9 @@ class UserController extends Controller
 
         return redirect()->route('home');
     }
+}
+    
+   
     /**
      * Display a listing of the users
      *

@@ -14,6 +14,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TargetController extends Controller
 {
+
+      public function __construct()
+    {
+        $this->middleware(['auth','mainuserVerified','subuserVerified']);
+    }
+
     public function index()
     {
         $userId = \getActiveGuardType()->main_acct_id;

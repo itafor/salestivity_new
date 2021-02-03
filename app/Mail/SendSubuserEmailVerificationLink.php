@@ -17,9 +17,9 @@ class SendSubuserEmailVerificationLink extends Mailable
      *
      * @return void
      */
-    public function __construct($sub_user)
+    public function __construct($user)
     {
-        $this->subUser = $sub_user;
+        $this->subUser = $user;
     }
 
     /**
