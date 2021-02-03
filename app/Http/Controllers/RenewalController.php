@@ -29,7 +29,7 @@ class RenewalController extends Controller
 
       public function __construct()
     {
-        $this->middleware(['auth','verified','subuserVerified'])->except('homepage');
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except('homepage');
     }
     /**
      * Display a listing of the resource.
