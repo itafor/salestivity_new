@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-
-use Illuminate\Http\Request;
+use App\Mail\SendSubuserEmailVerificationLink;
+use App\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -98,6 +99,10 @@ class RegisterController extends Controller
         $user->profile_id = $userId;
         $user->role_id = 1;
         $user->update();
+
+         $toEmail = $user->email;
+            
+          Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));// send this user email verification link
 
         $this->guard()->login($user);
 
