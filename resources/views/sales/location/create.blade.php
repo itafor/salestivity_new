@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Location Management')])
+@extends('layouts.app', ['title' => __('Location Management'), 'icon' => 'las la-map-marker-alt'])
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sales Location')])
 
@@ -12,7 +12,7 @@
                                 <h3 class="mb-0">{{ __('Add New Location') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('sales.location.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('sales.location.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
                         </div>
                     </div>

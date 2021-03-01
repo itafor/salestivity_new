@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Account Management')])
+@extends('layouts.app', ['title' => __('Account Management'), 'icon' => 'las la-suitcase'])
 @section('content')
 @include('users.partials.header', ['title' => __('View Account')]) 
 @include('master')
@@ -13,7 +13,8 @@
                                 <h3 class="mb-0">{{ __('Edit Account') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
+                                <button id="edit" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></button>
+                               
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('User Management')])
+@extends('layouts.app', ['title' => __('User Management'), 'icon' => 'las la-user'])
 @section('content')
 @include('users.partials.header', ['title' => __('Opportunity Report Details')])
 
@@ -65,11 +65,11 @@
             </select>
     </div>
   </div>
-  <div class="form-row col-md-12">
+  <div class="form-row">
     <div class="form-group col-md-4">
 
              <label class="control-label col-sm-4" for="date">Amount:</label>
-            <div class="col-md-12">
+            <div class="col-md-12 stack-input">
                 <input id="amount1" type="number" min="1" class="form-control" name="amount_from" value="{{$selectedAmountFrom !='' ? $selectedAmountFrom : ''}}" placeholder="From" required>
                 <input id="amount2" type="number" min="1" class="form-control" name="amount_to" value="{{$selectedAmountTo !='' ? $selectedAmountTo : ''}}" placeholder="To" required>
             </div>
@@ -78,7 +78,7 @@
 
   <div class="form-group col-md-4">
             <label class="control-label col-sm-6" for="date">Initiation Date:</label>
-            <div class="col-md-12">
+            <div class="col-md-12 stack-input">
                 <input id="date1" type="text" class="form-control" name="init_date_from" value="{{$selectedInitDateFrom !='' ? \Carbon\Carbon::parse($selectedInitDateFrom)->format('d/m/Y') : ''}}" placeholder="From" data-toggle="datepicker" required> 
                 <input id="date2" type="text" class="form-control" name="init_date_to" value="{{$selectedInitDateTo !='' ? \Carbon\Carbon::parse($selectedInitDateTo)->format('d/m/Y') : ''}}" placeholder="To" data-toggle="datepicker" required>
             </div>
@@ -86,7 +86,7 @@
      <div class="form-group col-md-4">
 
              <label class="control-label col-sm-6" for="date">Closure Date:</label>
-            <div class="col-md-12">
+            <div class="col-md-12 stack-input">
                 <input id="date1" type="text" class="form-control" name="closure_date_from" value="{{$selectedClosureDateFrom !='' ? \Carbon\Carbon::parse($selectedClosureDateFrom)->format('d/m/Y') : ''}}" placeholder="From" data-toggle="datepicker" required>
                 <input id="date2" type="text" class="form-control" name="closure_date_to" value="{{$selectedClosureDateTo !='' ? \Carbon\Carbon::parse($selectedClosureDateTo)->format('d/m/Y') : ''}}" placeholder="To" data-toggle="datepicker" required>
             </div>

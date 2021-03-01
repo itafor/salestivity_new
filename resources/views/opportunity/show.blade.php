@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('User Management')])
+@extends('layouts.app', ['title' => __('User Management'), 'icon' => 'las la-user'])
 @section('content')
 @include('users.partials.header', ['title' => __('Opportunity')])
 

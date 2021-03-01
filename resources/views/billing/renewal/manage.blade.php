@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Recurring Management')])
+@extends('layouts.app', ['title' => __('Recurring Management'), 'icon' => 'las la-file-invoice-dollar'])
 @section('content')
 @include('users.partials.header', ['title' => __('Manage Renewal')])  
 

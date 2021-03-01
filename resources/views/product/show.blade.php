@@ -1,5 +1,4 @@
-@extends('layouts.app', ['title' => __('Product Management')])
-
+@extends('layouts.app', ['title' => __('Product Management'), 'icon' => 'las la-cart'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('Product')]) 
@@ -26,17 +25,25 @@
 <div class="container-fluid mt--7">
         <div class="row">
 <div class="col-xl-12 order-xl-1">
-            <div class="card">
-  <div class="card-header">
-   <div class="float-left">Product Details</div>
-    <div class="float-right">
-      <a href="{{route('product.edit',[$product->id])}}">
-        <button class="btn btn-info btn-sm">Edit</button>
-      </a> ||  <a href="{{route('product.index')}}">
-        <button class="btn btn-success btn-sm">Back to List</button>
-      </a>
+  <div class="card shadow">
+  
+
+    <div class="card-header bg-white">
+      <div class="row align-items-center">
+          <div class="col-8">
+              <h3 class="mb-0">{{ __('Product Details') }}</h3>
+          </div>
+          <div class="col-4 text-right">
+              <a href="{{route('product.edit',[$product->id])}}" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></a>
+              <a href="{{ route('product.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
+          </div>
+      </div>
     </div>
-  </div>
+
+
+
+
+
   <div class="card-body">
              <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($product))
