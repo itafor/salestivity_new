@@ -1,7 +1,7 @@
-@extends('layouts.app', ['title' => __('Account Management')])
+@extends('layouts.app', ['title' => __('Account Management'), 'icon' => 'las la-user'])
 
 @section('content')
-@include('users.partials.header', ['title' => __('All Accounts')]) 
+@include('users.partials.header', ['title' => __('All Accounts'))] 
 
       
     <div class="container-fluid mt--7 main-container">
@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Accounts') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('customer.create') }}" class="btn btn-sm btn-primary">{{ __('Create account') }}</a>
+                                <a href="{{ route('customer.create') }}" class="btn-icon btn-tooltip" title="{{ __('Create Account') }}"><i class="las la-user-plus"></i></a>
                             </div>
                         </div>
                     </div>

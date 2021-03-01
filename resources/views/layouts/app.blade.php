@@ -15,8 +15,10 @@
         <!-- Icons -->
         <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon') }}/css/custom.css?v=1.0.0" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('select2-4.0.7/dist/css/select2.min.css') }}">
         <!-- <link href="ExampleStyle.css" type="text/css" rel="stylesheet"/> -->
         <link rel="stylesheet" href="{{ asset('css/tablestyle.css') }}">
@@ -133,6 +135,7 @@
 <!-- datatable script -->
        <script src="{{url('assets/datatables.net/js/jquery.dataTables.js')}}"></script>
     <script src="{{url('assets/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+    
     <script src="{{ url('js/select2.js') }}"></script>
     
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

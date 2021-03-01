@@ -1,5 +1,4 @@
-@extends('layouts.app', ['title' => __('Product Management')])
-
+@extends('layouts.app', ['title' => __('Product Management'), 'icon' => 'las la-suitcase'])
 @section('content')
 @include('users.partials.header', ['title' => __('All Products')]) 
 
@@ -14,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('All Products') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">{{ __('Add Product') }}</a>
+                                <a href="{{ route('product.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Product') }}"><i class="las la-cart-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +29,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>

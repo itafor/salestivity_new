@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Recurring Management')])
+@extends('layouts.app', ['title' => __('Recurring Management'), 'icon' => 'las la-file-invoice-dollar'])
 @section('content')
 @include('users.partials.header', ['title' => __('Recurring')])  
 
@@ -9,7 +9,7 @@
   <div class="card-header">
     <div class="float-left">Edit Recurring</div>
     <div class="float-right">
-        <a href="{{route('billing.renewal.index')}}">Back to List</a>
+       <a href="{{ route('billing.renewal.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-lef"></i></a>
     </div>
   </div>
   <div class="card-body">

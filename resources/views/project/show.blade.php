@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Project Management')])
+@extends('layouts.app', ['title' => __('Project Management'), 'icon' => 'las la-gem' ])
 @section('content')
 @include('users.partials.header', ['title' => __('Account')]) 
 		
@@ -24,13 +24,13 @@
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
+                    <div class="card-header bg-white">
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 id="title" class="mb-0">{{ __('View Project') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <button id="edit"  class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
+                                <button id="edit"  class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></button>
                             </div>
                         </div>
                     </div>

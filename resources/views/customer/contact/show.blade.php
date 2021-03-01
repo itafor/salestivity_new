@@ -26,7 +26,9 @@
                     <td>{{$contact->phone}}</td>
                     <td>{{$contact->email}}</td>
                     <td>
-                        <a onclick="deleteData('contact','destroy',{{$contact->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                        <a onclick="deleteData('contact','destroy',{{$contact->id}})">
+                            <button class="btn btn-sm btn-danger"><i class="las la-trash-alt"></i></button>
+                        </a>
                     </td>
               </tr>                 
                 @endforeach      

@@ -6,8 +6,15 @@
     $(document).ready(function() {
         $('.datatable').DataTable({
                 dom: 'lTfgitp',
+                "language": {
+                  "paginate": {
+                    "next": "<i class='las la-angle-double-right'></i>",
+                    "previous": "<i class='las la-angle-double-left'></i>"
+                  }
+                }
             
             });
+         
     });
     $("select").not('.reportselectOption, .user').select2({
         theme: "bootstrap"

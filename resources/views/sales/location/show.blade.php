@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Location Management')])
+@extends('layouts.app', ['title' => __('Location Management'), 'icon' => 'las la-map-marker-alt'])
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sales Location')])
 
@@ -28,7 +28,7 @@
                                 <h3 class="mb-0">{{ __('Add New Sale Location') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }}</button>
+                                <button id="edit" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></button>
                             </div>
                         </div>
                     </div>

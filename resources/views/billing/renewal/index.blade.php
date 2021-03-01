@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Recurring Management')])
+@extends('layouts.app', ['title' => __('Recurring Management'), 'icon' => 'las la-file-invoice-dollar'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('Recurring')]) 
@@ -11,10 +11,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('All Recurring') }} </h3>
+                                <h3 class="mb-0">{{ __('All Recurring Invoices') }} </h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.renewal.create') }}" class="btn btn-sm btn-primary">{{ __('Create Recurring') }}</a>
+                                <a href="{{ route('billing.renewal.create') }}" class="btn-icon btn-tooltip" title="{{ __('Create Recurring') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
