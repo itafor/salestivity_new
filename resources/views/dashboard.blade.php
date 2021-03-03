@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Dashboard')])
+@extends('layouts.app', ['title' => __('Dashboard'), 'icon' => 'las la-tachometer-alt'])
 
 @section('content')
     @include('layouts.headers.cards')

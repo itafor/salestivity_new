@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('SubCategory Management')])
+@extends('layouts.app', ['title' => __('Subcategory Management'), 'icon' => 'las la-layer-group'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('All Sub Categories')]) 
@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Sub Categories') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.subcategory.create') }}" class="btn btn-sm btn-primary">{{ __('Add Sub Category') }}</a>
+                                <a href="{{ route('product.subcategory.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Sub Category') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>

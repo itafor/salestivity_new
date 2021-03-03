@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Invoice Management')])
+@extends('layouts.app', ['title' => __('Invoice Management'), 'icon' => 'las la-receipt'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('All Invoices')]) 
@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Invoices') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.invoice.create') }}" class="btn btn-sm btn-primary">{{ __('Create Invoice') }}</a>
+                                <a href="{{ route('billing.invoice.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Invoice') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         
 
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Customer') }}</th>

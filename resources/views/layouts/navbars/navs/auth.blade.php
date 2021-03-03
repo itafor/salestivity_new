@@ -2,10 +2,13 @@
 <nav class="navbar navbar-auth navbar-top navbar-expand-md navbar-dark" id="navbar-main">
     <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">{{isset($title) ? $title : ''}}</a>
+        @if (isset($icon)) 
+            <i class="{{ $icon }} header-icon"></i>
+        @endif
+        <a class="h4 text-white d-none d-lg-inline-block header-title" href="{{ route('home') }}">{{isset($title) ? $title : ''}}</a>
         
         <!-- User -->
-        <ul class="navbar-nav align-items-center d-none d-md-flex">
+        <ul class="navbar-nav align-items-center d-none d-md-flex right">
             <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
