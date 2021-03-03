@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Email Address Verification')])
+@extends('layouts.app', ['title' => __('Account Verification'), 'icon' => 'las la-user-plus'])
 @section('content')
    <div class="header bg-solid-custom py-7 py-lg-8">
     <div class="container">
@@ -20,11 +20,11 @@
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
-                <div class="cardcard-custom bg-secondary shadow">
+                <div class="cardcard-custom bg-secondary shadow-light verify-panel">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
+                       <!--<div class="text-center text-muted mb-4">
                             <small>{{ __('Verify Your Email Address') }}</small>
-                        </div>
+                        </div>-->
                         <div>
                             @if (session('emailResentToUser'))
                                 <div class="alert alert-success" role="alert">
