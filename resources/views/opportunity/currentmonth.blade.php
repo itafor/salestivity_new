@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush" >
+                            <table class="table align-items-center table-flush datatable">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">{{ __('Account') }}</th>
@@ -71,7 +71,7 @@
                                                 
                                               
                                                 <td>
-                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                         
                                                 </td>
                                             </tr>

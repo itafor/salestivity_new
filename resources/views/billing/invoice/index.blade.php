@@ -31,7 +31,7 @@
                         
 
                             <div class="table-responsive">
-                                <table class="table table-bordered align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Customer') }}</th>
@@ -46,7 +46,7 @@
                                     <tbody>
                                         @if($invoices->isEmpty())
                                             <tr>
-                                                <td colspan="8" style="text-align: center">
+                                                <td colspan="7" style="text-align: center">
                                                     <h3>No data available</h3>
                                                 </td>
                                             </tr>
@@ -68,18 +68,11 @@
                                                     @endif
                                                     <td>{{ $invoice->status }}</td>
                                                     <td>
-                                                    <span>
-                                                    <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                    <!-- <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a> -->
-                                                   
-                                                    </span>
-                                                        <div class="col-4 text-right">
-                                                            
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                   
-                                                </td>
+                                                        <span>
+                                                            <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                            <!-- <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a> -->
+                                                        </span>                                                       
+                                                    </td>                                                    
                                                 </tr>
                                             @endforeach
                                         @endif

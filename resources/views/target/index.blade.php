@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered align-items-center table-flush" >
+                                <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Sales Person') }}</th>
@@ -70,7 +70,7 @@
                                                     <td>
                                                         <span>
                                                             <div class="col-4 text-right">
-                                                                <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success">{{ __('Manage') }}</a>
+                                                                <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success" title="Manage"><i class="las la-edit"></i></a>
                                                             </div>
                                                         </span>
                                                     </td>

@@ -78,7 +78,7 @@
                                                             <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                                 @csrf
                                                                 <div class="col-4 text-right">
-                                                                    <button type="submit" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                                    <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
                                                                 </div>
                                                             </form>
                                                             </div>

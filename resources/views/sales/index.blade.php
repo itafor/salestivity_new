@@ -29,7 +29,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table align-items-center table-bordered" >
+                                <table class="table align-items-center table-bordered datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Product') }}</th>
@@ -70,7 +70,7 @@
                                                     <td>   
                                                         <span>
                                                             <div class="col-4 text-right">
-                                                                <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                                <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                                 
                                                             </div>
                                                         </span>
