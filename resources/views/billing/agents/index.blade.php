@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Billing')])
+@extends('layouts.app', ['title' => __('Billing'), 'icon' => 'las la-file-invoice-dollar'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('All Billing Agents')]) 
@@ -53,9 +53,8 @@
                                            
                                             
                                             <td>
-                                                <div class="col-4 text-right">
-                                                   
-                                                    <a onclick="deleteData('billing','agent',{{$agent->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                                                <div class="col-4 text-right">                                                   
+                                                    <a onclick="deleteData('billing','agent',{{$agent->id}})"><button class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button></a>
                                                 </div>
                                             </td>
                                         </tr>

@@ -30,7 +30,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table table-bordered align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
@@ -70,7 +70,7 @@
                                                         <div class="btn-group" role="group">
                                                             <form action="{{ route('product.subcategory.destroy', [$sub->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                                 @csrf
-                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
                                                             </form>
                                                         </div>
                                                     </div>
