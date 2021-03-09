@@ -71,7 +71,7 @@
 
                                                         <div class="btn-group-justified text-center" role="group">
                                                             <div class="btn-group" role="group">
-                                                            <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                             </div>  
 
                                                             <div class="btn-group" role="group">
