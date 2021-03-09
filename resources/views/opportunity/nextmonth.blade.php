@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush" >
+                            <table class="table align-items-center table-flush datatable">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">{{ __('Account') }}</th>
@@ -68,7 +68,7 @@
                                                  <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
                                               
                                                 <td>
-                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                         <!-- <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a> -->
                                                 </td>
                                             </tr>

@@ -49,12 +49,12 @@
                                                 
                                                 <td>
                                                     <div class="col-4 text-right">
-                                                        <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                        <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                         @if($renewal->status == 'Paid')
-                                                        <a  class="btn btn-sm btn-primary text-white" onclick="completelypayAlert()">{{ __('Payment') }}</a>
+                                                        <a  class="btn btn-sm btn-primary" onclick="completelypayAlert()"title="Payment"><i class="las la-money-bill"></i></a>
                                                         @else
 
-                                                        <a  class="btn btn-sm btn-primary text-white" onclick="renewalPayment({{$renewal->id}})">{{ __('Payment') }}</a>
+                                                        <a  class="btn btn-sm btn-primary" onclick="renewalPayment({{$renewal->id}})" title="Renewal"><i class="las la-comment-dollar"></i></a>
 
                                                         @endif
                                                       
