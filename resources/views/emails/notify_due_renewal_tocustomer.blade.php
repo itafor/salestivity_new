@@ -150,13 +150,13 @@
                             Kindly be notified that your Recurring has expired.<br>
 
                                 Expired Date:
-                    ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
+                     {{ date("jS F, Y", strtotime($renewal->end_date)) }} 
                                 
                                     @else
 
-                                   Kindly be notified that your Recurring will be due in {{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}
+                                   Kindly be notified that your Recurring will be due on
                                    
-                    ( {{ date("jS F, Y", strtotime($renewal->end_date)) }} )
+                    {{ date("jS F, Y", strtotime($renewal->end_date)) }}.
 
                                  @endif
 
@@ -244,10 +244,7 @@
                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
               </tr>
 
-              <tr>
-                     <td style="width: 120px;"><b>{{ __('Days left') }}</b></td>
-                <td>{{$remaingDays}} {{$remaingDays > 1 ? 'days' : 'day'}}</td>           
-              </tr>
+             
 
                     </tbody>
                     @else
