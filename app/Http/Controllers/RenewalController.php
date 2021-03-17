@@ -103,24 +103,22 @@ class RenewalController extends Controller
          $renewal = Renewal::createNew($request->all());
          $getContactEmail = renewalContactEmail::where('renewal_id', $renewal->id)->get();
 
-         // get Company Email
          $company_email = $request->company_email;
-        //  send email to company email
-         (new User)->forceFill([
-            'name' => 'Company',
-            'email' => $company_email,
-            ])->notify((new RenewalCreated($renewal))->delay($when));
+
+         // (new User)->forceFill([
+         //    'name' => 'Company',
+         //    'email' => $company_email,
+         //    ])->notify((new RenewalCreated($renewal))->delay($when));
 
 
-            foreach ($getContactEmail as $key => $contact) {
-                $con = Contact::where('id', $contact->contact_id)->first();
-                // $user->notify(new RenewalCreated($renewal));
-                (new User)->forceFill([
-                    'name' => $con->name,
-                    'email' => $con->email,
-                    ])->notify((new RenewalCreated($renewal))->delay($when));
-                    // ])->notify(new RenewalCreated($renewal));
-            }
+         //    foreach ($getContactEmail as $key => $contact) {
+         //        $con = Contact::where('id', $contact->contact_id)->first();
+
+         //        (new User)->forceFill([
+         //            'name' => $con->name,
+         //            'email' => $con->email,
+         //            ])->notify((new RenewalCreated($renewal))->delay($when));
+         //    }
 
             DB::commit();
         }
