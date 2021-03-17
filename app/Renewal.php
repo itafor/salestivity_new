@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id','duration_type'
+        'category_id','subcategory_id','product_id','duration_type','first_reminder_sent'
     	];
 
     public function customers()
@@ -87,6 +87,7 @@ class Renewal extends Model
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
+         'first_reminder_sent' => 'no',
     	]);
 
         if($renewal){

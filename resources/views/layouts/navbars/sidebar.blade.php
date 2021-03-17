@@ -294,7 +294,7 @@
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="#navbar-invoicing-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                <i class="fab " style="color: #f4645f;"></i>
+                                <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
                                 <span class="nav-link-text">{{ __('Invoicing') }}</span>
                             </a>
                         </li>
@@ -334,29 +334,29 @@
                                 
                                 </ul>  
                         </div>
-                        <!-- Billing Agent -->
-                      <!--     <a class="nav-link" href="#navbar-billing-agent" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <!--Billing Parameters -->
+                          <a class="nav-link" href="#navbar-billing-agent" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
-                            <span class="nav-link-text">{{ __('Billing Agent') }}</span>
+                            <span class="nav-link-text">{{ __('Billing Parameters') }}</span>
                         </a>
                         <div class="collapse" id="navbar-billing-agent">
                             <ul class="nav nav-sm flex-column">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('billing.agent.index') }}">
-                                                {{ __('List') }}
+                                            <a class="nav-link" href="#">
+                                              #
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('billing.agent.create') }}">
-                                                {{ __('Add New') }}
+                                            <a class="nav-link" href="#">
+                                                #
                                             </a>
                                         </li> 
                                 </ul>
                                 
                                 </ul>  
-                        </div> -->
-                         <!-- Billing Agent end -->
+                        </div>
+                         <!--Billing Parameters end -->
                         </ul>
                     </div>
 

@@ -153,9 +153,9 @@
                                     
                                     @else
                                    
-                                   Kindly be notified that your renewal will be due in {{$remaing_days}} {{$remaing_days > 1 ? 'days' : 'day'}}
+                                   Kindly be notified that your renewal will be due on 
                                    
-                                 ( {{ date("jS F, Y", strtotime($customerRenewal->end_date)) }} )
+                                 {{ date("jS F, Y", strtotime($customerRenewal->end_date)) }}.
 
                                  @endif
                                  <br/>
@@ -239,11 +239,6 @@
               <tr>
                      <td style="width: 120px;"><b>{{ __('End Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($customerRenewal->end_date)) }}</td>           
-              </tr>
-
-              <tr>
-                     <td style="width: 120px;"><b>{{ __('Days left') }}</b></td>
-                <td>{{$remaing_days}} {{$remaing_days > 1 ? 'days' : 'day'}}</td>           
               </tr>
 
               <tr>
