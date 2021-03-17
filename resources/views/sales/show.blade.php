@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Sales Management')])
+@extends('layouts.app', ['title' => __('Sales Management'), 'icon' => 'las la-calculator'])
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sales')])
 
@@ -29,7 +29,7 @@
                                 <h3 class="mb-0">{{ __('Add New Sale') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <button id="edit" class="btn btn-sm btn-primary">{{ __('Edit') }} </button>
+                                <button id="edit" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></button>
                             </div>
                         </div>
                     </div>

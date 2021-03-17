@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Sales Management')])
+@extends('layouts.app', ['title' => __('Sales Management'), 'icon' => 'las la-calculator'])
 @section('content')
 @include('users.partials.header', ['title' => __('All Sales')]) 
 
@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('All Field Sales List') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('sales.create') }}" class="btn btn-sm btn-primary">{{ __('Add Sale') }}</a>
+                                <a href="{{ route('sales.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Sale') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table align-items-center table-bordered" >
+                                <table class="table align-items-center table-bordered datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Product') }}</th>
@@ -70,7 +70,7 @@
                                                     <td>   
                                                         <span>
                                                             <div class="col-4 text-right">
-                                                                <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                                <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                                 
                                                             </div>
                                                         </span>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Role Management')])
+@extends('layouts.app', ['title' => __('User Management'), 'icon' => 'las la-users-cog'])
 @section('content')
 @include('users.partials.header', ['title' => __('All Roles')])
 

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Account Management')])
+@extends('layouts.app', ['title' => __('Account Management'), 'icon' => 'las la-user'])
 @section('content')
 @include('users.partials.header', ['title' => __(' Customer Details')])  
 
@@ -24,32 +24,25 @@
 <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
-                            <div class="col-12">
-                                <h3 class="mb-0 float-left" id="title">{{ __('Customers') }}</h3>
-                                 <a href="{{ route('customer.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
+                <div class="card shadow">
+                   <div class="card-header col-12">
+                        <div class="row">
+                            <div class="col-6  text-left">
+                               <h3 class="mb-0 float-left" id="title">{{ __('Customers') }}</h3>
                             </div>
-         @if(isset($customer))
-            <div class="col-8">
-               
+                            <div class="col-6  text-right">
+                              @if(isset($customer))
+                                <a href="{{ route('customer.edit', ['id'=>$customer->id]) }}" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-user-edit"></i></a>
 
-            
-            <a href="{{ route('customer.edit', ['id'=>$customer->id]) }}">
-            <button class="btn btn-sm btn-primary">
-            {{ __('Edit') }}
-            </button>
-            </a>
-          
-
-
-             <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-
-            </div>
-            @endif
+                                <a onclick="deleteData('customer','destroy',{{$customer->id}})" class="btn-icon btn-tooltip" title="{{ __('Delete') }}"><i class="las la-trash"></i></a>
+                              @endif
+                               
+                                <a href="{{ route('customer.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
+                            </div>
                         </div>
                     </div>
+                    
+
                     <div class="card-body">
                                 <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($customer))
@@ -123,8 +116,13 @@
 
                     @endif
                   </table>
+
                   @if($contacts !='')
-                    @include('customer.contact.show')
+                  <div class="row mt-30 mb-30">
+                      <div class="col-md-12">
+                        @include('customer.contact.show')
+                      </div>
+                  </div>
                       @endif
                     </div>
                       

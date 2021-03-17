@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Account Management')])
+@extends('layouts.app', ['title' => __('Account Management'), 'icon' => 'las la-university'])
 
 @section('content')
 @include('users.partials.header', ['title' => __('All Accounts')]) 
@@ -11,10 +11,11 @@
                     <div class="card-header col-12">
                         <div class="row">
                             <div class="col-6  text-left">
-                                <a href="{{ route('customer.corporate.create') }}" class="btn btn-sm btn-primary">{{ __('Add Corporate account') }}</a>
+                               <h4>All Accounts</h4>
                             </div>
                             <div class="col-6  text-right">
-                                <a href="{{ route('customer.individual.create') }}" class="btn btn-sm btn-primary">{{ __('Add Individual account') }}</a>
+                                <a href="{{ route('customer.corporate.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Corporate Account') }}"><i class="las la-folder-plus"></i></a>
+                                <a href="{{ route('customer.individual.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Individual Account') }}"><i class="las la-user-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -68,11 +69,11 @@
                                                     <td>
                                                         <div class="btn-group-justified text-center" role="group">
                                                             <div class="btn-group" role="group">
-                                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                             </div>  
 
                                                             <div class="btn-group" role="group">
-                                                                            <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
+                                                                <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button></a>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Product Management')])
+@extends('layouts.app', ['title' => __('Product Management'), 'icon' => 'las la-edit'])
 @section('content')
 @include('users.partials.header', ['title' => __('Product')]) 
 		

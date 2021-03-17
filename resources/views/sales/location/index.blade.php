@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Location Management')])
+@extends('layouts.app', ['title' => __('Location Management'), 'icon' => 'las la-map-marker-alt'])
 @section('content')
 @include('users.partials.header', ['title' => __('All Location')]) 
 
@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('All Sales Location') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('sales.location.create') }}" class="btn btn-sm btn-primary">{{ __('Add Location') }}</a>
+                                <a href="{{ route('sales.location.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Sales Location') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         
 
                             <div class="table-responsive">
-                                <table class="table align-items-center table-bordered" >
+                                <table class="table table-bordered align-items-center table-bordered datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Location') }}</th>
@@ -68,7 +68,7 @@
                                             <td>   
                                                     <span>
                                                         <div class="col-4 text-right">
-                                                            <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                             
                                                         </div>
                                                     </span>

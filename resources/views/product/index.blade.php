@@ -1,5 +1,4 @@
-@extends('layouts.app', ['title' => __('Product Management')])
-
+@extends('layouts.app', ['title' => __('Product Management'), 'icon' => 'las la-suitcase'])
 @section('content')
 @include('users.partials.header', ['title' => __('All Products')]) 
 
@@ -14,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('All Products') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">{{ __('Add Product') }}</a>
+                                <a href="{{ route('product.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Product') }}"><i class="las la-cart-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +29,7 @@
                             @endif
                         
                             <div class="table-responsive">
-                                <table class="table align-items-center table-flush">
+                                <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Name') }}</th>
@@ -64,16 +63,15 @@
                                                 <td>
                                                     <div class="btn-group-justified text-center" role="group">
                                                         <div class="btn-group" role="group">
-                                                            <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                        </div>  
-
+                                                            <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                        </div> 
                                                         <div class="btn-group" role="group">
                                                             <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                                 @csrf
-                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger">{{ __('Delete') }}</button>
+                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
                                                             </form>
-                                                        </div>
-                                                    </div>
+                                                        </div>                                                        
+                                                    </div>                                                    
                                                 </td>
                                             </tr>
                                             @endforeach

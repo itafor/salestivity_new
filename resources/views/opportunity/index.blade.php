@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Opportunities')])
+@extends('layouts.app', ['title' => __('Opportunities'), 'icon' => 'las la-compass'])
 @section('content')
 @include('users.partials.header', ['title' => __('Opportunities')]) 
 
@@ -13,12 +13,12 @@
                                 <h3 class="mb-0">{{ __('My Opportunities') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('opportunity.create') }}" class="btn btn-sm btn-primary">{{ __('Add Opportunity') }}</a>
+                                 <a href="{{ route('opportunity.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Opportunity') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="rows">
 
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
@@ -47,44 +47,44 @@
                                     </div>
                                 @endif
                             </div>
-
-                            <div class="table-responsive">
-                                           <table class="table align-items-center table-flush" >
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">{{ __('Account') }}</th>
-                                        <th scope="col">{{ __('Name') }}</th>
-                                        <th scope="col">{{ __('Owner') }}</th>
-                                        <th scope="col">{{ __('Amount') }}</th>
-                                       
-                                        <th scope="col">{{ __('Action') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if($opportunities->isEmpty())
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-items-center table-flush datatable">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td colspan="8" style="text-align: center">
-                                                <h3>No data available</h3>
-                                            </td>
+                                            <th scope="col">{{ __('Account') }}</th>
+                                            <th scope="col">{{ __('Name') }}</th>
+                                            <th scope="col">{{ __('Owner') }}</th>
+                                            <th scope="col">{{ __('Amount') }}</th>                                           
+                                            <th scope="col">{{ __('Action') }}</th>
                                         </tr>
-                                    @else
-                                        @foreach($opportunities as $opportunity)
+                                    </thead>
+                                    <tbody>
+                                        @if($opportunities->isEmpty())
                                             <tr>
-                                            
-                                                
-                                                <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
-                                                <td>{{ $opportunity->name }}</td>
-                                                 <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
-                                                 <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
-                                              
-                                                <td>
-                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
                                                 </td>
                                             </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
+                                        @else
+                                            @foreach($opportunities as $opportunity)
+                                                <tr>
+                                                
+                                                    
+                                                    <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
+                                                    <td>{{ $opportunity->name }}</td>
+                                                     <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
+                                                     <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
+                                                  
+                                                    <td>
+                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                                </div>
                             </div>
                         </div>
                         <hr>

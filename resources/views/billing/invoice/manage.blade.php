@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Invoice Management')])
+@extends('layouts.app', ['title' => __('Invoice Management'), 'icon' => 'las la-receipt'])
 @section('content')
 @include('users.partials.header', ['title' => __('View Invoice')])  
 

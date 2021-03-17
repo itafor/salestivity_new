@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Invoice Management')])
+@extends('layouts.app', ['title' => __('Invoice Management'), 'icon' => 'las la-receipt'])
 @section('content')
 @include('users.partials.header', ['title' => __('View Invoice')])  
 
@@ -9,10 +9,13 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-12">
-                                <h3 class="mb-0 float-left" id="title">{{ __('Invoice') }}</h3>
-                                 <a href="{{ route('billing.invoice.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
+                            <div class="col-8">
+                                <h3 class="mb-0">{{ __('Invoice') }}</h3>
                             </div>
+                            <div class="col-4 text-right">
+                                <a href="{{ route('billing.invoice.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-left"></i></a>
+                            </div>
+                       
          @if(isset($invoice))
             <div class="col-8">
                 @if($invoice->status == 'Paid')

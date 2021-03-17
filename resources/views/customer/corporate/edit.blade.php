@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Account Management')])
+@extends('layouts.app', ['title' => __('Account Management'), 'icon' => 'las la-folder-plus'])
 @section('content')
 @include('users.partials.header', ['title' => __('Corporate Account')])
 @include('master')
@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('Edit Corporate Account') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('customer.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('customer.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
                         </div>
                     </div>

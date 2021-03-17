@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('SubCategory Management')])
+@extends('layouts.app', ['title' => __('Subcategory Managment'), 'icon' => 'las la-plus-circle'])
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sub Category')])  
 
@@ -12,7 +12,7 @@
                                 <h3 class="mb-0">{{ __('Add New Sub Category') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('product.subcategory.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('product.subcategory.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
                         </div>
                     </div>

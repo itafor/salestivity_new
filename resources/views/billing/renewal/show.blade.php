@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Recurring Management')])
+@extends('layouts.app', ['title' => __('Recurring Management'), 'icon' => 'las la-file-invoice-dollar'])
 @section('content')
 @include('users.partials.header', ['title' => __('View Recurring')])  
 
@@ -9,10 +9,16 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-12">
-                                <h3 class="mb-0 float-left" id="title">{{ __('Recurring') }}</h3>
-                                 <a href="{{ route('billing.renewal.index') }}"><button class="btn btn-sm btn-primary float-right">{{ __('Back to list') }} </button></a>
+                            <div class="col-8">
+                                <h3 class="mb-0">{{ __('Recurring') }} </h3>
                             </div>
+                            <div class="col-4 text-right">
+                                <a href="{{ route('billing.renewal.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-lef"></i></a>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+
+                        
          @if(isset($renewal))
             <div class="col-8">
                 @if($renewal->status == 'Paid')
