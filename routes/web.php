@@ -222,9 +222,19 @@ Route::post('report/opportunity-reports', 'OpportunityController@getReport')->na
 
 });
 
+Route::group([
+    'prefix' => 'settings'
+], function () {
+
+    Route::get('/', 'SettingsController@index')->name('settings.index');
+    Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
+
+});
+
 // Only a zeus Admin can access this route
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'admin.'], function() {
 	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
+
 });
 
 //cron jobs

@@ -62,6 +62,12 @@ class Renewal extends Model
     {
         return $this->belongsTo('App\SubCategory', 'subcategory_id','id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'main_acct_id');
+    }
+
     public static function createNew($data) {
 
         $guard_object = getActiveGuardType();

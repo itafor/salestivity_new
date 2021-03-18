@@ -214,3 +214,31 @@ function users_that_reports_to_main_user()
 
     return authUser()->users_that_report_tome;
 }
+
+function uploadImage($image)
+{
+    if(isset($image))
+    {
+        if($image->isValid()) 
+        {
+            $filename = $name = 'Salestivity_'.$image->getClientOriginalName();
+            $filename = str_replace(' ','_', $filename);
+            $trans = array(
+                ".png" => "", 
+                ".PNG" => "",
+                ".JPG" => "",
+                ".jpg" => "",
+                ".jpeg" => "",
+                ".JPEG" => "",
+                ".bmp" => "",
+                ".pdf" => "",
+            );
+            $filename = strtr($filename,$trans);
+            Cloudder::upload($image->getPathname(), $filename);
+            $response = Cloudder::getResult();
+            $path = $response['secure_url'];
+            $image->move(public_path("uploads"), $image->getClientOriginalName());
+        }
+    }
+    return $path;
+}
