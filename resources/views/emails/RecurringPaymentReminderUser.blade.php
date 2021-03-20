@@ -1,95 +1,97 @@
 @component('mail::message')
 # Invoice Renewal Notification
+<div class="card" style="width: 18rem;">
 @if(isset($customerRenewal->user) && $customerRenewal->user->company_logo !='')
-<img src="{{asset('uploads/'.$customerRenewal->user->company_logo)}}" alt="company logo" width="100" height="100">
+<img class="card-img-top" src="{{asset('uploads/'.$customerRenewal->user->company_logo)}}" alt="company logo" width="150" height="150">
 @endif
 <br>
-Dear {{$customerContact->name}},<br>
-<em>
-@if($remaing_days <= 0)
-Kindly be notified that your renewal has expired.<br>
-Expired Date: ( {{ date("jS F, Y", strtotime($customerRenewal->end_date)) }} )
-@else
-Kindly be notified that your renewal will be due on 
-{{ date("jS F, Y", strtotime($customerRenewal->end_date)) }}.
-@endif
-<br/>
-Please find below Recurring details.
-</em>
-<!-- @component('mail::button', ['url' => ''])
-Renew Now
-@endcomponent -->
+<br>
+<div class="card-body">
+<p class="card-text">Dear {{$customerContact->name}},</p>
+<p>Please be informed that for the <strong>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}</strong> for <strong>{{ $customerRenewal->customers->name }}</strong> is due for renewal.</p>
+<p>
+Find below the details of the invoice. Kindly make payment before the due date to avoid service suspension. Please read the domain expiration information section below.
+</p>
 <h4>Invoice Details</h4>
 <table class="table table-bordered">
 @if(isset($customerRenewal))
 <tbody>
 <tr>
-<td style="width: 120px;"><b>{{ __('Customer') }}</b></td>
-<td>{{ $customerRenewal->customers->name }}</td>
-</tr>
-<tr>
-<td style="width: 120px;"><b>{{ __('Category') }}</b></td>
-<td>{{ $customerRenewal->category ? $customerRenewal->category->name : 'N/A' }}
-</td>
-</tr>
-<tr>
-<td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
-<td>{{ $customerRenewal->subcategory ? $customerRenewal->subcategory->name : 'N/A' }}
-</td>
-</tr>
-<tr>
-<td style="width: 120px;"><b>{{ __('Product') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Item') }}</b></td>
 <td>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}
 </td>
 </tr>
 <tr>
-<td style="width: 120px;"><b>{{ __('Billing Amount') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
 <td>&#8358;{{ number_format($customerRenewal->billingAmount,2) }}
-</td>
-</tr>
-<tr>
-<td style="width: 120px;"><b>{{ __('Billing Balance') }}</b></td>
-<td>&#8358;{{ number_format($customerRenewal->billingBalance,2) }}
 </td>
 </tr>
 @if($customerRenewal->status == 'Paid')
 <tr>
-<td style="width: 120px;"><b>{{ __('Status') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
 <td class="text-success">{{ $customerRenewal->status }}
 </td>
 </tr>
 @elseif($customerRenewal->status == 'Partly paid')
 <tr>
-<td style="width: 120px;"><b>{{ __('Status') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
 <td class="text-warning">
 {{ $customerRenewal->status }}
 </td>
 </tr>
 @else
 <tr>
-<td style="width: 120px;"><b>{{ __('Status') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
 <td class="text-danger">
 {{ $customerRenewal->status }}
 </td>
 </tr>
 @endif
 <tr>
-<td style="width: 120px;"><b>{{ __('Start Date') }}</b></td>
-<td>{{ date("jS F, Y", strtotime($customerRenewal->start_date)) }}</td>           
+<td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
+<td>&#8358;{{ number_format($customerRenewal->billingBalance,2) }}
+</td>
 </tr>
 <tr>
-<td style="width: 120px;"><b>{{ __('End Date') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
 <td>{{ date("jS F, Y", strtotime($customerRenewal->end_date)) }}</td>           
 </tr>
 <tr>
-<td style="width: 120px;"><b>{{ __('Date created') }}</b></td>
-<td>{{ date("jS F, Y", strtotime($customerRenewal->created_at)) }}</td>           
+<td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
+<td>Bank Transfer 
+Digitalweb Application Development Limited
+0044102222
+Access Bank
+</td>           
 </tr>
 </tbody>
 @else
 <span>No matching records found</span>
 @endif
 </table>
-Thanks,<br>
-{{ config('app.name') }}
+<p>Thank you for your continuous patronage.<br>
+Digitalweb Billing Team</p><br>
+<p>Important Domain Expiration Information
+Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.
+</p>
+<p>
+Also note that when your domain expires without renewing, it enters a Grace Period of about 29 - 35 days within which renewals can be made with an additional $50.00 to the fees stated above.
+</p>
+<p>
+After this period, if your domain is not renewed, it enters a Redemtion Grace Period. A period of another 42 days where the owner can claim the domain with additional $200 redemption fee.
+</p>
+<p>
+After this period, your domain may now be released to the public for re-registration on a first come first served basis or may be *AUCTIONED OFF** to the highest bidder in a domain auction system.
+</p>
+<p>
+To avoid losing your domain name to an auction or anybody else, ensure your domain name is renewed and is always active.
+</p>
+<p>
+This invoice and the details specified is generated for the client or organization whose names appear on it. If you have received this invoice in error, kindly disregard the information and delete as appropriate.
+</p>
+</div>
+</div>
+<!-- @component('mail::button', ['url' => ''])
+Renew Now
+@endcomponent -->
 @endcomponent
