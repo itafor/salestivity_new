@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Jobs\NotifyDueRenewalJob;
-use App\Mail\NotifyDueRenewalEmail;
-use App\Mail\NotifyDueRenewalToCustomer;
+use App\Mail\RecurringPaymentReminderCustomers;
+use App\Mail\RecurringPaymentReminderUser;
 use App\Renewal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -108,7 +108,7 @@ public static function notifyCustomer($renewal){
           $customerEmail = $renewal->customers->email;
           if($customerEmail){
           $remaingDays = (string)$renewal->remaingdays;
-            Mail::to($customerEmail)->send(new NotifyDueRenewalToCustomer($renewal,$remaingDays));
+            Mail::to($customerEmail)->send(new RecurringPaymentReminderCustomers($renewal,$remaingDays));
           }
 }
 
@@ -126,7 +126,7 @@ public static function notifyCustomer($renewal){
 
             $toEmail = $customerContact->email;
 
-   Mail::to($toEmail)->send(new NotifyDueRenewalEmail($renewal,$customerContact,$remaing_days));
+   Mail::to($toEmail)->send(new RecurringPaymentReminderUser($renewal,$customerContact,$remaing_days));
 
 		    }
   }

@@ -123,19 +123,17 @@
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
-<!--                     <table>
+                        <table>
                         <tr>
                        
-                            <a href="http://assetclerk.com/">
-                        <img src="{{ asset('img/companydefaultlogo.png')}}" alt="Asset Clerk" title="Asset Clerk" width="50" height="40" >
-                            </a> 
-                            
-                            
+                           @if(isset($renewal->user) && $renewal->user->company_logo !='')
+                           <img src="{{asset('uploads/'.$renewal->user->company_logo)}}" alt="company logo" width="50" height="40">
+                            @endif
                             <td style="text-align:right">
                                 
                             </td>
                         </tr>
-                    </table> -->
+                    </table>
                 </td>
             </tr>
             
