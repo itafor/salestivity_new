@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Intranet Desk'),
+    'name' => env('APP_NAME', 'Salestivity'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://example.com'),
 
     'asset_url' => env('ASSET_URL', null),
 

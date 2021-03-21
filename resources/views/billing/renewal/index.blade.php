@@ -34,6 +34,7 @@
                                 <table class="table  table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
+                                            <th ><b>{{ __('Invoice Number') }}</b></th>
                                             <th ><b>{{ __('Customer') }}</b></th>
                                             <th ><b>{{ __('Product') }}</b></th>
                                             <th ><b>{{ __('End Date') }}</b></th>
@@ -43,6 +44,7 @@
                                     <tbody>
                                         @foreach($renewals as $renewal)
                                             <tr>
+                                                <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
                                                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                                                <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
                                                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
