@@ -123,19 +123,14 @@
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
-<!--                     <table>
+                    <table>
                         <tr>
-                       
-                            <a href="http://assetclerk.com/">
-                        <img src="{{ asset('img/companydefaultlogo.png')}}" alt="Asset Clerk" title="Asset Clerk" width="50" height="40" >
-                            </a> 
-                            
-                            
-                            <td style="text-align:right">
-                                
-                            </td>
+        @if(isset($renewal->user) && $renewal->user->company_logo !='')
+        <img class="card-img-top" src="{{asset('uploads/'.$renewal->user->company_logo)}}" alt="company logo" style="margin-left: 200px; height: 140px; width: 150px; border-radius: 50px;">
+        @endif
+                           
                         </tr>
-                    </table> -->
+                    </table>
                 </td>
             </tr>
             
@@ -146,9 +141,9 @@
                             <td colspan="2">
                                 Dear {{$renewal->customer->name}},<br>
                                 <em>
-                                  We wish to inform you that the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> has been recorded for the payment of <strong>{{$renewal->product->name}}</strong>
+                                 This is to confirm receipt of the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> for the <strong>{{$renewal->product->name}}</strong> for <strong>{{ $renewal->customer->name }}</strong>
                                  <br/>
-                                  Please find below Recurring details.
+                                  Please find details below;
                                 </em>
                             </td>
                         </tr>
@@ -157,26 +152,10 @@
             </tr>
         </table>
 
-<h4>Recurring DETAILS</h4>
         <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>
-                   <tr>
-                     <td style="width: 120px;"><b>{{ __('Customer') }}</b></td>
-                     <td>{{ $renewal->customer->name }}</td>
-                   </tr>
-
-                      <tr>
-                     <td style="width: 120px;"><b>{{ __('Category') }}</b></td>
-                     <td>{{ $renewal->renewal->category ? $renewal->renewal->category->name : 'N/A' }}
-                     </td>
-                   </tr>
-
-                     <tr>
-                     <td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
-                     <td>{{ $renewal->renewal->subcategory ? $renewal->renewal->subcategory->name : 'N/A' }}
-                     </td>
-                   </tr>
+                   
 
                      <tr>
                      <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
@@ -185,7 +164,7 @@
                    </tr>
 
                     <tr>
-                     <td style="width: 120px;"><b>{{ __('Billing Amount') }}</b></td>
+                     <td style="width: 120px;"><b>{{ __('Amount') }}</b></td>
                      <td>&#8358;{{ number_format($renewal->renewal->billingAmount,2) }}
                      </td>
                    </tr>
@@ -195,9 +174,13 @@
                      <td>&#8358;{{ number_format($renewal->renewal->amount_paid,2) }}
                      </td>
                    </tr>
+                      <tr>
+                     <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($renewal->payment_date)) }}</td>           
+              </tr>
 
                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Billing Balance') }}</b></td>
+                     <td style="width: 120px;"><b>{{ __('Balance') }}</b></td>
                      <td>&#8358;{{ number_format($renewal->billingbalance,2) }}
                      </td>
                    </tr>
@@ -225,15 +208,6 @@
                    </tr>
                      @endif
 
-                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($renewal->payment_date)) }}</td>           
-              </tr>
-              <tr>
-                     <td style="width: 120px;"><b>{{ __('Date Recorded') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($renewal->created_at)) }}</td>           
-              </tr>
-
                     </tbody>
                     @else
                     <span>No matching records found</span>
@@ -241,7 +215,8 @@
                     @endif
                   </table>
 
-
+<p>Thank you for your continued patronage.</p>
+<p>Digitalweb Billing Team</p>
          
 
     </div>
