@@ -38,11 +38,12 @@
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('My profile') }}</span>
                     </a>
+                       @if(!auth()->guard('sub_user')->check())
                     <a href="{{route('settings.index')}}" class="dropdown-item">
                         <i class="ni ni-settings-gear-65"></i>
                         <span>{{ __('Settings') }}</span>
                     </a>
-                    
+                    @endif
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
