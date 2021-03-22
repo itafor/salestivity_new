@@ -1,8 +1,9 @@
 @component('mail::message')
 # Invoice Renewal Notification
-<div class="card" style="width: 18rem;">
+<br>
+<div class="card">
 @if(isset($customerRenewal->user) && $customerRenewal->user->company_logo !='')
-<img class="card-img-top" src="{{asset('uploads/'.$customerRenewal->user->company_logo)}}" alt="company logo" width="150" height="150">
+<img class="card-img-top" src="{{asset('uploads/'.$customerRenewal->user->company_logo)}}" alt="company logo" style="margin-left: 200px; height: 140px; width: 150px; border-radius: 50px;">
 @endif
 <br>
 <br>
@@ -23,7 +24,7 @@ Find below the details of the invoice. Kindly make payment before the due date t
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
-<td>&#8358;{{ number_format($customerRenewal->billingAmount,2) }}
+<td>{{ $customerRenewal->invoice_number ? $customerRenewal->invoice_number : 'N/A' }}
 </td>
 </tr>
 @if($customerRenewal->status == 'Paid')

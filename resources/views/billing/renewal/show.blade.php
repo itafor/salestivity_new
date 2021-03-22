@@ -69,6 +69,10 @@
            @if(isset($renewal))
                     <tbody>
                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Invoice Number') }}</b></td>
+                     <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
+                   </tr>
+                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $renewal->customers ? $renewal->customers->name : 'N/A' }}</td>
                    </tr>
