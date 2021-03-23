@@ -20,7 +20,7 @@
                     <div class="card-body">
                             <h3>Company Logo</h3>
                             @if(isset($user))
-                           <img src="{{asset('uploads/'.$user->company_logo)}}" alt="company logo" width="200" height="200">
+                           <img src="{{$user->company_logo_url}}" alt="company logo" width="200" height="200">
                             @endif
                            
                             <form action="{{route('company.upload.logo')}}" method="post" enctype="multipart/form-data">
@@ -30,7 +30,7 @@
                         <label for="inputPassword6" class="col-form-label">Company Logo</label>
                       </div> -->
                       <div class="col-auto">
-                        <input type="file" name="company_logo" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" required>
+                        <input type="file" name="company_logo_url" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" required>
                       </div>
                       <div class="col-auto">
                         <span id="passwordHelpInline" class="form-text">

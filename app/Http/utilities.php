@@ -11,6 +11,7 @@ use App\SubCategory;
 use App\SubUser;
 use App\User;
 use Carbon\Carbon;
+use JD\Cloudder\Facades\Cloudder;
 
 
 
@@ -237,7 +238,7 @@ function uploadImage($image)
             Cloudder::upload($image->getPathname(), $filename);
             $response = Cloudder::getResult();
             $path = $response['secure_url'];
-            $image->move(public_path("uploads"), $image->getClientOriginalName());
+            // $image->move(public_path("uploads"), $image->getClientOriginalName());
         }
     }
     return $path;
