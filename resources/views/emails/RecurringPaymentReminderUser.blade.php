@@ -2,8 +2,8 @@
 # Invoice Renewal Notification
 <br>
 <div class="card">
-@if(isset($customerRenewal->user) && $customerRenewal->user->company_logo !='')
-<img class="card-img-top" src="{{asset('uploads/'.$customerRenewal->user->company_logo)}}" alt="company logo" style="margin-left: 200px; height: 140px; width: 150px; border-radius: 50px;">
+@if(isset($customerRenewal->user) && $customerRenewal->user->company_logo_url !='')
+<img class="card-img-top" src="{{$customerRenewal->user->company_logo_url}}" alt="company logo" style="margin-left: 200px; height: 140px; width: 150px; border-radius: 50px;">
 @endif
 <br>
 <br>

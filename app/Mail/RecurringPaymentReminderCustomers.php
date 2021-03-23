@@ -35,7 +35,7 @@ class RecurringPaymentReminderCustomers extends Mailable
             'renewal' => $this->renewal,
             'remaingDays' => $this->remaingDays,
         ])->from('noreply@salestivity.com', 'Salestivity')
-        ->subject('Invoice Renewal Notification');
+        ->subject('Invoice Renewal Notification')
         ->cc('billing@digitalwebglobal.com','digitalwebglobal');
     }
 }
