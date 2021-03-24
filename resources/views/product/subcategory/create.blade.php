@@ -1,6 +1,6 @@
 @extends('layouts.app', ['title' => __('Subcategory Managment'), 'icon' => 'las la-plus-circle'])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Sub Category')])  
+@include('users.partials.header', ['title' => __('Add City')])  
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">
@@ -9,7 +9,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Add New Sub Category') }}</h3>
+                                <h3 class="mb-0">{{ __('Add Sub Category') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('product.subcategory.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
@@ -75,41 +75,7 @@
             </div>
         </div>
 
-        <script>
-            $(document).ready(function(){
-                var maxField = 10; //Input fields increment limitation
-                var addButton = $('.add_button'); //Add button selector
-                var wrapper = $('.field_wrapper'); //Input field wrapper
-                var fieldHTML = '<div>'+ 
-                                    '<input type="text" name="addSubCategory[]" id="addSubCategory" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Category Name') }}" value="{{ old('name') }}" required autofocus>' +
-
-                                        '@if ($errors->has('name'))' +
-                                            '<span class="invalid-feedback" role="alert">' +
-                                                '<strong>{{ $errors->first('name') }}</strong>' +
-                                            '</span>' +
-                                        '@endif' +
-                                        '<a href="javascript:void(0);" class="remove_button"><i class="fa fa-times"></i></a>' +
-                                        '</div>'
-                var x = 1; //Initial field counter is 1
-                
-                //Once add button is clicked
-                $(addButton).click(function(){
-                    //Check maximum number of input fields
-                    if(x < maxField){ 
-                        x++; //Increment field counter
-                        $(wrapper).append(fieldHTML); //Add field html
-                    }
-                });
-                
-                //Once remove button is clicked
-                $(wrapper).on('click', '.remove_button', function(e){
-                    e.preventDefault();
-                    $(this).parent('div').remove(); //Remove field html
-                    x--; //Decrement field counter
-                });
-            });
-            </script>
-        
+       
         @include('layouts.footers.auth')
     </div>
 

@@ -538,6 +538,45 @@ $('#container').on('click', '.remove_project_file', function(e) {
             row--;
         });
 
+        // Add more cities
+   $('#addMoreCities').click(function(e) {
+           // console.log('ok')
+            e.preventDefault();
+
+            if(row >= 10){
+                alert("You've reached the maximum limit");
+                return;
+            }
+
+            var rowId = identifier();
+
+            $("#cityContainer").append(
+                '<div>'
+                    +'<div style="float:right; margin-right:50px; margin-top: 14px;" class="remove_city"><span style="cursor:pointer; " class="badge badge-danger" border="2"><i class="fa fa-minus"></i> Remove</span></div>'
+                    +'<div style="clear:both"></div>'
+                              +' <label class="form-control-label" for="input-property_type">City</label>'
+                              +'<br>'
+                              +'<br>'
+                                 +  '<input type="text" name="cities['+rowId+'][name]" class="form-control" required style="margin-top: -30px;">'
+                               
+                        +'<div style="clear:both"></div>'
+                        +'<br>'
+                    +'</div>'
+
+            );
+            row++;
+            $(".select"+rowId).select2({
+                    theme: "bootstrap"
+                });
+        });
+
+        // Remove parent of 'remove' link when link is clicked.
+        $('#cityContainer').on('click', '.remove_city', function(e) {
+            e.preventDefault();
+            $(this).parent().remove();
+            row--;
+        });
+
     $('#category_id').change(function(){
     var category = $(this).val();
     if(category){

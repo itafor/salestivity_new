@@ -25,6 +25,7 @@ public static function createNew($data)
       $userId = $guard_object->created_by;
 
       foreach ($data['subcategories'] as $key => $subcategory) {
+        // dd($subcategory);
         $subcategory = self::create([
            'name' => $subcategory['name'],
            'category_id' => $data['category_id'],
