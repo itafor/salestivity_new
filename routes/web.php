@@ -228,6 +228,18 @@ Route::group([
 
     Route::get('/', 'SettingsController@index')->name('settings.index');
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
+});
+
+Route::group([
+    'prefix' => 'location'
+], function () {
+
+    Route::get('fetch/cities', 'LocationController@fetchCities')->name('location.fetch.cities');
+    Route::get('create/city', 'LocationController@createCity')->name('location.create.city');
+    Route::post('add/city', 'LocationController@AddCity')->name('location.add.city');
+    Route::get('edit/city', 'LocationController@editCity')->name('location.edit.city');
+    Route::post('update/city', 'LocationController@updateCity')->name('location.update.city');
+    Route::post('destroy/city', 'LocationController@destroyCity')->name('location.destroy.city');
 
 });
 
