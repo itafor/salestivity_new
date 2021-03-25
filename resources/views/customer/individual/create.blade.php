@@ -251,9 +251,9 @@
                                             <div class="form-group{{ $errors->has('rent_commission') ? ' has-danger' : '' }} ">
                                                 <label class="form-control-label" for="input-contact_phone">{{ __('Phone') }}</label>
                                                 <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
+                                                    <!-- <div class="input-group-prepend">
                                                         <span class="input-group-text country-code" id="basic-addon1">+{{$getCountry->phonecode}}</span>
-                                                    </div>
+                                                    </div> -->
                                                     <input type="tel"  name="contacts[112211][contact_phone]" id="input-contact_phone" class="form-control {{ $errors->has('contact_phone') ? ' is-invalid' : '' }} contact_phone" placeholder=" 8090000000" value="{{old('contact_phone')}}">
                                                 </div>
                                                 @if ($errors->has('contact_phone'))

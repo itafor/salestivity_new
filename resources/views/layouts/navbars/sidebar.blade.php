@@ -26,12 +26,9 @@
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('My profile') }}</span>
                     </a>
-                     @if(!auth()->guard('sub_user')->check())
-                    <a href="{{route('settings.index')}}" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                     @endif
+                    
+                   
+                    
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
                         <span>{{ __('Activity') }}</span>
@@ -448,30 +445,28 @@
                                             </div>
                                         </ul>
                                     </li>
+                                    <a href="{{route('settings.index')}}" class="nav-link">
+                                        <span class="nav-link-text">{{ __('Company logo') }}</span>
+                                    </a>
 
-                                  {{-- <li class="nav-item">
+                             <!--      <li class="nav-item">
                                         <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                            <span class="nav-link-text">{{ __('Department') }}</span>
+                                            <span class="nav-link-text">{{ __('Company logo') }}</span>
                                         </a>
                                         <ul class="flex-column">
                                             <div class="collapse" id="navbar-dept">
                                                 <ul class="nav nav-sm flex-column" >
                                                     <ul class="nav nav-sm flex-column">
                                                         <li class="nav-item">
-                                                            <a class="nav-link" href="{{ route('dept.index') }}">
-                                                                {{ __('List Departments') }}
-                                                            </a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" href="{{ route('dept.store') }}">
-                                                                {{ __('Add Department') }}
+                                                             <a href="{{route('settings.index')}}" class="nav-link">
+                                                            <span class="nav-link-text">{{ __('logo') }}</span>
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </ul>
                                             </div>
                                         </ul>
-                                    </li> --}}
+                                    </li>  -->
                                 </ul>        
                             </ul>
                         </div>   

@@ -274,9 +274,9 @@
                                     <div class="form-group{{ $errors->has('rent_commission') ? ' has-danger' : '' }} ">
                                         <label class="form-control-label" for="input-contact_phone">{{ __('Phone') }}</label>
                                         <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
+                                           <!--  <div class="input-group-prepend">
                                                 <span class="input-group-text country-code" id="basic-addon1">+{{$getCountry->phonecode}}</span>
-                                            </div>
+                                            </div> -->
                                             <input type="tel"  name="contacts[112211][contact_phone]" id="input-contact_phone" class="form-control {{ $errors->has('contact_phone') ? ' is-invalid' : '' }} contact_phone" 
                                                     placeholder=" e.g 80678908032" value="{{old('contact_phone')}}">
                                         </div>
@@ -302,7 +302,7 @@
 
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-success mb-3">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>

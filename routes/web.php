@@ -216,11 +216,12 @@ Route::post('report/opportunity-reports', 'OpportunityController@getReport')->na
 	Route::get('getdept/{id}', 'AjaxController@getDept');
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');
 	Route::get('getsales/{id}', 'AjaxController@getSalesDept');
-	Route::get('getstates/{id}', 'AjaxController@getState');
-	Route::get('getcities/{id}', 'AjaxController@getCity');
 	Route::get('mails', 'RenewalController@mail');
 
 });
+
+Route::get('getstates/{id}', 'AjaxController@getState');
+Route::get('getcities/{id}', 'AjaxController@getCity');
 
 Route::group([
     'prefix' => 'settings'
@@ -230,22 +231,25 @@ Route::group([
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
 });
 
-Route::group([
-    'prefix' => 'location'
-], function () {
+// Route::group([
+//     'prefix' => 'location'
+// ], function () {
 
-    Route::get('fetch/cities', 'LocationController@fetchCities')->name('location.fetch.cities');
-    Route::get('create/city', 'LocationController@createCity')->name('location.create.city');
-    Route::post('add/city', 'LocationController@AddCity')->name('location.add.city');
-    Route::get('edit/city', 'LocationController@editCity')->name('location.edit.city');
-    Route::post('update/city', 'LocationController@updateCity')->name('location.update.city');
-    Route::post('destroy/city', 'LocationController@destroyCity')->name('location.destroy.city');
+//     Route::get('fetch/cities', 'LocationController@fetchCities')->name('location.fetch.cities');
+//     Route::get('create/city', 'LocationController@createCity')->name('location.create.city');
+//     Route::post('add/city', 'LocationController@AddCity')->name('location.add.city');
+//     Route::get('edit/city', 'LocationController@editCity')->name('location.edit.city');
+//     Route::post('update/city', 'LocationController@updateCity')->name('location.update.city');
+//     Route::post('destroy/city', 'LocationController@destroyCity')->name('location.destroy.city');
 
-});
+// });
 
 // Only a zeus Admin can access this route
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'admin.'], function() {
 	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
+    Route::get('location/create/city', 'LocationController@createCity')->name('location.create.city');
+  Route::post('location/add/city', 'LocationController@AddCity')->name('location.add.city');
+
 
 });
 
