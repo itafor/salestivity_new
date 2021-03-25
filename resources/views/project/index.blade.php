@@ -83,8 +83,7 @@
                                                             </form>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    
+                                                    </td>                                                    
                                                 </tr>
                                             @endforeach
                                         @endif
