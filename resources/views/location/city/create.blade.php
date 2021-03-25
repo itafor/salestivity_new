@@ -1,6 +1,6 @@
-@extends('layouts.app', ['title' => __('City Management'), 'icon' => 'las la-plus-circle'])
+@extends('layouts.zeus_layout', ['title' => __('Add City')])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Sub Category')])  
+@include('zeus.partials.header', ['title' => __('City')])  
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">
@@ -11,9 +11,7 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Add new city to a state') }}</h3>
                             </div>
-                           <!--  <div class="col-4 text-right">
-                                <a href="{{ route('location.fetch.cities') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
-                            </div> -->
+                        
                         </div>
                     </div>
                     <div class="col-12">
@@ -27,7 +25,7 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('location.add.city') }}" autocomplete="off">
+                        <form method="post" action="{{ route('admin.location.add.city') }}" autocomplete="off">
                             @csrf
                              <div class="row">
                                     <div class="col-md-6">

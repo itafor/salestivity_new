@@ -63,8 +63,26 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                                
-                
+
+    <li class="nav-item">
+                    <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-tv-2"></i>
+                        <span class="nav-link-text">{{ __('Location') }}</span>
+                    </a>
+                    <ul class="flex-column">
+                        <div class="collapse" id="navbar-dept">
+                            <ul class="nav nav-sm flex-column" >
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                         <a href="{{route('admin.location.create.city')}}" class="nav-link">
+                                        <span class="nav-link-text">{{ __('add city') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </ul>
+                </li> 
             </ul> 
 
         </div>
