@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RecurringPaymentReminderCustomers extends Mailable
+class EmailInvoiceRenewalToCustomer extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,7 +18,7 @@ class RecurringPaymentReminderCustomers extends Mailable
      *
      * @return void
      */
-     public function __construct($renewal,$remaingDays)
+    public function __construct($renewal,$remaingDays)
     {
         $this->renewal = $renewal;
         $this->remaingDays = $remaingDays;
@@ -31,11 +31,9 @@ class RecurringPaymentReminderCustomers extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.RecurringPaymentReminderCustomers')->with([
-            'renewal' => $this->renewal,
-            'remaingDays' => $this->remaingDays,
-        ])->from('noreply@salestivity.com', 'Salestivity')
-        ->subject('Invoice Renewal Notification')
-        ->cc('billing@digitalwebglobal.com','digitalwebglobal');
+         return $this->view('emails.email_invoice_renewal_to_customer')
+         ->from('noreply@salestivity.com', 'Salestivity')
+        ->subject('Invoice Renewal Notification');
+        // ->cc('billing@digitalwebglobal.com','digitalwebglobal');
     }
 }
