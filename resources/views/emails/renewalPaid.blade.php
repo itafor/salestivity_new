@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Recurring Payment Notifications</title>
+    <title>Renewal Payment Notifications</title>
     
     <style>
     .invoice-box {
@@ -125,9 +125,10 @@
                 <td colspan="2">
                     <table>
                         <tr>
-        @if(isset($renewal->user) && $renewal->user->company_logo !='')
-        <img class="card-img-top" src="{{asset('uploads/'.$renewal->user->company_logo)}}" alt="company logo" style="margin-left: 200px; height: 140px; width: 150px; border-radius: 50px;">
-        @endif
+
+             @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
+<img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+@endif
                            
                         </tr>
                     </table>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Recurring Payment Notifications</title>
+    <title>Invoice Payment Notifications</title>
     
     <style>
     .invoice-box {
@@ -123,19 +123,17 @@
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
-<!--                     <table>
+                    <table>
                         <tr>
                        
-                            <a href="http://assetclerk.com/">
-                        <img src="{{ asset('img/companydefaultlogo.png')}}" alt="Asset Clerk" title="Asset Clerk" width="50" height="40" >
-                            </a> 
+            @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
+<img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+@endif
                             
                             
-                            <td style="text-align:right">
-                                
-                            </td>
+                           
                         </tr>
-                    </table> -->
+                    </table>
                 </td>
             </tr>
             
@@ -146,9 +144,9 @@
                             <td colspan="2">
                                 Dear {{$paid_invoice->customer->name}},<br>
                                 <em>
-                                  We wish to inform you that the sum of <strong>&#8358;{{number_format($paid_invoice->amount_paid,2)}}</strong> has been recorded for the payment of <strong>{{$paid_invoice->product->name}}</strong>
+                                 This is to confirm receipt of the sum of <strong>&#8358;{{number_format($paid_invoice->amount_paid,2)}}</strong> for the <strong>{{$paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A'}}</strong> for <strong>{{ $paid_invoice->customer->name }}</strong>
                                  <br/>
-                                  Please find below Recurring details.
+                                  Please find details below;
                                 </em>
                             </td>
                         </tr>
@@ -161,22 +159,6 @@
         <table class="table table-bordered" id="rental_table">
            @if(isset($paid_invoice))
                     <tbody>
-                   <tr>
-                     <td style="width: 120px;"><b>{{ __('Customer') }}</b></td>
-                     <td>{{ $paid_invoice->customer->name }}</td>
-                   </tr>
-                 <tr>
-                     <td style="width: 120px;"><b>{{ __('Category') }}</b></td>
-                     <td>{{ $paid_invoice->invoice->category ? $paid_invoice->invoice->category->name : 'N/A' }}
-                     </td>
-                   </tr>
-
-                     <tr>
-                     <td style="width: 120px;"><b>{{ __('Sub Category') }}</b></td>
-                     <td>{{ $paid_invoice->invoice->subcategory ? $paid_invoice->invoice->subcategory->name : 'N/A' }}
-                     </td>
-                   </tr>
-
                      <tr>
                      <td style="width: 120px;"><b>{{ __('Product') }}</b></td>
                      <td>{{ $paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A' }}
@@ -184,19 +166,24 @@
                    </tr>
 
                     <tr>
-                     <td style="width: 120px;"><b>{{ __('Billing Amount') }}</b></td>
-                     <td>&#8358;{{ number_format($paid_invoice->billingAmount,2) }}
+                     <td style="width: 120px;"><b>{{ __('Amount') }}</b></td>
+                     <td>&#8358;{{ number_format($paid_invoice->invoice->billingAmount,2) }}
                      </td>
                    </tr>
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>&#8358;{{ number_format($paid_invoice->amount_paid,2) }}
+                     <!-- <td>&#8358;{{ number_format($paid_invoice->amount_paid,2) }} -->
+                     <td>&#8358;{{ number_format($paid_invoice->invoice->amount_paid,2)}}
                      </td>
                    </tr>
+                       <tr>
+                     <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>
+                <td>{{ date("jS F, Y", strtotime($paid_invoice->payment_date)) }}</td>           
+              </tr>
 
                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Billing Balance') }}</b></td>
+                     <td style="width: 120px;"><b>{{ __('Balance') }}</b></td>
                      <td>&#8358;{{ number_format($paid_invoice->billingbalance,2) }}
                      </td>
                    </tr>
@@ -208,16 +195,6 @@
                      <td class="text-dark">{{ $paid_invoice->invoice ? $paid_invoice->invoice->status : 'N/A' }}
                      </td>
                    </tr>
-                    
-
-                    <tr>
-                     <td style="width: 120px;"><b>{{ __('Payment Date') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($paid_invoice->payment_date)) }}</td>           
-              </tr>
-              <tr>
-                     <td style="width: 120px;"><b>{{ __('Date Recorded') }}</b></td>
-                <td>{{ date("jS F, Y", strtotime($paid_invoice->created_at)) }}</td>           
-              </tr>
 
                     </tbody>
                     @else

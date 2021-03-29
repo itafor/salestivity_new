@@ -30,7 +30,7 @@ class InvoicePaid extends Mailable
     public function build()
     {
         return $this->view('emails.invoicePaid')
-        ->from('noreply@salestivity.com', 'Salestivity')
+        ->from($this->paid_invoice->invoice->user->email, $this->paid_invoice->invoice->user->company_name)
         ->subject('Invoice Payment Notification');
     }
 }
