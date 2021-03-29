@@ -35,7 +35,7 @@ class EmailInvoiceRenewalToOtherContacts extends Mailable
     public function build()
     {
         return $this->view('emails.email_invoice_renewal_to_other_contacts')
-        ->from('noreply@salestivity.com', 'Salestivity')
+        ->from($this->customerRenewal->user->email, $this->customerRenewal->user->company_name)
         ->subject('Invoice Renewal Notification');
     }
 }
