@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use PDF;
 
 class EmailInvoiceRenewalToOtherContacts extends Mailable
 {
@@ -16,7 +17,8 @@ class EmailInvoiceRenewalToOtherContacts extends Mailable
     public $remaing_days;
     /**
      * Create a new message instance.
-     *
+        // ->attachData(base64_decode($this->pdf)->output(), "invoiceRenewal.pdf")
+     * 
      * @return void
      */
       public function __construct($renewal,$customerContact,$remaing_days)
@@ -34,8 +36,15 @@ class EmailInvoiceRenewalToOtherContacts extends Mailable
      */
     public function build()
     {
+        $pdf = PDF::loadView('emails.email_invoice_renewal_to_other_contacts', [
+            'customerRenewal'=> $this->customerRenewal, 
+            'customerContact' => $this->customerContact, 
+            'remaing_days' => $this->remaing_days
+        ]);
+
         return $this->view('emails.email_invoice_renewal_to_other_contacts')
         ->from($this->customerRenewal->user->email, $this->customerRenewal->user->company_name)
+        ->attachData($pdf->output(), "invoiceRenewal.pdf")
         ->subject('Invoice Renewal Notification');
     }
 }
