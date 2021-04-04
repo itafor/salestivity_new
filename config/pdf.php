@@ -8,5 +8,5 @@ return [
 	'keywords'              => '',
 	'creator'               => 'Laravel Pdf',
 	'display_mode'          => 'fullpage',
-	'tempDir'               => public_path('pdfInvoices') //base_path('../temp/')
+	'tempDir'               => base_path('./temPdfFiles/') //base_path('../temp/')
 ];
