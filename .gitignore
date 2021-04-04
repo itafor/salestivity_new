@@ -2,7 +2,6 @@
 /node_modules
 /public/hot
 /public/files
-/public/pdfInvoices
 /public/storage
 /storage/*.key
 /vendor
@@ -12,3 +11,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/temPdfFiles
