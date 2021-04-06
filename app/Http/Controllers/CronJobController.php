@@ -7,6 +7,7 @@ use App\Jobs\NotifyDueRenewalJob;
 use App\Mail\EmailInvoiceRenewalToCustomer;
 use App\Mail\EmailInvoiceRenewalToOtherContacts;
 use App\Renewal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -19,12 +20,12 @@ class CronJobController extends Controller
        
       $renewals = Renewal::where([
         ['billingBalance','>',0],
-        ['duration_type','Annually']
+        ['end_date', '>=', Carbon::now()]
       ])
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
      ->get();
-
+   //dd($renewals);
        foreach($renewals as $renewal) {
         $duration = $renewal->duration;
       //dd($duration);
@@ -57,7 +58,7 @@ class CronJobController extends Controller
       $renewals = Renewal::where([
         ['billingBalance','>',0],
         ['first_reminder_sent','no'],
-        ['duration_type','Annually']
+        ['end_date', '>=', Carbon::now()]
       ])
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
@@ -83,7 +84,8 @@ class CronJobController extends Controller
     {
        
       $renewals = Renewal::where([
-        ['billingBalance','>',0],
+        ['billingBalance', '>', 0],
+        ['end_date', '<=', Carbon::now()],
       ])
       ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
      DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
