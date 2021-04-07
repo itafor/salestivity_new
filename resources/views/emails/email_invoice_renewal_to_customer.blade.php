@@ -146,10 +146,6 @@ Find below the details of the invoice. Kindly make payment before the due date t
 @if(isset($renewal))
 <tbody>
 <tr>
-<td style="width: 150px;"><b>{{ __('Customer') }}</b></td>
-<td>{{ $renewal->customers->name }}</td>
-</tr>
-<tr>
 <td style="width: 150px;"><b>{{ __('Item') }}</b></td>
 <td>{{ $renewal->prod ? $renewal->prod->name : 'N/A' }}
 </td>
@@ -184,6 +180,10 @@ Find below the details of the invoice. Kindly make payment before the due date t
 <td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
 <td>&#8358;{{ number_format($renewal->billingBalance,2) }}
 </td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
+<td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
