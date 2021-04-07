@@ -65,4 +65,7 @@ class User extends Authenticatable
         return $this->hasMany(SubUser::class,'main_acct_id','id');
     }
 
+     public function company_detail(){
+        return $this->hasOne(CompanyDetail::class, 'main_acct_id', 'id');
+    }
 }

@@ -129,7 +129,13 @@
 @endif
 
 <p class="card-text">Dear {{$customerContact->name}},</p>
-<p>Please be informed that for the <strong>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}</strong> for <strong>{{ $customerRenewal->customers->name }}</strong> is due for renewal.</p>
+<p>Please be informed that for the <strong>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}</strong> for <strong>{{ $customerRenewal->customers->name }}</strong> is due for renewal
+  @if(isset($remaing_days) && $remaing_days >= 1)
+                in <strong>{{$remaing_days}}</strong> days.
+        @else
+        .
+        @endif
+</p>
 <p>
 Find below the details of the invoice. Kindly make payment before the due date to avoid service suspension. Please read the domain expiration information section below.
 </p>
