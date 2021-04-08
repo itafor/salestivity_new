@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\CompanyAccountDetail;
+use App\CompanyEmail;
 use App\Contact;
 use App\Customer;
 use App\Department;
@@ -165,5 +167,15 @@ public function getCompanyEmail($id)
         return response()->json(['user' => $user]);
     }
 
-    
+        public function fetchCompanyEmail($id)
+    {
+        $email = CompanyEmail::where('id', $id)->first();
+        return response()->json(['email' => $email]);
+    }
+
+    public function fetchCompanyBankDetail($id)
+    {
+        $detail = CompanyAccountDetail::where('id', $id)->first();
+        return response()->json(['detail' => $detail]);
+    }
 }

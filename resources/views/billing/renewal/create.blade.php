@@ -43,7 +43,7 @@
         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
             <select name="sub_category_id" id="sub_category_id" class="form-control border-input" data-toggle="select">
-                <option value="">Choose a Sub Category</option>
+                <option value="">Select Product Sub Category</option>
               
             </select>     
             @if ($errors->has('sub_category_id'))

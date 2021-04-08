@@ -445,8 +445,8 @@
                                             </div>
                                         </ul>
                                     </li>
-                                    <a href="{{route('settings.index')}}" class="nav-link">
-                                        <span class="nav-link-text">{{ __('Company logo') }}</span>
+                                    <a href="{{route('company_details.index')}}" class="nav-link">
+                                        <span class="nav-link-text">{{ __('Company Details') }}</span>
                                     </a>
 
                              <!--      <li class="nav-item">
@@ -458,7 +458,7 @@
                                                 <ul class="nav nav-sm flex-column" >
                                                     <ul class="nav nav-sm flex-column">
                                                         <li class="nav-item">
-                                                             <a href="{{route('settings.index')}}" class="nav-link">
+                                                             <a href="" class="nav-link">
                                                             <span class="nav-link-text">{{ __('logo') }}</span>
                                                             </a>
                                                         </li>
