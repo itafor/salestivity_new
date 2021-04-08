@@ -217,6 +217,8 @@ Route::post('report/opportunity-reports', 'OpportunityController@getReport')->na
 	Route::get('getproductprice/{id}', 'AjaxController@getProductPrice');
 	Route::get('getsales/{id}', 'AjaxController@getSalesDept');
 	Route::get('mails', 'RenewalController@mail');
+	Route::get('fetch-company-email/{id}', 'AjaxController@fetchCompanyEmail');
+	Route::get('fetch-company-bank-detail/{id}', 'AjaxController@fetchCompanyBankDetail');
 
 });
 
@@ -224,11 +226,19 @@ Route::get('getstates/{id}', 'AjaxController@getState');
 Route::get('getcities/{id}', 'AjaxController@getCity');
 
 Route::group([
-    'prefix' => 'settings'
+    'prefix' => 'company_details'
 ], function () {
 
-    Route::get('/', 'SettingsController@index')->name('settings.index');
+    Route::get('/', 'SettingsController@index')->name('company_details.index');
+    Route::post('/update-name', 'SettingsController@updateCompanyName')->name('company.update.name');
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
+    Route::post('/add-email', 'SettingsController@addCompanyEmail')->name('company.add.email');
+    Route::post('/edit-email', 'SettingsController@updateCompanyEmail')->name('company.update.email');
+    Route::post('/add-bank-account', 'SettingsController@addCompanyBankAccount')->name('company.add.bank_account.detail');
+    Route::post('/edit-bank-detail', 'SettingsController@updateCompanyBankDetail')->name('company.update.bank.account');
+
+
+
 });
 
 // Route::group([

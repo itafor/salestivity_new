@@ -164,6 +164,44 @@ function renewalPayment (id) {
                     }
                 });
 }
+
+function fetchCompanyEmail (id) {
+    //$('#modal-form form')[0].reset();
+    $('#modal-form').modal("show");
+
+    $.ajax({
+        url: baseUrl+'/fetch-company-email/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.email)
+           $('.modal-title').text('Update Company Email')
+           $('#company_email_id').val(data.email.id)
+           $('#company_email').val(data.email.email)
+           
+                    }
+                });
+}
+
+function fetchCompanyBankAccount(id) {
+    //$('#modal-form form')[0].reset();
+    $('#bank-account-modal-form').modal("show");
+
+    $.ajax({
+        url: baseUrl+'/fetch-company-bank-detail/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.detail)
+           $('.modal-title').text('Update company bank account detail')
+           $('#company_bank_account_id').val(data.detail.id)
+           $('#bank_name').val(data.detail.bank_name)
+           $('#account_name').val(data.detail.account_name)
+           $('#account_number').val(data.detail.account_number)
+           
+                    }
+                });
+}
 //auto input billing balance when amout paid is entered
 $('body').on('keyup', '#amount_paid', function(){
             let amountPaid = $(this).val();
