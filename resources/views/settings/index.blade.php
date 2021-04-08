@@ -1,6 +1,6 @@
-@extends('layouts.app', ['title' => __('Company Logo'), 'icon' => 'las la-compass'])
+@extends('layouts.app', ['title' => __('Company Details'), 'icon' => 'las la-compass'])
 @section('content')
-@include('users.partials.header', ['title' => __('Add Opportunity')])
+@include('users.partials.header', ['title' => __('Company Details')])
 
  <div class="container-fluid mt--7"> 
         <div class="row">
@@ -9,7 +9,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Company Logo') }}</h3>
+                                <h3 class="mb-0">{{ __('Logo') }}</h3>
                             </div>
                             <!-- <div class="col-4 text-right">
                                 <a href="{{-- route('role.create') --}}" class="btn btn-sm btn-primary">{{ __('Add role') }}</a>
@@ -50,6 +50,42 @@
                     </div>
                 </form>
                     <hr>
+           <h2>Name</h2>
+
+                            <form class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Company Name</label>
+            <input type="text" name="company_name" class="form-control" id="inputPassword2" placeholder="Company Name">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </form>
+<hr>
+<h2>Emails</h2>
+     <form class="form-inline">
+           
+            <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Company Email</label>
+            <input type="email" name="company_email" class="form-control" id="company_email" placeholder="Company Email">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </form>
+<hr>
+<h2>Bank Account Details</h2>
+     <form class="form-inline">
+            <div class="form-group mb-2 mr-1">
+            <label for="staticEmail2" >Bank Name</label>
+            <input type="text" class="form-control-plaintext" name="bank_name" id="bank_name" placeholder="Bank Name">
+            </div>
+             <div class="form-group  mb-2 mr-1">
+            <label for="staticEmail2">Account Name</label>
+            <input type="text" name="account_name" class="form-control-plaintext" id="account_name" placeholder="Account Name">
+            </div>
+             <div class="form-group  mb-2 mr-1">
+            <label for="staticEmail2">Account Number</label>
+            <input type="number" name="account_number" class="form-control-plaintext" id="account_name" placeholder="Account Number">
+            </div>
+            <button type="submit" class="btn btn-primary mb--3">Save</button>
+            </form>
                        </div>
 
                  

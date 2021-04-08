@@ -74,7 +74,7 @@
 <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
     <select name="customer_id" id="customer" class=" form-control selectOption" required>
         <option selected>Choose a Customer</option>
-        @foreach(allCustomers() as $key => $customer)
+        @foreach($customers as $key => $customer)
             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
         @endforeach
     </select>
