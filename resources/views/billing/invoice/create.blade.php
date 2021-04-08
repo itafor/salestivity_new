@@ -110,7 +110,7 @@
                                     <div class="col-6">
                                           <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
-                                    <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" required >
+                                    <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" >
                                     @if ($errors->has('discount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('discount') }}</strong>
