@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Subcategory Managment'), 'icon' => 'las la-plus-circle'])
+@extends('layouts.app', ['title' => __('Sub Category Managment'), 'icon' => 'las la-plus-circle'])
 @section('content')
 @include('users.partials.header', ['title' => __('Add City')])  
 
@@ -30,11 +30,11 @@
                         <form method="post" action="{{ route('product.subcategory.store') }}" autocomplete="off">
                             @csrf
                             
-                            <h6 class="heading-small text-muted mb-4">{{ __('Add Sub Category') }}</h6>
+                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Add Sub Category') }}</h6> -->
                             <div class="pl-lg-4 pr-lg-4">
                  <div class="col-md-12 pl-1">
                       <div class="form-group">
-                        <label for="category_id">Advert Category <span class="text-danger">*</span></label>
+                        <label for="category_id"> Category <span class="text-danger">*</span></label>
                         <select name="category_id" class="form-control" required>
                           <option>Select a category</option>
                           @foreach(productCategories() as $category)
@@ -49,7 +49,7 @@
                   </div>
 
                   <div class="col-md-12">
-                  <label class="form-control-label" for="input-property_type">{{ __('Subcategories') }}</label>
+                  <label class="form-control-label" for="input-property_type">{{ __('Sub Category') }}</label>
                   <input type="text" name="subcategories[112211][name]"  class="form-control" required>
                 </div>
 
@@ -59,7 +59,7 @@
                 <div style="clear:both"></div>
 
                    <div class="form-group">
-                  <button type="button" id="addMoreSubcategory" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i>  Add more Subcategories</button>
+                  <button type="button" id="addMoreSubcategory" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i>  Add more Sub Category</button>
                 </div>
                             
                                 </div>
