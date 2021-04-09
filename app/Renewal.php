@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number'
+        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id'
     	];
 
     public function customers()
@@ -68,6 +68,16 @@ class Renewal extends Model
         return $this->belongsTo('App\User', 'main_acct_id');
     }
 
+     public function compEmail()
+    {
+        return $this->belongsTo('App\CompanyEmail', 'company_email_id','id');
+    }
+
+    public function compBankAcct()
+    {
+        return $this->belongsTo('App\CompanyAccountDetail', 'company_bank_acc_id','id');
+    }
+
     public static function createNew($data) {
 
         $guard_object = getActiveGuardType();
@@ -94,7 +104,10 @@ class Renewal extends Model
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
          'first_reminder_sent' => 'no',
-         'invoice_number' => 'DW'.mt_rand(0000, 9999)
+         'invoice_number' => 'DW'.mt_rand(0000, 9999),
+        'company_email_id' => $data['company_email_id'],
+        'company_bank_acc_id' => $data['company_bank_acc_id'],
+
     	]);
 
         if($renewal){

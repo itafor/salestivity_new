@@ -4,23 +4,25 @@ namespace App\Http\Controllers;
 
 use App\BillingAgent;
 use App\Category;
+use App\CompanyAccountDetail;
+use App\CompanyEmail;
 use App\Contact;
 use App\Customer;
 use App\Jobs\SendRenewalPaymentNotification;
 use App\Mail\RenewalPaid;
+use App\Notifications\RenewalCreated;
 use App\Payment;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
 use App\SubCategory;
+use App\User;
 use App\renewalContactEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Notifications\RenewalCreated;
-use App\User;
 use Session;
 use Validator;
 
@@ -42,7 +44,7 @@ class RenewalController extends Controller
         $userId = auth()->user()->id;
         $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderby('end_date','asc')->get();
+        ])->orderby('created_at','asc')->get();
         return view('billing.renewal.index', compact('renewals'));
     }
 
@@ -60,6 +62,8 @@ class RenewalController extends Controller
         $data['products'] = Product::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
+        $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         return view('billing.renewal.create', $data);
     }
 
@@ -82,13 +86,16 @@ class RenewalController extends Controller
             'description' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
-            'duration_type' =>'required'
+            'duration_type' =>'required',
+            'company_email_id' =>'required',
+            'company_bank_acc_id' =>'required'
         ]);
 
         if ($validator->fails()) {
             Alert::warning('Required Fields', 'Please fill in all required fields');
             return back()->withInput();
         }
+        // dd($request->all());
 
         if(compareEndStartDate($request->start_date,$request->end_date) == false){
             Alert::error('Invalid End Date', 'Please ensure that the End Date is after the Start Date');

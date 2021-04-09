@@ -34,7 +34,7 @@ class RenewalPaid extends Mailable
     public function build()
     {
         return $this->view('emails.renewalPaid')
-        ->from($this->renewal->user->email, $this->renewal->user->company_name)
+        ->from($this->renewal->renewal->compEmail ?  $this->renewal->renewal->compEmail->email : $this->renewal->user->email)
         ->subject('Renewal Payment Notification');
     }
 }

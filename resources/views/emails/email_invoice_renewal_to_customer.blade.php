@@ -128,6 +128,7 @@
 
      @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+<span style="margin-left: -100px; align-content: center;">{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</span>
 @endif
 
     <p class="card-text">Dear {{$renewal->customers->name}},</p>
@@ -187,10 +188,10 @@ Find below the details of the invoice. Kindly make payment before the due date t
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
-<td>Bank Transfer 
-Digitalweb Application Development Limited
-0044102222
-Access Bank
+<td>Bank Transfer &nbsp; <br>
+<strong>Account Name</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_name : 'N/A' }}, &nbsp;<br>
+<strong>Account Number</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_number : 'N/A' }} , &nbsp;<br>
+<strong>Bank</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->bank_name : 'N/A' }}
 </td>           
 </tr>
 </tbody>
