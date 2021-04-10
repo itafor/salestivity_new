@@ -250,7 +250,7 @@
 
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Company Bank Account') }}</label>
-         <select class="form-control" name="company_bank_acc_id" id="company_bank_acc_id">
+         <select class="form-control" name="company_bank_acc_id" id="company_bank_acc_id" required>
        <option value="">Select bank account</option>
           @foreach($companyBankDetails as $bankDetail)
         <option value="{{$bankDetail->id}}">{{$bankDetail->bank_name}} - {{$bankDetail->account_number}}</option>

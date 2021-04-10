@@ -200,7 +200,7 @@ Find below the details of the invoice. Kindly make payment before the due date t
 @endif
 </table>
 <p>Thank you for your continuous patronage.<br>
-Digitalweb Billing Team</p><br>
+{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }} Billing Team</p><br>
 <p>Important Domain Expiration Information
 Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.
 </p>
