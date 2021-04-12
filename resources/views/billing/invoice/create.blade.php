@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <form method="post" action="{{ route('billing.invoice.store') }}" autocomplete="off">
                             @csrf
-                            <input type="hidden" name="status" value="Not Confirmed">
+                            <!-- <input type="hidden" name="status" value="Not Confirmed"> -->
                             <div class="pl-lg-4 pr-lg-4">
                                   <div class="row">
                                 
@@ -122,9 +122,9 @@
 
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                          <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="discount">{{ __('Billing Amount(in)') }}</label>
+                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }}</label>
                                     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
                                     @if ($errors->has('billingAmount'))
                                         <span class="invalid-feedback" role="alert">
@@ -134,7 +134,21 @@
                                 </div>
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col-4">
+                                             
+                                <div class="form-group{{ $errors->has('due_date') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="timeline">{{ __('Due Date') }}</label>
+                                   <input type="text" name="due_date" id="due_date" class="date form-control form-control-alternative{{ $errors->has('due_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Due Date') }}"  data-toggle="datepicker" value="{{ old('due_date') }}" required>
+
+                            @if ($errors->has('due_date'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('due_date') }}</strong>
+                                </span>
+                            @endif
+                                </div>
+                                    </div>
+
+                                    <div class="col-4">
                                              
                                 <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
@@ -148,6 +162,40 @@
                                 </div>
                                     </div>
                                 </div>
+
+        <div class="row">
+
+      <div class="col">
+<label class="form-control-label" for="discount">{{ __('Delivery Email') }}</label>
+   <select class="form-control" name="company_email_id" id="company_email_id" required>
+       <option value="">Select delivery email</option>
+          @foreach($companyEmails as $email)
+        <option value="{{$email->id}}">{{$email->email}}</option>
+        @endforeach
+   </select>
+
+    @if ($errors->has('company_email_id'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('company_email_id') }}</strong>
+        </span>
+    @endif
+    </div>
+
+      <div class="col">
+<label class="form-control-label" for="discount">{{ __('Company Bank Account') }}</label>
+         <select class="form-control" name="company_bank_acc_id" id="company_bank_acc_id" required>
+       <option value="">Select bank account</option>
+          @foreach($companyBankDetails as $bankDetail)
+        <option value="{{$bankDetail->id}}">{{$bankDetail->bank_name}} - {{$bankDetail->account_number}}</option>
+  @endforeach
+   </select>
+    @if ($errors->has('company_bank_acc_id'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('company_bank_acc_id') }}</strong>
+        </span>
+    @endif
+    </div>
+  </div>
                                  
                                                         
 

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\CompanyAccountDetail;
+use App\CompanyEmail;
 use App\Customer;
 use App\Invoice;
 use App\InvoicePayment;
 use App\Mail\InvoicePaid;
+use App\Mail\SendInvoice;
 use App\Payment;
 use App\Product;
 use App\SubCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -57,6 +61,10 @@ class InvoiceController extends Controller
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
+         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+         
+        $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
         return view('billing.invoice.create', $data);
     }
 
@@ -79,6 +87,11 @@ class InvoiceController extends Controller
             'cost' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
+            'company_email_id' => 'required',
+            'company_bank_acc_id' => 'required',
+            'due_date' => 'required',
+
+
         ];
         $message = [
             'customer.required' => 'Customer name is required',
@@ -87,6 +100,10 @@ class InvoiceController extends Controller
             'cost.required' => 'Please input cost',
             'category_id.required' => 'Product category is required',
             'sub_category_id.required' => 'Product subcategory is required',
+            'company_email_id.required' => 'company email  is required',
+            'company_bank_acc_id.required' => 'company bank account is required',
+            'due_date.required' => 'Due date is required',
+
             
         ];
         $validator = Validator::make($input, $rules, $message);
@@ -105,12 +122,20 @@ class InvoiceController extends Controller
             $invoice->timeline = $request->timeline;
             $invoice->cost = $request->cost;
             $invoice->discount = $request->discount;
-            $invoice->status = $request->status;
+            $invoice->status = 'Pending';
             $invoice->billingAmount = $request->billingAmount;
             $invoice->billingBalance = $request->billingAmount;
+            $invoice->company_email_id = $request->company_email_id;
+            $invoice->company_bank_acc_id = $request->company_bank_acc_id;
+            $invoice->due_date = Carbon::parse(formatDate($request->due_date, 'd/m/Y', 'Y-m-d'));
             $invoice->save();
 
             if($invoice){
+
+              $toEmail = $invoice->customers->email;
+
+            Mail::to($toEmail)->send(new SendInvoice($invoice));
+
                   $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);
 

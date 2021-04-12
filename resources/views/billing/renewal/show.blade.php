@@ -180,6 +180,15 @@
                  <td> First : {{$renewal->duration ? $renewal->duration->first_duration.'days' : 'N/A' }}, Second: {{$renewal->duration ? $renewal->duration->second_duration.'days' : 'N/A' }}, Third: {{$renewal->duration ? $renewal->duration->third_duration.'days' : 'N/A' }} </td>
                  </tr>
 
+                 <tr>
+                     <td style="width: 200px;"><b>{{ __('Delivery Email') }}</b></td>
+                <td>{{ $renewal->compEmail ? $renewal->compEmail->email : 'N/A' }}</td>           
+              </tr>
+              <tr>
+                 <td style="width: 200px;"><b>{{ __('Bank Account') }}</b></td>
+                 <td> <strong>Bank</strong> : {{$renewal->compBankAcct ? $renewal->compBankAcct->bank_name : 'N/A' }}, <strong>Account Name</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_name : 'N/A' }}, <strong>Account Number</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_number : 'N/A' }} </td>
+                 </tr>
+
                     </tbody>
                     @else
                     <span>No matching records found</span>

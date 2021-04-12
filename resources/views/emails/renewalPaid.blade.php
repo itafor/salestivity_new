@@ -128,6 +128,8 @@
 
              @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+<br>
+<span style="margin: auto;"><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b></span>
 @endif
                            
                         </tr>

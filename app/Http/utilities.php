@@ -2,6 +2,9 @@
 
 use App\Category;
 use App\City;
+use App\CompanyAccountDetail;
+use App\CompanyDetail;
+use App\CompanyEmail;
 use App\Contact;
 use App\Country;
 use App\Customer;
@@ -242,4 +245,20 @@ function uploadImage($image)
         }
     }
     return $path;
+}
+
+function company_details_alerts(){
+      $data['user'] = User::where([
+        ['id', getActiveGuardType()->main_acct_id],
+        ['company_logo_url', '!=', null]
+    ])->first();
+        $data['companyDetail'] = CompanyDetail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['name', '!=', null]
+        ])->first();
+        $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+  if($data['user'] == '' || $data['companyDetail'] == '' || $data['companyEmails'] == '' || $data['companyBankDetails'] == ''){
+        return  'show alert';
+  }
 }

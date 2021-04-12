@@ -11,16 +11,16 @@ class SendInvoice extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $invoice;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($invoice)
     {
-        $this->data = $data;
+        $this->invoice = $invoice;
     }
 
     /**
@@ -30,9 +30,8 @@ class SendInvoice extends Mailable
      */
     public function build()
     {
-        $address = 'info@salestivity.com';
-        $subject = 'Customer Invoice!';
-        $name = 'Jane Doe';
-        return $this->view('view.name');
+        return $this->view('emails.sendinvoice')
+        ->from($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email)
+        ->subject('Invoice Payment Notification');
     }
 }

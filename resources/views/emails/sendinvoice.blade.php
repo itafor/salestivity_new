@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Rent Due in 30 Days | Asset Clerk</title>
+    <title>Invoice  Notification</title>
     
     <style>
     .invoice-box {
@@ -68,6 +68,22 @@
         border-top: 2px solid #eee;
         font-weight: bold;
     }
+
+    #rental_table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+#rental_table td{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#rental_table .rent_title{
+  width: 150px;
+}
+
     
     @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td {
@@ -80,6 +96,9 @@
             width: 100%;
             display: block;
             text-align: center;
+        }
+        .notification_header{
+            font-size: 10px;
         }
     }
     
@@ -101,102 +120,101 @@
 
 <body>
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
-            <tr class="top">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td class="title">
-                                <img src="{{}}" alt="Asset Clerk" title="Asset Clerk" width="118" height="71.66" >
-                            </td>
-                            
-                            <td style="text-align:right">
-                                
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            
-            <tr class="information">
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td colspan="2">
-                                Dear Name,
-                                <p>
-                                  Kindly be notified that your rent will be due in 30 days. Please find below rental information.
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            
-            <tr class="heading">
-                <td>
-                    Property
-                </td>
-                
-                <td>
-                  
-                </td>
-            </tr>
-            
-            <tr class="details">
-                <td colspan="2">
-                    
-                </td>
-            </tr>
-            
-            <tr class="heading">
-                <td>
-                  Rent Details
-                </td>
-                <td></td>
-            </tr>
-            
-            <tr class="item">
-                <td>
-                    <b>Price:</b>
-                </td>
-                
-                <td>
-                    &#8358; 
-                </td>
-            </tr>
+       <h2>Invoice Notification</h2>
 
-            <tr class="item">
-                <td>
-                    <b>Rent Duration:</b>
-                </td>
-                
-                <td>
-                    
-                </td>
-            </tr>
+<div class="card">
+<div class="card-body">
+    @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
+<img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+<span style="margin-left: -100px; align-content: center;">{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</span>
+@endif
 
-            <tr class="item">
-                <td>
-                    <b>Rent Start Date:</b>
-                </td>
-                
-                <td>
-                    
-                </td>
-            </tr>
+<p class="card-text">Dear {{$invoice->customers->name}},</p>
+<p>Please be informed that for the <strong>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}</strong> for <strong>{{ $invoice->customers->name }}</strong> is due for renewal.
+</p>
+<p>
+Find below the details of the invoice. Kindly make payment before the due date to avoid service suspension. Please read the domain expiration information section below.
+</p>
+<h4>Invoice Details</h4>
+<table class="table table-bordered" id="rental_table">
+@if(isset($invoice))
+<tbody>
+<tr>
+<td style="width: 150px;"><b>{{ __('Item') }}</b></td>
+<td>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
+<td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}
+</td>
+</tr>
+@if($invoice->status == 'Paid')
+<tr>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
+<td class="text-success">{{ $invoice->status }}
+</td>
+</tr>
+@elseif($invoice->status == 'Partly paid')
+<tr>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
+<td class="text-warning">
+{{ $invoice->status }}
+</td>
+</tr>
+@else
+<tr>
+<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
+<td class="text-danger">
+{{ $invoice->status }}
+</td>
+</tr>
+@endif
+<tr>
+<td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
+<td>&#8358;{{ number_format($invoice->billingBalance,2) }}
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
+<td>{{ date("jS F, Y", strtotime($invoice->due_date)) }}</td>           
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
+<td>Bank Transfer &nbsp; <br>
+<strong>Account Name</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_name : 'N/A' }}, &nbsp;<br>
+<strong>Account Number</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_number : 'N/A' }} , &nbsp;<br>
+<strong>Bank</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->bank_name : 'N/A' }}
+</td>           
+</tr>
+</tbody>
+@else
+<span>No matching records found</span>
+@endif
+</table>
+<p>Thank you for your continuous patronage.<br>
+{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }} Billing Team</p><br>
+<p>Important Domain Expiration Information
+Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.
+</p>
+<p>
+Also note that when your domain expires without renewing, it enters a Grace Period of about 29 - 35 days within which renewals can be made with an additional $50.00 to the fees stated above.
+</p>
+<p>
+After this period, if your domain is not renewed, it enters a Redemtion Grace Period. A period of another 42 days where the owner can claim the domain with additional $200 redemption fee.
+</p>
+<p>
+After this period, your domain may now be released to the public for re-registration on a first come first served basis or may be *AUCTIONED OFF** to the highest bidder in a domain auction system.
+</p>
+<p>
+To avoid losing your domain name to an auction or anybody else, ensure your domain name is renewed and is always active.
+</p>
+<p>
+This invoice and the details specified is generated for the client or organization whose names appear on it. If you have received this invoice in error, kindly disregard the information and delete as appropriate.
+</p>
+</div>
+</div>
 
-            <tr class="item">
-                <td>
-                    <b>Rent Due Date:</b>
-                </td>
-                
-                <td>
-            
-                </td>
-            </tr>
-
-        </table>
     </div>
 </body>
 </html>

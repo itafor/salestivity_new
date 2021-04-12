@@ -9,7 +9,15 @@
             <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
+
         <ul class="nav align-items-center d-md-none">
+           @if(getActiveGuardType()->user_type == 'users')
+            @if(company_details_alerts())
+                 <div class="alert alert-danger mt-3" role="alert">
+  Please click <a href="{{route('company_details.index')}}" class="alert-link text-blue"> here </a> to enter your company details.
+</div>
+@endif
+@endif
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
@@ -29,14 +37,14 @@
                     
                    
                     
-                    <a href="#" class="dropdown-item">
+                   <!--  <a href="#" class="dropdown-item">
                         <i class="ni ni-calendar-grid-58"></i>
                         <span>{{ __('Activity') }}</span>
                     </a>
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-support-16"></i>
                         <span>{{ __('Support') }}</span>
-                    </a>
+                    </a> -->
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

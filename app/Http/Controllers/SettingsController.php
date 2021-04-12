@@ -12,6 +12,11 @@ use Validator;
 
 class SettingsController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except('homepage');
+    }
+    
      public function index()
     {
         $data['user'] = User::where('id', getActiveGuardType()->main_acct_id)->first();

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use SoftDeletes;
+    
     public function customers()
     {
         return $this->belongsTo('App\Customer', 'customer');
@@ -60,5 +61,15 @@ class Invoice extends Model
     public function payments()
     {
         return $this->morphToMany('App\Payment', 'payable');
+    }
+
+   public function compEmail()
+    {
+        return $this->belongsTo('App\CompanyEmail', 'company_email_id','id');
+    }
+
+    public function compBankAcct()
+    {
+        return $this->belongsTo('App\CompanyAccountDetail', 'company_bank_acc_id','id');
     }
 }
