@@ -28,7 +28,7 @@ class CronJobController extends Controller
    //dd($renewals);
        foreach($renewals as $renewal) {
         $duration = $renewal->duration;
-      //dd($duration);
+      
            if($duration && $duration->first_duration == $renewal->remaingdays){
                $renewalContacts = $renewal->contacts;
                      self::notifyCustomer($renewal);
