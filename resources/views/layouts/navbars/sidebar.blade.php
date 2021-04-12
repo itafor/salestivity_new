@@ -11,13 +11,7 @@
         <!-- User -->
 
         <ul class="nav align-items-center d-md-none">
-           @if(getActiveGuardType()->user_type == 'users')
-            @if(company_details_alerts())
-                 <div class="alert alert-danger mt-3" role="alert">
-  Please click <a href="{{route('company_details.index')}}" class="alert-link text-blue"> here </a> to enter your company details.
-</div>
-@endif
-@endif
+         
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
