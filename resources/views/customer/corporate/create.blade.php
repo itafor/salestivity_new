@@ -67,7 +67,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-website">{{ __('Website') }} (Optional)</label>
-                                            <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="" onfocus="if(this.value=='')this.value='http://'" >
+                                            <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="A url must start with http://"  value="" >
 
                                             @if ($errors->has('website'))
                                                 <span class="invalid-feedback" role="alert">
@@ -149,7 +149,7 @@
                                 <fieldset>
                                 <h2>Address:</h2>
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group{{ $errors->has('country') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="country_id">{{ __('Country') }}</label>
                                             <select name="country" id="country_id" class="form-control form-control-alternative border-input{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{ __('Country') }}" value="{{ old('country') }}" required >
@@ -165,7 +165,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="state_id">{{ __('State') }}</label>
                                             <select name="state" id="state_id" class="form-control form-control-alternative border-input{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state') }}" required >
@@ -184,7 +184,7 @@
                                 <!-- </div>
 
                                 <div class="row"> -->
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="city_id">{{ __('City') }}</label>
                                             <select name="city" id="city_id" class="form-control form-control-alternative border-input{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('street') }}" required >
@@ -197,9 +197,12 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                
+                                </div> 
+                                <div class="row">
+                                        <div class="col-md-12">
                                         <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-street">{{ __('Street') }}</label>
+                                            <label class="form-control-label" for="input-street">{{ __('Street Address') }}</label>
                                             <input type="text" name="street" id="input-street" class="form-control form-control-alternative border-input{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Street') }}" value="{{ old('street') }}" required >
 
                                             @if ($errors->has('street'))
@@ -209,7 +212,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </fieldset>
                             <fieldset>
                                    

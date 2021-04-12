@@ -108,8 +108,8 @@
                                     </div>
                                     <div class="col-md-4">
                                       <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
-                                    <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" formnovalidate="formnovalidate" value="" onfocus="if(this.value=='')this.value='http://'">
+                                    <label class="form-control-label" for="input-website">{{ __('Website') }} (Optional)</label>
+                                    <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="A url must start with http://"  value="">
 
                                     @if ($errors->has('website'))
                                         <span class="invalid-feedback" role="alert">
