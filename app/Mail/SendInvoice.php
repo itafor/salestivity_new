@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use PDF;
 
 class SendInvoice extends Mailable
 {
@@ -30,8 +31,13 @@ class SendInvoice extends Mailable
      */
     public function build()
     {
+        $pdf = PDF::loadView('emails.sendinvoice', [
+            'invoice'=> $this->invoice, 
+        ]);
+
         return $this->view('emails.sendinvoice')
         ->from($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email)
+        ->attachData($pdf->output(), "invoicePayment.pdf")
         ->subject('Invoice Payment Notification');
     }
 }
