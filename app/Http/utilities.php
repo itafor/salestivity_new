@@ -262,3 +262,12 @@ function company_details_alerts(){
         return  'show alert';
   }
 }
+
+function loginUserId(){
+    if(getActiveGuardType()->user_type == 'users'){
+    $user = SubUser::where('email',authUser()->email)->first();
+        return $user->id;
+    }elseif (getActiveGuardType()->user_type == 'sub_users') {
+        return auth()->guard('sub_user')->user()->id;
+    }
+}

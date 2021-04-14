@@ -43,4 +43,8 @@ class Opportunity extends Model
 
         return $customer->name;
     }
+
+     public function opp_updates(){
+        return $this->hasMany(OpportunityUpdate::class,'opportunity_id','id');
+    }
 }
