@@ -8,6 +8,7 @@ use App\CompanyAccountDetail;
 use App\CompanyEmail;
 use App\Contact;
 use App\Customer;
+use App\Http\Controllers\CronJobController;
 use App\Jobs\SendRenewalPaymentNotification;
 use App\Mail\RenewalPaid;
 use App\Notifications\RenewalCreated;
@@ -107,25 +108,23 @@ class RenewalController extends Controller
             // $user = auth()->user();
             $when = now()->addSeconds(5);
             $emails = [];
-         $renewal = Renewal::createNew($request->all());
-         $getContactEmail = renewalContactEmail::where('renewal_id', $renewal->id)->get();
-
-         $company_email = $request->company_email;
-
-         // (new User)->forceFill([
-         //    'name' => 'Company',
-         //    'email' => $company_email,
-         //    ])->notify((new RenewalCreated($renewal))->delay($when));
+         $new_renewal = Renewal::createNew($request->all());
+         $getContactEmail = renewalContactEmail::where('renewal_id', $new_renewal->id)->get();
+         // $company_email = $request->company_email;
 
 
-         //    foreach ($getContactEmail as $key => $contact) {
-         //        $con = Contact::where('id', $contact->contact_id)->first();
+      $renewal = Renewal::where([
+        ['id', $new_renewal->id],
+      ])
+      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
+     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+     ->first();
 
-         //        (new User)->forceFill([
-         //            'name' => $con->name,
-         //            'email' => $con->email,
-         //            ])->notify((new RenewalCreated($renewal))->delay($when));
-         //    }
+          $renewalContacts = $renewal->contacts;
+
+        CronJobController::notifyCustomer($renewal);
+
+        CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
 
             DB::commit();
         }
