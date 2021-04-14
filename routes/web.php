@@ -178,6 +178,11 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 Route::get('lower-level-users-opportunities/{id}/{userId}', ['as' => 'lower.level.useropportunity.view', 'uses' => 'OpportunityController@getOpportunitiesOfLowerLevelUsers']);
 Route::get('report/opportunity-report', 'OpportunityController@report')->name('opportunity.create.report');
 Route::post('report/opportunity-reports', 'OpportunityController@getReport')->name('opportunity.get.report');
+
+//opportunity updates
+Route::post('opportunity_update', 'OpportunityUpdateController@storeUpdate')->name('opportunity.update.store');
+
+
 	// Target Management
 	Route::get('targets', ['as' => 'target.index', 'uses' => 'TargetController@index']);
 	Route::get('target/new', ['as' => 'target.create', 'uses' => 'TargetController@create']);
