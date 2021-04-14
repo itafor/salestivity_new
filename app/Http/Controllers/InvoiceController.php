@@ -135,7 +135,7 @@ class InvoiceController extends Controller
 
               $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->queue(new SendInvoice($invoice));
+            Mail::to($toEmail)->send(new SendInvoice($invoice));
 
                   $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);
