@@ -819,7 +819,7 @@ function add_product() {
 
   $("#first_duration, #second_duration, #third_duration").on('keyup', function(){
      let data = $(this).val();
-     if(data >= 365 || data <= -1 ||  isNaN(parseInt(data))){
+     if(data >= 500 || data <= -1 ||  isNaN(parseInt(data))){
       alert('Invalid number entered! Please enter a number between 0 and 364');
       $("#first_duration, #second_duration, #third_duration").val('');
      }
