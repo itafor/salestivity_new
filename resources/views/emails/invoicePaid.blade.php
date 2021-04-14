@@ -129,7 +129,7 @@
             @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
 <br>
-<span style="margin: auto;"><b>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</b></span>
+<p>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</p>
 @endif
                             
                             

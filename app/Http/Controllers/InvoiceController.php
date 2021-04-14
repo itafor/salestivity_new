@@ -128,13 +128,14 @@ class InvoiceController extends Controller
             $invoice->company_email_id = $request->company_email_id;
             $invoice->company_bank_acc_id = $request->company_bank_acc_id;
             $invoice->due_date = Carbon::parse(formatDate($request->due_date, 'd/m/Y', 'Y-m-d'));
+            $invoice->invoice_number = 'DW'.mt_rand(1000, 9999);
             $invoice->save();
 
             if($invoice){
 
               $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->send(new SendInvoice($invoice));
+            Mail::to($toEmail)->queue(new SendInvoice($invoice));
 
                   $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);

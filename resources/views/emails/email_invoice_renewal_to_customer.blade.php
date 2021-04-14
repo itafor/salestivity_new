@@ -128,7 +128,7 @@
 
      @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
-<span style="margin-left: -100px; align-content: center;">{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</span>
+<p>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</p>
 @endif
 
     <p class="card-text">Dear {{$renewal->customers->name}},</p>
@@ -153,8 +153,7 @@ Find below the details of the invoice. Kindly make payment before the due date t
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
-<td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}<td>
-</td>
+<td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
 </tr>
 @if($renewal->status == 'Paid')
 <tr>

@@ -104,7 +104,7 @@ class Renewal extends Model
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
          'first_reminder_sent' => 'no',
-         'invoice_number' => 'DW'.mt_rand(0000, 9999),
+         'invoice_number' => 'DW'.mt_rand(1000, 9999),
         'company_email_id' => $data['company_email_id'],
         'company_bank_acc_id' => $data['company_bank_acc_id'],
 
