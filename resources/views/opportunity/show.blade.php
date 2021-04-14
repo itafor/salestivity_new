@@ -118,27 +118,29 @@
                                     </div>
                 </div>
                 <hr>
+                <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
+    @if(count($opportunity->opp_updates) >=1)
     <div class="card">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="text-center mb-5"> Opportunity Updates </h3>
                 <div class="row">
                     <div class="col-md-12">
-                      @if(count($opportunity->opp_updates) >=1)
+                    
                         @foreach($opportunity->opp_updates as $update)
                         <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>{{$update->user ?$update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i> {{ date("jS F, Y", strtotime($update->update_date)) }}</span>
-                                        <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;{{$update->type}}</span>
+                                        <h5>{{$update->user ?$update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i>  {{ \Carbon\Carbon::parse($update->update_date)->diffForhumans() }}</span>
+                                        <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span>
                                     </div>
                                     <div class="col-4">
                                         <div class="pull-right reply"> <a href="#"><span><i class="fa fa-reply"></i> reply</span></a> </div>
                                     </div>
-                                </div> {{$update->commments}}. <div class="media mt-4"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
+                                </div> <span style="color: gray; border-radius: 5px;">{{$update->commments}}</span>.
+                                 <div class="media mt-4"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
                                     <div class="media-body">
                                         <div class="row">
                                             <div class="col-12 d-flex">
@@ -159,12 +161,13 @@
                             </div>
                         </div>
                         @endforeach
-                       @endif
+                      
                     </div>
                 </div>
             </div>
         </div>
     </div>
+     @endif
     <br>
     <form method="post" action="{{ route('opportunity.update.store') }}" autocomplete="off" class="mt--3">
      @csrf
@@ -176,7 +179,7 @@
                                         <div class="form-group{{ $errors->has('update_date') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="update_date_id">{{ __('Update Date') }}</label>
                                            
-                                           <input type="text" name="update_date" class="form-control" id="update_date" data-toggle="datepicker" required>
+                                           <input type="text" name="update_date" class="form-control" id="update_date" data-toggle="datepicker" placeholder="Date" required>
                                             @if ($errors->has('update_date'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('update_date') }}</strong>
