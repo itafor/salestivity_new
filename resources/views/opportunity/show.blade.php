@@ -117,7 +117,7 @@
                                         @endforelse
                                     </div>
                 </div>
-                <hr>
+             {{--   <hr>
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
@@ -225,7 +225,7 @@
     <button type="submit" class="btn btn-success mt-4" id="submitRenewalButton">{{ __('Submit') }}</button>
   </div>
 </form>
-</div>
+</div> --}}
 
   </div>
 
