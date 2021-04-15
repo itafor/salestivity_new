@@ -12,6 +12,7 @@ use App\Invoice;
 use App\InvoicePayment;
 use App\Opportunity;
 use App\OpportunityProduct;
+use App\OpportunityUpdate;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
@@ -177,5 +178,12 @@ public function getCompanyEmail($id)
     {
         $detail = CompanyAccountDetail::where('id', $id)->first();
         return response()->json(['detail' => $detail]);
+    }
+
+    public function fetchOpportunityUpdate($id)
+    {
+        $opportUpdate = OpportunityUpdate::where('id', $id)->first();
+        $updateDate = Carbon::parse($opportUpdate->update_date)->format('d/m/Y');
+        return response()->json(['opportUpdate' => $opportUpdate, 'updateDate'=>$updateDate]);
     }
 }

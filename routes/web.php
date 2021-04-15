@@ -181,6 +181,7 @@ Route::post('report/opportunity-reports', 'OpportunityController@getReport')->na
 
 //opportunity updates
 Route::post('opportunity_update', 'OpportunityUpdateController@storeUpdate')->name('opportunity.update.store');
+	Route::post('update-opport-update', 'OpportunityUpdateController@editOpportunityUpdate')->name('opportunity.update.edit');;
 
 
 	// Target Management
@@ -224,6 +225,8 @@ Route::post('opportunity_update', 'OpportunityUpdateController@storeUpdate')->na
 	Route::get('mails', 'RenewalController@mail');
 	Route::get('fetch-company-email/{id}', 'AjaxController@fetchCompanyEmail');
 	Route::get('fetch-company-bank-detail/{id}', 'AjaxController@fetchCompanyBankDetail');
+	// Opportunities update
+	Route::get('fetch-opport-update/{id}', 'AjaxController@fetchOpportunityUpdate');
 
 });
 
