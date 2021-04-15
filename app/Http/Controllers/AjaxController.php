@@ -44,6 +44,11 @@ class AjaxController extends Controller
          $oppProd->delete();
         Alert::success('Product', 'Deleted');
         return back();
+}elseif ($itemModel == 'opportunityUpdate') {
+         $opp_update = OpportunityUpdate::find($id);
+         $opp_update->delete();
+        Alert::success('Opportunity Update', 'Deleted');
+        return back();
 }
 }
 
