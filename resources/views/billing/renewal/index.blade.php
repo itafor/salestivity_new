@@ -50,6 +50,9 @@
                                                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
                                                 
                                                 <td>
+
+                                                    
+
                                                     <div class="col-4 text-right">
                                                         <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                         @if($renewal->status == 'Paid')
@@ -59,9 +62,12 @@
                                                         <a  class="btn btn-sm btn-primary" onclick="renewalPayment({{$renewal->id}})" title="Renewal"><i class="las la-comment-dollar"></i></a>
 
                                                         @endif
-                                                      
+
+
+                                                      <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewal',$renewal->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>

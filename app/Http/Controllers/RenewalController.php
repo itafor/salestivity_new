@@ -43,9 +43,10 @@ class RenewalController extends Controller
     {
          $guard_object = getActiveGuardType();
         $userId = auth()->user()->id;
-        $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderby('created_at','asc')->get();
+        // $renewals = Renewal::where([
+        //     ['main_acct_id', getActiveGuardType()->main_acct_id],
+        // ])->orderby('created_at','asc')->get();
+        $renewals = Renewal::all();
         return view('billing.renewal.index', compact('renewals'));
     }
 
