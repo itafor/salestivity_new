@@ -845,3 +845,27 @@ function add_product() {
       $('#editopportunityupdate'+id+'form').toggle();
 
   }
+
+
+    function replyOpportunityUpdate(id) {
+       
+      $('#replytopportunityupdate'+id+'form').toggle();
+
+  }
+
+    function editOpportunityUpdateReply(id) {
+        $.ajax({
+        url: baseUrl+'/fetch-opport-update-reply/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.opportUpdateReply)
+          // $('#type_id'+id+'').empty();
+           $('#opportunity_update_reply_id'+id).val(data.opportUpdateReply.id)
+           $('#reply'+id).append(data.opportUpdateReply.reply)
+                    }
+                });
+        console.log(id)
+      $('#opportunityUpdateReply'+id+'form').toggle();
+
+  }

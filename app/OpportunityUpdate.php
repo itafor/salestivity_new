@@ -19,4 +19,8 @@ class OpportunityUpdate extends Model
      public function opportunity(){
     	return $this->belongsTo(Opportunity::class,'opportunity_id','id')->orderBy('created_at','desc');
     }
+
+    public function updateReplies(){
+    	return $this->hasMany(OpportunityUpdateReply::class,'opportunity_update_id','id');
+    }
 }

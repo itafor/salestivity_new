@@ -13,6 +13,7 @@ use App\InvoicePayment;
 use App\Opportunity;
 use App\OpportunityProduct;
 use App\OpportunityUpdate;
+use App\OpportunityUpdateReply;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
@@ -48,6 +49,11 @@ class AjaxController extends Controller
          $opp_update = OpportunityUpdate::find($id);
          $opp_update->delete();
         Alert::success('Opportunity Update', 'Deleted');
+        return back();
+}elseif ($itemModel == 'opportunityUpdateReply') {
+         $opp_update_reply = OpportunityUpdateReply::find($id);
+         $opp_update_reply->delete();
+        Alert::success('Opportunity Update Reply', 'Deleted');
         return back();
 }
 }
@@ -190,5 +196,11 @@ public function getCompanyEmail($id)
         $opportUpdate = OpportunityUpdate::where('id', $id)->first();
         $updateDate = Carbon::parse($opportUpdate->update_date)->format('d/m/Y');
         return response()->json(['opportUpdate' => $opportUpdate, 'updateDate'=>$updateDate]);
+    }
+
+      public function fetchOpportunityUpdateReply($id)
+    {
+        $opportUpdateReply = OpportunityUpdateReply::where('id', $id)->first();
+        return response()->json(['opportUpdateReply' => $opportUpdateReply]);
     }
 }

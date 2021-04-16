@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OpportunityUpdate;
+use App\OpportunityUpdateReply;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -67,6 +68,65 @@ public function editOpportunityUpdate(Request $request){
         ]);
     
       if($opportunity_update){
+        return redirect()->route('opportunity.show', [$request->opportunity_id]);
+    }else{
+            Alert::error('Ooops', 'Something went wrong. please try again!!');
+        return redirect()->route('opportunity.show', [$request->opportunity_id]);
+
+}
+
+}
+
+    public function storeOpportunityUpdateReply(Request $request){
+        //dd($request->all());
+        $data = $request->all();
+             $validator = Validator::make($request->all(), [
+            'opportunity_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+            'opportunity_update_id' => 'required|numeric',
+            'reply' => 'required',
+        ]);
+          if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in all required fields');
+            return back()->withInput();
+        }
+
+
+        $opportunity_update_reply = OpportunityUpdateReply::create([
+        'opportunity_update_id' => $data['opportunity_update_id'],
+        'user_id' => $data['user_id'],
+        'reply' => $data['reply'],
+        ]);
+    
+      if($opportunity_update_reply){
+        return redirect()->route('opportunity.show', [$request->opportunity_id]);
+    }else{
+            Alert::error('Ooops', 'Something went wrong. please try again!!');
+        return redirect()->route('opportunity.show', [$request->opportunity_id]);
+
+}
+
+}
+
+    public function updateOpportunityUpdateReply(Request $request){
+        //dd($request->all());
+        $data = $request->all();
+             $validator = Validator::make($request->all(), [
+            'opportunity_id' => 'required|numeric',
+            'opportunity_update_reply_id' => 'required|numeric',
+            'reply' => 'required',
+        ]);
+          if ($validator->fails()) {
+            Alert::warning('Required Fields', 'Please fill in all required fields');
+            return back()->withInput();
+        }
+
+
+        $opportunity_update_reply = OpportunityUpdateReply::find($data['opportunity_update_reply_id'])->update([
+        'reply' => $data['reply'],
+        ]);
+    
+      if($opportunity_update_reply){
         return redirect()->route('opportunity.show', [$request->opportunity_id]);
     }else{
             Alert::error('Ooops', 'Something went wrong. please try again!!');
