@@ -117,7 +117,7 @@
                                         @endforelse
                                     </div>
                 </div>
-               {{-- <hr>
+                <hr>
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
@@ -139,7 +139,16 @@
                                     <div class="col-4">
                                         <div class="pull-right reply"> <span onclick="replyOpportunityUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>
                                     </div>
-                                </div> <span style="color: gray; border-radius: 5px;">{{$update->commments}}</span>.
+                                </div> 
+                            <span style="color: gray; border-radius: 5px;" id="lessOppUpdateComment{{$update->id}}">{{str_limit($update->commments, 210)}} 
+                                    @if(strlen($update->commments) > 210)
+                                <b onclick="seeMoreOppUpdateComment({{$update->id}})" style="cursor:pointer;">See more</b>
+                                @endif
+                            </span>
+
+                            <span style="color: gray; border-radius: 5px; display: none;" id="moreOppUpdateComment{{$update->id}}">{{$update->commments}} <b onclick="seeLessOppUpdateComment({{$update->id}})" style="cursor: pointer;">&nbsp;See Less</b></span>
+
+
                                 @if(loginUserId() == $update->user->id)
                                 <div class="row">
                                      <div class="col-8 d-flex mt-2">
@@ -176,7 +185,7 @@
      @endif
     <br>
          @include('opportunity.updates.newOpportunityUpdate')
-</div> --}}
+</div>
 
   </div>
 

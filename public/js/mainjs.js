@@ -869,3 +869,25 @@ function add_product() {
       $('#opportunityUpdateReply'+id+'form').toggle();
 
   }
+
+  function seeMoreOppUpdateComment(id){
+    console.log(id)
+      $('#lessOppUpdateComment'+id).hide();
+      $('#moreOppUpdateComment'+id).show();
+  }
+
+    function seeLessOppUpdateComment(id){
+      $('#lessOppUpdateComment'+id).show();
+      $('#moreOppUpdateComment'+id).hide();
+  }
+
+  function seeMoreOppUpdateCommentReply(id){
+    console.log(id)
+      $('#lessOppUpdateCommentReply'+id).hide();
+      $('#moreOppUpdateCommentReply'+id).show();
+  }
+
+    function seeLessOppUpdateCommentReply(id){
+      $('#lessOppUpdateCommentReply'+id).show();
+      $('#moreOppUpdateCommentReply'+id).hide();
+  }
