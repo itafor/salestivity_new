@@ -109,22 +109,19 @@ class RenewalController extends Controller
             $when = now()->addSeconds(5);
             $emails = [];
          $new_renewal = Renewal::createNew($request->all());
-         $getContactEmail = renewalContactEmail::where('renewal_id', $new_renewal->id)->get();
-         // $company_email = $request->company_email;
 
+     //  $renewal = Renewal::where([
+     //    ['id', $new_renewal->id],
+     //  ])
+     //  ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
+     // DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+     // ->first();
 
-      $renewal = Renewal::where([
-        ['id', $new_renewal->id],
-      ])
-      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
-     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
-     ->first();
+     //      $renewalContacts = $renewal->contacts;
 
-          $renewalContacts = $renewal->contacts;
+     //    CronJobController::notifyCustomer($renewal);
 
-        CronJobController::notifyCustomer($renewal);
-
-        CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+     //    CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
 
             DB::commit();
         }

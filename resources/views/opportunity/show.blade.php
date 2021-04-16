@@ -117,7 +117,7 @@
                                         @endforelse
                                     </div>
                 </div>
-                <hr>
+               {{-- <hr>
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
@@ -176,7 +176,7 @@
      @endif
     <br>
          @include('opportunity.updates.newOpportunityUpdate')
-</div>
+</div> --}}
 
   </div>
 
