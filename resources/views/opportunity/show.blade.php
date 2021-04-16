@@ -117,7 +117,7 @@
                                         @endforelse
                                     </div>
                 </div>
-             {{--   <hr>
+               {{-- <hr>
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
@@ -133,31 +133,37 @@
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>{{$update->user ?$update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i>  {{ \Carbon\Carbon::parse($update->update_date)->diffForhumans() }}</span>
+                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i>  {{ \Carbon\Carbon::parse($update->update_date)->diffForhumans() }}</span>
                                         <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span>
                                     </div>
                                     <div class="col-4">
-                                        <div class="pull-right reply"> <a href="#"><span><i class="fa fa-reply"></i> reply</span></a> </div>
+                                        <div class="pull-right reply"> <span onclick="replyOpportunityUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>
                                     </div>
                                 </div> <span style="color: gray; border-radius: 5px;">{{$update->commments}}</span>.
-                                 <div class="media mt-4"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
-                                    <div class="media-body">
-                                        <div class="row">
-                                            <div class="col-12 d-flex">
-                                                <h5>Simona Disa</h5> <span>- 3 hours ago</span>
-                                            </div>
-                                        </div> letters, as opposed to using 'Content here, content here', making it look like readable English.
+                                @if(loginUserId() == $update->user->id)
+                                <div class="row">
+                                     <div class="col-8 d-flex mt-2">
+                                        
+                                        <span onclick="editOpportunityUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit opportunity update"></i> </span>&nbsp;&nbsp;
+                                       
+                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true"></i>&nbsp; &nbsp; </a>
+
                                     </div>
                                 </div>
-                                <div class="media mt-3"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/nAcoHRf.jpg" /></a>
-                                    <div class="media-body">
-                                        <div class="row">
-                                            <div class="col-12 d-flex">
-                                                <h5>John Smith</h5> <span>- 4 hours ago</span>
-                                            </div>
-                                        </div> the majority have suffered alteration in some form, by injected humour, or randomised words.
-                                    </div>
+                         @endif
+
+                                <!-- edit update form -->
+            <div class="row mt-4" id="editopportunityupdate{{$update->id}}form" style="display: none;">
+         @include('opportunity.updates.edit_opportunity_update_form')
                                 </div>
+
+
+            <!-- opportunity update  replies -->
+         @include('opportunity.updates.replies')
+                      
+            <!-- replies form -->
+         @include('opportunity.updates.repliesForm')
+                                
                             </div>
                         </div>
                         @endforeach
@@ -169,62 +175,7 @@
     </div>
      @endif
     <br>
-    <form method="post" action="{{ route('opportunity.update.store') }}" autocomplete="off" class="mt--3">
-     @csrf
-                                <div class="row">
-     <input type="hidden" name="opportunity_id" value="{{$opportunity->id}}">
-     <input type="hidden" name="user_id" value="{{loginUserId()}}">
-
-                                    <div class="col-md-6">
-                                        <div class="form-group{{ $errors->has('update_date') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="update_date_id">{{ __('Update Date') }}</label>
-                                           
-                                           <input type="text" name="update_date" class="form-control" id="update_date" data-toggle="datepicker" placeholder="Date" required>
-                                            @if ($errors->has('update_date'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('update_date') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="state_id">{{ __('Type') }}</label>
-                                            <select name="type" id="type_id" class="form-control" placeholder="{{ __('type') }}" value="{{ old('type') }}" required>
-                                               <option value="">Select type</option>
-                                               <option value="Phone">Phone</option>
-                                               <option value="Email">Email</option>
-                                               <option value="Online Meeting">Online Meeting
-                                               </option>
-                                               <option value="Physical Meeting">Physical Meeting</option>
-                                               <option value="General">General</option>
-                                            </select>
-                                            @if ($errors->has('type'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('type') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                          </div>
-                        <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group{{ $errors->has('commments') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-comment">{{ __('Comment') }}</label>
-                                            <textarea class="form-control" name="commments" id="commments_id" placeholder="Type commments" rows="4" required></textarea>
-
-                                            @if ($errors->has('commments'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('commments') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-            <div class="text-center">
-    <button type="submit" class="btn btn-success mt-4" id="submitRenewalButton">{{ __('Submit') }}</button>
-  </div>
-</form>
+         @include('opportunity.updates.newOpportunityUpdate')
 </div> --}}
 
   </div>

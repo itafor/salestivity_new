@@ -824,3 +824,48 @@ function add_product() {
       $("#first_duration, #second_duration, #third_duration").val('');
      }
   })
+
+  // opportunity updates
+  function editOpportunityUpdate(id) {
+        $.ajax({
+        url: baseUrl+'/fetch-opport-update/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.opportUpdate)
+          $('#commments_id'+id).empty();
+          // $('#type_id'+id+'').empty();
+           $('#opp_update_id'+id).val(data.opportUpdate.id)
+           $('#update_date'+id).val(data.updateDate)
+           $('#commments_id'+id).append(data.opportUpdate.commments)
+           $('<option>').attr('selected', true).val(data.opportUpdate.type).text(data.opportUpdate.type).appendTo('#type_id'+id);
+                    }
+                });
+        console.log(id)
+      $('#editopportunityupdate'+id+'form').toggle();
+
+  }
+
+
+    function replyOpportunityUpdate(id) {
+       
+      $('#replytopportunityupdate'+id+'form').toggle();
+
+  }
+
+    function editOpportunityUpdateReply(id) {
+        $.ajax({
+        url: baseUrl+'/fetch-opport-update-reply/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.opportUpdateReply)
+          // $('#type_id'+id+'').empty();
+           $('#opportunity_update_reply_id'+id).val(data.opportUpdateReply.id)
+           $('#reply'+id).append(data.opportUpdateReply.reply)
+                    }
+                });
+        console.log(id)
+      $('#opportunityUpdateReply'+id+'form').toggle();
+
+  }
