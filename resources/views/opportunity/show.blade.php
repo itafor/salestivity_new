@@ -121,14 +121,14 @@
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
-    @if(count($opportunity->opp_updates) >=1)
+    @if(count($opportunity_updates) >=1)
     <div class="card">
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                     
-                        @foreach($opportunity->opp_updates as $update)
+                        @foreach($opportunity_updates as $update)
                         <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
                             <div class="media-body">
                                 <div class="row">
@@ -176,6 +176,7 @@
                             </div>
                         </div>
                         @endforeach
+                      {!! $opportunity_updates->links() !!}
                       
                     </div>
                 </div>
