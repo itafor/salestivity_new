@@ -9,9 +9,14 @@ class Category extends Model
 {
     use softDeletes;
     // Create a many to many relationship btw product and category model
+    // public function product()
+    // {
+    //     return $this->belongsToMany('App\Product', 'category_product');
+    // }
+
     public function product()
     {
-        return $this->belongsToMany('App\Product', 'category_product');
+        return $this->hasOne('App\Product', 'category_id');
     }
 
      public function sub_categories(){
