@@ -193,7 +193,7 @@
                        <div class="col-md-12">
                        @foreach($categories as $category)
                        <div class="row">
-                            <b>{{$category->products ? $category->name : ''}}</b> 
+                            <b>{{$category->product ? $category->name : ''}}</b> 
                        </div>
 
                                  <div class="row">

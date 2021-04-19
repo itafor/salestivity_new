@@ -13,7 +13,7 @@
       <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Opportunity Details') }} </h3>
+                                <h3 class="mb-0">{{ __('Manage Opportunity') }} </h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('opportunity.view',[$opportunity->id]) }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
@@ -201,7 +201,7 @@
 
             @foreach($categories as $category)
                        <div class="row">
-                            <b>{{$category->products ? $category->name : ''}}</b> 
+                            <b>{{$category->product ? $category->name : ''}}</b> 
                        </div>
                     <div class="row">
                                     <div class="col-xl-12 button">
