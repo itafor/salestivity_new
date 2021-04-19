@@ -26,7 +26,7 @@
                             <div class="pl-lg-4">
                                 <input type="hidden" name="opportunity_id" value="{{$opportunity->id}}">
                                 <div class="row">
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('opportunity_name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-opportunity">{{ __('Opportunity Name') }}</label>
                                             <input type="text" name="opportunity_name" id="input-opportunity" class="form-control form-control-alternative{{ $errors->has('opportunity_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Opportunity Name') }}" value="{{ $opportunity->name }}" required>
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
                                             <select name="account_id" id="customer" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" >
@@ -55,11 +55,8 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="row">
-                              
-                                    <div class="col-xl-12">
+
+                                     <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('contact') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-contact">{{ __('Contact') }}</label>
                                             <select name="contact" id="contact_emails" class="form-control form-control-alternative{{ $errors->has('contact') ? ' is-invalid' : '' }}" placeholder="{{ __('Contact') }}" value="{{ old('contact') }}">
@@ -74,6 +71,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                               
 
                                 <div class="row">
                                     <div class="col-xl-6">
@@ -188,9 +187,9 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         @forelse($opportunity->opp_product as $product)
-                                            <span class="badge bg-purple">{{ $product->produc ? $product->produc->name : 'N/A'  }} </span>
+                                            <span class="text-gray"><b>{{ $product->produc ? $product->produc->name : 'N/A'  }} </b></span>
                                             <small class="removeProduct" style="color: red; margin-top: -100px; cursor: pointer;"> 
-                                        <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityProduct',$product->id])}}" title="Delete"><button type="button" class="btn btn-sm btn-danger">x</button></a></small> 
+                                        <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityProduct',$product->id])}}" title="Delete" class="text-danger">X</a></small> 
                                         @empty
                                             <span class="badge bg-purple">No Product Added</span>
                                         @endforelse
@@ -200,11 +199,14 @@
 
           @include('product.add_new')
 
-
+            @foreach($categories as $category)
+                       <div class="row">
+                            <b>{{$category->products ? $category->name : ''}}</b> 
+                       </div>
                     <div class="row">
                                     <div class="col-xl-12 button">
-                                        @if($products)
-                                @foreach($products as $product)
+                                        @if($category->products)
+                                @foreach($category->products as $product)
                                         <label>
                             <input type="checkbox" name="products[]" value="{{$product->id}}">
                                   {{$product->name}} </label>
@@ -219,7 +221,7 @@
 
                                     </div>
                                 </div>
-                               
+                          @endforeach     
 
                              
                                 <div class="text-center">

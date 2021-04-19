@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         @forelse($opportunity->opp_product as $product)
-                                            <span class="badge bg-purple">{{ $product->produc ? $product->produc->name : 'N/A'  }}</span>
+                                            <span class="text-gray"><b>{{ $product->produc ? $product->produc->name : 'N/A'  }}</b>,</span>
                                         @empty
                                             <span class="badge bg-purple">No Product Added</span>
                                         @endforelse

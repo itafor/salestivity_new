@@ -132,6 +132,11 @@ class OpportunityController extends Controller
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
+          $data['subCategories'] = SubCategory::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
+
         return view('opportunity.create', $data);
     }
 

@@ -389,7 +389,7 @@ $('.selectpicker').selectpicker({
                         $('<option>').attr('selected', true).val('').text('Select contacts').appendTo('#contact_emails');
                        localStorage.setItem('contact_emails',JSON.stringify(data.contacts));
                         $.each(data.contacts, function(k, v) {
-                            $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#contact_emails');
+                            $('<option>').attr('selected', false).val(v.id).text(v.surname ? v.surname : ''+' '+ v.name).appendTo('#contact_emails');
                         });
 
                       }else{
