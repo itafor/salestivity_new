@@ -129,11 +129,13 @@
                     <div class="col-md-12">
                     
                         @foreach($opportunity_updates as $update)
-                        <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
+                        <div class="media mt-3"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i>  {{ \Carbon\Carbon::parse($update->update_date)->diffForhumans() }}</span>
+                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> &nbsp;&nbsp;&nbsp;<span> <i class="fa fa-clock" aria-hidden="true"></i>  
+                                    {{ date("jS F, Y", strtotime($update->update_date)) }}
+                                        </span>
                                         <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span>
                                     </div>
                                     <div class="col-4">
@@ -155,8 +157,12 @@
                                         
                                         <span onclick="editOpportunityUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit opportunity update"></i> </span>&nbsp;&nbsp;
                                        
-                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true"></i>&nbsp; &nbsp; </a>
+                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true" title="Delete opportunity update"></i>&nbsp; &nbsp; </a>
 
+                                         <span onclick="editOpportunityUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; </span>&nbsp;&nbsp;
+                                    </div>
+                                     <div class="col-4">
+                                        <div class="pull-right reply"> <span onclick="opportunityUpdateReplies({{$update->id}})" style="cursor: pointer;">  <label id="hideOPPReplyLabel{{$update->id}}" style="display: none;">Hide</label> <label id="">Replies</label> ({{count($update->updateReplies)}})</span> </div>
                                     </div>
                                 </div>
                          @endif
@@ -168,7 +174,9 @@
 
 
             <!-- opportunity update  replies -->
+            <div id="opportunityUpdateReplies{{$update->id}}" style="display: none;">
          @include('opportunity.updates.replies')
+            </div>
                       
             <!-- replies form -->
          @include('opportunity.updates.repliesForm')
