@@ -389,7 +389,7 @@ $('.selectpicker').selectpicker({
                         $('<option>').attr('selected', true).val('').text('Select contacts').appendTo('#contact_emails');
                        localStorage.setItem('contact_emails',JSON.stringify(data.contacts));
                         $.each(data.contacts, function(k, v) {
-                            $('<option>').attr('selected', false).val(v.id).text(v.email).appendTo('#contact_emails');
+                            $('<option>').attr('selected', false).val(v.id).text(v.surname ? v.surname : ''+' '+ v.name).appendTo('#contact_emails');
                         });
 
                       }else{
@@ -834,6 +834,8 @@ function add_product() {
         success: function(data) {
            console.log(data.opportUpdate)
           $('#commments_id'+id).empty();
+          $('#opp_update_id'+id).empty();
+          $('#update_date'+id).empty();
           // $('#type_id'+id+'').empty();
            $('#opp_update_id'+id).val(data.opportUpdate.id)
            $('#update_date'+id).val(data.updateDate)
@@ -841,7 +843,7 @@ function add_product() {
            $('<option>').attr('selected', true).val(data.opportUpdate.type).text(data.opportUpdate.type).appendTo('#type_id'+id);
                     }
                 });
-        console.log(id)
+        
       $('#editopportunityupdate'+id+'form').toggle();
 
   }
@@ -860,12 +862,43 @@ function add_product() {
         dataType: 'json',
         success: function(data) {
            console.log(data.opportUpdateReply)
-          // $('#type_id'+id+'').empty();
+          $('#opportunity_update_reply_id'+id+'').empty();
+          $('#reply'+id).empty();
+
            $('#opportunity_update_reply_id'+id).val(data.opportUpdateReply.id)
            $('#reply'+id).append(data.opportUpdateReply.reply)
                     }
                 });
-        console.log(id)
+        
       $('#opportunityUpdateReply'+id+'form').toggle();
+
+  }
+
+  function seeMoreOppUpdateComment(id){
+    console.log(id)
+      $('#lessOppUpdateComment'+id).hide();
+      $('#moreOppUpdateComment'+id).show();
+  }
+
+    function seeLessOppUpdateComment(id){
+      $('#lessOppUpdateComment'+id).show();
+      $('#moreOppUpdateComment'+id).hide();
+  }
+
+  function seeMoreOppUpdateCommentReply(id){
+    console.log(id)
+      $('#lessOppUpdateCommentReply'+id).hide();
+      $('#moreOppUpdateCommentReply'+id).show();
+  }
+
+    function seeLessOppUpdateCommentReply(id){
+      $('#lessOppUpdateCommentReply'+id).show();
+      $('#moreOppUpdateCommentReply'+id).hide();
+  }
+
+    function opportunityUpdateReplies(id) {
+       
+      $('#opportunityUpdateReplies'+id).toggle();
+      $('#hideOPPReplyLabel'+id).toggle();
 
   }

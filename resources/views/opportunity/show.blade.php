@@ -111,43 +111,58 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         @forelse($opportunity->opp_product as $product)
-                                            <span class="badge bg-purple">{{ $product->produc ? $product->produc->name : 'N/A'  }}</span>
+                                            <span class="text-gray"><b>{{ $product->produc ? $product->produc->name : 'N/A'  }}</b>,</span>
                                         @empty
                                             <span class="badge bg-purple">No Product Added</span>
                                         @endforelse
                                     </div>
                 </div>
-               {{-- <hr>
+                <hr>
                 <h3 class="text-center mb-5"> Opportunity Updates </h3>
 
 <div class="container mb-5 mt-5">
-    @if(count($opportunity->opp_updates) >=1)
+    @if(count($opportunity_updates) >=1)
     <div class="card">
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                     
-                        @foreach($opportunity->opp_updates as $update)
-                        <div class="media"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
+                        @foreach($opportunity_updates as $update)
+                        <div class="media mt-3"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> <span>&nbsp; <i class="fa fa-clock" aria-hidden="true"></i>  {{ \Carbon\Carbon::parse($update->update_date)->diffForhumans() }}</span>
+                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> &nbsp;&nbsp;&nbsp;<span> <i class="fa fa-clock" aria-hidden="true"></i>  
+                                    {{ date("jS F, Y", strtotime($update->update_date)) }}
+                                        </span>
                                         <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span>
                                     </div>
                                     <div class="col-4">
                                         <div class="pull-right reply"> <span onclick="replyOpportunityUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>
                                     </div>
-                                </div> <span style="color: gray; border-radius: 5px;">{{$update->commments}}</span>.
+                                </div> 
+                            <span style="color: gray; border-radius: 5px;" id="lessOppUpdateComment{{$update->id}}">{{str_limit($update->commments, 210)}} 
+                                    @if(strlen($update->commments) > 210)
+                                <b onclick="seeMoreOppUpdateComment({{$update->id}})" style="cursor:pointer;">See more</b>
+                                @endif
+                            </span>
+
+                            <span style="color: gray; border-radius: 5px; display: none;" id="moreOppUpdateComment{{$update->id}}">{{$update->commments}} <b onclick="seeLessOppUpdateComment({{$update->id}})" style="cursor: pointer;">&nbsp;See Less</b></span>
+
+
                                 @if(loginUserId() == $update->user->id)
                                 <div class="row">
                                      <div class="col-8 d-flex mt-2">
                                         
                                         <span onclick="editOpportunityUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit opportunity update"></i> </span>&nbsp;&nbsp;
                                        
-                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true"></i>&nbsp; &nbsp; </a>
+                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunityUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true" title="Delete opportunity update"></i>&nbsp; &nbsp; </a>
 
+                                         <span onclick="editOpportunityUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; </span>&nbsp;&nbsp;
+                                    </div>
+                                     <div class="col-4">
+                                        <div class="pull-right reply"> <span onclick="opportunityUpdateReplies({{$update->id}})" style="cursor: pointer;">  <label id="hideOPPReplyLabel{{$update->id}}" style="display: none;">Hide</label> <label id="">Replies</label> ({{count($update->updateReplies)}})</span> </div>
                                     </div>
                                 </div>
                          @endif
@@ -159,7 +174,9 @@
 
 
             <!-- opportunity update  replies -->
+            <div id="opportunityUpdateReplies{{$update->id}}" style="display: none;">
          @include('opportunity.updates.replies')
+            </div>
                       
             <!-- replies form -->
          @include('opportunity.updates.repliesForm')
@@ -167,6 +184,7 @@
                             </div>
                         </div>
                         @endforeach
+                      {!! $opportunity_updates->links() !!}
                       
                     </div>
                 </div>
@@ -176,7 +194,7 @@
      @endif
     <br>
          @include('opportunity.updates.newOpportunityUpdate')
-</div> --}}
+</div>
 
   </div>
 

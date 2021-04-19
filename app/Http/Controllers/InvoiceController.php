@@ -37,7 +37,7 @@ class InvoiceController extends Controller
     {
         $data['invoices'] = Invoice::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('created_at', 'DESC')->get();
+        ])->orderBy('created_at', 'DESC')->paginate(10);
 
 
         return view('billing.invoice.index', $data);

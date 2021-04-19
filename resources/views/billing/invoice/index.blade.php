@@ -78,6 +78,8 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                             {!! $invoices->links() !!}
+                                
                             </div>
                         </div>
                     </div>

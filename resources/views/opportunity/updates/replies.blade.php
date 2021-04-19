@@ -6,7 +6,15 @@
                         <div class="col-12 d-flex">
                             <h5>{{$reply->user->name}} {{$reply->user->last_name}}</h5>&nbsp;&nbsp; <span><i class="fa fa-clock"></i>&nbsp;&nbsp; {{ \Carbon\Carbon::parse($reply->created_at)->diffForhumans() }}</span>
                         </div>
-                    </div> {{$reply->reply}}.
+                    </div> <!-- {{$reply->reply}} -->
+
+                      <span style="color: gray; border-radius: 5px;" id="lessOppUpdateCommentReply{{$reply->id}}">{{str_limit($reply->reply, 180)}} 
+                                    @if(strlen($reply->reply) > 180)
+                                <b onclick="seeMoreOppUpdateCommentReply({{$reply->id}})" style="cursor:pointer;">See more</b>
+                                @endif
+                            </span>
+
+                            <span style="color: gray; border-radius: 5px; display: none;" id="moreOppUpdateCommentReply{{$reply->id}}">{{$reply->reply}} <b onclick="seeLessOppUpdateCommentReply({{$reply->id}})" style="cursor: pointer;">&nbsp;See Less</b></span>
 
                     @if(loginUserId() == $reply->user->id)
                     <div class="row">

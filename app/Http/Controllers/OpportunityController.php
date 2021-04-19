@@ -7,6 +7,7 @@ use App\Contact;
 use App\Customer;
 use App\Opportunity;
 use App\OpportunityProduct;
+use App\OpportunityUpdate;
 use App\Product;
 use App\SubCategory;
 use App\SubUser;
@@ -130,6 +131,11 @@ class OpportunityController extends Controller
         $data['products'] = Product::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
+
+          $data['subCategories'] = SubCategory::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+      ])->get();
+
 
         return view('opportunity.create', $data);
     }
@@ -473,8 +479,9 @@ class OpportunityController extends Controller
     public function show($id)
     {
         $opportunity = Opportunity::where('id', $id)->first();
+        $opportunity_updates = OpportunityUpdate::where('opportunity_id', $id)->orderBy('created_at','desc')->paginate(10);
         
-        return view('opportunity.show', compact('opportunity'));
+        return view('opportunity.show', compact('opportunity','opportunity_updates'));
     }
 
     public function edit($id)
