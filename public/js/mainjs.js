@@ -902,3 +902,7 @@ function add_product() {
       $('#hideOPPReplyLabel'+id).toggle();
 
   }
+
+function confirm_invoice_payment_resend() {
+  return confirm('Do you really want to resend this invoice?');
+}

@@ -33,6 +33,7 @@
 
         @endif
 
+
             <!--  @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
             <a onclick="editPaidinvoiceAlert()">
             <button class="btn btn-sm btn-primary" >
@@ -47,6 +48,8 @@
             </a>
             @endif -->
 
+          
+
               @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
                <a onclick="deletePaidinvoiceAlert()">
             <button class="btn btn-sm btn-danger" >
@@ -56,6 +59,14 @@
                 @else
              <a onclick="return confirm_delete()" href="{{route('items.destroy',['invoice',$invoice->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
               @endif
+
+                <a  href="{{route('invoice.download',[$invoice->id])}}" >
+                <button class="btn btn-sm btn-dark" >
+            {{ __('Download Invoice') }}
+            </button>
+        </a>
+
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>
@@ -64,6 +75,10 @@
                                 <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($invoice))
                     <tbody>
+                         <tr>
+                     <td style="width: 200px;"><b>{{ __('Invoice Number') }}</b></td>
+                     <td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}</td>
+                   </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $invoice->customers ? $invoice->customers->name : 'N/A' }}</td>
