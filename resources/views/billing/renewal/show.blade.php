@@ -60,6 +60,14 @@
               @else
              <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewal',$renewal->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
               @endif
+
+        <a  href="{{route('renewal.invoice.download',[$renewal->id])}}" >
+                <button class="btn btn-sm btn-dark" >
+            {{ __('Download Invoice') }}
+            </button>
+        </a>
+
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('renewal.invoice.resend',[$renewal->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>

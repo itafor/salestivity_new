@@ -875,7 +875,6 @@ function add_product() {
   }
 
   function seeMoreOppUpdateComment(id){
-    console.log(id)
       $('#lessOppUpdateComment'+id).hide();
       $('#moreOppUpdateComment'+id).show();
   }

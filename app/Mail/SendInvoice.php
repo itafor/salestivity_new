@@ -35,9 +35,11 @@ class SendInvoice extends Mailable
             'invoice'=> $this->invoice, 
         ]);
 
+        $documentName = 'invoicePayment_'.$this->invoice->invoice_number.'.pdf';
+
         return $this->view('emails.sendinvoice')
         ->from($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email)
-        ->attachData($pdf->output(), "invoicePayment.pdf")
+        ->attachData($pdf->output(), $documentName)
         ->subject('Invoice Payment Notification');
     }
 }

@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
+use PDF;
 
 class RenewalController extends Controller
 {
@@ -110,18 +111,7 @@ class RenewalController extends Controller
             $emails = [];
          $new_renewal = Renewal::createNew($request->all());
 
-     //  $renewal = Renewal::where([
-     //    ['id', $new_renewal->id],
-     //  ])
-     //  ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
-     // DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
-     // ->first();
-
-     //      $renewalContacts = $renewal->contacts;
-
-     //    CronJobController::notifyCustomer($renewal);
-
-     //    CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+              // self::renewalInvoice($new_renewal->id);
 
             DB::commit();
         }
@@ -303,4 +293,53 @@ class RenewalController extends Controller
         Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
         return redirect()->route('billing.renewal.show',$request->renewal_id);
     }
+
+
+   public function downloadRenewalInvoice($renewalId){
+    
+         $renewal = self::getRenewal($renewalId);
+      
+      $pdf = PDF::loadView('emails.email_invoice_renewal_to_customer', [
+            'renewal'=> $renewal, 
+            'remaingDays' => $renewal->remaingDays, 
+        ]);
+
+        $documentName = 'invoiceRenewal_'.$renewal->invoice_number.'.pdf';
+
+      return $pdf->download($documentName);
+   }
+
+      public function resendRenewalInvoice($renewalId){
+
+              self::renewalInvoice($renewalId);
+
+            $status = "Renewal Invoice has been resent successfully";
+            Alert::success('Renewal Invoice Resent', $status);
+            return back();
+   }
+
+   public static function renewalInvoice($renewalId){
+      
+         $renewal = self::getRenewal($renewalId);
+
+          $renewalContacts = $renewal->contacts;
+
+        CronJobController::notifyCustomer($renewal);
+
+        CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
+   }
+
+   public static function getRenewal($renewalId){
+
+    $renewal = Renewal::where([
+        ['id', $renewalId],
+      ])
+      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
+     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
+     ->first();
+   return $renewal;
+
+   }
+
+
 }

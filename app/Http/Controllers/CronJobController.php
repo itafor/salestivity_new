@@ -52,32 +52,7 @@ class CronJobController extends Controller
 
  }
 
-     public static function firstRecurringReminderMail()
-    {
-       
-      $renewals = Renewal::where([
-        ['billingBalance','>',0],
-        ['first_reminder_sent','no'],
-        ['end_date', '>=', Carbon::now()]
-      ])
-      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
-     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
-     ->get();
- 
- //dd($renewals);
 
-       foreach($renewals as $renewal) {
-            if($renewal->days == 365){
-                    $renewalContacts = $renewal->contacts;
-                     self::notifyCustomer($renewal);
-               if($renewalContacts){
-           self::sendNotificationToContactsAttachedToRenewal($renewalContacts);
-          }
-          self::updateRenewal($renewal->id);
-      }
-           
-    }
- }
 
 
     public static function dueUnpaidRenewalsMonthlyNotification()
@@ -133,14 +108,5 @@ public static function notifyCustomer($renewal){
 		    }
   }
 
-
-
-
-    public static function updateRenewal($renewal_id)
-    {
-        Renewal::where('id', $renewal_id)->update([
-        'first_reminder_sent' => 'yes',
-        ]); 
-    }
 
 }

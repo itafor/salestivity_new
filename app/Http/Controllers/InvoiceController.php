@@ -330,7 +330,9 @@ class InvoiceController extends Controller
             'invoice' => $invoice, 
         ]);
 
-      return $pdf->download('invoicePayment.pdf');
+        $documentName = 'invoicePayment_'.$invoice->invoice_number.'.pdf';
+
+      return $pdf->download($documentName);
    }
 
    public function resendInvoicePayment($invoiceId){

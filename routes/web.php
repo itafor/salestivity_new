@@ -157,6 +157,11 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 	Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
 	Route::get('item/{item_model}/{id}', ['as' => 'items.destroy', 'uses' => 'AjaxController@destroyItems']);
 
+	Route::get('resend-renewal-invoice/{id}','RenewalController@resendRenewalInvoice')->name('renewal.invoice.resend');
+
+	Route::get('download-renewal-invoice/{id}','RenewalController@downloadRenewalInvoice')->name('renewal.invoice.download');
+
+
 	// Billing Agent
 	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');
 	Route::get('billing/create','BillingAgentController@create')->name('billing.agent.create');

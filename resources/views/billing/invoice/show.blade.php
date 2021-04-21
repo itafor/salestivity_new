@@ -27,7 +27,7 @@
         @else
                <a onclick="invoice_payment({{$invoice->id}})" >
                 <button class="btn btn-sm btn-primary" >
-            {{ __('Record Payment') }}
+            {{ __('Payment') }}
             </button>
         </a>
 
@@ -60,13 +60,13 @@
              <a onclick="return confirm_delete()" href="{{route('items.destroy',['invoice',$invoice->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
               @endif
 
-             <!--    <a  href="{{route('invoice.download',[$invoice->id])}}" >
+                <a  href="{{route('invoice.download',[$invoice->id])}}" >
                 <button class="btn btn-sm btn-dark" >
             {{ __('Download Invoice') }}
             </button>
         </a>
 
-         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a> -->
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>
