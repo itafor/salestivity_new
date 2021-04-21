@@ -898,7 +898,11 @@ function add_product() {
 
     function opportunityUpdateReplies(id) {
        
-      $('#opportunityUpdateReplies'+id).toggle();
+      $('#opportunity_updateReplies'+id).toggle();
       $('#hideOPPReplyLabel'+id).toggle();
 
   }
+
+function confirm_invoice_payment_resend() {
+  return confirm('Do you really want to resend this invoice?');
+}

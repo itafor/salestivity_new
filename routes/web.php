@@ -142,6 +142,9 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 	Route::get('billing/invoice/{id}', ['as' => 'billing.invoice.destroy', 'uses' => 'InvoiceController@destroy']);
 
 	Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
+	Route::get('download/invoice/{id}','InvoiceController@downloadInvoicePayment')->name('invoice.download');
+	Route::get('resend-invoice/{id}','InvoiceController@resendInvoicePayment')->name('invoice.payment.resend');
+
 
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -321,66 +322,28 @@ class InvoiceController extends Controller
         return redirect()->route('billing.invoice.index');
     }
 
-    /**
-     * Store a newly created payment resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function pay(Request $request)
-    // {
-    //     $userId = \getActiveGuardType()->main_acct_id;
-    //     $guard_object = \getActiveGuardType();
-    //     $input = $request->all();
-    //     $rules = [
-            
-    //         'cost' => 'required',
-    //         'category_id' => 'required',
-    //         'product' => 'required',
-    //         'amount' => 'required'
-    //     ];
-    //     $message = [
-    //         'cost.required' => 'Please input cost',
-    //         'category_id.required' => 'Category is required',
-    //         'product.required' => 'Please choose a Product',
-    //         'amount.required' => 'Please input an amount',
-            
-    //     ];
-    //     $validator = Validator::make($input, $rules, $message);
-    //     if ($validator->fails()) {
-    //         return redirect()->back()->withErrors($validator);
-    //     }
+   public function downloadInvoicePayment($invoiceId){
     
+      $invoice = Invoice::find($invoiceId);
+      
+      $pdf = PDF::loadView('emails.sendinvoice', [
+            'invoice' => $invoice, 
+        ]);
 
-    //     $payment = new Payment;
-        
-    //     $payment->created_by = $guard_object->created_by;
-    //     $payment->user_type = $guard_object->user_type;
-    //     $payment->main_acct_id = $userId;
-    //     $payment->customer_id = $request->customer_id;
-    //     $invoice_id = $request->invoice_id;
-    //     $payment->cost = $request->cost;
-    //     $payment->category_id = $request->category_id;
-    //     $payment->sub_category_id = $request->sub_category_id;
-    //     $payment->amount = $request->amount;
-    //     $payment->discount = $request->discount;
-    //     $payment->status = $request->status;
+      return $pdf->download('invoicePayment.pdf');
+   }
 
-    //     $calcDiscount = ($payment->discount/100) * $request->cost;
-    //     $discountCost = $request->cost - $calcDiscount;
-    //     $payment->outstanding = ($request->amount) - ($discountCost);
+   public function resendInvoicePayment($invoiceId){
 
-    //     $payment->save();
+      $invoice = Invoice::find($invoiceId);
 
-    //     $product = $request->product;
-        
-        
-    //     $payment->invoicesMorph()->sync($invoice_id);
-    //     $payment->product()->sync($product);
+      $toEmail = $invoice->customers->email;
 
-    //     $status = "Payment has been Registerd ";
-    //     Alert::success('Payment', $status);
+        $invoiceResent =  Mail::to($toEmail)->send(new SendInvoice($invoice));
 
-    //     return redirect()->route('billing.invoice.index');
-    // }
+            $status = "Invoice has been resent successfully";
+            Alert::success('Invoice Resent', $status);
+            return back();
+          
+   }
 }
