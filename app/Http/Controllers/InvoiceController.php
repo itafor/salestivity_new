@@ -323,6 +323,7 @@ class InvoiceController extends Controller
     }
 
    public function downloadInvoicePayment($invoiceId){
+    
       $invoice = Invoice::find($invoiceId);
       
       $pdf = PDF::loadView('emails.sendinvoice', [

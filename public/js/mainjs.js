@@ -898,7 +898,7 @@ function add_product() {
 
     function opportunityUpdateReplies(id) {
        
-      $('#opportunityUpdateReplies'+id).toggle();
+      $('#opportunity_updateReplies'+id).toggle();
       $('#hideOPPReplyLabel'+id).toggle();
 
   }

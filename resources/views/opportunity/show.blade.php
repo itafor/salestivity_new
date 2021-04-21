@@ -174,7 +174,7 @@
 
 
             <!-- opportunity update  replies -->
-            <div id="opportunityUpdateReplies{{$update->id}}" style="display: none;">
+            <div id="opportunity_updateReplies{{$update->id}}" style="display: none;">
          @include('opportunity.updates.replies')
             </div>
                       
