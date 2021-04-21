@@ -42,9 +42,11 @@ class EmailInvoiceRenewalToOtherContacts extends Mailable
             'remaing_days' => $this->remaing_days
         ]);
 
+        $documentName = 'invoiceRenewal_'.$this->customerRenewal->invoice_number.'.pdf';
+
         return $this->view('emails.email_invoice_renewal_to_other_contacts')
         ->from($this->customerRenewal->compEmail ?  $this->customerRenewal->compEmail->email  : $this->customerRenewal->user->email)
-        ->attachData($pdf->output(), "invoiceRenewal.pdf")
+        ->attachData($pdf->output(), $documentName)
         ->subject('Invoice Renewal Notification');
     }
 }

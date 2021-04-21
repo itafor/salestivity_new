@@ -40,7 +40,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group{{ $errors->has('commments') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-comment">{{ __('Comment') }}</label>
-                                            <textarea class="form-control" name="commments" placeholder="Type commments" rows="4" required></textarea>
+                                            <textarea class="form-control" name="commments" placeholder="Type a commment" rows="4" required></textarea>
 
                                             @if ($errors->has('commments'))
                                                 <span class="invalid-feedback" role="alert">

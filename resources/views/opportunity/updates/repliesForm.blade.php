@@ -11,7 +11,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group{{ $errors->has('reply') ? ' has-danger' : '' }}">
 <!--                                             <label class="form-control-label" for="input-comment">{{ __('Comment') }}</label> -->
-                                            <textarea class="form-control" name="reply"  placeholder="Type reply" rows="2" required></textarea>
+                                            <textarea class="form-control" name="reply"  placeholder="Type a reply" rows="2" required></textarea>
 
                                             @if ($errors->has('reply'))
                                                 <span class="invalid-feedback" role="alert">
