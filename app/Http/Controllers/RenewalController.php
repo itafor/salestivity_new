@@ -69,12 +69,7 @@ class RenewalController extends Controller
         return view('billing.renewal.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         //dd($request->all());
@@ -106,7 +101,7 @@ class RenewalController extends Controller
 
         DB::beginTransaction();
         try{
-            // $user = auth()->user();
+            
             $when = now()->addSeconds(5);
             $emails = [];
          $new_renewal = Renewal::createNew($request->all());
