@@ -71,6 +71,12 @@
                                                         <span>
                                                             <div class="col-4 text-right">
                                                                 <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success" title="Manage"><i class="las la-edit"></i></a>
+
+                                                                <a onclick="return confirm_delete()"  href="{{route('items.destroy',['target',$target->id])}}" title="Delete"><button class="btn  text-danger">
+                                                             <i class="las la-trash"></i>
+                                                         </button>
+                                                            
+                                                        </a>
                                                             </div>
                                                         </span>
                                                     </td>

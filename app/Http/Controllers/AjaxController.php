@@ -17,8 +17,10 @@ use App\OpportunityUpdateReply;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
+use App\RetailFieldSale;
 use App\State;
 use App\SubUser;
+use App\Target;
 use App\Unit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,6 +56,22 @@ class AjaxController extends Controller
          $opp_update_reply = OpportunityUpdateReply::find($id);
          $opp_update_reply->delete();
         Alert::success('Opportunity Update Reply', 'Deleted');
+        return back();
+}elseif ($itemModel == 'opportunity') {
+         $opportunity = Opportunity::find($id);
+         $opportunity->delete();
+        Alert::success('Opportunity', 'Deleted');
+        return back();
+}elseif ($itemModel == 'target') {
+         $target = Target::find($id);
+         $target->delete();
+        Alert::success('Target', 'Deleted');
+        return back();
+}
+elseif ($itemModel == 'retailFieldSale') {
+         $sale = RetailFieldSale::find($id);
+         $sale->delete();
+        Alert::success('Retail Field Sale', 'Deleted');
         return back();
 }
 }
