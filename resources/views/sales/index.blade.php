@@ -71,6 +71,11 @@
                                                         <span>
                                                             <div class="col-4 text-right">
                                                                 <a href="{{ route('sales.show', [$sale->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                                 <a onclick="return confirm_delete()"  href="{{route('items.destroy',['retailFieldSale',$sale->id])}}" title="Delete"><button class="btn  text-danger">
+                                                             <i class="las la-trash"></i>
+                                                         </button>
+                                                            
+                                                        </a>
                                                                 
                                                             </div>
                                                         </span>

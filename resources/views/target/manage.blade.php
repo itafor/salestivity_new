@@ -135,7 +135,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('product_amount') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-amt-achieved">{{ __('Amount Achieved') }}</label>
-                                            <input type="number" name="amt_achieved" id="input-amt-achieved" class="form-control form-control-alternative{{ $errors->has('amt_achieved') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount Achieved') }}" value="{{ $target->amt_achieved }}">
+                                            <input type="number" name="amt_achieved" id="input-achieve_amount" class="form-control form-control-alternative{{ $errors->has('amt_achieved') ? ' is-invalid' : '' }}" placeholder="{{ __('Amount Achieved') }}" value="{{ $target->amt_achieved }}" readonly>
                                             @if ($errors->has('amt_achieved'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('amt_achieved') }}</strong>
@@ -147,7 +147,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('percent_achieved') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-percent_achieved">{{ __('Percentage Achieved') }}</label>
-                                            <input type="number" name="percent_achieved" id="input-percent_achieved" class="form-control form-control-alternative{{ $errors->has('product_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Percentage Acheived') }}" value="{{ $target->percentage }}" >
+                                            <input type="number" name="percent_achieved" id="input-percentage" class="form-control form-control-alternative{{ $errors->has('product_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Percentage Acheived') }}" value="{{ $target->percentage }}" readonly>
                                             @if ($errors->has('percent_achieved'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('percent_achieved') }}</strong>

@@ -25,7 +25,7 @@
                             <!-- <h6 class="heading-small text-muted mb-4">{{ __('Target information') }}</h6> -->
                             <div class="pl-lg-4 pr-lg-4">
 
-                                        <div class="row">
+                                       {{-- <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('department_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-dept">{{ __('Department') }}</label>
@@ -57,7 +57,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('sales') ? ' has-danger' : '' }}">
@@ -178,7 +178,7 @@
                                     </div>
                                      <div class="col-xl-12">
                                         <div class="form-group{{ $errors->has('percentage') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-percentage">{{ __('Percentage') }}</label>
+                                            <label class="form-control-label" for="input-percentage">{{ __('Percentage Achieved') }}</label>
                                             <input type="number" name="percentage" id="input-percentage" class="form-control form-control-alternative{{ $errors->has('percentage') ? ' is-invalid' : '' }}" placeholder="{{ __('Percentage') }}" value="{{ old('percentage') }}" required readonly="readonly">
                                             @if ($errors->has('percentage'))
                                                 <span class="invalid-feedback" role="alert">

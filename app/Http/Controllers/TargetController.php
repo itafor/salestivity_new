@@ -47,7 +47,6 @@ class TargetController extends Controller
             $rules = [
      
                 'sales' => 'required',
-                'unit_id' => 'required',
                 'percentage' => 'required',
                  'qty' => 'required',
                 'product_id' => 'required',
@@ -69,7 +68,8 @@ class TargetController extends Controller
 
             $target_amount = $data['unit_price'] * $data['qty'];
             
-            $percentage_amount = ($data['achieve_amount'] / $target_amount) * 100;
+            $percentage_amount = round(($data['achieve_amount'] / $target_amount) * 100, 2);
+            // dd($percentage_amount);
             
             $target = new Target;
     
@@ -77,7 +77,7 @@ class TargetController extends Controller
             $target->user_type = $guard_object->user_type;
             $target->created_by = $guard_object->created_by;
             $target->sales_person_id = $request->sales;
-            $target->department_id = $request->department_id;
+            // $target->department_id = $request->department_id;
             $target->unit_id = $request->unit_id;
             $target->amount = $request->product_amount;
             $target->percentage = $percentage_amount;
@@ -149,7 +149,7 @@ class TargetController extends Controller
             $target = Target::find($id);
     
             $target->sales_person_id = $request->input('sales');
-            $target->department_id = $request->input('department_id');
+            // $target->department_id = $request->input('department_id');
             $target->amount = $request->input('product_amount');
             $target->percentage = $request->input('percent_achieved');
             $target->manager = $request->input('manager');

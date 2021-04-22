@@ -77,7 +77,17 @@
                                                      <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
                                                   
                                                     <td>
-                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" title="View">
+                                                            <button  class="btn btn-sm text-success">
+                                                            <i class="las la-eye"></i>
+                                                            </button>
+                                                        </a>
+
+                                                         <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunity',$opportunity->id])}}" title="Delete"><button class="btn  text-danger">
+                                                             <i class="las la-trash"></i>
+                                                         </button>
+                                                            
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endforeach
