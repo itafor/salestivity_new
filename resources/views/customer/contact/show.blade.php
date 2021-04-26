@@ -18,6 +18,7 @@
         <tbody>
             @if($contacts->count() >=1)
             @foreach($contacts as $contact)
+             @if($customer->email != $contact->email && $contact->title !=null )
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$contact->title}}</td>
@@ -30,7 +31,8 @@
                             <button class="btn btn-sm btn-danger"><i class="las la-trash-alt"></i></button>
                         </a>
                     </td>
-              </tr>                 
+              </tr>   
+              @endif              
                 @endforeach      
             @else
             <tr>

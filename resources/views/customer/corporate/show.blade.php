@@ -221,6 +221,7 @@
                             </thead>
                             <tbody>
                                 @foreach($contacts as $contact)
+                                
                                   <tr>
                                       <td>{{ $contact->title }}</td>
                                       <td>{{ $contact->surname }}</td>
@@ -242,6 +243,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    
                                 @endforeach
                                   </tr>
                             </tbody>
