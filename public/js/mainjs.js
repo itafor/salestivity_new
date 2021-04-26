@@ -480,7 +480,7 @@ $('#addMore').click(function(e) {
             +'<div style="clear:both"></div>'
                +'<div class="row" id="rowNumber'+rowId+'" data-row="'+rowId+'">'
             
-                +'<div class="form col-md-3">'
+                +'<div class="form col-md-4">'
                 +'<label class="form-control-label" for="input-category">Title</label>'
                 +'<select name="contacts['+rowId+'][contact_title]"  class="form-control select'+rowId+'" required>'
                 +'<option value="">Select title</option>'
@@ -492,11 +492,15 @@ $('#addMore').click(function(e) {
 
                 +'</div>'
                  
+                  +'<div class="form col-md-4">'
                 +'<div class="form-group{{ $errors->has("contact_surname") ? "has-danger": "" }} col-md-3">'
                 +'    <label class="form-control-label" for="input-category">Surname</label>'
                 + '<input type="text" name="contacts['+rowId+'][contact_surname]" id="input-contact_surname" class="form-control" placeholder="Enter surname" value="" required>'
 
                 +'</div>'
+                +'</div>'
+
+                +'<div class="form col-md-4">'
 
                 +'<div class="form-group{{ $errors->has("contact_name") ? "has-danger" : ""}} col-md-3">'
                 +'    <label class="form-control-label" for="input-contact_name"> Other names</label>'
@@ -505,18 +509,25 @@ $('#addMore').click(function(e) {
                
     
                 +'</div>'
+                +'</div>'
                  +'<div style="clear:both"></div>'
+
+                +'<div class="form col-md-4">'
+                 
                 +'<div class="form-group{{ $errors->has("contact_email") ? "has-danger" : "" }} col-md-3">'
                 +'    <label class="form-control-label" for="input-contact_email">Email</label>'
                 +'    <input type="email" name="contacts['+rowId+'][contact_email]" class="contact_email form-control {{ $errors->has("contact_email") ? "is-invalid" : "" }} contact_email" placeholder="Enter contact email" value="" required>'
 
                 +'</div>'
-
-
+                +'</div>'
+                
+                +'<div class="form col-md-4">'
+                
                 +'<div class="form-group{{ $errors->has("contact_phone") ? "has-danger" : "" }} col-md-2">'
                 +'    <label class="form-control-label" for="input-contact_phone">Phone</label>'
                 +'    <input type="tel" name="contacts['+rowId+'][contact_phone]" class="contact_phone form-control {{ $errors->has("contact_phone") ? "is-invalid" : ""}} contact_phone" placeholder="Enter contact phone" value="" required>'
 
+                +'</div>'
                 +'</div>'
 
                 +'<div style="clear:both"></div>'

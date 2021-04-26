@@ -68,7 +68,7 @@
                                 <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
-                                            <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="{{old('website',$customer->website)}}" required onfocus="if(this.value=='')this.value='http://'" >
+                                            <input type="text" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" value="{{old('website',$customer->website)}}" required onfocus="if(this.value=='')this.value='http://'" >
 
                                             @if ($errors->has('website'))
                                                 <span class="invalid-feedback" role="alert">
@@ -227,10 +227,12 @@
                           <h2>{{ __('Contacts:') }}</h2>
                            @if ($customer->contacts->count() > 0)
                                     @foreach ($customer->contacts as $contact)
+                                     @if($customer->email != $contact->email && $contact->title !=null )
                                      <div style="float:right;cursor: pointer;"><a onclick="deleteData('contact','destroy',{{$contact->id}})" class="btn btn-danger btn-sm text-white" title="Delete Contact">
                                         <i class="fa fa-trash" ></i> Delete
                                      </a></div>
                                     <div style="clear:both"></div>
+                                   
                     <div class="row">
                          <div class="col-md-2">
                         <div class="form-group{{ $errors->has('contact_title') ? ' has-danger' : '' }}">
@@ -300,6 +302,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                               @endforeach
                                 @else
                               <h4>No contact record found</h4>
