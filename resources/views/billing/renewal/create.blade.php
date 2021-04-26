@@ -132,7 +132,7 @@
 
       <div class="row">
 
-            <div class="col">
+           {{-- <div class="col">
 <label class="form-control-label" for="discount">{{ __('CC') }}</label>
         <input name="company_email" class="form-control company_email border-input" value="{{authUser()->email}}" id="company_email***" readonly>
         @if ($errors->has('company_email'))
@@ -140,9 +140,17 @@
                 <strong>{{ $errors->first('company_email') }}</strong>
             </span>
         @endif
-    </div>
+    </div> --}}
 
-    <div class="col">
+
+
+  </div>
+
+   
+
+        <div class="row">
+
+                <div class="col">
 <label class="form-control-label" for="duration_type">{{ __('Duration Type') }}</label>
         <select name="duration_type" class="form-control" id="duration_type" required>
             <option  value="">Choose</option>
@@ -156,12 +164,6 @@
             </span>
         @endif
     </div>
-
-  </div>
-
-   
-
-        <div class="row">
 
     <div class="col">
 <label class="form-control-label" for="start_date">{{ __('Start Date') }}</label>
