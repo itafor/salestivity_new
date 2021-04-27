@@ -267,8 +267,8 @@
   </div>
 
 <div class="text-center">
-    <button onclick="removeDisabledAttr()" type="submit" class="btn btn-success mt-4" id="submitRenewalButton">{{ __('Save') }}</button>
-  <div class="sk-circle" id="loader">
+    <button onclick="removeDisabledAttr()" type="submit" class="btn btn-success mt-4" id="submitRenewalButtonxxx">{{ __('Save') }}</button>
+<!--   <div class="sk-circle" id="loader">
   <div class="sk-circle1 sk-child"></div>
   <div class="sk-circle2 sk-child"></div>
   <div class="sk-circle3 sk-child"></div>
@@ -281,7 +281,7 @@
   <div class="sk-circle10 sk-child"></div>
   <div class="sk-circle11 sk-child"></div>
   <div class="sk-circle12 sk-child"></div>
-</div>
+</div> -->
 </div>
 
 </form>

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header col-12">
+                    <div class="card-header col-12  mb-10">
                         <div class="row">
                             <div class="col-6  text-left">
                                <h4>All Accounts</h4>
@@ -39,7 +39,7 @@
                             @endif
                         
 
-                            <div class="table-responsive">
+                            
                                 <table class="table table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
@@ -82,7 +82,7 @@
                                         @endif
                                     </tbody>
                                 </table>    
-                            </div>
+                            
                         </div>
                     </div>
             </div>
