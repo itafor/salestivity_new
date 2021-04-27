@@ -47,7 +47,9 @@
                                                 <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
                                                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                                                <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
-                                                <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>
+                                                <td>
+                                                    {{ strftime('%d-%b-%Y', strtotime($renewal->end_date)) }}
+                                                    </td>
                                                 
                                                 <td>
 
