@@ -20,6 +20,8 @@
         theme: "bootstrap"
     });
 
+
+
   var Datepicker = (function() {
 var $datepicker = $('.datepicker');
 function init($this) {

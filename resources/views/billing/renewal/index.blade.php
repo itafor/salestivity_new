@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header border-0">
+                    <div class="card-header border-0 mb-10">
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('All Recurring Invoices') }} </h3>
@@ -28,10 +28,8 @@
                                     </button>
                                 </div>
                             @endif
-                        
 
-                            <div class="table-responsive">
-                                <table class="table  table-bordered table-hover datatable">
+                              <table id="examplex" class="table table-striped table-bordered dt-responsive nowrap datatable" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th ><b>{{ __('Invoice Number') }}</b></th>
@@ -48,7 +46,7 @@
                                                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                                                <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
                                                 <td>
-                                                    {{ strftime('%Y-%b-%d', strtotime($renewal->end_date)) }}
+                                                    {{ date('Y/m/d', strtotime($renewal->end_date)) }}
                                                     </td>
                                                 
                                                 <td>
@@ -74,7 +72,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>                    
                 </div>

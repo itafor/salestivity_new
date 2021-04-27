@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header border-0">
+                    <div class="card-header border-0  mb-10">
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('All Accounts') }}</h3>
@@ -38,7 +38,7 @@
                             @endif
                         
 
-                            <div class="table-responsive">
+                            
                                 <table class="table align-items-center table-flush">
                                     <thead class="thead-dark">
                                         <tr>
@@ -74,7 +74,7 @@
                                           </tr>
                                     </tbody>
                                 </table>    
-                            </div>
+                           
                            </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header border-0">
+                    <div class="card-header border-0  mb-10">
                         <div class="row align-items-center">
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('My Opportunities') }}</h3>
@@ -38,7 +38,7 @@
                             <div class="col-xl-6"></div>
                         </div>
 
-                        <div class="table-responsive">
+                        
                             <table class="table align-items-center table-flush datatable">
                                 <thead class="thead-dark">
                                     <tr>
@@ -75,7 +75,7 @@
                                     @endif
                                 </tbody>
                             </table>
-                        </div>
+                        
 <hr>
                         
                          
