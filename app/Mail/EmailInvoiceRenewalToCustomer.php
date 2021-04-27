@@ -43,7 +43,7 @@ class EmailInvoiceRenewalToCustomer extends Mailable
          return $this->view('emails.email_invoice_renewal_to_customer')
          ->from($this->renewal->compEmail ?  $this->renewal->compEmail->email : $this->renewal->user->email)
         ->subject('Invoice Renewal Notification')
-        ->attachData($pdf->output(), $documentName);
-        // ->cc('billing@digitalwebglobal.com','digitalwebglobal');
+        ->attachData($pdf->output(), $documentName)
+        ->cc($this->renewal->compEmail ?  $this->renewal->compEmail->email : $this->renewal->user->email);
     }
 }

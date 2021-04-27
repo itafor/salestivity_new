@@ -31,6 +31,7 @@ class InvoicePaid extends Mailable
     {
         return $this->view('emails.invoicePaid')
         ->from($this->paid_invoice->invoice->compEmail ? $this->paid_invoice->invoice->compEmail->email : $this->paid_invoice->invoice->user->email)
-        ->subject('Invoice Payment Notification');
+        ->subject('Invoice Payment Notification')
+        ->cc($this->paid_invoice->invoice->compEmail ? $this->paid_invoice->invoice->compEmail->email : $this->paid_invoice->invoice->user->email);
     }
 }
