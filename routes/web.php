@@ -203,6 +203,7 @@ Route::post('opportunity_update', 'OpportunityUpdateController@storeUpdate')->na
 	Route::get('target/{id}/manage', ['as' => 'target.manage', 'uses' => 'TargetController@manage']);
 	Route::post('target/{id}', ['as' => 'target.update', 'uses' => 'TargetController@update']);
 	Route::get('target/{id}', ['as' => 'target.destroy', 'uses' => 'TargetController@destroy']);
+	Route::post('add-product-totarget', 'TargetController@addProductToTarget')->name('target.product.add');;
 
 	
 

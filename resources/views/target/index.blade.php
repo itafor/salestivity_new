@@ -35,11 +35,11 @@
                                         <tr>
                                             <th scope="col">{{ __('Sales Person') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
-                                            <th scope="col">{{ __('Department') }}</th>
-                                            <th scope="col">{{ __('Unit') }}</th>
-                                            <th scope="col">{{ __('Target Amount') }}</th>
-                                            <th scope="col">{{ __('Amount Achieved') }}</th>
-                                            <th scope="col">{{ __('Percentage Achieved') }}</th>
+                                            <th scope="col">{{ __('Start Date') }}</th>
+                                            <th scope="col">{{ __('End Date') }}</th>
+                                            <th scope="col">{{ __(' Amount') }}</th>
+                                            <!-- <th scope="col">{{ __('Amount Achieved') }}</th>
+                                            <th scope="col">{{ __('Percentage Achieved') }}</th> -->
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -62,15 +62,17 @@
                                                     @else
                                                         <td>Not Set</td>
                                                     @endif
-                                                    <td>{{ $target->dept->name ?? ''}}</td>
-                                                    <td>{{ $target->unit->name ?? ''}}</td>
-                                                    <td>{{ $target->amount }}</td>
-                                                    <td>{{ $target->amt_achieved }}</td>
-                                                    <td>{{ $target->percentage }}%</td>
+
+                <td>{{ $target->start_date ?  date("jS F, Y", strtotime($target->start_date)) : 'N/A' }}</td>           
+
+                <td>{{ $target->end_date ? date("jS F, Y", strtotime($target->end_date)) : 'N/A'}}</td>           
+                                                    <td> &#8358;{{ number_format($target->products->sum('amount'), 2) }}</td>
+                                                   <!--  <td>{{ $target->amt_achieved }}</td>
+                                                    <td>{{ $target->percentage }}%</td> -->
                                                     <td>
                                                         <span>
                                                             <div class="col-4 text-right">
-                                                                <a href="{{ route('target.manage', [$target->id]) }}" class="btn btn-sm btn-success" title="Manage"><i class="las la-edit"></i></a>
+                                                                <a href="{{ route('target.show', [$target->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
 
                                                                 <a onclick="return confirm_delete()"  href="{{route('items.destroy',['target',$target->id])}}" title="Delete"><button class="btn  text-danger">
                                                              <i class="las la-trash"></i>

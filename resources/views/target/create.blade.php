@@ -19,45 +19,11 @@
                     <div class="card-body">
                         <form method="post" action="{{ route('target.store') }}" autocomplete="off">
                             <input type="hidden" value="Open" name="status">
-                           <!--  <input type="hidden" value="0" name="percentage">
-                            <input type="hidden" value="" name="department_id" id="dept_id"> -->
+
                             @csrf
-                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Target information') }}</h6> -->
+                           
                             <div class="pl-lg-4 pr-lg-4">
 
-                                       {{-- <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('department_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-dept">{{ __('Department') }}</label>
-                                            <select name="department_id" id="input-dept" class="form-control" data-toggle="select">
-                                                <option value="">Select a Department</option>
-                                                @foreach($departments as $dept)
-                                                    <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                                                @endforeach
-                                            </select> 
-
-                                            @if ($errors->has('dept'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('dept') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('unit_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-unit">{{ __('Unit') }}</label>
-                                            <select name="unit_id" id="input-unit" class="form-control" data-toggle="select">
-                                                <option value="">Select a Unit</option>
-                                            </select> 
-
-                                            @if ($errors->has('unit_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('unit_id') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>--}}
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('sales') ? ' has-danger' : '' }}">
@@ -95,40 +61,29 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-type">{{ __('Target Type') }}</label>
-                                            <select name="type" id="input-type" class="form-control form-control-alternative border-input {{ $errors->has('type') ? ' is-invalid' : '' }}" placeholder="{{ __('Target Type') }}" value="{{ old('type') }}" >
-                                                <option value="">Target Type</option>
-                                                <option value="1">Weekly</option>
-                                                <option value="2">Monthly</option>
-                                                <option value="3">Yearly</option>
-                                        
-                                            </select>
+                                            <label class="form-control-label" for="input-type">{{ __('Start Date') }}</label>
+                                <input type="text" name="start_date" id="start_date" class="date form-control form-control-alternative{{ $errors->has('start_date') ? ' is-invalid' : '' }}" placeholder="{{ __('Start Date') }}"  data-toggle="datepicker" value="{{ old('start_date') }}" required >
 
-                                            @if ($errors->has('type'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('type') }}</strong>
-                                                </span>
-                                            @endif
+                            @if ($errors->has('start_date'))
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('start_date') }}</strong>
+                            </span>
+                            @endif
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-product">{{ __('Product Name') }}</label>
-                                            <select name="product_id" id="input-product" class="form-control form-control-alternative border-input {{ $errors->has('product_id') ? ' is-invalid' : '' }}" value="{{ old('product_id') }}" >
-                                                <option value="">Select Product</option>
-                                                @foreach($products as $product)
-                                                    <option value="{{$product->id}}">{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('product_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('product_id') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
+                                            <label class="form-control-label" for="input-product">{{ __('End Date') }}</label>
+                                <input type="text" name="end_date" id="enddate" class="date form-control form-control-alternative{{ $errors->has('end_date') ? ' is-invalid' : '' }}" placeholder="{{ __('End Date') }}"  data-toggle="datepicker" value="{{ old('end_date') }}" required >
+
+                                @if ($errors->has('end_date'))
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('end_date') }}</strong>
+                                </span>
+                                @endif
                                     </div>
                                 </div>
-                                <div class="row">
+                               {{-- <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('unit_price') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="unit-input">{{ __('Unit Price') }}</label>
@@ -187,10 +142,10 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Continue') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -204,51 +159,5 @@
     
     <script>
 
-        // Auto fill unit price when a product has been picked
-        function selectProduct(value) {
-            $.get('/getproductprice/' + value, function (data) {
-                // console.log(data.products);
-                // $('#input-unit').html("");
-                // $('#input-unit').append("");
-                jQuery.each(data.products, function (i, val) {
-                    $('#unit-input').val(val.standard_price);
-                });
-            });
-        }
-
-        $('#input-product').change(function () {
-            selectProduct($(this).val());
-            // $('#input-unit').prop('disabled', false)
-        });
-
-        // Auto fill department id when a sales person has been picked
-        function selectSales(value) {
-            $.get('/getsales/' + value, function (data) {
-                console.log(data.depts);
-                jQuery.each(data.depts, function (i, val) {  
-                    // console.log(val.id)
-                    $('#dept_id').val(val.id);
-                });
-            });
-        }
-
-        $('#input-sales').change(function () {
-            selectSales($(this).val());
-            // $('#input-unit').prop('disabled', false)
-        });
-
-        // calculate value for Total Amount according to number of quantity
-        $('.form-group').on('input', '#qty', function(){
-            var totalAmount = $('#unit-input').val().replace( /,/g, '');
-    
-            // console.log(totalAmount);
-            $('.form-group #qty').each(function(){
-                var inputVal = $(this).val();
-                if($.isNumeric(inputVal)){
-                    totalAmount *= parseFloat(inputVal)
-                }
-            });
-            $('#input-amount').val(totalAmount);
-        });
     </script>
 @endsection

@@ -78,7 +78,7 @@ $('#input-dept').change(function () {
                     type: "GET",
                     dataType: 'json',
                     success: function(data) {
-                      
+                      console.log(data)
                       if (data.category == '') {
                          $('#renewal_description').val('');
                       }
@@ -770,6 +770,15 @@ $(function() {
 function add_product() {
     //$('#modal-form form')[0].reset();
     $('#addProduct').modal("show");
+  }
+
+  function show_add_product_to_target_form(){
+    $('#addProductToTarget').modal("show");
+  }
+
+  function hide_product_form() {
+    //$('#modal-form form')[0].reset();
+    $('#addProduct, #addProductToTarget').modal("hide");
 
   }
 
@@ -918,3 +927,41 @@ function add_product() {
 function confirm_invoice_payment_resend() {
   return confirm('Do you really want to resend this invoice?');
 }
+
+// Add product to target
+$('#productId').change(function(){
+            var productId = $(this).val();
+    $('#target_amount').val('');
+    $('#target_quantity').val('');
+            
+            if(productId !='' && !isNaN(parseFloat(productId))){
+                $.ajax({
+                    url: baseUrl+'/fetch-product-price/'+productId,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function(data) {
+                      console.log('products',data)
+                        $('#unit_price').empty();
+                        $('#unit_price').val((data.products.standard_price).toFixed(2));
+                         $('#amount').val((data.products.standard_price).toFixed(2));
+                    }
+                });
+            }
+            else{
+                $('#unit_price').val('');
+            }
+        });
+
+//auto fill target amount when quantity is entered
+$(document).on('keyup', '#target_quantity', function(e){
+    e.preventDefault();
+    let quantity = $(this).val();
+    console.log(quantity)
+    const unitPrice = $('#unit_price').val();
+    let target_amount = unitPrice * quantity;
+    $('#target_amount').val(target_amount);
+
+if(quantity <=0 || quantity <=0){
+     $(this).val('');
+}
+ });
