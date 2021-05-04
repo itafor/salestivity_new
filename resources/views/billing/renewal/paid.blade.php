@@ -23,11 +23,11 @@
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        All 
+                                        Paid 
                                     </button>
                                     <div class="dropdown-menu">
 
-                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['paid']) }}">Paid</a>
+                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['all']) }}">All</a>
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
                                     </div>
@@ -71,6 +71,8 @@
                                                 <td>{{$renewal->status}}</td>
                                                 
                                                 <td>
+
+                                                    
 
                                                     <div class="col-4 text-right">
                                                         <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>

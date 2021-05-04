@@ -48,7 +48,7 @@
 
                            <div class="table-responsive">
                            
-                                 <table class="table  table-bordered datatable" style="width:100%">
+                                 <table class="table table-bordered datatable" style="width:100%">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Customer') }}</th>

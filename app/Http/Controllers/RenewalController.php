@@ -50,6 +50,40 @@ class RenewalController extends Controller
         return view('billing.renewal.index', compact('renewals'));
     }
 
+public function getBillingRenewals($id)
+    {
+        switch ($id) {
+            case 'all':
+                $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderby('created_at','asc')->get();
+        return view('billing.renewal.index', compact('renewals'));
+
+                break;
+     case 'outstanding':
+                $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Pending']
+        ])->orwhere([ 
+          ['status','Partly Paid']
+        ])->orderby('created_at','asc')->get();
+        return view('billing.renewal.outstanding', compact('renewals'));
+                
+                break;
+     case 'paid':
+                $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Paid']
+        ])->orderby('created_at','asc')->get();
+        return view('billing.renewal.paid', compact('renewals'));
+                
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

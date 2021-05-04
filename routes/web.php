@@ -145,6 +145,8 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 	Route::get('download/invoice/{id}','InvoiceController@downloadInvoicePayment')->name('invoice.download');
 	Route::get('resend-invoice/{id}','InvoiceController@resendInvoicePayment')->name('invoice.payment.resend');
 
+	Route::get('billing/invoice/view/{id}','InvoiceController@getBillingInvoices')->name('billing.invoice.view');
+
 
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
@@ -160,6 +162,8 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 	Route::get('resend-renewal-invoice/{id}','RenewalController@resendRenewalInvoice')->name('renewal.invoice.resend');
 
 	Route::get('download-renewal-invoice/{id}','RenewalController@downloadRenewalInvoice')->name('renewal.invoice.download');
+
+	Route::get('billing/renewal/{id}','RenewalController@getBillingRenewals')->name('billing.renewal.invoice.view');
 
 
 	// Billing Agent
