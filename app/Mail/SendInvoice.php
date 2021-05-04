@@ -39,7 +39,6 @@ class SendInvoice extends Mailable
 
         return $this->view('emails.sendinvoice')
         ->from($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email)
-        ->replyTo($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email)
         ->attachData($pdf->output(), $documentName)
         ->subject('Invoice Payment Notification')
          ->cc($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email);

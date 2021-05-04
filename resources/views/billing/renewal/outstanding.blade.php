@@ -23,12 +23,12 @@
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        All 
+                                        Outstanding
                                     </button>
                                     <div class="dropdown-menu">
 
+                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['all']) }}">All</a>
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['paid']) }}">Paid</a>
-                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
                                     </div>
                                 </div>
@@ -55,7 +55,6 @@
                                             <th ><b>{{ __('Product') }}</b></th>
                                             <th ><b>{{ __('End Date') }}</b></th>
                                             <th ><b>{{ __('Status') }}</b></th>
-                                            
                                             <th class="text-center"><b>{{ __('Action') }}</b></th>
                                         </tr>
                                     </thead>
@@ -69,8 +68,9 @@
                                                     {{ date('Y/m/d', strtotime($renewal->end_date)) }}
                                                     </td>
                                                 <td>{{$renewal->status}}</td>
-                                                
                                                 <td>
+
+                                                    
 
                                                     <div class="col-4 text-right">
                                                         <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>

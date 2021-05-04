@@ -194,7 +194,9 @@ class UserController extends Controller
     {
         $userId = \getActiveGuardType()->main_acct_id;
         // $roles = Role::where('main_acct_id', $userId)->get();
-        $roles = Role::all();
+        $roles = Role::where([
+            ['name', '!=', 'Super Admin']
+        ])->get();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $reportsTo = SubUser::where('main_acct_id', $userId)->get();
         // dd($reportsTo);
@@ -263,7 +265,9 @@ class UserController extends Controller
     {
         $userId = \getActiveGuardType()->main_acct_id;
         $user = SubUser::find($id);
-        $roles = Role::all();
+        $roles = Role::where([
+            ['name', '!=', 'Super Admin']
+        ])->get();
         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $reportsTo = SubUser::where('main_acct_id', $userId)->get();
        // dd($reportsTo);

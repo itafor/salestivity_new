@@ -38,11 +38,49 @@ class InvoiceController extends Controller
     {
         $data['invoices'] = Invoice::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('created_at', 'DESC')->paginate(10);
+        ])->orderBy('created_at', 'DESC')->get();
 
 
         return view('billing.invoice.index', $data);
     }
+
+     public function getBillingInvoices($id){
+
+          switch ($id) {
+            case 'all':
+               $data['invoices'] = Invoice::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('created_at', 'DESC')->get();
+
+        return view('billing.invoice.index', $data);
+              break;
+
+               case 'paid':
+               $data['invoices'] = Invoice::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Paid']
+        ])->orderBy('created_at', 'DESC')->get();
+
+        return view('billing.invoice.paid', $data);
+              break;
+
+              case 'outstanding':
+               $data['invoices'] = Invoice::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Pending']
+        ])->orwhere([ 
+          ['status','Partly Paid']
+        ])->orderBy('created_at', 'DESC')->get();
+
+        return view('billing.invoice.outstanding', $data);
+              break;
+            
+            default:
+              # code...
+              break;
+          }
+     }
+
 
     /**
      * Show the form for creating a new resource.
