@@ -30,8 +30,8 @@ class InvoicePaid extends Mailable
     public function build()
     {
         return $this->view('emails.invoicePaid')
-        ->from($this->paid_invoice->invoice->compEmail ? $this->paid_invoice->invoice->compEmail->email : $this->paid_invoice->invoice->user->email)
+         ->replyTo('billing@digitalweb247.com','Digitalweb247')
         ->subject('Invoice Payment Notification')
-        ->cc($this->paid_invoice->invoice->compEmail ? $this->paid_invoice->invoice->compEmail->email : $this->paid_invoice->invoice->user->email);
+        ->cc('billing@digitalweb247.com','Digitalweb247');
     }
 }

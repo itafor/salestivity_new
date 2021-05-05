@@ -80,7 +80,7 @@ class SettingsController extends Controller
     {
         $data = $request->all();
 
-       
+       // dd($data);
             if(!isset($data['company_email'])){
                 $status = "Please enter your company email!!";
         Alert::warning('Company Email', $status);
@@ -88,8 +88,15 @@ class SettingsController extends Controller
             }
         
             CompanyEmail::create([
-                    'main_acct_id' => getActiveGuardType()->main_acct_id,
-                    'email' => $data['company_email'],
+                    "main_acct_id" => getActiveGuardType()->main_acct_id,
+                    "email" => $data['company_email'],
+                    "driver"        =>      $data['driver'],
+                    "host"          =>      $data['hostName'],
+                    "port"          =>      $data['port'],
+                    "encryption"    =>      $data['encryption'],
+                    "user_name"     =>      $data['userName'],
+                    "password"      =>      $data['password'],
+                    "sender_name"   =>      $data['senderName'],
             ]);
              $status = "Company Email added!!";
         Alert::success('Company Email', $status);

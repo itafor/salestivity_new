@@ -178,6 +178,7 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         JD\Cloudder\CloudderServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        // App\Providers\MailConfigServiceProvider::class,
     ],
 
     /*

@@ -39,6 +39,10 @@ function authUserId(){
 	return auth()->user()->id;
 }
 
+function mainUserId($id = null){
+    return $id;
+}
+
 function getIndustries(){
  $industries = Industry::all();
  return $industries;
