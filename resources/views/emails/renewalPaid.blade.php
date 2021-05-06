@@ -9,8 +9,8 @@
         max-width: 800px;
         margin: auto;
         padding: 30px;
-        border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        /*border: 1px solid #eee;*/
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
         font-size: 16px;
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -127,7 +127,7 @@
                         <tr>
 
              @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
-<img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+<img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px;  align-content: center;">
 <br>
 <span style="margin: auto;"><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b></span>
 @endif
