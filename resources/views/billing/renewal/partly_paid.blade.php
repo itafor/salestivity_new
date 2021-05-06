@@ -22,15 +22,13 @@
 
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
-                                    <button type="button" class="btn btn-icon btn-sm  dropdown-toggle invoiceTab" data-toggle="dropdown">
-                                        Paid 
+                                    <button type="button" class="btn btn-icon btn-sm dropdown-toggle invoiceTab" data-toggle="dropdown">
+                                        Partly Paid
                                     </button>
                                     <div class="dropdown-menu">
 
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['all']) }}">All</a>
-                                       
-                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['partly_paid']) }}">Partly Paid</a>
-                                       
+                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['paid']) }}">Paid</a>
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
                                     </div>
@@ -58,22 +56,20 @@
                                             <th ><b>{{ __('Customer') }}</b></th>
                                             <th ><b>{{ __('Product') }}</b></th>
                                             <th ><b>{{ __('Status') }}</b></th>
-                                            
                                             <th class="text-center"><b>{{ __('Action') }}</b></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($renewals as $renewal)
                                             <tr>
-                                                <td>
+                                                 <td>
                                                     {{ date('Y/m/d', strtotime($renewal->end_date)) }}
                                                     </td>
                                                 <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
                                                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
-                                               <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
-                                                
+                                               <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
+                                               
                                                 <td>{{$renewal->status}}</td>
-                                                
                                                 <td>
 
                                                     

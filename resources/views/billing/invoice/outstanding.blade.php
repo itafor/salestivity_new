@@ -22,13 +22,15 @@
 
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <button type="button" class="btn btn-icon btn-sm dropdown-toggle invoiceTab" data-toggle="dropdown">
                                         Outstanding 
                                     </button>
                                     <div class="dropdown-menu">
 
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['all']) }}">All</a>
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['paid']) }}">Paid</a>
+                                        <a class="dropdown-item" href="{{ route('billing.invoice.view', ['partly_paid']) }}">Partly Paid</a>
+
                                        
                                     </div>
                                 </div>
@@ -50,13 +52,13 @@
                                  <table class="table table-bordered  datatable" style="width:100%">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th scope="col">{{ __('End Date') }}</th>
                                             <th scope="col">{{ __('Customer') }}</th>
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Cost') }}</th>
-                                            <th scope="col">{{ __('Timeline') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
-                                            <th scope="col" colspan="2">{{ __('Action') }}</th>
+                                            <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -69,11 +71,12 @@
                                         @else
                                             @foreach($invoices as $invoice)
                                                 <tr>
-                                                
+                                                <td>
+                                                    {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
+                                                    </td>
                                                     <td>{{ $invoice->customers->name }}</td>
                                                     <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
                                                     <td>{{ $invoice->cost }}</td>
-                                                    <td>{{ $invoice->timeline }}</td>
                                                     @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                                                         <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
                                                                 getCreatedByDetails($invoice->user_type, $invoice->created_by)['last_name']
@@ -86,7 +89,7 @@
                                                     <td>
                                                         <span>
                                                             <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
-                                                            <!-- <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a> -->
+                                                            
                                                         </span>                                                       
                                                     </td>                                                    
                                                 </tr>

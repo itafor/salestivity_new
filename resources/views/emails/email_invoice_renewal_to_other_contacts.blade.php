@@ -3,14 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Invoice Renewal Notification</title>
+    <link type="text/css" href="{{ url('css/invoice_styles.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ url('css/invoice_styles.css') }}" rel="stylesheet">
     
     <style>
     .invoice-box {
         max-width: 800px;
         margin: auto;
         padding: 30px;
-        border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        /*border: 1px solid #eee;*/
+        /*box-shadow: 0 0 10px rgba(0, 0, 0, .15);*/
         font-size: 16px;
         line-height: 24px;
         font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -125,7 +127,7 @@
 <div class="card">
 <div class="card-body">
     @if(isset($customerRenewal->user) && $customerRenewal->user->company_logo_url !='')
-<img class="card-img-top" src="{{$customerRenewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; border-radius: 50px; align-content: center;">
+<img class="card-img-top" src="{{$customerRenewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 <p>{{$customerRenewal->user->company_detail ? $customerRenewal->user->company_detail->name : '' }}</p>
 @endif
 
@@ -175,6 +177,16 @@ Find below the details of the invoice. Kindly make payment before the due date t
 </td>
 </tr>
 @endif
+<tr>
+<td style="width: 150px;"><b>{{ __('Original Amount') }}</b></td>
+<td>&#8358;{{ number_format($customerRenewal->productPrice,2) }}
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Discount') }}</b></td>
+<td>{{ $customerRenewal->discount ? $customerRenewal->discount : 'N/A' }}
+</td>
+</tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
 <td>&#8358;{{ number_format($customerRenewal->billingBalance,2) }}

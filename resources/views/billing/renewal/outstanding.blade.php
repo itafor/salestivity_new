@@ -22,13 +22,15 @@
 
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <button type="button" class="btn btn-icon btn-sm  dropdown-toggle invoiceTab" data-toggle="dropdown">
                                         Outstanding
                                     </button>
                                     <div class="dropdown-menu">
 
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['all']) }}">All</a>
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['paid']) }}">Paid</a>
+                                        <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['partly_paid']) }}">Partly Paid</a>
+
                                        
                                     </div>
                                 </div>
@@ -50,10 +52,10 @@
                               <table class="table table-bordered dt-responsive  datatable" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th ><b>{{ __('End Date') }}</b></th>
                                             <th ><b>{{ __('Invoice Number') }}</b></th>
                                             <th ><b>{{ __('Customer') }}</b></th>
                                             <th ><b>{{ __('Product') }}</b></th>
-                                            <th ><b>{{ __('End Date') }}</b></th>
                                             <th ><b>{{ __('Status') }}</b></th>
                                             <th class="text-center"><b>{{ __('Action') }}</b></th>
                                         </tr>
@@ -61,17 +63,15 @@
                                     <tbody>
                                         @foreach($renewals as $renewal)
                                             <tr>
-                                                <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
-                                                <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
-                                               <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}
                                                 <td>
                                                     {{ date('Y/m/d', strtotime($renewal->end_date)) }}
                                                     </td>
+                                                <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
+                                                <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
+                                               <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
+                                                
                                                 <td>{{$renewal->status}}</td>
                                                 <td>
-
-                                                    
-
                                                     <div class="col-4 text-right">
                                                         <a href="{{ route('billing.renewal.show', [$renewal->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                                                         @if($renewal->status == 'Paid')
