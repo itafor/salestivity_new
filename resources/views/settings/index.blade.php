@@ -156,11 +156,47 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
             </div>
-            <div class="w3-container">
+    <hr>
+    <div class="w3-container">
   <div class="row">
+<div class="table-responsive">
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Driver</th>
+      <th scope="col">Host Name</th>
+      <th scope="col">Port</th>
+      <th scope="col">Encryption</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Sender Name</th>
+      <th scope="col">Sender Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
     @foreach($companyEmails as $email)
-    {{$email->email}} <span  class="mr-2" onclick="fetchCompanyEmail({{$email->id}})" style="cursor: pointer;"> <i class="fa fa-edit ml-1" title="edit email"></i></span>
-    @endforeach
+    <tr>
+      <td>{{$email->driver}}</td>
+      <td>{{$email->host}}</td>
+      <td>{{$email->port}}</td>
+      <td>{{$email->encryption}}</td>
+      <td>{{$email->user_name}}</td>
+      <td>{{$email->sender_name}}</td>
+      <td>{{$email->email}}</td>
+      <td>
+        <span  class="mr-2" onclick="fetchCompanyEmail({{$email->id}})" style="cursor: pointer;"> <i class="fa fa-edit ml-1" title="edit email"></i></span>
+      </td>
+      
+    </tr>
+  @endforeach
+  </tbody>
+</table>
+</div>
+
+
+
+
+
   </div>
 </div>
 <hr>

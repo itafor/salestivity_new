@@ -180,6 +180,13 @@ function fetchCompanyEmail (id) {
            $('.modal-title').text('Update Company Email')
            $('#company_email_id').val(data.email.id)
            $('#company_email').val(data.email.email)
+           $('#email_driver').val(data.email.driver)
+           $('#email_hostname').val(data.email.host)
+           $('#email_username').val(data.email.user_name)
+           $('#email_password').val(data.email.password)
+           $('#email_port').val(data.email.port)
+           $('#email_encryption').val(data.email.encryption)
+           $('#sender_name').val(data.email.sender_name)
            
                     }
                 });

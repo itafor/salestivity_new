@@ -119,6 +119,14 @@ public function updateCompanyEmail(Request $request)
 
             if($compemail){
              $compemail->email = $data['company_email'];
+            $compemail->driver      =      $data['driver'];
+            $compemail->host          =      $data['hostName'];
+            $compemail->port          =      $data['port'];
+            $compemail->encryption    =      $data['encryption'];
+            $compemail->user_name     =      $data['userName'];
+            $compemail->password    =      $data['password'];
+            $compemail->sender_name  =      $data['senderName'];
+
             $compemail->save();
             $status = "Company email updated!!";
         Alert::success('Company Name', $status);
