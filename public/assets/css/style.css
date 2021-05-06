@@ -1,3 +1,7 @@
+.invoiceTab{
+  width: 100%; 
+  padding-bottom: 40px;
+}
 .datepicker {
     border-radius: 0.375rem;
 

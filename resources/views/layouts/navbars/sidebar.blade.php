@@ -344,15 +344,11 @@
                             <ul class="nav nav-sm flex-column">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                              #
+                                            <a class="nav-link" href="{{route('company_details.index')}}">
+                                              List parameters
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                                #
-                                            </a>
-                                        </li> 
+                                        
                                 </ul>
                                 
                                 </ul>  
@@ -447,9 +443,9 @@
                                             </div>
                                         </ul>
                                     </li>
-                                    <a href="{{route('company_details.index')}}" class="nav-link">
+                                    <!-- <a href="{{route('company_details.index')}}" class="nav-link">
                                         <span class="nav-link-text">{{ __('Company Details') }}</span>
-                                    </a>
+                                    </a> -->
 
                              <!--      <li class="nav-item">
                                         <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">

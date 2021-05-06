@@ -23,14 +23,14 @@
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-icon btn-sm dropdown-toggle invoiceTab" data-toggle="dropdown">
-                                        All 
+                                        Partly Paid 
                                     </button>
                                     <div class="dropdown-menu">
 
+                                        <a class="dropdown-item" href="{{ route('billing.invoice.view', ['all']) }}">All</a>
+
+
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['paid']) }}">Paid</a>
-
-                                        <a class="dropdown-item" href="{{ route('billing.invoice.view', ['partly_paid']) }}">Partly Paid</a>
-
 
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
@@ -61,7 +61,7 @@
                                             <th scope="col">{{ __('Cost') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
-                                            <th scope="col">{{ __('Action') }}</th>
+                                            <th scope="col" >{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -74,9 +74,10 @@
                                         @else
                                             @foreach($invoices as $invoice)
                                                 <tr>
-                                                 <td>
+                                                    <td>
                                                     {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
                                                     </td>
+                                                
                                                     <td>{{ $invoice->customers->name }}</td>
                                                     <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
                                                     <td>{{ $invoice->cost }}</td>
@@ -92,7 +93,7 @@
                                                     <td>
                                                         <span>
                                                             <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
-                                                            <!-- <a href="{{ route('billing.invoice.manage', [$invoice->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') }}</a> -->
+                                                            
                                                         </span>                                                       
                                                     </td>                                                    
                                                 </tr>

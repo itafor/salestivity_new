@@ -44,10 +44,11 @@ class RenewalController extends Controller
     {
          $guard_object = getActiveGuardType();
         $userId = auth()->user()->id;
-        $renewals = Renewal::where([
+        $data['renewals'] = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderby('created_at','asc')->get();
-        return view('billing.renewal.index', compact('renewals'));
+        ])->orderBy('end_date','asc')->get();
+
+        return view('billing.renewal.index', $data);
     }
 
 public function getBillingRenewals($id)
@@ -56,7 +57,8 @@ public function getBillingRenewals($id)
             case 'all':
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderby('created_at','asc')->get();
+        ])->orderBy('end_date','asc')->get();
+
         return view('billing.renewal.index', compact('renewals'));
 
                 break;
@@ -64,8 +66,6 @@ public function getBillingRenewals($id)
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Pending']
-        ])->orwhere([ 
-          ['status','Partly Paid']
         ])->orderby('created_at','asc')->get();
         return view('billing.renewal.outstanding', compact('renewals'));
                 
@@ -76,6 +76,14 @@ public function getBillingRenewals($id)
             ['status', 'Paid']
         ])->orderby('created_at','asc')->get();
         return view('billing.renewal.paid', compact('renewals'));
+                
+                break;
+       case 'partly_paid':
+                $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Partly paid']
+        ])->orderby('created_at','asc')->get();
+        return view('billing.renewal.partly_paid', compact('renewals'));
                 
                 break;
             

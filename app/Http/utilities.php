@@ -9,6 +9,7 @@ use App\Contact;
 use App\Country;
 use App\Customer;
 use App\Industry;
+use App\Product;
 use App\State;
 use App\SubCategory;
 use App\SubUser;
@@ -42,6 +43,7 @@ function authUserId(){
 function mainUserId($id = null){
     return $id;
 }
+
 
 function getIndustries(){
  $industries = Industry::all();
