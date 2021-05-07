@@ -219,7 +219,7 @@
                   </table>
 
 <p>Thank you for your continued patronage.</p>
-<p>Digitalweb Billing Team</p>
+<p><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b> Billing Team</p>
          
 
     </div>
