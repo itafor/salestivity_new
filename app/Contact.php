@@ -15,7 +15,8 @@ class Contact extends Model
         'name',
         'phone',
         'email',
-        'main_acct_id'
+        'main_acct_id',
+        'contact_type'
     ];
 
     protected $casts = [

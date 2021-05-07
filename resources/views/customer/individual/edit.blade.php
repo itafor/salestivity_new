@@ -107,7 +107,7 @@
                                     <div class="col-md-4">
                                       <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-website">{{ __('Website') }}</label>
-                                    <input type="url" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" formnovalidate="formnovalidate" value="{{old('website',$customer->website)}}" onfocus="if(this.value=='')this.value='http://'">
+                                    <input type="text" name="website" id="input-website" class="form-control form-control-alternative{{ $errors->has('website') ? ' is-invalid' : '' }}" placeholder="{{ __('Website') }}" formnovalidate="formnovalidate" value="{{$customer->website}}" >
 
                                     @if ($errors->has('website'))
                                         <span class="invalid-feedback" role="alert">

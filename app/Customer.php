@@ -201,15 +201,15 @@ public static function createContact($customer,$data)
 
         $customer = self::where('id', $data['id'])->first();
         $address = AddressCustomer::where('customer_id', $data['id'])->first();
-        $contactExist = Contact::where('email', $customer->email)->first();
-
 
         self::updateAddress($address,$data);
         self::updateContacts($data,$customer);
 
-         if(!$contactExist){
-            self::addCustomerToContact($customer);
-        }
+        self::update_main_customer_detail_in_contact($data);
+
+        //temporary method
+        self::update_main_user_contact_type();
+        
     }
 
      public static function updateIndividualCustomerAcount($data)
@@ -232,9 +232,9 @@ public static function createContact($customer,$data)
         self::updateAddress($address,$data);
         self::updateContacts($data,$customer);
 
-        if(!$contactExist){
-            self::addCustomerToContact($customer);
-        }
+        self::update_main_user_contact_type();
+
+        self::update_main_customer_detail_in_contact($data);
     }
 
     public static function updateContacts($data,$customer)
@@ -305,7 +305,34 @@ public static function addCustomerToContact($customer)
     'phone' => $customer->phone,
     'email' => $customer->email,
     'main_acct_id' => getActiveGuardType()->main_acct_id,
+    'contact_type' => 'main_customer'
     ]);
+}
+
+public static function update_main_user_contact_type(){
+     $contacts = Contact::where([
+            ['title', null],
+            ['surname', null]
+    ])->get();
+        if(count($contacts) >= 1){
+            foreach ($contacts as $key => $contact) {
+        $contact->contact_type = 'main_customer';
+        $contact->save();
+            }
+    }
+}
+
+public static function update_main_customer_detail_in_contact($data){
+           $contactExist = Contact::where([
+            ['customer_id', $data['id']],
+            ['contact_type','main_customer']
+    ])->first();
+        if($contactExist){
+        $contactExist->email = isset($data['company_email']) ? $data['company_email'] : $data['email'];
+        $contactExist->name = isset($data['company_name']) ? $data['company_name'] : $data['name'];
+        $contactExist->phone = isset($data['company_phone']) ? $data['company_phone'] : $data['phone'];
+        $contactExist->save();
+    }
 }
 
 }

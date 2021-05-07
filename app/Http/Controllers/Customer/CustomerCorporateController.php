@@ -150,7 +150,6 @@ class CustomerCorporateController extends Controller
             'industry' => 'required',
             'company_email' => 'required|max:255',
             'company_phone' => 'required',
-            'website' => 'required',
             'turn_over' => 'required',
             'employee_count' => 'required',
             'state' => 'required',
