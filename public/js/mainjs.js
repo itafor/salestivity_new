@@ -102,7 +102,7 @@ $('#input-dept').change(function () {
         });
 
         $('body').on('keyup', '#discount', function(){
-
+            product_price = $('#productPrice').val();
             let discount = $(this).val();
            if(0 <= discount && discount < 101){
             if(parseFloat(product_price) <= 0){
@@ -130,9 +130,10 @@ $('#input-dept').change(function () {
 $(document).on('keyup', '#discount', function(e){
     e.preventDefault();
     let value = e.target.value;
+            product_price = $('#productPrice').val();
 if(value <=0){
      $(this).val('');
-    $('#billingAmount').val(billinga_amount);
+    $('#billingAmount').val(billinga_amount ? billinga_amount : product_price);
 }
  });
 $(document).on('keyup', '#productPrice', function(e){
@@ -850,7 +851,7 @@ function add_product() {
      let data = $(this).val();
      if(data >= 500 || data <= -1 ||  isNaN(parseInt(data))){
       alert('Invalid number entered! Please enter a number between 0 and 364');
-      $("#first_duration, #second_duration, #third_duration").val('');
+      // $("#first_duration, #second_duration, #third_duration").val('');
      }
   })
 

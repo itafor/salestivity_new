@@ -199,10 +199,18 @@ public function getBillingRenewals($id)
     {
 
         $userId = auth()->user()->id;
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
-        $renewal = Renewal::where('id',$id)->first();
-        return view('billing.renewal.edit', compact('renewal','customers', 'products'));
+        $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['customers'] = Customer::where('main_acct_id', $userId)->get();
+        $data['renewal'] = Renewal::where('id',$id)->first();
+        $data['products'] = Product::where('main_acct_id', $userId)->get();
+
+        $data['subCategory'] = SubCategory::where('id',$data['renewal']->subcategory_id)->first();
+
+        $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+        
+        return view('billing.renewal.edit', $data);
     }
 
     /**
@@ -214,15 +222,21 @@ public function getBillingRenewals($id)
      */
     public function update(Request $request)
     {
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'renewal_id' => 'required|numeric',
             'customer_id' => 'required|numeric',
+            'category_id' => 'required|numeric',
+            'sub_category_id' => 'required|numeric',
             'product' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required',
             'productPrice' => 'required|numeric',
             'billingAmount' => 'required|numeric',
             'description' => 'required',
+            'duration_type' =>'required',
+            'company_email_id' =>'required',
+            'company_bank_acc_id' =>'required'
         ]);
 
         if ($validator->fails()) {

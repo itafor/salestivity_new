@@ -119,10 +119,13 @@ class Renewal extends Model
 
     public static function updateRenewal($data)
     {
+        $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
+
         self::where('id', $data['renewal_id'])->update([
-        'main_acct_id' => getActiveGuardType()->main_acct_id,
         'customer_id' => $data['customer_id'],
-        'product' => $data['product'],
+        'category_id' => $data['category_id'],
+        'subcategory_id' => $data['sub_category_id'],
+        'product_id' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => $data['discount'],
         'billingAmount' => $data['billingAmount'],
@@ -130,7 +133,13 @@ class Renewal extends Model
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
+        'duration_type' => $data['duration_type'],
+        'company_email_id' => $data['company_email_id'],
+        'company_bank_acc_id' => $data['company_bank_acc_id'],
         ]); 
+
+        self::updateRenewalReminderDuration($data);
+        self::updateRenewalContactEmail($data, $contactEmails);
     }
 
  public static function createRenewalContactEmail($renewal,$contactEmails) {
@@ -148,14 +157,46 @@ class Renewal extends Model
 
  }
 
+  public static function updateRenewalContactEmail($data, $contactEmails) {
+
+        $renewalContactEmails = renewalContactEmail::where('renewal_id', $data['renewal_id'])->get();
+        if(count($renewalContactEmails) >= 1){
+            foreach ($renewalContactEmails as $key => $contactEmail) {
+                $contactEmail->delete();
+            }
+        }
+   
+    if($contactEmails !='' && $contactEmails[0] != null){
+    foreach ($contactEmails as $key => $contactEmail) {
+       $renewalContact = new renewalContactEmail();
+       $renewalContact->contact_id = $contactEmail;
+       $renewalContact->renewal_id = $data['renewal_id'];
+       $renewalContact->save();
+    }
+
+  }
+
+ }
+
   public static function createRenewalReminderDuration($data, $renewal) {
 
        $reminderDuration = new RenewalReminderDuration();
        $reminderDuration->renewal_id = $renewal->id;
-       $reminderDuration->first_duration = $data['first_duration'] ? $data['first_duration'] : null;
-       $reminderDuration->second_duration = $data['second_duration'] ? $data['second_duration'] : null;
-       $reminderDuration->third_duration = $data['third_duration'] ? $data['third_duration'] : 0;
+       $reminderDuration->first_duration = isset($data['first_duration']) ? $data['first_duration'] : null;
+       $reminderDuration->second_duration = isset($data['second_duration']) ? $data['second_duration'] : null;
+       $reminderDuration->third_duration = isset($data['third_duration']) ? $data['third_duration'] : 0;
        $reminderDuration->save();
 
+ }
+
+   public static function updateRenewalReminderDuration($data) {
+
+       $reminderDuration = RenewalReminderDuration::where('renewal_id', $data['renewal_id'])->first();
+       if($reminderDuration){
+       $reminderDuration->first_duration = isset($data['first_duration']) ? $data['first_duration'] : null;
+       $reminderDuration->second_duration = isset($data['second_duration']) ? $data['second_duration'] : null;
+       $reminderDuration->third_duration = isset($data['third_duration']) ? $data['third_duration'] : 0;
+       $reminderDuration->save();
+    }
  }
 }
