@@ -149,6 +149,7 @@ Find below the details of the invoice.
 <td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}
 </td>
 </tr>
+
 @if($invoice->status == 'Paid')
 <tr>
 <td style="width: 150px;"><b>{{ __('Status') }}</b></td>
@@ -170,6 +171,16 @@ Find below the details of the invoice.
 </td>
 </tr>
 @endif
+<tr>
+<td style="width: 150px;"><b>{{ __('Original Amount') }}</b></td>
+<td> &#8358;{{ number_format($invoice->cost, 2) }}
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Discount') }}</b></td>
+<td>{{ $invoice->discount ? $invoice->discount : 'N/A' }}
+</td>
+</tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
 <td>&#8358;{{ number_format($invoice->billingBalance,2) }}

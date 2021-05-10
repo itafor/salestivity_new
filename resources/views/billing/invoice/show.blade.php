@@ -34,7 +34,7 @@
         @endif
 
 
-            <!--  @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
+             @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
             <a onclick="editPaidinvoiceAlert()">
             <button class="btn btn-sm btn-primary" >
             {{ __('Edit') }}
@@ -46,7 +46,7 @@
             {{ __('Edit') }}
             </button>
             </a>
-            @endif -->
+            @endif
 
           
 

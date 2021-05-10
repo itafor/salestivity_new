@@ -291,6 +291,10 @@ class InvoiceController extends Controller
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
+       $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+         
+      $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
         return view('billing.invoice.edit',$data);
     }
 
@@ -304,7 +308,7 @@ class InvoiceController extends Controller
     public function update(Request $request)
     {
         $input = $request->all();
-       // dd($input);
+        //dd($input);
               $rules = [
             'invoice_id' => 'required',
             'customer' => 'required',
@@ -313,6 +317,9 @@ class InvoiceController extends Controller
             'cost' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
+            'due_date' => 'required',
+            'company_email_id' => 'required',
+            'company_bank_acc_id' => 'required',
         ];
         $message = [
             'customer.required' => 'Customer name is required',
@@ -322,6 +329,9 @@ class InvoiceController extends Controller
             'category_id.required' => 'Product category is required',
             'sub_category_id.required' => 'Product subcategory is required',
             'invoice_id.required' => 'Invoice ID is required',
+            'due_date.required' => 'Due Date is required',
+            'company_email_id.required' => 'Company email is required',
+            'company_bank_acc_id.required' => 'Company bank detail is required',
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
@@ -330,15 +340,26 @@ class InvoiceController extends Controller
 
 
             $invoice = Invoice::find($input['invoice_id']);
-            $invoice->customer = $request->input('customer');
-            $invoice->category_id = $request->category_id;
-            $invoice->subcategory_id = $request->sub_category_id;
-            $invoice->product_id = $request->input('product');
-            $invoice->timeline = $request->input('timeline');
-            $invoice->cost = $request->input('cost');
-            $invoice->status = $request->input('status');
+            $invoice->customer = $input['customer'];
+            $invoice->category_id = $input['category_id'];
+            $invoice->subcategory_id = $input['sub_category_id'];
+            $invoice->product_id = $input['product'];
+            $invoice->timeline = $input['timeline'];
+            $invoice->cost = $input['cost'];
+            $invoice->discount = isset($input['discount']) ? $input['discount'] : null;
+            $invoice->billingAmount = $request->billingAmount;
+            $invoice->billingBalance = $request->billingAmount;
+            // $invoice->status = $request->input('status');
+            $invoice->company_email_id = $input['company_email_id'];
+            $invoice->company_bank_acc_id = $input['company_bank_acc_id'];
+            $invoice->due_date = Carbon::parse(formatDate($input['due_date'], 'd/m/Y', 'Y-m-d'));
             $invoice->update();
             if($invoice){
+
+               $toEmail = $invoice->customers->email;
+
+            Mail::to($toEmail)->send(new SendInvoice($invoice));
+
             $status = "Invoice has been been updated ";
             Alert::success('Invoice', $status);
 
