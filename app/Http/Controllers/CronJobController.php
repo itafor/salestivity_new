@@ -108,5 +108,62 @@ public static function notifyCustomer($renewal){
 		    }
   }
 
+  public static function renewExpiredReccuringByOneYear()
+    {
+       
+      $renewals = Renewal::where([
+        ['renew_status', null],
+        ['end_date', '<=', Carbon::now()],
+      ])->get();
+    // dd($renewals);
+
+       foreach($renewals as $renewal) {
+
+        $contactEmails = $renewal->contacts;
+        //dd($contactEmails);
+         $discountValue = $renewal->discount ? $renewal->discount : null;
+        $discountedPrice = ($discountValue / 100) * $renewal->productPrice;
+        $finalPrice = $renewal->productPrice - $discountedPrice;
+
+        $data['first_duration'] = $renewal->duration->first_duration;
+        $data['second_duration'] = $renewal->duration->second_duration;
+        $data['third_duration'] = $renewal->duration->third_duration;
+
+        $new_renewal = new Renewal();
+        $new_renewal->main_acct_id = $renewal->main_acct_id;
+        $new_renewal->created_by_id =  $renewal->created_by_id;
+        $new_renewal->customer_id = $renewal->customer_id;
+        $new_renewal->category_id = $renewal->category_id;
+        $new_renewal->subcategory_id = $renewal->subcategory_id;
+        $new_renewal->product_id = $renewal->product_id;
+        $new_renewal->productPrice = $renewal->productPrice;
+        $new_renewal->discount = $renewal->discount;
+        $new_renewal->duration_type = $renewal->duration_type;
+        $new_renewal->billingAmount =  $finalPrice;  //$data['billingAmount'],
+        $new_renewal->billingBalance = $finalPrice;  //$data['billingAmount'],
+        $new_renewal->userType = $renewal->userType;
+        $new_renewal->description = $renewal->description;
+        $new_renewal->start_date = Carbon::now();//->format('d/m/Y');
+        $new_renewal->end_date =  Carbon::now()->addYear();//->format('d/m/Y');
+        $new_renewal->first_reminder_sent = 'no';
+        $new_renewal->invoice_number = 'DW'.mt_rand(1000, 9999);
+        $new_renewal->company_email_id = $renewal->company_email_id;
+        $new_renewal->company_bank_acc_id = $renewal->company_bank_acc_id;
+        $new_renewal->save();   
+
+        if($new_renewal){
+           Renewal::createRenewalContactEmail($new_renewal,$contactEmails);
+           Renewal::createRenewalReminderDuration($data, $new_renewal);
+           self::modify_renewal_renew_status($renewal);
+        }
+           
+    }
+ }
+
+public static function modify_renewal_renew_status($renewal){
+    $reccuring = Renewal::find($renewal->id);
+    $reccuring->renew_status = 'Renewed';
+    $reccuring->save();
+}
 
 }

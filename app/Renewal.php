@@ -148,7 +148,7 @@ class Renewal extends Model
     if($contactEmails !='' && $contactEmails[0] != null){
     foreach ($contactEmails as $key => $contactEmail) {
        $renewalContact = new renewalContactEmail();
-       $renewalContact->contact_id = $contactEmail;
+       $renewalContact->contact_id = isset($contactEmail['contact_id']) ? $contactEmail['contact_id'] : $contactEmail;
        $renewalContact->renewal_id = $renewal->id;
        $renewalContact->save();
     }
