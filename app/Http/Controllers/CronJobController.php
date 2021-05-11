@@ -115,13 +115,13 @@ public static function notifyCustomer($renewal){
         ['renew_status', null],
         ['end_date', '<=', Carbon::now()],
       ])->get();
-    // dd($renewals);
+   // dd($renewals);
 
        foreach($renewals as $renewal) {
 
         $contactEmails = $renewal->contacts;
-        //dd($contactEmails);
-         $discountValue = $renewal->discount ? $renewal->discount : null;
+        
+        $discountValue = $renewal->discount ? $renewal->discount : null;
         $discountedPrice = ($discountValue / 100) * $renewal->productPrice;
         $finalPrice = $renewal->productPrice - $discountedPrice;
 
@@ -139,12 +139,12 @@ public static function notifyCustomer($renewal){
         $new_renewal->productPrice = $renewal->productPrice;
         $new_renewal->discount = $renewal->discount;
         $new_renewal->duration_type = $renewal->duration_type;
-        $new_renewal->billingAmount =  $finalPrice;  //$data['billingAmount'],
-        $new_renewal->billingBalance = $finalPrice;  //$data['billingAmount'],
+        $new_renewal->billingAmount =  $finalPrice;  
+        $new_renewal->billingBalance = $finalPrice;
         $new_renewal->userType = $renewal->userType;
         $new_renewal->description = $renewal->description;
-        $new_renewal->start_date = Carbon::now();//->format('d/m/Y');
-        $new_renewal->end_date =  Carbon::now()->addYear();//->format('d/m/Y');
+        $new_renewal->start_date = Carbon::parse($renewal->end_date);
+        $new_renewal->end_date =  Carbon::parse($renewal->end_date)->addYear();
         $new_renewal->first_reminder_sent = 'no';
         $new_renewal->invoice_number = 'DW'.mt_rand(1000, 9999);
         $new_renewal->company_email_id = $renewal->company_email_id;
