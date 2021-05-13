@@ -29,19 +29,20 @@
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('first_name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-first_name">{{ __('First Name') }}</label>
-                                            <input type="text" name="first_name" id="input-first_name" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required autofocus>
+                                            <input type="text" name="first_name" id="searchCustomers" class="form-control form-control-alternative{{ $errors->has('first_name') ? ' is-invalid' : '' }}" placeholder="{{ __('First Name') }}" value="{{ old('first_name') }}" required autofocus autocomplete="new-password">
 
                                             @if ($errors->has('company_name'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('first_name') }}</strong>
                                                 </span>
                                             @endif
+                                            <div id="customersList"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('last_name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-last_name">{{ __('Last Name') }}</label>
-                                            <input type="text" name="last_name" id="input-last_name" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required autofocus>
+                                            <input type="text" name="last_name" id="input-last_name" class="form-control form-control-alternative{{ $errors->has('last_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') }}" required autocomplete="new-password">
 
                                             @if ($errors->has('last_name'))
                                                 <span class="invalid-feedback" role="alert">

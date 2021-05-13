@@ -90,6 +90,8 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 	Route::get('account/corporate/{id}/delete', ['as' => 'customer.corporate.destroy', 'uses' => 'Customer\CustomerCorporateController@destroy']);
 	Route::post('account/corporate/{id}/saveContact', ['as' => 'customer.corporate.saveContacts', 'uses' => 'ContactController@saveContacts']);
 
+	Route::get('/search/customers', 'CustomerController@searchCustomersByName')->name('search.customer.name');
+
 	Route::get('account/individual/new', ['as' => 'customer.individual.create', 'uses' => 'Customer\CustomerIndividualController@create']);
 	Route::post('account/individual/new', ['as' => 'customer.individual.store', 'uses' => 'Customer\CustomerIndividualController@store']);
 	Route::get('account/individual/{id}/show', ['as' => 'customer.individual.show', 'uses' => 'Customer\CustomerIndividualController@show']);
@@ -284,6 +286,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 	Route::get('home', ['uses' => 'Zeus\HomeController@index', 'as' => 'index']);
     Route::get('location/create/city', 'LocationController@createCity')->name('location.create.city');
   Route::post('location/add/city', 'LocationController@AddCity')->name('location.add.city');
+  Route::get('cities', 'LocationController@fetchCities')->name('location.view.cities');
 
 
 });

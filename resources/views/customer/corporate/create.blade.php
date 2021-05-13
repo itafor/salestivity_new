@@ -29,13 +29,14 @@
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('company_name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-company">{{ __('Company Name') }}</label>
-                                            <input type="text" name="company_name" id="input-company" class="form-control form-control-alternative{{ $errors->has('company_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Company Name') }}" value="{{ old('company_name') }}" required autofocus>
+                                            <input type="text" name="company_name" id="searchCustomers" class="form-control form-control-alternative{{ $errors->has('company_name') ? ' is-invalid' : '' }}" placeholder="{{ __('Company Name') }}" value="{{ old('company_name') }}" required autofocus>
 
                                             @if ($errors->has('company_name'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('company_name') }}</strong>
                                                 </span>
                                             @endif
+                                            <div id="customersList"></div>
                                         </div>
                                     </div>
                              

@@ -123,6 +123,7 @@ class CustomerController extends Controller
    $customer->delete();
     }
  }
+
   public function deleteContact($id)
     {
     $contact = Contact::find($id);
@@ -130,4 +131,25 @@ class CustomerController extends Controller
    $contact->delete();
     }
  }
+
+    public function searchCustomersByName(Request $request){
+     if($request->get('customer_name'))
+     {
+      $customer_name = $request->get('customer_name');
+
+      $customers = Customer::where('name','like',"%{$customer_name}%")
+      ->where('main_acct_id', getActiveGuardType()->main_acct_id)
+    ->get();
+    $output ='<ul class="dropdown-menu" 
+    style="display: block; 
+    position: absolute; z-index: 1; width:300px; padding-left:20px; margin-left:10px; margin-top:-15px;">';
+    foreach ($customers as $customer) {
+       if($customer->main_acct_id == getActiveGuardType()->main_acct_id){
+$output.='<li><a href="/customer/'.$customer->id.'/show">'.$customer->name.'</a></li>';
+ }
+    }
+   $output .='</ul>';
+   echo $output;
+   }
+}
 }

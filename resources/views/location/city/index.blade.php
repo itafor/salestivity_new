@@ -14,7 +14,7 @@
                                 <h3 class="mb-0">{{ __('All Cities') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('location.create.city') }}" class="btn-icon btn-tooltip" title="{{ __('Add City') }}"><i class="las la-plus-circle"></i></a>
+                                <a href="{{ route('admin.location.create.city') }}" class="btn-icon btn-tooltip" title="{{ __('Add City') }}"><i class="las la-plus-circle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -39,14 +39,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if(getCities()->isEmpty())
+                                        @if(count($cities) <=0)
                                             <tr>
                                                 <td colspan="8" style="text-align: center">
                                                     <h3>No data available</h3>
                                                 </td>
                                             </tr>
                                         @else
-                                            @foreach(getCities()->take(10) as $city)
+                                            @foreach($cities->take(50) as $city)
                                             <tr>
                                                 <td>{{ $city->name }}</td>
                                                 <td>{{ $city->state ? $city->state->name : 'N/A'  }}</td>
@@ -55,11 +55,11 @@
                                                 <td>
                                                     <div class="btn-group-justified text-center" role="group">
                                                         <div class="btn-group" role="group">
-                                                            <a href="{{ route('location.edit.city', [$city->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
+                                                            <a href="" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
                                                         </div>  
 
                                                         <div class="btn-group" role="group">
-                                                            <form action="{{ route('location.destroy.city', [$city->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
+                                                            <form action="" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
                                                                 @csrf
                                                                 <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
                                                             </form>

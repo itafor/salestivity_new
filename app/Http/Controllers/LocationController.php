@@ -6,6 +6,7 @@ use App\City;
 use App\Country;
 use App\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Stevebauman\Location\Facades\Location;
 use Validator;
@@ -15,7 +16,16 @@ class LocationController extends Controller
 
 	public function fetchCities(Request $request){
 
-        return view('location.city.index');
+            $cities = [];
+  City::with(['state'])->chunk(100, function($citiesValue) use (&$cities) {
+
+    foreach ($citiesValue as $city) {
+        $cities[] = $city;
+    }
+ });
+
+// dd($cities);
+        return view('location.city.index', compact('cities'));
 
 	}
 

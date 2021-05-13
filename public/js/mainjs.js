@@ -973,3 +973,36 @@ if(quantity <=0 || quantity <=0){
      $(this).val('');
 }
  });
+
+
+  //auto populate customers when company or customer name is entered
+  $(document).ready(function(){
+  $('#searchCustomers').keyup(function(){
+    
+    var customerName=$(this).val();
+
+    if(customerName!==''){
+      var _token = $('input[name="_token"').val();
+      $.ajax({
+        url: baseUrl+'/search/customers',
+        method:"get",
+        data:{customer_name:customerName, _token:_token},
+        success:function(customer){
+          
+          $('#customersList').fadeIn();
+          $('#customersList').html(customer);
+          
+         if($('#searchCustomers').val() ===''){
+          $('#customersList').empty(); 
+         }
+        }
+      })
+    }
+  }); 
+
+  $(document).on('click', 'li', function(e){  
+        // $('#searchCustomers').val($(this).text()); //display search value in input field 
+        $('#customersList').fadeOut();  
+    });  
+ 
+});

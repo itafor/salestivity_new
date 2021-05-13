@@ -11,7 +11,9 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Add new city to a state') }}</h3>
                             </div>
-                        
+                        <!-- <div class="col-4 text-right">
+                                <a href="{{ route('admin.location.view.cities') }}" class="btn-icon btn-tooltip" title="{{ __('view Cities') }}"><i class="las la-plus-circle">View cities</i></a>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-12">
