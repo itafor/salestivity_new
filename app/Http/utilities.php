@@ -277,3 +277,22 @@ function loginUserId(){
         return auth()->guard('sub_user')->user()->id;
     }
 }
+
+function whatsappNotification($from_number, $to_number,  $text_messages){
+     $url = "https://messages-sandbox.nexmo.com/v0.1/messages";
+    $params = ["to" => ["type" => "whatsapp", "number" =>$to_number],
+        "from" => ["type" => "whatsapp", "number" => $from_number],
+        "message" => [
+            "content" => [
+                "type" => "text",
+                "text" => $text_messages
+            ]
+        ]
+    ];
+    $headers = ["Authorization" => "Basic " . base64_encode('3eae53b5'. ":" . '5vaBUvs8KEgwWMne')];
+
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('POST', $url, ["headers" => $headers, "json" => $params]);
+    $data = $response->getBody();
+    Log::Info($data);
+}

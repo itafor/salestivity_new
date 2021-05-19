@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.salestivity.com'),
+    'host' => env('MAIL_HOST', 'mail.digitalweb247.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'alert@salestivity.com'),
-        'name' => env('MAIL_FROM_NAME', 'SALESTIVITY'),
+        'address' => env('MAIL_FROM_ADDRESS', 'billing@digitalweb247.com'),
+        'name' => env('MAIL_FROM_NAME', 'Digitalweb247'),
     ],
 
     /*

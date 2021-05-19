@@ -36,6 +36,14 @@ class SendInvoice extends Mailable
         ]);
 
         $documentName = 'invoicePayment_'.$this->invoice->invoice_number.'.pdf';
+        $text_messages = 'I am just testing laravel messaging with whatsapp';
+
+        
+      $text = view('emails.sendinvoice', [
+            'invoice'=> $this->invoice, 
+        ]);
+
+        // whatsappNotification('14157386170', '2347065907948', strip_tags($text));
 
         return $this->view('emails.sendinvoice')
          ->replyTo('billing@digitalweb247.com','Digitalweb247')
