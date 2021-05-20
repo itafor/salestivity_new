@@ -169,6 +169,10 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 
 	Route::get('billing/renewal/{id}','RenewalController@getBillingRenewals')->name('billing.renewal.invoice.view');
 
+	Route::get('confirm/recurring/invoice/{id}','RenewalController@changeBillStatusToConfirmed')->name('recurring.bill.status.confirm');
+	Route::get('send/recurring/invoice/{id}','RenewalController@changeBillStatusToSent')->name('recurring.bill.status.sent');
+
+
 
 	// Billing Agent
 	Route::get('billing/agent','BillingAgentController@index')->name('billing.agent.index');

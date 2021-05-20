@@ -72,6 +72,8 @@
             @endif
                         </div>
                     </div>
+
+
                     <div class="card-body">
                                 <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($renewal))
@@ -82,7 +84,22 @@
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Bill Status') }}</b></td>
-                     <td>{{ $renewal->bill_status ? $renewal->bill_status : 'N/A' }}</td>
+                     <td>
+
+                        {{ $renewal->bill_status ? $renewal->bill_status : 'N/A' }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+             
+              <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Change Bill Status
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('recurring.bill.status.sent',[$renewal->id])}}">Sent</a>
+                    <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('recurring.bill.status.confirm',[$renewal->id])}}">Confirmed</a>
+                  </div>
+                </div>
+
+                     </td>
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
