@@ -142,6 +142,12 @@
 <p>
 Find below the details of the invoice. Kindly make payment before the due date to avoid service suspension. Please read the domain expiration information section below.
 </p>
+<p>
+    Please click the button below to confirm receipt of this invoice.<br>
+    <a href="{{ route('recurring.billing.confirm', [$customerRenewal->id]) }}">
+    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+</a>
+</p>
 <h4>Invoice Details</h4>
 <table class="table table-bordered" id="rental_table">
 @if(isset($customerRenewal))
@@ -228,6 +234,13 @@ To avoid losing your domain name to an auction or anybody else, ensure your doma
 </p>
 <p>
 This invoice and the details specified is generated for the client or organization whose names appear on it. If you have received this invoice in error, kindly disregard the information and delete as appropriate.
+</p>
+
+<p>
+    Please click the button below to confirm receipt of this invoice.<br>
+    <a href="{{ route('recurring.billing.confirm', [$customerRenewal->id]) }}">
+    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+</a>
 </p>
 </div>
 </div>

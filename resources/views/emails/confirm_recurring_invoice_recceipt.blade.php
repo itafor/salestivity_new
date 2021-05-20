@@ -133,7 +133,7 @@
 
     <p class="card-text">Dear {{$renewal->user->name}} {{$renewal->user->last_name}},</p>
     <p>
-        This is to inform you that the Recurring Invoice with Invoice Number <b>{{$renewal->invoice_number}}</b> has been confirmed by the recipient ({{$renewal->customers->name}}).
+        This is to inform you that the Recurring Invoice with Invoice Number <b>{{$renewal->invoice_number}}</b> has been confirmed by the recipient.
     </p>
     <p>
     Please click <a href="{{ route('billing.renewal.show', [$renewal->id]) }}">HERE</a> to view invoice details
