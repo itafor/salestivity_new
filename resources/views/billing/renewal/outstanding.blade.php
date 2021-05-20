@@ -56,7 +56,7 @@
                                             <th ><b>{{ __('Invoice Number') }}</b></th>
                                             <th ><b>{{ __('Customer') }}</b></th>
                                             <th ><b>{{ __('Product') }}</b></th>
-                                            <th ><b>{{ __('Status') }}</b></th>
+                                            <th ><b>{{ __('payment Status') }}</b></th>
                                             <th class="text-center"><b>{{ __('Action') }}</b></th>
                                         </tr>
                                     </thead>

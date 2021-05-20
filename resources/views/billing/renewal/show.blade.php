@@ -81,6 +81,10 @@
                      <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
                    </tr>
                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Bill Status') }}</b></td>
+                     <td>{{ $renewal->bill_status ? $renewal->bill_status : 'N/A' }}</td>
+                   </tr>
+                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $renewal->customers ? $renewal->customers->name : 'N/A' }}</td>
                    </tr>
@@ -148,20 +152,20 @@
 
                     @if($renewal->status == 'Paid')
                     <tr>
-                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Payment Status') }}</b></td>
                      <td class="text-success">{{ $renewal->status }}
                      </td>
                    </tr>
                     @elseif($renewal->status == 'Partly paid')
                     <tr>
-                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Payment Status') }}</b></td>
                      <td class="text-warning">
                         {{ $renewal->status }}
                      </td>
                    </tr>
                      @else
                       <tr>
-                     <td style="width: 200px;"><b>{{ __('Status') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Payment Status') }}</b></td>
                      <td class="text-danger">
                          {{ $renewal->status }}
                      </td>

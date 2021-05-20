@@ -293,6 +293,10 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 
 });
 
+//billing receipt confirmation
+	Route::get('billing/invoice/{invoicceId}/confirm','RenewalController@confirmRecurringInvoiceReceipt')->name('recurring.billing.confirm');
+
+
 //cron jobs notifications
 	Route::get('annaul_renewal_notification', 'CronJobController@annualRenewalsNotification');
 	Route::get('due_unpaid_renewals_monthly_notification', 'CronJobController@dueUnpaidRenewalsMonthlyNotification');

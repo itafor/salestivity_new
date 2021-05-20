@@ -86,6 +86,9 @@ public static function notifyCustomer($renewal){
           if($customerEmail){
           $remaingDays = (string)$renewal->remaingdays;
             Mail::to($customerEmail)->send(new EmailInvoiceRenewalToCustomer($renewal,$remaingDays));
+
+           self::update_renewal_bill_status_to_sent($renewal);
+
           }
 }
 
@@ -165,5 +168,18 @@ public static function modify_renewal_renew_status($renewal){
     $reccuring->renew_status = 'Renewed';
     $reccuring->save();
 }
+
+public static function update_renewal_bill_status_to_sent($renewal){
+    $reccuring = Renewal::find($renewal->id);
+    $reccuring->bill_status = 'Sent';
+    $reccuring->save();
+}
+
+public static function update_renewal_bill_status_to_confirmed($renewal){
+    $reccuring = Renewal::find($renewal->id);
+    $reccuring->bill_status = 'Confirmed';
+    $reccuring->save();
+}
+
 
 }

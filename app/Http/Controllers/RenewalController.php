@@ -10,6 +10,7 @@ use App\Contact;
 use App\Customer;
 use App\Http\Controllers\CronJobController;
 use App\Jobs\SendRenewalPaymentNotification;
+use App\Mail\ConfirmRecurringInvoiceRecceipt;
 use App\Mail\RenewalPaid;
 use App\Notifications\RenewalCreated;
 use App\Payment;
@@ -23,10 +24,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
-use PDF;
 
 class RenewalController extends Controller
 {
@@ -390,6 +391,24 @@ public function getBillingRenewals($id)
      ->first();
    return $renewal;
 
+   }
+
+   public function confirmRecurringInvoiceReceipt($renewal_id){
+            $renewal = Renewal::find($renewal_id);
+
+            if($renewal->bill_status == 'Confirmed'){
+                return 'Already confirmed!!';
+            }else{
+
+                CronJobController::update_renewal_bill_status_to_confirmed($renewal);
+
+                   $toEmail = $renewal->user->email;
+
+                Mail::to($toEmail)->send(new ConfirmRecurringInvoiceRecceipt($renewal));
+
+                return 'Confirmed successfully!!';
+
+            }
    }
 
 
