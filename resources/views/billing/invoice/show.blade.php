@@ -79,6 +79,25 @@
                      <td style="width: 200px;"><b>{{ __('Invoice Number') }}</b></td>
                      <td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}</td>
                    </tr>
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Bill Status') }}</b></td>
+                     <td>
+
+                        {{ $invoice->bill_status ? $invoice->bill_status : 'N/A' }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+             
+              <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Change Bill Status
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('invoice.bill.status.sent',[$invoice->id])}}">Sent</a>
+                    <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('invoice.bill.status.confirm',[$invoice->id])}}">Confirmed</a>
+                  </div>
+                </div>
+
+                     </td>
+                   </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $invoice->customers ? $invoice->customers->name : 'N/A' }}</td>

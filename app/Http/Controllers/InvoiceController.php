@@ -6,6 +6,7 @@ use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
 use App\Customer;
+use App\Http\Traits\InvoiceBillStatus;
 use App\Invoice;
 use App\InvoicePayment;
 use App\Mail\InvoicePaid;
@@ -17,13 +18,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use PDF;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
-use PDF;
 
 class InvoiceController extends Controller
 {
+
+  use InvoiceBillStatus;
+  
    public function __construct()
     {
         $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage','verifySubuserEmail']);
@@ -182,6 +186,8 @@ class InvoiceController extends Controller
               $toEmail = $invoice->customers->email;
 
             Mail::to($toEmail)->send(new SendInvoice($invoice));
+
+           self::update_invoice_bill_status_to_sent($invoice);
 
                   $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);
@@ -408,10 +414,19 @@ class InvoiceController extends Controller
       $toEmail = $invoice->customers->email;
 
         $invoiceResent =  Mail::to($toEmail)->send(new SendInvoice($invoice));
-
+     
+      self::update_invoice_bill_status_to_sent($invoice);
+            
             $status = "Invoice has been resent successfully";
             Alert::success('Invoice Resent', $status);
             return back();
           
    }
+
+   public static function update_invoice_bill_status_to_sent($invoice){
+    $invoice = Invoice::find($invoice->id);
+    $invoice->bill_status = 'Sent';
+    $invoice->save();
+}
+
 }

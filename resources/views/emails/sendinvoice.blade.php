@@ -135,6 +135,12 @@
 <p>
 Find below the details of the invoice. 
 </p>
+<p>
+    Please click the button below to confirm receipt of this invoice.<br>
+    <a href="{{ route('invoice.billing.confirm', [$invoice->id]) }}">
+    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+</a>
+</p>
 <h4>Invoice Details</h4>
 <table class="table table-bordered" id="rental_table">
 @if(isset($invoice))
@@ -205,6 +211,13 @@ Find below the details of the invoice.
 </table>
 <p>Thank you for your continuous patronage.</p>
 <p><b>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</b>  Billing Team.</p>
+
+<p>
+    Please click the button below to confirm receipt of this invoice.<br>
+    <a href="{{ route('invoice.billing.confirm', [$invoice->id]) }}">
+    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+</a>
+</p>
 </div>
 </div>
 

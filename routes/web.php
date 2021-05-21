@@ -151,6 +151,8 @@ Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser
 
 	Route::get('billing/invoice/view/{id}','InvoiceController@getBillingInvoices')->name('billing.invoice.view');
 
+Route::get('confirm/invoice/{id}','InvoiceController@changeInvoiceBillStatusToConfirmed')->name('invoice.bill.status.confirm');
+	Route::get('send/invoice/{id}','InvoiceController@changeInvoiceBillStatusToSent')->name('invoice.bill.status.sent');
 
 	// Renewal
 	Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
@@ -299,6 +301,8 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 
 //billing receipt confirmation
 	Route::get('billing/invoice/{invoicceId}/confirm','RenewalController@confirmRecurringInvoiceReceipt')->name('recurring.billing.confirm');
+
+	Route::get('invoice/{invoicceId}/confirm','InvoiceController@confirmInvoiceReceipt')->name('invoice.billing.confirm');
 
 
 //cron jobs notifications

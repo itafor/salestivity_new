@@ -9,6 +9,8 @@ use App\CompanyEmail;
 use App\Contact;
 use App\Customer;
 use App\Http\Controllers\CronJobController;
+use App\Http\Traits\RecurringBillStatus;
+use App\Http\Traits\RenewalInvoiceTrait;
 use App\Jobs\SendRenewalPaymentNotification;
 use App\Mail\ConfirmRecurringInvoiceRecceipt;
 use App\Mail\RenewalPaid;
@@ -31,6 +33,7 @@ use Validator;
 
 class RenewalController extends Controller
 {
+    use RenewalInvoiceTrait, RecurringBillStatus;
 
       public function __construct()
     {
@@ -345,100 +348,5 @@ public function getBillingRenewals($id)
         Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
         return redirect()->route('billing.renewal.show',$request->renewal_id);
     }
-
-
-   public function downloadRenewalInvoice($renewalId){
-    
-         $renewal = self::getRenewal($renewalId);
-      
-      $pdf = PDF::loadView('emails.email_invoice_renewal_to_customer', [
-            'renewal'=> $renewal, 
-            'remaingDays' => $renewal->remaingDays, 
-        ]);
-
-        $documentName = 'invoiceRenewal_'.$renewal->invoice_number.'.pdf';
-
-      return $pdf->download($documentName);
-   }
-
-      public function resendRenewalInvoice($renewalId){
-
-              self::renewalInvoice($renewalId);
-
-            $status = "Renewal Invoice has been resent successfully";
-            Alert::success('Renewal Invoice Resent', $status);
-            return back();
-   }
-
-   public static function renewalInvoice($renewalId){
-      
-         $renewal = self::getRenewal($renewalId);
-
-          $renewalContacts = $renewal->contacts;
-
-        CronJobController::notifyCustomer($renewal);
-
-        CronJobController::sendNotificationToContactsAttachedToRenewal($renewalContacts);
-   }
-
-   public static function getRenewal($renewalId){
-
-    $renewal = Renewal::where([
-        ['id', $renewalId],
-      ])
-      ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,renewals.start_date,renewals.end_date) AS days'),
-     DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remaingdays'))
-     ->first();
-   return $renewal;
-
-   }
-
-   public function confirmRecurringInvoiceReceipt($renewal_id){
-            $renewal = Renewal::find($renewal_id);
-
-            if($renewal->bill_status == 'Confirmed'){
-                return 'Already confirmed!!';
-            }else{
-
-                CronJobController::update_renewal_bill_status_to_confirmed($renewal);
-
-                   $toEmail = $renewal->user->email;
-
-                Mail::to($toEmail)->send(new ConfirmRecurringInvoiceRecceipt($renewal));
-
-                return 'Confirmed successfully!!';
-
-            }
-   }
-
-   public function changeBillStatusToConfirmed($renewal_id){
-            $renewal = Renewal::find($renewal_id);
-            // dd($renewal);
-            if($renewal->bill_status == 'Confirmed'){
-                 Alert::success('Bill Status', 'Bill status already changed to confirmed');
-        return redirect()->route('billing.renewal.show',$renewal_id);
-            }else{
-
-                CronJobController::update_renewal_bill_status_to_confirmed($renewal);
-
-                 Alert::success('Bill Status', 'Bill status changed to confirmed!!');
-        return redirect()->route('billing.renewal.show',$renewal_id);
-            }
-   }
-
-      public function changeBillStatusToSent($renewal_id){
-            $renewal = Renewal::find($renewal_id);
-            // dd($renewal);
-            if($renewal->bill_status == 'Sent'){
-                 Alert::success('Bill Status', 'Bill status already changed to sent');
-        return redirect()->route('billing.renewal.show',$renewal_id);
-            }else{
-
-                CronJobController::update_renewal_bill_status_to_sent($renewal);
-
-                 Alert::success('Bill Status', 'Bill status changed to sent!!');
-        return redirect()->route('billing.renewal.show',$renewal_id);
-            }
-   }
 
 }
