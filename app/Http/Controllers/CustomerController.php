@@ -145,7 +145,7 @@ class CustomerController extends Controller
     position: absolute; z-index: 1; width:300px; padding-left:20px; margin-left:10px; margin-top:-15px;">';
     foreach ($customers as $customer) {
        if($customer->main_acct_id == getActiveGuardType()->main_acct_id){
-$output.='<li><a href="/customer/'.$customer->id.'/show">'.$customer->name.'</a></li>';
+$output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px; color: #000;" ">'.$customer->name.'</a></li>';
  }
     }
    $output .='</ul>';
