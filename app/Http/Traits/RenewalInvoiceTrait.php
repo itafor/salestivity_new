@@ -5,6 +5,7 @@ use App\Http\Controllers\CronJobController;
 use App\Renewal;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 
 trait RenewalInvoiceTrait {
 

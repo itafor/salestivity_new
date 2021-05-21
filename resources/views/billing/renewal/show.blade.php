@@ -36,19 +36,13 @@
 
         @endif
 
-           @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
-            <a onclick="editPaidRenewalAlert()">
-            <button class="btn btn-sm btn-primary" >
-            {{ __('Edit') }}
-            </button>
-            </a>
-            @else
+         
             <a href="{{ route('billing.renewal.edit', ['id'=>$renewal->id]) }}">
             <button class="btn btn-sm btn-primary">
             {{ __('Edit') }}
             </button>
             </a>
-            @endif 
+            
 
              @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
             <a onclick="deletePaidRenewalAlert()">

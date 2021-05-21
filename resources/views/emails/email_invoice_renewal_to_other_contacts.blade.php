@@ -162,6 +162,10 @@ Find below the details of the invoice. Kindly make payment before the due date t
 <td>{{ $customerRenewal->invoice_number ? $customerRenewal->invoice_number : 'N/A' }}
 </td>
 </tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Domain Name') }}</b></td>
+<td>{{ $customerRenewal->customers ? $customerRenewal->customers->website : 'N/A' }}</td>
+</tr>
 @if($customerRenewal->status == 'Paid')
 <tr>
 <td style="width: 150px;"><b>{{ __('Status') }}</b></td>
