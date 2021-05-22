@@ -37,7 +37,7 @@ class RenewalController extends Controller
 
       public function __construct()
     {
-        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except('homepage');
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['confirmRecurringInvoiceReceipt']);
     }
     /**
      * Display a listing of the resource.

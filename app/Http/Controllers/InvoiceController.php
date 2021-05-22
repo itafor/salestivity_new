@@ -30,7 +30,7 @@ class InvoiceController extends Controller
   
    public function __construct()
     {
-        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage','verifySubuserEmail']);
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage','verifySubuserEmail','confirmInvoiceReceipt']);
     }
 
     /**
