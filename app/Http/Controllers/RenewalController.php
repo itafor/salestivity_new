@@ -50,7 +50,7 @@ class RenewalController extends Controller
         $userId = auth()->user()->id;
         $data['renewals'] = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('end_date','asc')->get();
+        ])->orderBy('end_date','asc')->with(['customers','prod'])->get();
 
         return view('billing.renewal.index', $data);
     }
@@ -61,7 +61,7 @@ public function getBillingRenewals($id)
             case 'all':
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('end_date','asc')->get();
+        ])->orderBy('end_date','asc')->with(['customers','prod'])->get();
 
         return view('billing.renewal.index', compact('renewals'));
 
@@ -70,7 +70,7 @@ public function getBillingRenewals($id)
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Pending']
-        ])->orderby('created_at','asc')->get();
+        ])->orderby('created_at','asc')->with(['customers','prod'])->get();
         return view('billing.renewal.outstanding', compact('renewals'));
                 
                 break;
@@ -78,7 +78,7 @@ public function getBillingRenewals($id)
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Paid']
-        ])->orderby('created_at','asc')->get();
+        ])->orderby('created_at','asc')->with(['customers','prod'])->get();
         return view('billing.renewal.paid', compact('renewals'));
                 
                 break;
@@ -86,7 +86,7 @@ public function getBillingRenewals($id)
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Partly paid']
-        ])->orderby('created_at','asc')->get();
+        ])->orderby('created_at','asc')->with(['customers','prod'])->get();
         return view('billing.renewal.partly_paid', compact('renewals'));
                 
                 break;
