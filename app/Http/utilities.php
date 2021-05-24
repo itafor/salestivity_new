@@ -15,6 +15,7 @@ use App\SubCategory;
 use App\SubUser;
 use App\User;
 use Carbon\Carbon;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
 function formatDate($date, $oldFormat, $newFormat)
@@ -229,8 +230,6 @@ function uploadImage($image)
     {
         if($image->isValid()) 
         {
-            $filename = $name = 'Salestivity_'.$image->getClientOriginalName();
-            $filename = str_replace(' ','_', $filename);
             $trans = array(
                 ".png" => "", 
                 ".PNG" => "",
@@ -241,11 +240,10 @@ function uploadImage($image)
                 ".bmp" => "",
                 ".pdf" => "",
             );
-            $filename = strtr($filename,$trans);
-
+            $uploadedFileUrl = Cloudinary::uploadFile($image->getRealPath())->getSecurePath();
         }
     }
-    return $path;
+    return $uploadedFileUrl;
 }
 
 function company_details_alerts(){
