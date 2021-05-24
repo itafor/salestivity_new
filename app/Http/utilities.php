@@ -15,8 +15,6 @@ use App\SubCategory;
 use App\SubUser;
 use App\User;
 use Carbon\Carbon;
-use JD\Cloudder\Facades\Cloudder;
-
 
 
 function formatDate($date, $oldFormat, $newFormat)
@@ -244,10 +242,7 @@ function uploadImage($image)
                 ".pdf" => "",
             );
             $filename = strtr($filename,$trans);
-            Cloudder::upload($image->getPathname(), $filename);
-            $response = Cloudder::getResult();
-            $path = $response['secure_url'];
-            // $image->move(public_path("uploads"), $image->getClientOriginalName());
+
         }
     }
     return $path;
