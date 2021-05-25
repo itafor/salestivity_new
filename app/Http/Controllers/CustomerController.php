@@ -140,6 +140,7 @@ class CustomerController extends Controller
       $customers = Customer::where('name','like',"%{$customer_name}%")
       ->where('main_acct_id', getActiveGuardType()->main_acct_id)
     ->get();
+
     $output ='<ul class="dropdown-menu" 
     style="display: block; 
     position: absolute; z-index: 1; width:300px; padding-left:20px; margin-left:10px; margin-top:-15px;">';
@@ -149,7 +150,12 @@ $output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px
  }
     }
    $output .='</ul>';
-   echo $output;
+   if (count($customers) >= 1) {
+        echo $output;
+   }else{
+    echo '';
+   }
+   
    }
 }
 }

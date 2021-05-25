@@ -138,7 +138,7 @@ Find below the details of the invoice.
 <p>
     Please click the button below to confirm receipt of this invoice.<br>
     <a href="{{ route('invoice.billing.confirm', [$invoice->id]) }}">
-    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+    <button type="button" class="btn btn-sm btn-success"> Confirm Invoice Receipt</button>
 </a>
 </p>
 <h4>Invoice Details</h4>
@@ -215,7 +215,7 @@ Find below the details of the invoice.
 <p>
     Please click the button below to confirm receipt of this invoice.<br>
     <a href="{{ route('invoice.billing.confirm', [$invoice->id]) }}">
-    <button type="button" class="btn btn-sm btn-success"> Comfirm Invoice Receipt</button>
+    <button type="button" class="btn btn-sm btn-success"> Confirm Invoice Receipt</button>
 </a>
 </p>
 </div>
