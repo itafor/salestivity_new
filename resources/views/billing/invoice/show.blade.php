@@ -34,31 +34,18 @@
         @endif
 
 
-             @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
-            <a onclick="editPaidinvoiceAlert()">
-            <button class="btn btn-sm btn-primary" >
-            {{ __('Edit') }}
-            </button>
-            </a>
-            @else
             <a href="{{ route('billing.invoice.edit', ['id'=>$invoice->id]) }}">
             <button class="btn btn-sm btn-primary">
             {{ __('Edit') }}
             </button>
             </a>
-            @endif
+            
 
           
 
-              @if($invoice->status == 'Paid' || $invoice->status == 'Partly paid')
-               <a onclick="deletePaidinvoiceAlert()">
-            <button class="btn btn-sm btn-danger" >
-            {{ __('Delete') }}
-            </button>
-            </a>
-                @else
+             
              <a onclick="return confirm_delete()" href="{{route('items.destroy',['invoice',$invoice->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-              @endif
+            
 
                 <a  href="{{route('invoice.download',[$invoice->id])}}" >
                 <button class="btn btn-sm btn-dark" >

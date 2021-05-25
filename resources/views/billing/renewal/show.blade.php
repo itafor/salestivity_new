@@ -44,16 +44,9 @@
             </a>
             
 
-             @if($renewal->status == 'Paid' || $renewal->status == 'Partly paid')
-            <a onclick="deletePaidRenewalAlert()">
-            <button class="btn btn-sm btn-danger" >
-            {{ __('Delete') }}
-            </button>
-            </a>
-
-              @else
+            
              <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewal',$renewal->id])}}"><button class="btn btn-sm btn-danger">{{ __('Delete') }}</button></a>
-              @endif
+              
 
         <a  href="{{route('renewal.invoice.download',[$renewal->id])}}" >
                 <button class="btn btn-sm btn-dark" >
