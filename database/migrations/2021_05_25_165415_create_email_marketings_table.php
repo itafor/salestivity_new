@@ -15,6 +15,12 @@ class CreateEmailMarketingsTable extends Migration
     {
         Schema::create('email_marketings', function (Blueprint $table) {
             $table->id();
+            $table->integer('main_acct_id')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->string('user_type')->nullable();
+            $table->text('subject')->nullable();
+            $table->text('message')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

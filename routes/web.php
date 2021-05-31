@@ -272,6 +272,17 @@ Route::group([
     Route::post('/add-bank-account', 'SettingsController@addCompanyBankAccount')->name('company.add.bank_account.detail');
     Route::post('/edit-bank-detail', 'SettingsController@updateCompanyBankDetail')->name('company.update.bank.account');
 
+});
+
+Route::group([
+    'prefix' => 'email-marketing'
+], function () {
+
+    Route::get('/create', 'EmailMarketingController@createNewEmail')->name('email.marketing.create');
+    Route::get('/list', 'EmailMarketingController@listEmails')->name('email.marketing.list');
+    Route::post('/send', 'EmailMarketingController@sendNewEmail')->name('email.marketing.send');
+
+    Route::get('/show/{id}', 'EmailMarketingController@showEmail')->name('email.marketing.show');
 
 
 });

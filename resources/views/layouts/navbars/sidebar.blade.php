@@ -380,11 +380,35 @@
                         </ul>
                     </div> -->
                 </li>
-                <li class="nav-item">
+             <!--    <li class="nav-item">
                     <a class="nav-link" href="#navbar-email_marketing"  role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-ruler-pencil text-primary"></i>
                         <span class="nav-link-text">{{ __('Email Marketing') }}</span>
                     </a>
+                </li> -->
+
+                    <li class="nav-item">
+                    <a class="nav-link" href="#navbar-email_marketing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Email Marketing') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-email_marketing">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('email.marketing.create') }}">
+                                        {{ __('Create') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('email.marketing.list') }}">
+                                        {{ __('List') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
                 </li>
 
                  <li class="nav-item">

@@ -68,4 +68,10 @@ class User extends Authenticatable
      public function company_detail(){
         return $this->hasOne(CompanyDetail::class, 'main_acct_id', 'id');
     }
+
+    public function myEmailMarketing(){
+        return $this->hasMany(EmailMarketing::class,'main_acct_id','id');
+    }
+
+    
 }

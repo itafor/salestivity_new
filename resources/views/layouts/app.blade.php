@@ -34,6 +34,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
+<!-- Rich text editor style -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url('richTextEditor/richtext.min.css') }}">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+
 <!-- Data table stylesheet -->
     <link href="{{url('assets/datatables.net-bs4/css/dataTables.bootstrap4.css')}}" rel="stylesheet">
 
@@ -162,7 +168,15 @@ $(function() {
 });
 </script>
     <script src="{{url('js/mainjs.js')}}"></script>
-
+  
+<!-- Rich text editor script -->
+  <script type="text/javascript" src="{{ url('richTextEditor/jquery.richtext.js') }}"></script>
+        <script type="text/javascript" src="{{ url('richTextEditor/jquery.richtext.min.js') }}"></script>
+   <script>
+        $(document).ready(function() {
+            $('.content').richText();
+        });
+        </script>
 
     </body>
 </html>
