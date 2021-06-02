@@ -8,7 +8,7 @@
                         </div>
                     </div> <!-- {{$reply->reply}} -->
 
-                      <span style="color: gray; border-radius: 5px;" id="lessOppUpdateCommentReply{{$reply->id}}">{{str_limit($reply->reply, 180)}} 
+                      <span style="color: gray; border-radius: 5px;" id="lessOppUpdateCommentReply{{$reply->id}}">{{ \Illuminate\Support\Str::limit($reply->reply, 180)}} 
                                     @if(strlen($reply->reply) > 180)
                                 <b onclick="seeMoreOppUpdateCommentReply({{$reply->id}})" style="cursor:pointer;">See more</b>
                                 @endif

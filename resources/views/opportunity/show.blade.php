@@ -142,7 +142,7 @@
                                         <div class="pull-right reply"> <span onclick="replyOpportunityUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>
                                     </div>
                                 </div> 
-                            <span style="color: gray; border-radius: 5px;" id="lessOppUpdateComment{{$update->id}}">{{str_limit($update->commments, 210)}} 
+                            <span style="color: gray; border-radius: 5px;" id="lessOppUpdateComment{{$update->id}}">{{ \Illuminate\Support\Str::limit($update->commments, 210)}} 
                                     @if(strlen($update->commments) > 210)
                                 <b onclick="seeMoreOppUpdateComment({{$update->id}})" style="cursor:pointer;">See more</b>
                                 @endif
