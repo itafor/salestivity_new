@@ -18,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         @if(isset($mail))
-                       
+                       <b>{{ date("jS F, Y", strtotime($mail->created_at)) }}</b><br><br>
                        {!! $mail->message !!}
                        @else
                        <span>No mail found</span>

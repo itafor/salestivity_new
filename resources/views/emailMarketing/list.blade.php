@@ -22,7 +22,7 @@
                        @foreach($mails as $mail)
 
                     <li class="list-group-item" >
-                       <a href="{{route('email.marketing.show', [$mail->id])}}" style="color: #000;"> {!! $mail->subject !!} </a>
+                       <a href="{{route('email.marketing.show', [$mail->id])}}" style="color: #000;"> {!! $mail->subject !!} </a>  &nbsp;&nbsp;&nbsp;&nbsp; <b>{{ date("jS F, Y", strtotime($mail->created_at)) }}</b>
                     </li>
 
                        @endforeach

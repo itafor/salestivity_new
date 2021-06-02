@@ -6,6 +6,7 @@ use App\Customer;
 use App\EmailMarketing;
 use App\Mail\EmailMarketingMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
@@ -49,7 +50,7 @@ class EmailMarketingController extends Controller
 
     public function listEmails(Request $request){
 
-    		$data['mails'] = EmailMarketing::where('main_acct_id',  getActiveGuardType()->main_acct_id)->paginate(10);
+    		$data['mails'] = EmailMarketing::where('main_acct_id',  getActiveGuardType()->main_acct_id)->orderBy('created_at', 'desc')->paginate(10);
    		
     	return view('emailMarketing.list', $data);
     }
@@ -61,6 +62,16 @@ class EmailMarketingController extends Controller
     	return view('emailMarketing.show', $data);
     }
 
+
+ public function emptyJobTable(){
+
+    		$jobs =  DB::table('jobs')->get();
+    		foreach ($jobs as $key => $job) {
+    			$jb = DB::table('jobs')->where('id', $job->id)->delete();
+    		}
+   		
+    	return 'Done!';
+    }
 
     
 }

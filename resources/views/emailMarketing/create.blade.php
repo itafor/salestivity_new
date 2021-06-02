@@ -27,7 +27,7 @@
                <textarea name="message" class="content" id="message" required></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Send Mail</button>
+                <button type="submit" class="btn btn-primary"> Send </button>
                 </form>
                     </div>
                 </div>
