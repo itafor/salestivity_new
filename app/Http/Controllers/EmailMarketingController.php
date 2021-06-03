@@ -13,7 +13,7 @@ use Validator;
 
 class EmailMarketingController extends Controller
 {
-    
+
       public function __construct()
     {
         $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['emptyJobTable']);
@@ -41,7 +41,10 @@ class EmailMarketingController extends Controller
     	$customers = Customer::all();
 
     	foreach ($customers as $key => $customer) {
-            Mail::to($customer->email)->queue(new EmailMarketingMail($customer, $data));
+                $customerEmail = $customer->email;
+                if($customerEmail){
+            Mail::to($customerEmail)->queue(new EmailMarketingMail($customer, $data));
+                }
     	}
 
     $storeEmail = EmailMarketing::newMessage($data);
