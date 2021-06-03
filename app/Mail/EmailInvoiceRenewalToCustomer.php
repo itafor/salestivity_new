@@ -38,6 +38,13 @@ class EmailInvoiceRenewalToCustomer extends Mailable
             'remaingDays' => $this->remaingDays, 
         ]);
 
+     $text = view('whatsapp.email_invoice_renewal_to_customer', [
+            'renewal'=> $this->renewal, 
+            'remaingDays' => $this->remaingDays, 
+        ]);
+
+         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
+
         $documentName = 'invoiceRenewal_'.$this->renewal->invoice_number.'.pdf';
 
          return $this->view('emails.email_invoice_renewal_to_customer')

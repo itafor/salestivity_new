@@ -54,8 +54,8 @@
                                         @else
                                             @foreach($projects as $project)
                                                 <tr>
-                                                    <td>{{ $project->customer->name ?? "" }}</td>
-                                                    <td>{{ $project->product->name }}</td>
+                                                    <td>{{ $project->customer ? $project->customer->name : 'N/A' }}</td>
+                                                    <td>{{ $project->product ? $project->product->name : 'N/A'}}</td>
                                                     <td>{{ $project->technician }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>

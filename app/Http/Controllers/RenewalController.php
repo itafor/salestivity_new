@@ -327,7 +327,7 @@ public function getBillingRenewals($id)
          $payment_status =RenewalPayment::where('id',$renewal->id)->first();
          $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
 
-            Mail::to($toEmail)->send(new RenewalPaid($renewal,$payment_status));
+            Mail::to($toEmail)->queue(new RenewalPaid($renewal,$payment_status));
         //     if($renewalcontacts){
         //             foreach ($renewalcontacts as $key => $contact) {
         //                 $customerContactEmail=Contact::where('id',$contact->contact_id)->first();

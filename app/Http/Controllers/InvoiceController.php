@@ -245,7 +245,7 @@ class InvoiceController extends Controller
          $paid_invoice =  InvoicePayment::createNew($request->all());
              $toEmail = $paid_invoice->customer->email;
 
-            Mail::to($toEmail)->send(new InvoicePaid($paid_invoice));
+            Mail::to($toEmail)->queue(new InvoicePaid($paid_invoice));
       
             DB::commit();
         }
@@ -364,7 +364,7 @@ class InvoiceController extends Controller
 
                $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->send(new SendInvoice($invoice));
+            Mail::to($toEmail)->queue(new SendInvoice($invoice));
 
             $status = "Invoice has been been updated ";
             Alert::success('Invoice', $status);
@@ -413,7 +413,7 @@ class InvoiceController extends Controller
 
       $toEmail = $invoice->customers->email;
 
-        $invoiceResent =  Mail::to($toEmail)->send(new SendInvoice($invoice));
+        $invoiceResent =  Mail::to($toEmail)->queue(new SendInvoice($invoice));
      
       self::update_invoice_bill_status_to_sent($invoice);
             

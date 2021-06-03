@@ -342,7 +342,7 @@
                         <span class="nav-link-text">{{ __('Email-Marketing') }}</span>
                     </a>
 
-                <!--     <div class="collapse" id="navbar-email-marking">
+                    <div class="collapse" id="navbar-email-marking">
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
@@ -357,7 +357,7 @@
                                 </li>
                             </ul>
                         </ul>
-                    </div> -->
+                    </div>
                 </li>
 
 

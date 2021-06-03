@@ -33,6 +33,14 @@ class RenewalPaid extends Mailable
      */
     public function build()
     {
+
+    $text = view('whatsapp.renewalPaid', [
+            'renewal'=> $this->renewal, 
+            'payment_status'=> $this->payment_status, 
+        ]);
+    
+         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
+
         return $this->view('emails.renewalPaid')
          ->replyTo('billing@digitalweb247.com','Digitalweb247')
         ->subject('Renewal Payment Notification')

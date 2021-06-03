@@ -85,7 +85,7 @@ public static function notifyCustomer($renewal){
           $customerEmail = $renewal->customers->email;
           if($customerEmail){
           $remaingDays = (string)$renewal->remaingdays;
-            Mail::to($customerEmail)->send(new EmailInvoiceRenewalToCustomer($renewal,$remaingDays));
+            Mail::to($customerEmail)->queue(new EmailInvoiceRenewalToCustomer($renewal,$remaingDays));
 
            self::update_renewal_bill_status_to_sent($renewal);
 
@@ -106,7 +106,7 @@ public static function notifyCustomer($renewal){
 
             $toEmail = $customerContact->email;
 
-   Mail::to($toEmail)->send(new EmailInvoiceRenewalToOtherContacts($renewal,$customerContact,$remaing_days));
+   Mail::to($toEmail)->queue(new EmailInvoiceRenewalToOtherContacts($renewal,$customerContact,$remaing_days));
 
 		    }
   }

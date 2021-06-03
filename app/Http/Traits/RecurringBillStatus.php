@@ -21,7 +21,7 @@ public function confirmRecurringInvoiceReceipt($renewal_id){
 
            $toEmail = $renewal->user->email;
 
-        Mail::to($toEmail)->send(new ConfirmRecurringInvoiceRecceipt($renewal));
+        Mail::to($toEmail)->queue(new ConfirmRecurringInvoiceRecceipt($renewal));
 
         return 'Confirmed successfully!!';
 
