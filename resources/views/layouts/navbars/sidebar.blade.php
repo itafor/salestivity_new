@@ -84,27 +84,6 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
-                    </a>
-
-                    <div class="collapse" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('User profile') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-accounts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -335,7 +314,6 @@
                                 
                                 </ul>  
                         </div>
-                        <!--Billing Parameters -->
                           <a class="nav-link" href="#navbar-billing-agent" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
                             <span class="nav-link-text">{{ __('Billing Parameters') }}</span>
@@ -353,40 +331,18 @@
                                 
                                 </ul>  
                         </div>
-                         <!--Billing Parameters end -->
                         </ul>
                     </div>
+                  </li>
 
-                   <!--  <div class="collapse" id="navbar-renewal">
-                        <ul class="nav nav-sm flex-column">
-                            <a class="nav-link" href="#navbar-renewal-billing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                <i class="fab " style="color: #f4645f;"></i>
-                                <span class="nav-link-text">{{ __('Renewals') }}</span>
-                            </a>
-                            <div class="collapse" id="navbar-renewal-billing">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('List Renewals') }}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('profile.edit') }}">
-                                        {{ __('Add Renewals') }}
-                                    </a>
-                                </li> 
-                                </ul>  
-                            </div>
-                        </ul>
-                    </div> -->
-                </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#navbar-email_marketing" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+
+                   <li class="nav-item">
+                    <a class="nav-link" href="#navbar-email-marking" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
-                        <span class="nav-link-text">{{ __('Email Marketing') }}</span>
+                        <span class="nav-link-text">{{ __('Email-Marketing') }}</span>
                     </a>
 
-                <!--     <div class="collapse" id="navbar-email_marketing">
+                    <div class="collapse" id="navbar-email-marking">
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
@@ -401,8 +357,9 @@
                                 </li>
                             </ul>
                         </ul>
-                    </div> -->
+                    </div>
                 </li>
+
 
                  <li class="nav-item">
                     <a class="nav-link" href="#navbar-opportunity-report" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -450,93 +407,17 @@
                                                                 {{ __('Add User') }}
                                                             </a>
                                                         </li>
-                                                        <!-- <li class="nav-item">
-                                                            <a class="nav-link" href="{{-- route('role.create') --}}">
-                                                                {{ __('Add User Role') }}
-                                                            </a>
-                                                        </li> -->
                                                     </ul>
                                                 </ul>
                                             </div>
                                         </ul>
                                     </li>
-                                    <!-- <a href="{{route('company_details.index')}}" class="nav-link">
-                                        <span class="nav-link-text">{{ __('Company Details') }}</span>
-                                    </a> -->
-
-                             <!--      <li class="nav-item">
-                                        <a class="nav-link" href="#navbar-dept" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                                            <span class="nav-link-text">{{ __('Company logo') }}</span>
-                                        </a>
-                                        <ul class="flex-column">
-                                            <div class="collapse" id="navbar-dept">
-                                                <ul class="nav nav-sm flex-column" >
-                                                    <ul class="nav nav-sm flex-column">
-                                                        <li class="nav-item">
-                                                             <a href="" class="nav-link">
-                                                            <span class="nav-link-text">{{ __('logo') }}</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </ul>
-                                            </div>
-                                        </ul>
-                                    </li>  -->
                                 </ul>        
                             </ul>
                         </div>   
                                 
                     </li>
                 @endif
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-key-25 text-info"></i> {{ __('Login') }}
-                    </a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                    </a>
-                </li>
-                <li class="nav-item mb-5" style="position: absolute; bottom: 0;">
-                    <a class="nav-link" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
-                        <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                    </a>
-                </li>
-            </ul> -->
-            <!-- Divider -->
-            <!-- <hr class="my-3"> -->
-            <!-- Heading -->
-            <!-- <h6 class="navbar-heading text-muted">Documentation</h6> -->
-            <!-- Navigation -->
-            <!-- <ul class="navbar-nav mb-md-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
-                        <i class="ni ni-spaceship"></i> Getting started
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
-                        <i class="ni ni-palette"></i> Foundation
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
-                        <i class="ni ni-ui-04"></i> Components
-                    </a>
-                </li>
-            </ul> -->
         </div>
     </div>
 </nav>

@@ -14,6 +14,11 @@ use Validator;
 class EmailMarketingController extends Controller
 {
     
+      public function __construct()
+    {
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['emptyJobTable']);
+    }
+
     public function createNewEmail(Request $request){
 
     	return view('emailMarketing.create');
