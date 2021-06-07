@@ -174,6 +174,12 @@ Route::get('confirm/invoice/{id}','InvoiceController@changeInvoiceBillStatusToCo
 	Route::get('confirm/recurring/invoice/{id}','RenewalController@changeBillStatusToConfirmed')->name('recurring.bill.status.confirm');
 	Route::get('send/recurring/invoice/{id}','RenewalController@changeBillStatusToSent')->name('recurring.bill.status.sent');
 
+	//renewal updates
+Route::post('renewal_update', 'RenewalUpdateController@storeUpdate')->name('renewal.update.store');
+Route::post('update-renewal-update', 'RenewalUpdateController@editRenewalUpdate')->name('renewalupdateopperator');
+Route::post('add-renewal-update-reply', 'RenewalUpdateController@storeRenewalUpdateReply')->name('renewal.update.reply.store');
+Route::post('update-renewal-update-reply', 'RenewalUpdateController@updateRenewalUpdateReply')->name('renewal.update.reply.edit');;
+
 
 
 	// Billing Agent
@@ -254,6 +260,9 @@ Route::post('opportunity_update', 'OpportunityUpdateController@storeUpdate')->na
 	// Opportunities update
 	Route::get('fetch-opport-update/{id}', 'AjaxController@fetchOpportunityUpdate');
 	Route::get('fetch-opport-update-reply/{id}', 'AjaxController@fetchOpportunityUpdateReply');
+	// Opportunities update
+	Route::get('fetch-renewal-update/{id}', 'AjaxController@fetchRenewalUpdate');
+	Route::get('fetch-renewal-update-reply/{id}', 'AjaxController@fetchRenewalUpdateReply');
 
 });
 

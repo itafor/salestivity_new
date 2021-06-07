@@ -17,6 +17,8 @@ use App\OpportunityUpdateReply;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
+use App\RenewalUpdate;
+use App\RenewalUpdateReply;
 use App\RetailFieldSale;
 use App\State;
 use App\SubUser;
@@ -73,7 +75,18 @@ elseif ($itemModel == 'retailFieldSale') {
          $sale->delete();
         Alert::success('Retail Field Sale', 'Deleted');
         return back();
+}elseif ($itemModel == 'renewalUpdate') {
+         $renewalupdate = RenewalUpdate::find($id);
+         $renewalupdate->delete();
+        Alert::success('Renewal Update', 'Deleted');
+        return back();
+}elseif ($itemModel == 'renewalUpdateReply') {
+         $renewal_update_reply = RenewalUpdateReply::find($id);
+         $renewal_update_reply->delete();
+        Alert::success('Renewal Update Reply', 'Deleted');
+        return back();
 }
+
 }
 
     public function getContacts($id)
@@ -220,5 +233,18 @@ public function getCompanyEmail($id)
     {
         $opportUpdateReply = OpportunityUpdateReply::where('id', $id)->first();
         return response()->json(['opportUpdateReply' => $opportUpdateReply]);
+    }
+
+       public function fetchRenewalUpdate($id)
+    {
+        $renewalUpdate = RenewalUpdate::where('id', $id)->first();
+        $updateDate = Carbon::parse($renewalUpdate->update_date)->format('d/m/Y');
+        return response()->json(['renewalUpdate' => $renewalUpdate, 'updateDate'=>$updateDate]);
+    }
+
+      public function fetchRenewalUpdateReply($id)
+    {
+        $renewalUpdateReply = RenewalUpdateReply::where('id', $id)->first();
+        return response()->json(['renewalUpdateReply' => $renewalUpdateReply]);
     }
 }

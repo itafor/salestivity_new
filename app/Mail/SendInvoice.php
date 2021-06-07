@@ -48,8 +48,8 @@ class SendInvoice extends Mailable
         return $this->view('emails.sendinvoice')
          ->replyTo('billing@digitalweb247.com','Digitalweb247')
         ->attachData($pdf->output(), $documentName)
-        ->subject('Invoice Payment Notification')
-        ->cc('billing@digitalweb247.com','Digitalweb247');
+        ->subject('Invoice Payment Notification');
+        // ->cc('billing@digitalweb247.com','Digitalweb247');
          // ->cc($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email);
     }
 }

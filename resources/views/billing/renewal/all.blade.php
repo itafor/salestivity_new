@@ -52,7 +52,7 @@
                               <table class="table table-bordered dt-responsive  datatable" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th ><b>{{ __('End Date') }}</b></th>
+                                            <th ><b>{{ __('Due Date') }}</b></th>
                                             <th ><b>{{ __('Invoice Number') }}</b></th>
                                             <th ><b>{{ __('Customer') }}</b></th>
                                             <th ><b>{{ __('Product') }}</b></th>

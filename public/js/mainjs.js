@@ -932,6 +932,84 @@ function add_product() {
 
   }
 
+    // Renewal updates
+  function editRenewalUpdate(id) {
+        $.ajax({
+        url: baseUrl+'/fetch-renewal-update/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.renewalUpdate)
+          $('#commments_id'+id).empty();
+          $('#opp_update_id'+id).empty();
+          $('#update_date'+id).empty();
+          // $('#type_id'+id+'').empty();
+           $('#renewal_update_id'+id).val(data.renewalUpdate.id)
+           $('#update_date'+id).val(data.updateDate)
+           $('#commments_id'+id).append(data.renewalUpdate.commments)
+           $('<option>').attr('selected', true).val(data.renewalUpdate.type).text(data.renewalUpdate.type).appendTo('#type_id'+id);
+                    }
+                });
+        
+      $('#editRenewalUpdate'+id+'form').toggle();
+
+  }
+
+
+    function replyRenewalUpdate(id) {
+       
+      $('#replytrenewalupdate'+id+'form').toggle();
+
+  }
+
+  function editRenewalUpdateReply(id) {
+        $.ajax({
+        url: baseUrl+'/fetch-renewal-update-reply/'+id,
+        type: "GET",
+        dataType: 'json',
+        success: function(data) {
+           console.log(data.renewalUpdateReply)
+          $('#renewal_update_reply_id'+id+'').empty();
+          $('#reply'+id).empty();
+
+           $('#renewal_update_reply_id'+id).val(data.renewalUpdateReply.id)
+           $('#reply'+id).append(data.renewalUpdateReply.reply)
+                    }
+                });
+        
+      $('#renewalUpdateReply'+id+'form').toggle();
+
+  }
+
+  function seeMoreRenewalUpdateComment(id){
+      $('#lessRenewalUpdateComment'+id).hide();
+      $('#moreRenewalUpdateComment'+id).show();
+  }
+
+    function seeLessRenewalUpdateComment(id){
+      $('#lessRenewalUpdateComment'+id).show();
+      $('#moreRenewalUpdateComment'+id).hide();
+  }
+
+  function seeMoreRenewalUpdateCommentReply(id){
+    console.log(id)
+      $('#lessRenewalUpdateCommentReply'+id).hide();
+      $('#moreRenewalUpdateCommentReply'+id).show();
+  }
+
+    function seeLessRenewalUpdateCommentReply(id){
+      $('#lessRenewalUpdateCommentReply'+id).show();
+      $('#moreRenewalUpdateCommentReply'+id).hide();
+  }
+
+    function renewalUpdateReplies(id) {
+       
+      $('#renewal_updateReplies'+id).toggle();
+      $('#hideRenewalReplyLabel'+id).toggle();
+
+  }
+
+
 function confirm_invoice_payment_resend() {
   return confirm('Do you really want to resend this invoice?');
 }

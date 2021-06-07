@@ -1,12 +1,38 @@
 @extends('layouts.app', ['title' => __('Recurring Management'), 'icon' => 'las la-file-invoice-dollar'])
 @section('content')
 @include('users.partials.header', ['title' => __('View Recurring')])  
+<style type="text/css">
+  
+.card {
+    position: relative;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #d2d2dc;
+    border-radius: 11px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
+    /*box-shadow: 0px 0px 5px 0px rgb(161, 163, 164)*/
+}
 
+.media img {
+    width: 40px;
+    height: 40px
+}
+
+.reply a {
+    text-decoration: none
+}
+</style>
 
 <div class="container-fluid mt--7 main-container">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
+                <div class="card">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
@@ -183,7 +209,7 @@
                 <td>{{ date("jS F, Y", strtotime($renewal->start_date)) }}</td>           
               </tr>
               <tr>
-                     <td style="width: 200px;"><b>{{ __('End Date') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Due Date') }}</b></td>
                 <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
               </tr>
                  <tr>
@@ -215,8 +241,94 @@
                      @if($renewalPayments !='')
                     @include('billing.renewal.payment.show')
                       @endif
+
+
+
+
+<div class="container mb-5 mt-5">
+<h3 class="text-center mb-5"> Recurring Updates </h3>
+
+    @if(isset($renewal_updates) && count($renewal_updates) >=1)
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                    
+                        @foreach($renewal_updates as $update)
+                        <div class="media mt-3"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_360,h_360/https://al-azharinternationalcollege.com/wp-content/uploads/2017/08/avatar.png" />
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-8 d-flex">
+                                        <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> &nbsp;&nbsp;&nbsp;<span> <i class="fa fa-clock" aria-hidden="true"></i>  
+                                    {{ date("jS F, Y", strtotime($update->update_date)) }}
+                                        </span>
+                                       {{-- <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span> --}}
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="pull-right reply"> <span onclick="replyRenewalUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>
+                                    </div>
+                                </div> 
+                            <span style="color: gray; border-radius: 5px;" id="lessRenewalUpdateComment{{$update->id}}">{{ \Illuminate\Support\Str::limit($update->commments, 210)}} 
+                                    @if(strlen($update->commments) > 210)
+                                <b onclick="seeMoreRenewalUpdateComment({{$update->id}})" style="cursor:pointer;">See more</b>
+                                @endif
+                            </span>
+
+                            <span style="color: gray; border-radius: 5px; display: none;" id="moreRenewalUpdateComment{{$update->id}}">{{$update->commments}} <b onclick="seeLessRenewalUpdateComment({{$update->id}})" style="cursor: pointer;">&nbsp;See Less</b></span>
+
+
+                                @if(loginUserId() == $update->user->id)
+                                <div class="row">
+                                     <div class="col-8 d-flex mt-2">
+                                        
+                                        <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit renewal update"></i> </span>&nbsp;&nbsp;
+                                       
+                                          <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewalUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true" title="Delete renewal update"></i>&nbsp; &nbsp; </a>
+
+                                         <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; </span>&nbsp;&nbsp;
+                                    </div>
+                                     <div class="col-4">
+                                        <div class="pull-right reply"> <span onclick="renewalUpdateReplies({{$update->id}})" style="cursor: pointer;">  <label id="hideRenewalReplyLabel{{$update->id}}" style="display: none;">Hide</label> <label id="">Replies</label> ({{count($update->updateReplies)}})</span> </div>
+                                    </div>
+                                </div>
+                         @endif
+
+                                <!-- edit update form -->
+            <div class="row mt-4" id="editRenewalUpdate{{$update->id}}form" style="display: none;">
+         @include('billing.renewal.updates.edit_renewal_update_form')
+                                </div>
+
+
+            <!-- renewal update  replies -->
+            <div id="renewal_updateReplies{{$update->id}}" style="display: none;">
+         @include('billing.renewal.updates.replies')
+            </div>
+                      
+            <!-- replies form -->
+         @include('billing.renewal.updates.repliesForm')
+                                
+                            </div>
+                        </div>
+                        @endforeach
+                      {!! $renewal_updates->links() !!}
+                      
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+     @endif
+    <br>
+         @include('billing.renewal.updates.newrenewalUpdate')
+</div>
+
+                </div>
+
+ 
+            </div>
+
+     
         </div>
         
         @include('layouts.footers.auth')

@@ -19,6 +19,7 @@ use App\Payment;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
+use App\RenewalUpdate;
 use App\SubCategory;
 use App\User;
 use App\renewalContactEmail;
@@ -188,9 +189,9 @@ public function getBillingRenewals($id)
         if($renewal){
          $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->get();
         }
-         
+         $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at','desc')->paginate(10);
        
-        return view('billing.renewal.show', compact('renewal','renewalPayments'));
+        return view('billing.renewal.show', compact('renewal','renewalPayments','renewal_updates'));
     }
 
     /**
