@@ -320,7 +320,7 @@
     </div>
      @endif
     <br>
-         @include('billing.renewal.updates.newrenewalUpdate')
+         @include('billing.renewal.updates.newRenewalUpdate')
 </div>
 
                 </div>
