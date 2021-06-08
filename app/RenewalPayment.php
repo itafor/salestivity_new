@@ -71,7 +71,7 @@ class RenewalPayment extends Model
        		$getRenewal = Renewal::where('id', $renewalPayment->renewal_id)->first();
        		if($getRenewal){
             $getRenewal->billingbalance = $renewalPayment->billingbalance;
-             $getRenewal->amount_paid += $renewalPayment->amount_paid;
+             $getRenewal->amount_paid = $getRenewal->amount_paid + $renewalPayment->amount_paid;
       			$getRenewal->status = $renewalPayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
       			$getRenewal->save();
       		}	

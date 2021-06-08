@@ -205,7 +205,8 @@
                     @endif
                   </table>
 
-
+                  <p>Thank you for your continued patronage.</p>
+<p><b>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</b> Billing Team</p>
          
 
     </div>

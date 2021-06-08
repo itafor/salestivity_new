@@ -38,6 +38,10 @@ class SendRenewalPaymentNotification implements ShouldQueue
     {
     $toEmail = $this->customerContacts->email;
 
-   Mail::to($toEmail)->send(new SendRenewalPaymentNotice($this->renewalPaymentDetails,$this->customerContacts,$this->payment_status));
+    if($toEmail){
+
+          Mail::to($toEmail)->queue(new SendRenewalPaymentNotice($this->renewalPaymentDetails, $this->payment_status));
+    }
+ 
     }
 }

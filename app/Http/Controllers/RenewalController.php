@@ -324,18 +324,19 @@ public function getBillingRenewals($id)
         try{
          $renewal =  RenewalPayment::createNew($request->all());
              $toEmail = $renewal->customer->email;
-        //$billingAgent = BillingAgent::where('customer_id',$renewal->customer_id)->first();
+        
          $payment_status =RenewalPayment::where('id',$renewal->id)->first();
          $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
 
             Mail::to($toEmail)->queue(new RenewalPaid($renewal,$payment_status));
-        //     if($renewalcontacts){
-        //             foreach ($renewalcontacts as $key => $contact) {
-        //                 $customerContactEmail=Contact::where('id',$contact->contact_id)->first();
-        // SendRenewalPaymentNotification::dispatch($renewal,$customerContactEmail,$payment_status)
-        //     ->delay(now()->addSeconds(5));
-        //     }
-        // }
+
+            if($renewalcontacts){
+                    foreach ($renewalcontacts as $key => $contact) {
+                        $customerContactEmail=Contact::where('id',$contact->contact_id)->first();
+        SendRenewalPaymentNotification::dispatch($renewal,$customerContactEmail,$payment_status)
+            ->delay(now()->addSeconds(5));
+            }
+        }
             DB::commit();
         }
         catch(Exception $e){

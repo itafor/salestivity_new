@@ -66,7 +66,7 @@ class InvoicePayment extends Model
        		$getInvoice = Invoice::where('id', $invicePayment->invoice_id)->first();
        		if($getInvoice){
             $getInvoice->billingbalance = $invicePayment->billingbalance;
-            $getInvoice->amount_paid += $invicePayment->amount_paid;
+            $getInvoice->amount_paid =  $getInvoice->amount_paid + $invicePayment->amount_paid;
       			$getInvoice->status = $invicePayment->billingbalance == 0 ? 'Paid' : 'Partly paid';
       			$getInvoice->save();
       		}	

@@ -244,9 +244,9 @@ class InvoiceController extends Controller
         try{
          $paid_invoice =  InvoicePayment::createNew($request->all());
              $toEmail = $paid_invoice->customer->email;
-
+             if($toEmail){
             Mail::to($toEmail)->queue(new InvoicePaid($paid_invoice));
-      
+        }
             DB::commit();
         }
         catch(Exception $e){
@@ -257,7 +257,7 @@ class InvoiceController extends Controller
             
         }
         
-        Alert::success('invoice Payment', 'Invoice payment recorded successfully');
+        Alert::success('Invoice Payment', 'Invoice payment recorded successfully');
         return redirect()->route('billing.invoice.show',$request->invoice_id);
     }
 
