@@ -185,7 +185,7 @@ class InvoiceController extends Controller
 
               $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->send(new SendInvoice($invoice));
+            Mail::to($toEmail)->queue(new SendInvoice($invoice));
 
            self::update_invoice_bill_status_to_sent($invoice);
 
