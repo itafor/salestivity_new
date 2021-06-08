@@ -2,95 +2,64 @@
 <html>
 
 <body>
-    <div class="invoice-box">
-       <h2>Invoice Notification</h2>
+<div class="invoice-box">
+*Invoice Notification*
 
-<div class="card">
-<div class="card-body">
-    @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
+@if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 <p>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</p>
 @endif
 
-<p class="card-text">Dear {{$invoice->customers->name}},</p>
-<p>Please be informed that for the <strong>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}</strong> for <strong>{{ $invoice->customers->name }}</strong> is due for payment.
-</p>
-<p>
+Dear {{$invoice->customers->name}}
+Please be informed that for the {{ $invoice->prod ? $invoice->prod->name : 'N/A' }} for {{ $invoice->customers->name }} is due for payment.
+
 Find below the details of the invoice. 
-</p>
-<h4>Invoice Details</h4>
-<table class="table table-bordered" id="rental_table">
+
+*Invoice Details*
+
 @if(isset($invoice))
-<tbody>
-<tr>
-<td style="width: 150px;"><b>{{ __('Item') }}</b></td>
-<td>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}
-</td>
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
-<td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}
-</td>
-</tr>
+
+{{ __('Item') }}: {{ $invoice->prod ? $invoice->prod->name : 'N/A' }}
+
+{{ __('Invoice Number') }}: {{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}
+
 
 @if($invoice->status == 'Paid')
-<tr>
-<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
-<td class="text-success">{{ $invoice->status }}
-</td>
-</tr>
+
+{{ __('Status') }}: {{ $invoice->status }}
+
 @elseif($invoice->status == 'Partly paid')
-<tr>
-<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
-<td class="text-warning">
-{{ $invoice->status }}
-</td>
-</tr>
+{{ __('Status') }}: {{ $invoice->status }}
+
 @else
-<tr>
-<td style="width: 150px;"><b>{{ __('Status') }}</b></td>
-<td class="text-danger">
-{{ $invoice->status }}
-</td>
-</tr>
+
+{{ __('Status') }}: {{ $invoice->status }}
+
 @endif
-<tr>
-<td style="width: 150px;"><b>{{ __('Original Amount') }}</b></td>
-<td> N {{ number_format($invoice->cost, 2) }}
-</td>
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Discount') }}</b></td>
-<td>{{ $invoice->discount ? $invoice->discount : 'N/A' }}
-</td>
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
-<td>N{{ number_format($invoice->billingBalance,2) }}
-</td>
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
-<td>{{ date("jS F, Y", strtotime($invoice->due_date)) }}</td>           
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
-<td>Bank Transfer <br>
+
+{{ __('Original Amount') }}: N{{ number_format($invoice->cost, 2) }}
+
+{{ __('Discount') }}: {{ $invoice->discount ? $invoice->discount : 'N/A' }}
+
+{{ __('Amount Due') }}: N{{ number_format($invoice->billingBalance,2) }}
+
+{{ __('Due Date') }}: {{ date("jS F, Y", strtotime($invoice->due_date)) }}
+
+{{ __('Payment Method') }}:
+Bank Transfer
 <strong>Account Name</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_name : 'N/A' }},<br>
 <strong>Account Number</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_number : 'N/A' }} , <br>
 <strong>Bank</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->bank_name : 'N/A' }}
-</td>           
-</tr>
-</tbody>
+
 @else
 <span>No matching records found</span>
 @endif
-</table>
+
 <p>Thank you for your continuous patronage.</p>
 <p><b>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</b>  Billing Team.</p>
 </div>
 </div>
 
-    </div>
+</div>
 </body>
 </html>
