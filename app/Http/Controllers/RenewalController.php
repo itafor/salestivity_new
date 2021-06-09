@@ -11,6 +11,7 @@ use App\Customer;
 use App\Http\Controllers\CronJobController;
 use App\Http\Traits\RecurringBillStatus;
 use App\Http\Traits\RenewalInvoiceTrait;
+use App\Http\Traits\RenewalPaymentTrait;
 use App\Jobs\SendRenewalPaymentNotification;
 use App\Mail\ConfirmRecurringInvoiceRecceipt;
 use App\Mail\RenewalPaid;
@@ -34,7 +35,7 @@ use Validator;
 
 class RenewalController extends Controller
 {
-    use RenewalInvoiceTrait, RecurringBillStatus;
+    use RenewalInvoiceTrait, RecurringBillStatus, RenewalPaymentTrait;
 
       public function __construct()
     {
@@ -294,61 +295,5 @@ public function getBillingRenewals($id)
         $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.renewal.manage', compact('renewal', 'customers', 'products', 'categories', 'sub_categories'));
     }
-
-    /**
-     * Store a newly created payment resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function pay(Request $request)
-    {
-         //dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'productPrice' => 'required|numeric',
-            'billingAmount' => 'required|numeric',
-            'amount_paid' => 'required|numeric',
-            'billingbalance' => 'required',
-            'customer_id' => 'required|numeric',
-            'product_id' => 'required|numeric',
-            'renewal_id' => 'required|numeric',
-            'payment_date' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            Alert::warning('Required Fields', 'Please fill in a required fields');
-            return back()->withInput();
-        }
-
-        DB::beginTransaction();
-        try{
-         $renewal =  RenewalPayment::createNew($request->all());
-             $toEmail = $renewal->customer->email;
-        
-         $payment_status =RenewalPayment::where('id',$renewal->id)->first();
-         $renewalcontacts =renewalContactEmail::where('renewal_id',$renewal->renewal_id)->get();
-
-            Mail::to($toEmail)->queue(new RenewalPaid($renewal,$payment_status));
-
-            if($renewalcontacts){
-                    foreach ($renewalcontacts as $key => $contact) {
-                        $customerContactEmail=Contact::where('id',$contact->contact_id)->first();
-        SendRenewalPaymentNotification::dispatch($renewal,$customerContactEmail,$payment_status)
-            ->delay(now()->addSeconds(5));
-            }
-        }
-            DB::commit();
-        }
-        catch(Exception $e){
-            DB::rollback();
-            
-            Alert::error('Renewal Payment', 'An attempt to record renewal payment failed');
-         return back()->withInput();
-            
-        }
-        
-        Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
-        return redirect()->route('billing.renewal.show',$request->renewal_id);
-    }
-
+    
 }

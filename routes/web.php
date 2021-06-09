@@ -174,6 +174,8 @@ Route::get('confirm/invoice/{id}','InvoiceController@changeInvoiceBillStatusToCo
 	Route::get('confirm/recurring/invoice/{id}','RenewalController@changeBillStatusToConfirmed')->name('recurring.bill.status.confirm');
 	Route::get('send/recurring/invoice/{id}','RenewalController@changeBillStatusToSent')->name('recurring.bill.status.sent');
 
+	Route::get('resend/payment/receipt/{id}','RenewalController@resendRenwalPaymentReceipt')->name('resend.renewal.payment.receipt');
+
 	//renewal updates
 Route::post('renewal_update', 'RenewalUpdateController@storeUpdate')->name('renewal.update.store');
 Route::post('update-renewal-update', 'RenewalUpdateController@editRenewalUpdate')->name('renewalupdateopperator');
