@@ -38,7 +38,7 @@ class EmailMarketingController extends Controller
             return back()->withInput();
         }
 
-    	$customers = Customer::all();
+    $customers = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
     	foreach ($customers as $key => $customer) {
                 $customerEmail = $customer->email;
