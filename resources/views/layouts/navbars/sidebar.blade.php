@@ -336,7 +336,7 @@
                   </li>
 
 
-                   <li class="nav-item">
+           <!--         <li class="nav-item">
                     <a class="nav-link" href="#navbar-email-marking" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-bullseye text-primary" aria-hidden="true"></i>
                         <span class="nav-link-text">{{ __('Email-Marketing') }}</span>
@@ -358,7 +358,7 @@
                             </ul>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
 
                  <li class="nav-item">
