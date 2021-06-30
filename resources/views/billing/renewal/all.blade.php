@@ -31,6 +31,8 @@
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['partly_paid']) }}">Partly Paid</a>
 
                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['outstanding']) }}">Outstanding</a>
+
+                                         <a class="dropdown-item" href="{{ route('billing.renewal.invoice.view', ['due']) }}">Due</a>
                                        
                                     </div>
                                 </div>
