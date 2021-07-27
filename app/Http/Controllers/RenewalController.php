@@ -216,9 +216,9 @@ public function getBillingRenewals($id)
 
         $userId = auth()->user()->id;
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
-        $data['customers'] = Customer::where('main_acct_id', $userId)->get();
+        $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['renewal'] = Renewal::where('id',$id)->first();
-        $data['products'] = Product::where('main_acct_id', $userId)->get();
+        $data['products'] = Product::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
         $data['subCategory'] = SubCategory::where('id',$data['renewal']->subcategory_id)->first();
 
