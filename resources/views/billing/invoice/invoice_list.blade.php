@@ -14,9 +14,9 @@
 <tr>
     <th scope="col">{{ __('End Date') }}</th>
     <th scope="col">{{ __('Customer') }}</th>
-    <th scope="col">{{ __('Product') }}</th>
-    <th scope="col">{{ __('Cost') }}</th>
     <th scope="col">{{ __('Author') }}</th>
+    <th scope="col">{{ __('Product') }}</th>
+    <th scope="col">{{ __('Billing Amount (N)') }}</th>
     <th scope="col">{{ __('Status') }}</th>
     <th scope="col">{{ __('Action') }}</th>
 </tr>
@@ -35,8 +35,7 @@
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
             </td>
             <td>{{ $invoice->customers->name }}</td>
-            <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
-            <td>{{ $invoice->cost }}</td>
+            
             @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
                         getCreatedByDetails($invoice->user_type, $invoice->created_by)['last_name']
@@ -45,6 +44,8 @@
             @else
                 <td>Not Set</td>
             @endif
+            <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
+            <td>{{ $invoice->billingAmount }}</td>
             <td>{{ $invoice->status }}</td>
             <td>
                 <span>
@@ -55,6 +56,8 @@
     @endforeach
 @endif
 </tbody>
+@include('billing.billfooter')
+
 </table>
 </div>
 

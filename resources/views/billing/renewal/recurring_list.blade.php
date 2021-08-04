@@ -18,6 +18,7 @@
                 <th ><b>{{ __('Invoice Number') }}</b></th>
                 <th ><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
+                <th ><b>{{ __('Billing Amount (N)') }}</b></th>
                 <th ><b>{{ __('payment Status') }}</b></th>
 
                 <th class="text-center"><b>{{ __('Action') }}</b></th>
@@ -36,6 +37,7 @@
 
                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                 <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
+                <td>{{ $renewal->billingAmount }}</td>
 
 
 
@@ -56,6 +58,7 @@
                 </tr>
                 @endforeach
                 </tbody>
+                @include('billing.billfooter')
                 </table>
 
                 </div>
