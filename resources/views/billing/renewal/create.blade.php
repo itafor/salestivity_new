@@ -192,7 +192,7 @@
      <div class="row" style="display: none;" id="AnnualReminderDuration">
     <div class="col">
 <label class="form-control-label" for="first_duration">{{ __('First Reminder Duration') }}</label>
-        <input type="number" min="1" name="first_duration" id="first_duration" class="form-control form-control-alternative{{ $errors->has('first_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 50 days to due date') }}"  value="{{ old('first_duration') }}" >
+        <input type="number" min="1" name="first_duration" id="first_durationX" class="form-control form-control-alternative{{ $errors->has('first_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 50 days to due date') }}"  value="60" >
 
         @if ($errors->has('first_duration'))
             <span class="invalid-feedback" role="alert">
@@ -202,7 +202,7 @@
     </div>
     <div class="col">
 <label class="form-control-label" for="second_duration">{{ __('Second Reminder Duration') }}</label>
-    <input type="number" min="1" name="second_duration" id="second_duration" class="form-control form-control-alternative{{ $errors->has('second_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 25 days to due date') }}"  value="{{ old('second_duration') }}" >
+    <input type="number" min="1" name="second_duration" id="second_durationX" class="form-control form-control-alternative{{ $errors->has('second_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 25 days to due date') }}"  value="30" >
 
     @if ($errors->has('second_duration'))
         <span class="invalid-feedback" role="alert">
@@ -212,7 +212,7 @@
     </div>
        <div class="col">
 <label class="form-control-label" for="third_duration">Third Reminder Duration</label>
-    <input type="number" min="0" name="third_duration" id="third_duration" class="form-control form-control-alternative{{ $errors->has('third_duration') ? ' is-invalid' : '' }}" placeholder="{{ __('E.g. 0 days to due date') }}"  value="" >
+    <input type="number" min="0" name="third_duration" id="third_durationX" class="form-control form-control-alternative{{ $errors->has('third_duration') ? ' is-invalid' : '' }}"  value="7" >
 
     @if ($errors->has('third_duration'))
         <span class="invalid-feedback" role="alert">

@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('level') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-level">{{ __('Level') }}</label>
+                                        <label class="form-control-label" for="input-level">Level: (1 is the highest level, followed by 2 etc.)</label>
                                         <select name="level" class="form-control" id="level">
                                             <option value="">Select Level</option>
                                             <option value="1">1</option>

@@ -74,9 +74,9 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
              
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Change Bill Status
-                  </button>
+                  <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <b>Change Bill Status</b>
+                  </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('invoice.bill.status.sent',[$invoice->id])}}">Sent</a>
                     <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('invoice.bill.status.confirm',[$invoice->id])}}">Confirmed</a>

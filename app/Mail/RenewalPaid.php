@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use PDF;
 
 class RenewalPaid extends Mailable
 {
@@ -19,7 +20,7 @@ class RenewalPaid extends Mailable
      *
      * @return void
      */
-    public function __construct($renewal,$payment_status)
+    public function __construct($renewal, $payment_status)
     {
         $this->renewal = $renewal;
         $this->payment_status = $payment_status;
@@ -33,17 +34,30 @@ class RenewalPaid extends Mailable
      */
     public function build()
     {
-
-    $text = view('whatsapp.renewalPaid', [
-            'renewal'=> $this->renewal, 
-            'payment_status'=> $this->payment_status, 
-        ]);
+        $text = view(
+            'whatsapp.renewalPaid',
+            [
+            'renewal'=> $this->renewal,
+            'payment_status'=> $this->payment_status,
+            ]
+        );
     
-         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
+        whatsappNotification('14157386170', '2347065907948', strip_tags($text));
+
+        // $pdf = PDF::loadView(
+        //     'emails.renewalPaid',
+        //     [
+        //     'renewal'=> $this->renewal,
+        //     'payment_status' => $this->payment_status,
+        //     ]
+        // );
+
+        $documentName = 'paymentConfirmation_'.'.pdf';
 
         return $this->view('emails.renewalPaid')
-         ->replyTo('billing@digitalweb247.com','Digitalweb247')
-        ->subject('Renewal Payment Notification')
-        ->cc('billing@digitalweb247.com','Digitalweb247');
+            ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
+            ->subject('Confirmation of Payment');
+        // ->attachData($pdf ? $pdf->output() : "", $documentName);
+            // ->cc('billing@digitalweb247.com', 'Digitalweb247');
     }
 }

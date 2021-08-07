@@ -30,16 +30,43 @@
 </style>
 
 <div class="container-fluid mt--7 main-container">
-        <div class="row">
+@if(isset($renewal))
+    <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
+                            <?php   
+                            $currentStatus= "";
+                            if(isset($renewal)){
+                            if($renewal->bill_status == "Sent" && $renewal->billingBalance > 0){
+                            $currentStatus= "due";
+                            }elseif($renewal->status == 'Partly paid'){
+                            $currentStatus = "partly_paid";
+                            }elseif($renewal->status == 'Pending'){
+                            $currentStatus = "outstanding";
+                            }elseif($renewal->status == 'Paid'){
+                            $currentStatus = "paid";
+                            }else{
+                            $currentStatus = "all";
+                            }
+                            }
+                            ?>
+                            <div class="col-6">
+                                 <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'previous']) }}" title="View">
+                                <button class="btn btn-default btn-sm float-left">Previous</button>
+
+                                 </a>
+
+                                  <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'next']) }}"  title="View">                                <button class="btn btn-default btn-sm float-right">Next</button>
+                                 </a>
+
+                            </div>
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Recurring') }} </h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.renewal.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-lef"></i></a>
+                                <a href="{{ route('billing.renewal.invoice.view', [$currentStatus]) }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         <div class="row align-items-center">
@@ -80,7 +107,7 @@
             </button>
         </a>
 
-         <a onclick="return confirm_invoice_payment_resend()" href="{{route('renewal.invoice.resend',[$renewal->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a>
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('renewal.invoice.resend',[$renewal->id])}}"><button class="btn btn-sm btn-primary">{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>
@@ -103,9 +130,9 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
              
               <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Change Bill Status
-                  </button>
+                  <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <b>Change Bill Status</b>
+              </span>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('recurring.bill.status.sent',[$renewal->id])}}">Sent</a>
                     <a onclick="return confirm_delete()" class="dropdown-item" href="{{route('recurring.bill.status.confirm',[$renewal->id])}}">Confirmed</a>
@@ -334,7 +361,12 @@
         @include('layouts.footers.auth')
        
     @include('billing.renewal.payment.create')
-
+    @else
+<div class="col-4 text-right">
+    End of records
+    <a href="{{ route('billing.renewal.invoice.view', ['all']) }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="fas fa-arrow-right"></i></a>
+</div>
+    @endif
     </div>
 
 @endsection

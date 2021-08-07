@@ -4,7 +4,7 @@
 <div class="invoice-box">
 @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
-*Invoice payment Notification*
+*Confirmation of Payment*
 <span>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</span>
 @endif
 

@@ -2,11 +2,16 @@
 
 namespace App\Mail;
 
+use Cloudinary\Transformation\pdf;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+// use PDF;
 
+/**
+ * [Description SendRenewalPaymentNotice]
+ */
 class SendRenewalPaymentNotice extends Mailable
 {
     use Queueable, SerializesModels;
@@ -32,7 +37,18 @@ class SendRenewalPaymentNotice extends Mailable
      */
     public function build()
     {
+        $pdf = pdf::loadView(
+            'emails.send_renewal_payment_notice',
+            [
+            'renewal' => $this->renewal,
+            'payment_status' => $this->payment_status,
+            ]
+        );
+
+        $documentName = 'paymentConfirmation_'.'.pdf';
+
         return $this->view('emails.send_renewal_payment_notice')
-        ->subject('Renewal Payment Notification');
+        ->attachData($pdf->output(), $documentName)
+        ->subject('Confirmation of Payment');
     }
 }

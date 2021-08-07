@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Invoice Payment Notifications</title>
+    <title>Confirmation of Payment</title>
     
     <style>
     .invoice-box {
