@@ -39,7 +39,7 @@
                             <?php   
                             $currentStatus= "";
                             if(isset($renewal)){
-                            if($renewal->bill_status == "Sent" && $renewal->billingBalance > 0){
+                            if($renewal->bill_status == "Sent" && $renewal->billingBalance > 0 && $renewal->remainingDays < 60){
                             $currentStatus= "due";
                             }elseif($renewal->status == 'Partly paid'){
                             $currentStatus = "partly_paid";
@@ -53,12 +53,16 @@
                             }
                             ?>
                             <div class="col-6">
-                                 <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'previous']) }}" title="View">
-                                <button class="btn btn-default btn-sm float-left">Previous</button>
+                                 <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'previous']) }}" title="Previous Recurring Invoice">
+                                <button class="btn btn-default btn-sm float-left"
+                                {{isset($minId) && $minId == $renewal->id ? "disabled" : "" }} ><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
 
                                  </a>
 
-                                  <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'next']) }}"  title="View">                                <button class="btn btn-default btn-sm float-right">Next</button>
+                                  <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'next']) }}"  title="Next Recurring Invoice">                        
+
+                                    <button class="btn btn-default btn-sm float-right"
+                                    {{isset($maxId) && $maxId == $renewal->id ? "disabled" : "" }}><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                                  </a>
 
                             </div>

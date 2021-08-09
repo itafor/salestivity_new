@@ -46,12 +46,13 @@ class RenewalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function index()
     {
         $data['renewals'] = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('end_date','asc')->with(['customers','prod'])->get();
-
+        ])->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remainingDays'))->orderBy('end_date','asc')->with(['customers','prod'])->get();
+            // dd($data['renewals']);
         return view('billing.renewal.index', $data);
         
     }
@@ -195,27 +196,24 @@ public function getBillingRenewals($id)
         // dd($navStatus);
         $renewalPayments='';
         $renewal = Renewal::where('id',$id)->first();
-        $highestId = 0;
-        $lowerId = 0;
+        $maxId = 0;
+        $minId = 0;
         if($status == "partly_paid" && $navStatus == "next"){
-        $maxId = $this->getMaxId('Partly paid');
-// dd($maxId);
+        $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('Partly paid');
         $renewal = Renewal::where([
         $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
         ['status', 'Partly paid'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','asc')->with(['customers','prod'])->first();
        }elseif($status == "outstanding" && $navStatus == "next"){
-          $maxId = $this->getMaxId('Pending');
-// dd($maxId);
+          $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('Pending');
         $renewal = Renewal::where([
         $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
-           
-            ['status', 'Pending'],
+        ['status', 'Pending'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','asc')->with(['customers','prod'])->first();
        }elseif($status == "paid" && $navStatus == "next"){
-        $maxId = $this->getMaxId('paid');
+        $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('paid');
         $renewal = Renewal::where([
         $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
             ['status', 'Paid'],
@@ -223,64 +221,87 @@ public function getBillingRenewals($id)
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','asc')->with(['customers','prod'])->first();
        }elseif($status == "due" && $navStatus == "next"){
+          $maxId = $this->getDueRenewalMaxId();
         $renewal = Renewal::where([
-        ['id', '>', $id],
+         $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ['bill_status', 'Sent'],
         ['billingBalance', '>', 0]
-        ])->orderBy('id','asc')->with(['customers','prod'])->first();
+        ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)->orderBy('id','asc')->with(['customers','prod'])->first();
        }elseif($status == "partly_paid" && $navStatus == "previous"){
-       
+       $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Partly paid');
         $renewal = Renewal::where([
-            ['id', '<', $id],
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
             ['status', 'Partly paid'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','desc')->with(['customers','prod'])->first();
        }elseif($status == "outstanding" && $navStatus == "previous"){
+       $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Pending');
         $renewal = Renewal::where([
-            ['id', '<', $id],
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
             ['status', 'Pending'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','desc')->with(['customers','prod'])->first();
        }elseif($status == "paid" && $navStatus == "previous"){
-
+       $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Paid');
         $renewal = Renewal::where([
-            ['id', '<', $id],
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
             ['status', 'Paid'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id','desc')->with(['customers','prod'])->first();
-       }elseif($status == "partly_paid" && $navStatus == "previous"){
-    
+       
+       }
+       elseif($status == "due" && $navStatus == "previous"){
+        $minId = $this->getDueRenewalMinId();
         $renewal = Renewal::where([
-            ['id', '<=', $id],
-            ['status', 'Partly paid'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id','desc')->with(['customers','prod'])->first();
-       }elseif($status == "due" && $navStatus == "previous"){
-        $renewal = Renewal::where([
-        ['id', '<', $id],
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ['bill_status', 'Sent'],
         ['billingBalance', '>', 0]
-        ])->orderBy('id','desc')->with(['customers','prod'])->first();
+        ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)->orderBy('id','asc')->with(['customers','prod'])->first();
        }
-
-
 
         if($renewal){
          $renewalPayments = RenewalPayment::where('renewal_id',$renewal->id)->get();
         }
          $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at','desc')->paginate(10);
        
-        return view('billing.renewal.show', compact('renewal','renewalPayments','renewal_updates','highestId','lowerId'));
+        return view('billing.renewal.show', compact('renewal','renewalPayments','renewal_updates','maxId','minId'));
     }
 
-    public  function getMaxId($status)
+    public  function getPaidPartlyPaidPendingRenewalMaxId($status)
     {
     return Renewal::where([
             ['status', $status],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->max('id');
+    }
+
+     public  function getPaidPartlyPaidPendingRenewalMinId($status)
+    {
+    return Renewal::where([
+            ['status', $status],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->min('id');
+    }
+
+
+    public function getDueRenewalMaxId()
+    {
+         return Renewal::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['bill_status', 'Sent'],
+        ['billingBalance', '>', 0]
+        ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)->max('id');
+    }
+
+     public function getDueRenewalMinId()
+    {
+         return Renewal::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['bill_status', 'Sent'],
+        ['billingBalance', '>', 0]
+        ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)->min('id');
     }
 
     /**
