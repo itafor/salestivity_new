@@ -30,6 +30,20 @@
     </tr>
 @else
     @foreach($invoices as $invoice)
+                          <?php   
+                            $currentStatus= "";
+                            if(isset($invoice)){
+                            if($invoice->status == 'Partly paid'){
+                            $currentStatus = "partly_paid";
+                            }elseif($invoice->status == 'Pending'){
+                            $currentStatus = "outstanding";
+                            }elseif($invoice->status == 'Paid'){
+                            $currentStatus = "paid";
+                            }else{
+                            $currentStatus = "all";
+                            }
+                            }
+                            ?>
         <tr>
          <td>
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
@@ -49,7 +63,7 @@
             <td>{{ $invoice->status }}</td>
             <td>
                 <span>
-                    <a href="{{ route('billing.invoice.show', [$invoice->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                    <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
                 </span>                                                       
             </td>                                                    
         </tr>

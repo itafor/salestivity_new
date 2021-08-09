@@ -29,9 +29,7 @@
 
                     <?php   
                     $currentStatus= "";
-                    if($renewal->bill_status == "Sent" && $renewal->billingBalance > 0 && $renewal->remainingDays < 60){
-                         $currentStatus= "due";
-                    }elseif($renewal->status == 'Partly paid'){
+                    if($renewal->status == 'Partly paid'){
                          $currentStatus = "partly_paid";
                     }elseif($renewal->status == 'Pending'){
                          $currentStatus = "outstanding";

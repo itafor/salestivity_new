@@ -204,21 +204,93 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id, $status, $navStatus
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $status, $navStatus)
     {
-        $userId = \getActiveGuardType()->main_acct_id;
         $invoice = Invoice::find($id);
-        $customers = Customer::where('main_acct_id', $userId)->get();
-        $products = Product::where('main_acct_id', $userId)->get();
-// dd($invoice->invoicePayment);
-        // $payments = Payment::where('customer_id', $invoice->customer)->where('status', '!=', 'Renewal')->get();
+        $customers = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $products = Product::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+        $maxId = 0;
+        $minId = 0;
+        $currentId = $id;
+        if ($status == "partly_paid" && $navStatus == "next") {
+            $maxId = $this->getPaidPartlyPaidPendingInvoiceMaxId('Partly paid');
+            $invoice = Invoice::where([
+        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
+        ['status', 'Partly paid'],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+        } elseif ($status == "outstanding" && $navStatus == "next") {
+            $maxId = $this->getPaidPartlyPaidPendingInvoiceMaxId('Pending');
+            $invoice = Invoice::where([
+        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
+        ['status', 'Pending'],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+        } elseif ($status == "paid" && $navStatus == "next") {
+            $maxId = $this->getPaidPartlyPaidPendingInvoiceMaxId('paid');
+            $invoice = Invoice::where([
+        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
+            ['status', 'Paid'],
+
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+        }elseif ($status == "partly_paid" && $navStatus == "previous") {
+            $minId =  $this->getPaidPartlyPaidPendingInvoiceMinId('Partly paid');
+            $invoice = Invoice::where([
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
+            ['status', 'Partly paid'],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+        } elseif ($status == "outstanding" && $navStatus == "previous") {
+            $minId =  $this->getPaidPartlyPaidPendingInvoiceMinId('Pending');
+            $invoice = Invoice::where([
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
+            ['status', 'Pending'],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+        } elseif ($status == "paid" && $navStatus == "previous") {
+            $minId =  $this->getPaidPartlyPaidPendingInvoiceMinId('Paid');
+            $invoice = Invoice::where([
+         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
+            ['status', 'Paid'],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+        }
         
-        
-        return view('billing.invoice.show', compact('invoice'));
+        return view('billing.invoice.show', compact('invoice', 'maxId', 'minId','currentId'));
       
+    }
+
+       /**
+     * Get paid, partly paid and pending invoice with the highest id
+     * @param mixed $status
+     *
+     * @return \Illuminate\Http\Response
+     */
+       public function getPaidPartlyPaidPendingInvoiceMaxId($status)
+    {
+        return Invoice::where([
+            ['status', $status],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->max('id');
+    }
+
+       /**
+     * Get paid, partly paid and pending invoice with the lowest id
+     * @param mixed $status
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPaidPartlyPaidPendingInvoiceMinId($status)
+    {
+        return Invoice::where([
+            ['status', $status],
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->min('id');
     }
 
       public function pay(Request $request)

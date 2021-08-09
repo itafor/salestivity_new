@@ -8,15 +8,50 @@
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
+ <div class="row align-items-center">
+
+
+@if(isset($invoice))
+                              <?php   
+                            $currentStatus= "";
+                            if(isset($invoice)){
+                            if($invoice->status == 'Partly paid'){
+                            $currentStatus = "partly_paid";
+                            }elseif($invoice->status == 'Pending'){
+                            $currentStatus = "outstanding";
+                            }elseif($invoice->status == 'Paid'){
+                            $currentStatus = "paid";
+                            }else{
+                            $currentStatus = "all";
+                            }
+                            }
+                            ?>
+                         <div class="col-6">
+                                 <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'previous']) }}" title="Previous {{$currentStatus}} Invoice">
+                                <button class="btn btn-default btn-sm float-left"
+                                {{isset($minId) && $minId == $currentId ? "disabled" : "" }} ><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+
+                                 </a>
+
+                                  <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}"  title="Next {{$currentStatus}} Invoice">                        
+
+                                    <button class="btn btn-default btn-sm float-right"
+                                    {{isset($maxId) && $maxId == $currentId ? "disabled" : "" }}><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                                 </a>
+
+                            </div>
+                       
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Invoice') }}</h3>
                             </div>
+        
+
+
                             <div class="col-4 text-right">
-                                <a href="{{ route('billing.invoice.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-left"></i></a>
+                                <a href="{{ route('billing.invoice.view',[$currentStatus]) }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
                        
-         @if(isset($invoice))
+       
             <div class="col-8">
                 @if($invoice->status == 'Paid')
             <a >
@@ -53,7 +88,7 @@
             </button>
         </a>
 
-         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-default">{{ __('Resend Invoice') }}</button></a>
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-success">{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>
@@ -61,6 +96,8 @@
                     <div class="card-body">
                                 <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($invoice))
+
+
                     <tbody>
                          <tr>
                      <td style="width: 200px;"><b>{{ __('Invoice Number') }}</b></td>
