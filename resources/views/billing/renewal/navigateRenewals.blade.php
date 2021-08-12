@@ -32,9 +32,9 @@
 <div class="container-fluid mt--7 main-container">
 @if(isset($renewal))
     <div class="row">
-
+        
     @include('billing.renewal.renewalDetails')
-     
+         
         </div>
         
         @include('layouts.footers.auth')

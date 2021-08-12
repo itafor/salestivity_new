@@ -175,7 +175,8 @@ class ProductController extends Controller
        if($update_product){
         $status = "Product has been updated successfully!!!";
             Alert::success('Product', $status);
-      return redirect()->route('product.index');
+      return back();
+      // return redirect()->route('product.index');
        
 
         } else {

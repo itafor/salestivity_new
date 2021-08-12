@@ -120,6 +120,12 @@ class Renewal extends Model
     public static function updateRenewal($data)
     {
         $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
+        $renewal =  self::where('id', $data['renewal_id'])->first();
+        $existingBillBal = $renewal->billingBalance;
+        $existingBillAmt = $renewal->billingAmount;
+        // $paymentStatus = self::getRenewalPaymentStatus($existingBillBal, $existingBillAmt, $data['billingAmount'], $renewal->status);
+
+        // dd($paymentStatus);
 
         self::where('id', $data['renewal_id'])->update([
         'customer_id' => $data['customer_id'],
@@ -127,8 +133,8 @@ class Renewal extends Model
         'subcategory_id' => $data['sub_category_id'],
         'product_id' => $data['product'],
         'productPrice' => $data['productPrice'],
-        // 'discount' => $data['discount'],
-        // 'billingAmount' => $data['billingAmount'],
+        'discount' => $data['discount'],
+        'billingAmount' => $data['billingAmount'],
         // 'billingBalance' => $data['billingAmount'],
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
@@ -140,6 +146,20 @@ class Renewal extends Model
 
         self::updateRenewalReminderDuration($data);
         self::updateRenewalContactEmail($data, $contactEmails);
+    }
+
+
+    public static function getRenewalPaymentStatus($existingBillBal, $existingBillAmt, $incomingBillAmt, $existingStatus)
+    {
+            if($existingBillBal == 0 && $incomingBillAmt == $existingBillAmt){
+                return 'Paid';
+            }elseif ($existingBillBal > 0 && $existingBillBal < $existingBillAmt && $incomingBillAmt >= $existingBillAmt) {
+               return 'Partly paid';
+            }elseif ($existingBillBal == $existingBillAmt) {
+                return 'Pending';
+            }else{
+              return $existingStatus;
+            }
     }
 
  public static function createRenewalContactEmail($renewal,$contactEmails) {

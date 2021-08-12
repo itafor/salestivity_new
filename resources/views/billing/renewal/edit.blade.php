@@ -6,10 +6,24 @@
         <div class="row">
             <div class="col-xl-12 order-xl-1">
 <div class="card">
+         <?php   
+            $currentStatus= "";
+            if(isset($renewal)){
+            if($renewal->status == 'Partly paid'){
+            $currentStatus = "partly_paid";
+            }elseif($renewal->status == 'Pending'){
+            $currentStatus = "outstanding";
+            }elseif($renewal->status == 'Paid'){
+            $currentStatus = "paid";
+            }else{
+            $currentStatus = "all";
+            }
+            }
+            ?>
   <div class="card-header">
     <div class="float-left">Edit Recurring</div>
     <div class="float-right">
-       <a href="{{ route('billing.renewal.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-lef"></i></a>
+       <a href="{{ route('billing.renewal.invoice.view', [$currentStatus]) }}" class="btn-icon btn-tooltip btn-sm" title="{{ __('Back to List') }}"><i class="fa fa-arrow-left"></i></a>
     </div>
   </div>
   <div class="card-body">
@@ -58,8 +72,8 @@
   <label class="form-control-label" for="product">{{ __('Product') }}</label>
         <select name="product" id="product_id" class="form-control form-control-alternative{{ $errors->has('product') ? ' is-invalid' : '' }}">
             <option value="">Choose a Product</option>
-                @foreach($products as $key => $product)
-                <option value="{{ $product->id }}" {{$product->id == $renewal->product_id ? 'selected' : ''}}>{{ $product->name }}</option>
+                @foreach($products as $key => $produc)
+                <option value="{{ $produc->id }}" {{$produc->id == $renewal->prod->id ? 'selected' : ''}}>{{ $produc->name }}</option>
             @endforeach
         </select>
 @if ($errors->has('product'))
@@ -67,6 +81,7 @@
         <strong>{{ $errors->first('product') }}</strong>
     </span>
 @endif
+
     </div>
 
     <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }} col-md-6" >
@@ -90,8 +105,14 @@
   </div>
     <div class="form-row">
 <div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-4">
-    <label class="form-control-label" for="productPrice">{{ __('Product Price') }}</label>
-    <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $renewal->productPrice)}}" required readonly="">
+    <label class="form-control-label" for="productPrice">{{ __('Product Price:') }}
+        <button type="button"  class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" {{$renewal->status == 'Pending' ? "" :"disabled"}} >
+  Edit
+</button>
+</label>
+
+                 <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $product->standard_price)}}" required readonly >
+   
 
     @if ($errors->has('productPrice'))
         <span class="invalid-feedback" role="alert">
@@ -102,7 +123,7 @@
     
 <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-4" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
-    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" readonly>
+    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" {{$renewal->status == 'Pending' ? "" :"disabled"}}>
 
     @if ($errors->has('discount'))
         <span class="invalid-feedback" role="alert">
@@ -118,7 +139,7 @@
    
 <div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
-    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $renewal->billingAmount)}}" required readonly="">
+    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $currentBillingBalance ? $currentBillingBalance : $renewal->billingAmount)}}" required readonly="">
 
     @if ($errors->has('billingAmount'))
         <span class="invalid-feedback" role="alert">
@@ -276,6 +297,8 @@
     <button type="submit" class="btn btn-success mt-4" >{{ __('Save') }}</button>
     </div>
 </form>
+        @include('product.editwithModal')
+
   </div>
 </div>
             </div>

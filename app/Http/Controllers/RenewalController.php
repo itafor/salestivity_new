@@ -160,6 +160,7 @@ class RenewalController extends Controller
         try {
             $when = now()->addSeconds(5);
             $emails = [];
+
             $new_renewal = Renewal::createNew($request->all());
 
             // self::renewalInvoice($new_renewal->id);
@@ -176,6 +177,7 @@ class RenewalController extends Controller
         return redirect()->route('billing.renewal.index');
     }
 
+
     public function mail()
     {
         return view('emails.renewal_created_notification');
@@ -189,9 +191,29 @@ class RenewalController extends Controller
      */
     public function show($id, $status, $navStatus)
     {
-        // dd($navStatus);
         $renewalPayments='';
-        $renewal = Renewal::where('id', $id)->first();
+        $renewal = Renewal::where([
+            ['id', $id],
+            ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->first();
+        // dd($renewal);
+
+        $maxId = 0;
+        $minId = 0;
+        $currentId = $id;
+        
+        if ($renewal) {
+            $renewalPayments = RenewalPayment::where('renewal_id', $renewal->id)->get();
+        }
+        $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at', 'desc')->paginate(10);
+       
+        return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId','currentId'));
+    }
+
+    public function navigateRenewals($id, $status, $navStatus)
+    {
+        $renewalPayments='';
+
         $maxId = 0;
         $minId = 0;
         $currentId = $id;
@@ -248,6 +270,7 @@ class RenewalController extends Controller
         return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId','currentId'));
     }
 
+
     /**
      * Get paid, partly paid and pending renewal with the highest id
      * @param mixed $status
@@ -287,6 +310,7 @@ class RenewalController extends Controller
     public function edit($id)
     {
         $userId = auth()->user()->id;
+
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['renewal'] = Renewal::where('id', $id)->first();
@@ -296,8 +320,13 @@ class RenewalController extends Controller
 
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
-
         
+        $data['product'] = $data['renewal']->prod;
+
+         $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
+        $discountedPrice = ($discountValue / 100) * $data['product']->standard_price;
+        $data['currentBillingBalance'] = $data['product']->standard_price - $discountedPrice;
+
         return view('billing.renewal.edit', $data);
     }
 
@@ -310,7 +339,7 @@ class RenewalController extends Controller
      */
     public function update(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'renewal_id' => 'required|numeric',
             'customer_id' => 'required|numeric',
@@ -349,7 +378,7 @@ class RenewalController extends Controller
         }
         
         Alert::success('Renewal Update successful', 'Renewal updated successfully');
-        return redirect()->route('billing.renewal.show', $request->renewal_id);
+        return back();//redirect()->route('billing.renewal.show', $request->renewal_id);
     }
 
     /**

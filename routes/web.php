@@ -160,7 +160,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::post('billing/renewal/new', ['as' => 'billing.renewal.store', 'uses' => 'RenewalController@store']);
     Route::get('billing/renewal/{id}/manage', ['as' => 'billing.renewal.manage', 'uses' => 'RenewalController@manage']);
     Route::post('billing/renewal/pay', ['as' => 'billing.renewal.pay', 'uses' => 'RenewalController@pay']);
-    Route::get('billing/renewal/{id}/{status}/{navStatus}', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
+    Route::get('billing/renewal/{id}/{status}/{navStatus}/show', ['as' => 'billing.renewal.show', 'uses' => 'RenewalController@show']);
+    Route::get('billing/renewal/{id}/{status}/{navStatus}', ['as' => 'billing.renewal.navigate', 'uses' => 'RenewalController@navigateRenewals']);
     Route::post('billing/renewal', ['as' => 'billing.renewal.update', 'uses' => 'RenewalController@update']);
     Route::get('item/{item_model}/{id}', ['as' => 'items.destroy', 'uses' => 'AjaxController@destroyItems']);
 
