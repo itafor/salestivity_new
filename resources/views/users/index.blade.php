@@ -92,9 +92,22 @@
                                                                     </button>
                                                                 </form>    
                                                             @else
-                                                                <!-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> -->
+                                                               
                                                                 <a class="dropdown-item" href="{{ route('editSubUser', $user) }}">{{ __('Edit') }}</a>
+
+                                                                 <!-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> -->
+                                                                 
                                                             @endif
+
+                                                            @if($user->status == 1)
+                                                             <a onclick="disableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item" href="#">{{ __('Disable user') }}
+                                                                  </a>
+                                                            @elseif($user->status == 0)
+                                                                    <a onclick="enableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item" href="#">{{ __('Enable user') }}
+                                                                  </a>
+                                                             @endif
+
+                                                                   
                                                         </div>
                                                     </div>
                                                 </td>
@@ -117,3 +130,60 @@
         @include('layouts.footers.auth')
     </div>
 @endsection
+
+<script type="text/javascript">
+    // Delete data with ajax
+function enableSubuser(status, userId) {
+    swal({
+        title: "Enable Selected subuser",
+        text: "Do you really want to enable the selected subuser?!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: baseUrl + "/update-subuser/" + status + "/" + userId,
+                type: "GET",
+                data: { userId: userId },
+                success: function (data) {
+                    swal("Poof! The selected subuser has been enabled!", {
+                        icon: "success",
+                    });
+                    window.location.href = window.location.href; // refresh page
+                },
+            });
+        } else {
+            swal("Action cancelled!");
+        }
+    });
+}
+
+function disableSubuser(status, userId) {
+    swal({
+        title: "Enable Selected subuser",
+        text: "Do you really want to enable the selected subuser?!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: baseUrl + "/update-subuser/" + status + "/" + userId,
+                type: "GET",
+                data: { userId: userId },
+                success: function (data) {
+                    console.log(data);
+                    swal("Poof! The selected subuser has been disabled!", {
+                        icon: "success",
+                    });
+                    window.location.href = window.location.href; // refresh page
+                },
+            });
+        } else {
+            swal("Action cancelled!");
+        }
+    });
+}
+
+</script>

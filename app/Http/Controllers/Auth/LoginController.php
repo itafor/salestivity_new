@@ -76,7 +76,7 @@ class LoginController extends Controller
     // }
 
     public function login(Request $request)
-    {   
+    {
         $input = $request->all();
    
         $this->validate($request, [
@@ -87,7 +87,6 @@ class LoginController extends Controller
         // Login Admin
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))
         ) {
-
             return redirect()->intended('/admin/home');
         }
         
@@ -103,16 +102,16 @@ class LoginController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         }
         if (Auth::guard('sub_user')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 0], $request->get('remember'))) {
-            
             return back()
                 ->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'You are not enabled. Please contanct the admin']);;
+                ->withErrors(['email' => 'You are not enabled. Please contanct the admin']);
+            ;
         }
 
         return back()
                 ->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'Invalid details.']);;
-          
+                ->withErrors(['email' => 'Invalid details.']);
+        ;
     }
 
     /**
@@ -124,7 +123,8 @@ class LoginController extends Controller
 
     
 
-    protected function guard(){
+    protected function guard()
+    {
         return Auth::guard('admin');
     }
     // protected function authenticated($request, $user)
@@ -136,7 +136,7 @@ class LoginController extends Controller
     //     return redirect()->intended('/home');
     // }
 
-        /**
+    /**
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -146,11 +146,11 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
         
-      Auth::guard('admin')->logout();
-      Auth::guard('sub_user')->logout();
-      Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
+        Auth::guard('sub_user')->logout();
+        Auth::guard('web')->logout();
         
-      $request->session()->invalidate();
+        $request->session()->invalidate();
 
         return $this->loggedOut($request) ?: redirect('/');
     }

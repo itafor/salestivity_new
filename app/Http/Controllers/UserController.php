@@ -336,4 +336,17 @@ class UserController extends Controller
           return redirect()->back()->withInput()->withStatus(__('A user can only report to another user with a lower level number i.e 2 can report to 1!'));
             }
     }
+
+    public function enableOrDisableSubuser($status, $userId)
+    {
+      $user = SubUser::findOrFail($userId);
+      if($user && $status == 1){
+        $user->status = 0;
+        $user->save();
+      }elseif($user && $status == 0){
+        $user->status = 1;
+        $user->save();
+      }
+      return $user;
+    }
 }

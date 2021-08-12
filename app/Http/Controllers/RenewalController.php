@@ -207,9 +207,17 @@ class RenewalController extends Controller
         }
         $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at', 'desc')->paginate(10);
        
-        return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId','currentId'));
+        return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId', 'currentId'));
     }
 
+    /**
+     * Navigate from one renewal to another
+     * @param mixed $id
+     * @param mixed $status
+     * @param mixed $navStatus
+     *
+      * @return \Illuminate\Http\Response
+     */
     public function navigateRenewals($id, $status, $navStatus)
     {
         $renewalPayments='';
@@ -239,7 +247,7 @@ class RenewalController extends Controller
 
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
-        }elseif ($status == "partly_paid" && $navStatus == "previous") {
+        } elseif ($status == "partly_paid" && $navStatus == "previous") {
             $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Partly paid');
             $renewal = Renewal::where([
          $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
@@ -267,7 +275,7 @@ class RenewalController extends Controller
         }
         $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at', 'desc')->paginate(10);
        
-        return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId','currentId'));
+        return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId', 'currentId'));
     }
 
 
@@ -323,7 +331,7 @@ class RenewalController extends Controller
         
         $data['product'] = $data['renewal']->prod;
 
-         $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
+        $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
         $discountedPrice = ($discountValue / 100) * $data['product']->standard_price;
         $data['currentBillingBalance'] = $data['product']->standard_price - $discountedPrice;
 

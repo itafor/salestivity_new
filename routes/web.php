@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 
     //primary user email verification
     Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser.verify.email');
+    Route::get('update-subuser/{status}/{id}', 'UserController@enableOrDisableSubuser');
 
     
     // Roles
@@ -137,7 +138,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('billing/invoice', ['as' => 'billing.invoice.index', 'uses' => 'InvoiceController@index']);
     Route::get('billing/invoice/new', ['as' => 'billing.invoice.create', 'uses' => 'InvoiceController@create']);
     Route::post('billing/invoice/new', ['as' => 'billing.invoice.store', 'uses' => 'InvoiceController@store']);
-    Route::get('billing/invoice/{id}/{status}/{navStatus}', ['as' => 'billing.invoice.show', 'uses' => 'InvoiceController@show']);
+    Route::get('billing/invoice/{id}/{status}/{navStatus}/show', ['as' => 'billing.invoice.show', 'uses' => 'InvoiceController@show']);
+     Route::get('billing/invoice/{id}/{status}/{navStatus}', ['as' => 'billing.invoice.navigate', 'uses' => 'InvoiceController@navigateInvoices']);
     Route::get('billing/invoice/{id}/manage', ['as' => 'billing.invoice.manage', 'uses' => 'InvoiceController@manage']);
     Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
     Route::post('billing/invoice/update', ['as' => 'billing.invoice.update', 'uses' => 'InvoiceController@update']);
