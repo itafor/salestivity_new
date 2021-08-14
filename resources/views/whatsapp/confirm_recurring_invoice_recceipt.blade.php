@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Invoice Renewal Notification</title>
+    <title>Managed Hosting Invoice</title>
     
     <style>
     .invoice-box {

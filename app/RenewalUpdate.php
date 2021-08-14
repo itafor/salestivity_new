@@ -10,7 +10,7 @@ class RenewalUpdate extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['renewal_id','user_id','update_date','type','commments'];
+    protected $fillable = ['renewal_id','user_id','update_date','type','commments', 'bill_remark', 'bill_remark_payment_date'];
 
 
     public function user(){

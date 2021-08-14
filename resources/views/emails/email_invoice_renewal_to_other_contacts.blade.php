@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Invoice Renewal Notification</title>
+<title>Managed Hosting Invoice</title>
 <link type="text/css" href="{{ url('css/invoice_styles.css') }}" rel="stylesheet">
 <link type="text/css" href="{{ url('css/invoice_styles.css') }}" rel="stylesheet">
 
@@ -122,7 +122,7 @@ text-align: left;
 
 <body>
 <div class="invoice-box">
-<h2>Invoice Renewal Notification</h2>
+<h2>Managed Hosting Invoice</h2>
 
 <div class="card">
 <div class="card-body">

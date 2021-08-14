@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <body>
 <div class="invoice-box">
-*Invoice Renewal Notification*
+*Managed Hosting Invoice*
 @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 {{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}

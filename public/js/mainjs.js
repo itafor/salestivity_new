@@ -3,6 +3,54 @@
 
 // });
 
+//hide and show bill remark date
+    $("#bill_remark_id").change(function () {
+    var bill_remark = $(this).val();
+        // alert(bill_remark);
+
+    if (bill_remark === "Customer to make payment") {
+        $("#bill_remark_date_label").show();
+        $("#bill_remark_date_id").show();
+        
+        
+        $("div.update_date_label").removeClass('col-md-6');
+
+        $("div.bill_remark_class").removeClass('col-md-6');
+
+        $("div.update_date_label").addClass('col-md-4');
+
+        $("div.bill_remark_class").addClass('col-md-4');
+
+
+        
+    } else {
+        $("#bill_remark_date_id").val("");
+         $("#bill_remark_date_label").hide();
+        $("#bill_remark_date_id").hide();
+         $("div.update_date_label").addClass('col-md-6');
+
+        $("div.bill_remark_class").addClass('col-md-6');
+    }
+});
+
+//hide and show bill remark date when editing it
+
+$(".edit_bill_remark_class").change(function () {
+    var bill_remark = $(this).val();
+    if (bill_remark === "Customer to make payment") {
+        $("#bill_remark_date_label").show();
+        $(".bill_remark_date_class").show();
+        
+    } else {
+        $(".bill_remark_date_class").val("");
+        $(".bill_remark_date_class").hide();
+        
+    }
+});
+
+
+
+
 $(document).ready(function () {
     $(".datatable").DataTable({
         dom: "lTfgitp",
@@ -1037,18 +1085,50 @@ function editRenewalUpdate(id) {
             $("#commments_id" + id).empty();
             $("#opp_update_id" + id).empty();
             $("#update_date" + id).empty();
-            // $('#type_id'+id+'').empty();
+            $('#bill_remark_id' + id).empty();
+            $("#bill_remark_date_id" + id).empty();
             $("#renewal_update_id" + id).val(data.renewalUpdate.id);
             $("#update_date" + id).val(data.updateDate);
             $("#commments_id" + id).append(data.renewalUpdate.commments);
+            $("#bill_remark_date_id" + id).val(data.renewalUpdate.bill_remark_payment_date);
             $("<option>")
-                .attr("selected", true)
-                .val(data.renewalUpdate.type)
-                .text(data.renewalUpdate.type)
-                .appendTo("#type_id" + id);
+                .attr("selected", data.renewalUpdate.bill_remark ? true : false)
+                .val(data.renewalUpdate.bill_remark)
+                .text(data.renewalUpdate.bill_remark)
+                .appendTo("#bill_remark_id" + id);
+                 $("<option>")
+                .attr("selected", data.renewalUpdate.bill_remark ? false : true)
+                .val("")
+                .text("Select Bill Remark")
+                .appendTo("#bill_remark_id" + id);
+            $("<option>")
+                .attr("selected", false)
+                .val("Customer to make payment")
+                .text("Customer to make payment")
+                .appendTo("#bill_remark_id" + id);
+            $("<option>")
+                .attr("selected", false)
+                .val("Customer asked to resend invoice")
+                .text("Customer asked to resend invoice")
+                .appendTo("#bill_remark_id" + id);
+            $("<option>")
+                .attr("selected", false)
+                .val("Customer cancelled service")
+                .text("Customer cancelled service")
+                .appendTo("#bill_remark_id" + id);
+           $("<option>")
+                .attr("selected", false)
+                .val("Customer not yet satisfied with work")
+                .text("Customer not yet satisfied with work")
+                .appendTo("#bill_remark_id" + id);
+          $("<option>")
+                .attr("selected", false)
+                .val("Customer not reachable")
+                .text("Customer not reachable")
+                .appendTo("#bill_remark_id" + id);
         },
     });
-
+    // $(".edit_bill_remark_date" + id).toggle();
     $("#editRenewalUpdate" + id + "form").toggle();
 }
 

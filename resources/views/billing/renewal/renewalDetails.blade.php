@@ -259,7 +259,13 @@
                                         <h5>{{$update->user ? $update->user->name:''}} {{$update->user ?$update->user->last_name:''}}</h5> &nbsp;&nbsp;&nbsp;<span> <i class="fa fa-clock" aria-hidden="true"></i>  
                                     {{ date("jS F, Y", strtotime($update->update_date)) }}
                                         </span>
-                                       {{-- <span>&nbsp; <i class="fa fa-star text-blue" aria-hidden="true"></i>&nbsp;<b>{{$update->type}}</b></span> --}}
+                                       <span>&nbsp;<b>Remark:</b> &nbsp;{{$update->bill_remark ? $update->bill_remark : "N/A"}}</span> 
+
+                                       @if($update->bill_remark_payment_date !='')
+                                       &nbsp;&nbsp;<span> <b>Payment Date: </b> 
+                                    {{ date("jS F, Y", strtotime($update->bill_remark_payment_date)) }}
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-4">
                                         <div class="pull-right reply"> <span onclick="replyRenewalUpdate({{$update->id}})" style="cursor: pointer;"><i class="fa fa-reply"></i> reply</span> </div>

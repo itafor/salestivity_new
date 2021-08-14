@@ -99,11 +99,11 @@
                                                                  
                                                             @endif
 
-                                                            @if($user->status == 1)
-                                                             <a onclick="disableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item" href="#">{{ __('Disable user') }}
+                                                            @if($user->status == 1 && $user->status != '')
+                                                             <a onclick="disableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item text-danger" href="#">{{ __('Disable user') }}
                                                                   </a>
-                                                            @elseif($user->status == 0)
-                                                                    <a onclick="enableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item" href="#">{{ __('Enable user') }}
+                                                            @elseif($user->status == 0 && $user->status != '')
+                                                                    <a onclick="enableSubuser({{$user->status}}, {{$user->id}})" class="dropdown-item" href="#">Enable user
                                                                   </a>
                                                              @endif
 
@@ -134,6 +134,7 @@
 <script type="text/javascript">
     // Delete data with ajax
 function enableSubuser(status, userId) {
+
     swal({
         title: "Enable Selected subuser",
         text: "Do you really want to enable the selected subuser?!",
@@ -150,7 +151,7 @@ function enableSubuser(status, userId) {
                     swal("Poof! The selected subuser has been enabled!", {
                         icon: "success",
                     });
-                    window.location.href = window.location.href; // refresh page
+                    location.reload();
                 },
             });
         } else {
@@ -161,8 +162,8 @@ function enableSubuser(status, userId) {
 
 function disableSubuser(status, userId) {
     swal({
-        title: "Enable Selected subuser",
-        text: "Do you really want to enable the selected subuser?!",
+        title: "Disable Selected subuser",
+        text: "Do you really want to disable the selected subuser?!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
@@ -177,7 +178,7 @@ function disableSubuser(status, userId) {
                     swal("Poof! The selected subuser has been disabled!", {
                         icon: "success",
                     });
-                    window.location.href = window.location.href; // refresh page
+                    location.reload();
                 },
             });
         } else {

@@ -18,7 +18,7 @@ class RenewalUpdateController extends Controller
             'renewal_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'update_date' => 'required',
-            // 'type' => 'required',
+            'bill_remark' => 'required',
             'commments' => 'required',
         ]);
     	  if ($validator->fails()) {
@@ -33,13 +33,16 @@ class RenewalUpdateController extends Controller
         'update_date' => Carbon::parse(formatDate($data['update_date'], 'd/m/Y', 'Y-m-d')),
         'type' => isset($data['type']) ? $data['type'] : null,
         'commments' => $data['commments'],
+        'bill_remark' => $data['bill_remark'],
+        'bill_remark_payment_date' => isset($data['bill_remark_payment_date']) ? Carbon::parse(formatDate($data['bill_remark_payment_date'], 'd/m/Y', 'Y-m-d')) : null,
+
     	]);
     
       if($renewal_update){
-    	return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+    	return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
     }else{
     		Alert::error('Ooops', 'Something went wrong. please try again!!');
-    	return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+    	return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
 
 }
 
@@ -65,13 +68,15 @@ public function editRenewalUpdate(Request $request){
         'update_date' => Carbon::parse(formatDate($data['update_date'], 'd/m/Y', 'Y-m-d')),
         'type' => isset($data['type']) ? $data['type'] : null,
         'commments' => $data['commments'],
+        'bill_remark' => $data['bill_remark'],
+        'bill_remark_payment_date' => isset($data['bill_remark_payment_date']) ? Carbon::parse(formatDate($data['bill_remark_payment_date'], 'd/m/Y', 'Y-m-d')) : null,
         ]);
     
       if($renewal_update){
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back();// redirect()->route('billing.renewal.show', [$request->renewal_id]);
     }else{
             Alert::error('Ooops', 'Something went wrong. please try again!!');
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
 
 }
 
@@ -99,10 +104,10 @@ public function editRenewalUpdate(Request $request){
         ]);
     
       if($renewal_update_reply){
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
     }else{
             Alert::error('Ooops', 'Something went wrong. please try again!!');
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
 
 }
 
@@ -127,10 +132,10 @@ public function editRenewalUpdate(Request $request){
         ]);
     
       if($renewal_update_reply){
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back(); // redirect()->route('billing.renewal.show', [$request->renewal_id]);
     }else{
             Alert::error('Ooops', 'Something went wrong. please try again!!');
-        return redirect()->route('billing.renewal.show', [$request->renewal_id]);
+        return back(); //redirect()->route('billing.renewal.show', [$request->renewal_id]);
 
 }
 
