@@ -120,17 +120,14 @@
 
 <body>
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
+
+  <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
                     <table>
                         <tr>
 
-             @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
-<img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px;  align-content: center;">
-<br>
-<span style="margin: auto;"><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b></span>
-@endif
+
                            
                         </tr>
                     </table>
@@ -139,23 +136,31 @@
             
             <tr class="information">
                 <td colspan="2">
-                    <table>
-                          <tr>
-                            <td colspan="2">
-                                Dear {{$renewal->customer->name}},<br>
-                                <em>
-                                 This is to confirm receipt of the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> for the <strong>{{$renewal->product->name}}</strong> for <strong>{{ $renewal->customer->name }}</strong>
-                                 <br/>
-                                  Please find details below;
-                                </em>
-                            </td>
-                        </tr>
-                    </table>
+                    
                 </td>
             </tr>
         </table>
 
-        <table class="table table-bordered" id="rental_table">
+                  @if(isset($renewal))
+<img class="card-img-top" src="{{ $renewal && $renewal->user ? $renewal->user->company_logo_url : ""}}" alt="company logo" style="margin: auto; height: 140px; width: 150px;  align-content: center;">
+<br>
+      
+{{ $renewal && $renewal->user ? $renewal->user->company_detail->name : ""}}
+@endif
+
+<table>
+      <tr>
+        <td colspan="2">
+            Dear {{$renewal->customer->name}},<br>
+            <em>
+             This is to confirm receipt of the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> for the <strong>{{$renewal->product->name}}</strong> for <strong>{{ $renewal->customer->name }}</strong>
+             <br/>
+              Please find details below;
+            </em>
+        </td>
+    </tr>
+</table>
+      <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>
                    
@@ -218,9 +223,8 @@
                     @endif
                   </table>
 
-<p>Thank you for your continued patronage.</p>
+                  <p>Thank you for your continued patronage.</p>
 <p><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b> Billing Team</p>
-         
 
     </div>
 </body>

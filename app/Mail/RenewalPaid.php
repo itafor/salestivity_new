@@ -34,30 +34,18 @@ class RenewalPaid extends Mailable
      */
     public function build()
     {
-        $text = view(
-            'whatsapp.renewalPaid',
-            [
+       
+        $pdf = PDF::loadView('emails.renewalPaid',[
             'renewal'=> $this->renewal,
-            'payment_status'=> $this->payment_status,
-            ]
-        );
-    
-        whatsappNotification('14157386170', '2347065907948', strip_tags($text));
+            'payment_status' => $this->payment_status
+            ]);
 
-        // $pdf = PDF::loadView(
-        //     'emails.renewalPaid',
-        //     [
-        //     'renewal'=> $this->renewal,
-        //     'payment_status' => $this->payment_status,
-        //     ]
-        // );
-
-        $documentName = 'paymentConfirmation_'.'.pdf';
+        $documentName = 'paymentConfirmation_'.$this->renewal->id.'.pdf';
 
         return $this->view('emails.renewalPaid')
             ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
-            ->subject('Confirmation of Payment');
-        // ->attachData($pdf ? $pdf->output() : "", $documentName);
+            ->subject('Confirmation of Payment')
+            ->attachData($pdf->output(), $documentName);
             // ->cc('billing@digitalweb247.com', 'Digitalweb247');
     }
 }

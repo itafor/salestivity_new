@@ -48,7 +48,7 @@ trait RenewalPaymentTrait {
         }
         
         Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
-        return redirect()->route('billing.renewal.show',$request->renewal_id);
+        return back();//redirect()->route('billing.renewal.show',$request->renewal_id);
     }
 
     public function sendPaymentReceiptToCustomer($renewal_payment){
@@ -76,7 +76,7 @@ public function resendRenwalPaymentReceipt($renewal_payment_id){
         $this->sendPaymentReceiptToCustomer($renewal_payment);
 
          Alert::success('Resend Renewal Payment', 'Renewal payment receipt resent.');
-        return redirect()->route('billing.renewal.show',$renewal_payment->renewal->id);
+        return back();// redirect()->route('billing.renewal.show',$renewal_payment->renewal->id);
 }
 
 }

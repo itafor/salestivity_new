@@ -331,9 +331,9 @@ class RenewalController extends Controller
         
         $data['product'] = $data['renewal']->prod;
 
-        $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
-        $discountedPrice = ($discountValue / 100) * $data['product']->standard_price;
-        $data['currentBillingBalance'] = $data['product']->standard_price - $discountedPrice;
+        // $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
+        // $discountedPrice = ($discountValue / 100) * $data['product']->standard_price;
+        // $data['currentBillingBalance'] = $data['product']->standard_price - $discountedPrice;
 
         return view('billing.renewal.edit', $data);
     }

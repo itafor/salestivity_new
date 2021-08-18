@@ -106,12 +106,12 @@
     <div class="form-row">
 <div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Product Price:') }}
-        <button type="button"  class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" {{$renewal->status == 'Pending' ? "" :"disabled"}} >
+        <!-- <button type="button"  class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" {{$renewal->status == 'Pending' ? "" :"disabled"}} >
   Edit
-</button>
+</button> -->
 </label>
 
-                 <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $product->standard_price)}}" required readonly >
+                 <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $renewal->productPrice)}}" required  {{$renewal->status == 'Pending' ? "" :"readonly"}} >
    
 
     @if ($errors->has('productPrice'))
@@ -123,7 +123,7 @@
     
 <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-4" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
-    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" {{$renewal->status == 'Pending' ? "" :"disabled"}}>
+    <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" {{$renewal->status == 'Pending' ? "" :"readonly"}}>
 
     @if ($errors->has('discount'))
         <span class="invalid-feedback" role="alert">
@@ -139,7 +139,7 @@
    
 <div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
     <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
-    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $currentBillingBalance ? $currentBillingBalance : $renewal->billingAmount)}}" required readonly="">
+    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $renewal->billingAmount)}}" required readonly="">
 
     @if ($errors->has('billingAmount'))
         <span class="invalid-feedback" role="alert">
