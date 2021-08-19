@@ -64,7 +64,7 @@
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
-                     <td>&#8358;{{ number_format($product->standard_price,2) }}
+                     <td>{!! $product->currency ? $product->currency->symbol : '&#8358;' !!}{{ number_format($product->standard_price,2) }}
                      </td>
                    </tr>
 

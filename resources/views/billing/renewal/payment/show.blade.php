@@ -23,9 +23,9 @@
                     <td>{{$payment->product ? $payment->product->name : 'N/A' }}</td>
                     <td>{{$payment->status}}</td>
                      
-                    <td>&#8358;{{ number_format($payment->billingAmount,2)}}</td>
-                    <td>&#8358;{{ number_format($payment->amount_paid,2)}}</td>
-                    <td>&#8358;{{ number_format($payment->billingbalance,2)}}</td>
+                    <td>{!! $payment->product && $payment->product->currency ? $payment->product->currency->symbol : '&#8358;' !!}{{ number_format($payment->billingAmount,2)}}</td>
+                    <td>{!! $payment->product && $payment->product->currency ? $payment->product->currency->symbol : '&#8358;' !!}{{ number_format($payment->amount_paid,2)}}</td>
+                    <td>{!! $payment->product && $payment->product->currency ? $payment->product->currency->symbol : '&#8358;' !!}{{ number_format($payment->billingbalance,2)}}</td>
                     <td>{{ date("jS F, Y", strtotime($payment->payment_date)) }}</td>
                       <td>
 

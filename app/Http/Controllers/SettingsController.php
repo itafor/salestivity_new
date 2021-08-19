@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CompanyAccountDetail;
 use App\CompanyDetail;
 use App\CompanyEmail;
+use App\CurrencySymbol;
 use App\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -170,5 +171,21 @@ public function updateCompanyEmail(Request $request)
         
        return redirect()->route('company_details.index');
     }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyCurrencySymbol($id)
+    {
+         $currency = CurrencySymbol::findOrFail($id);
+         if($currency){
+            $currency->delete();
+        return redirect()->back()->withStatus(__('Currency symbol deleted successfully'));
+         }
+    }
+
 
 }

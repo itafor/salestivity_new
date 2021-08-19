@@ -286,6 +286,7 @@ Route::group([
     Route::post('/edit-email', 'SettingsController@updateCompanyEmail')->name('company.update.email');
     Route::post('/add-bank-account', 'SettingsController@addCompanyBankAccount')->name('company.add.bank_account.detail');
     Route::post('/edit-bank-detail', 'SettingsController@updateCompanyBankDetail')->name('company.update.bank.account');
+      Route::get('/destroy/{id}', 'SettingsController@destroyCurrencySymbol')->name('destroy.currency.symbol');
 });
 
 Route::group([
@@ -298,6 +299,8 @@ Route::group([
     Route::get('/show/{id}', 'EmailMarketingController@showEmail')->name('email.marketing.show');
 });
 
+  Route::resource('currency', CurrencyController::class);
+ 
 // Route::group([
 //     'prefix' => 'location'
 // ], function () {

@@ -87,7 +87,7 @@
 
   <div class="row">
     <div class="col">
-<label class="form-control-label" for="productPrice">{{ __('Product Price') }}</label>
+<label class="form-control-label" for="productPrice">{{ __('Product Price') }} <span class="currency"></span></label>
     <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value=" " required readonly="">
 
     @if ($errors->has('productPrice'))
@@ -107,7 +107,7 @@
     @endif
     </div>
     <div class="col">
-<label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
+<label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} <span class="currency"></span></label>
         <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
 
         @if ($errors->has('billingAmount'))

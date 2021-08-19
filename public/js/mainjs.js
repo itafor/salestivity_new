@@ -173,6 +173,8 @@ $("#product_id").change(function () {
                     data.category + ", " + data.subcategory
                 );
                 billinga_amount = data.products.standard_price.toFixed(2);
+                $('.currency').empty();
+                $('.currency').append("(" + data.currency + ")");
             },
         });
     } else {

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Product;
 use App\Category;
+use App\CurrencySymbol;
+use App\Product;
 use App\SubCategory;
+use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use Session;
 use Validator;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
 {
@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function create()
     {
 
-       
+       $data['currencies'] = CurrencySymbol::all();
         $data['categories'] = Category::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
@@ -81,6 +81,7 @@ class ProductController extends Controller
             'sub_category_id' => 'required',
             'description' => 'required',
             'standard_price' => 'required',
+            'currency_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +98,9 @@ class ProductController extends Controller
             $product->main_acct_id = $guard_object->main_acct_id;
             $product->created_by = $guard_object->created_by;
             $product->user_type = $guard_object->user_type;
+            $product->currency_id = $request->currency_id;
+            
+
             $product->save();
 
         } catch (\Throwable $th) {
@@ -136,7 +140,7 @@ class ProductController extends Controller
      */
     public function editProduct($id)
     {
-        
+        $data['currencies'] = CurrencySymbol::all();
         $data['product'] = Product::find($id);
 
         if( $data['product']->category == '' ||  $data['product']->sub_category =='' ){
@@ -163,6 +167,7 @@ class ProductController extends Controller
             'sub_category_id' => 'required',
             'description' => 'required',
             'standard_price' => 'required',
+            'currency_id' => 'required',
             ]);
     
             if($validator->fails()){

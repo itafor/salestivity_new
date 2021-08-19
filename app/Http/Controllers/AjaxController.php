@@ -129,6 +129,7 @@ elseif ($itemModel == 'retailFieldSale') {
 
         return response()->json([
             'products' => $products,
+            'currency' => $products->currency ? $products->currency->symbol : '&#8358;',
             'category' => $products->category ? $products->category->name : 'N/A',
             'subcategory' => $products->sub_category ? $products->sub_category->name : 'N/A',
         ]);

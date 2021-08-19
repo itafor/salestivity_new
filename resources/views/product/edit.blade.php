@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="row">
                                  
-                                      <div class="col-xl-6">
+                                      <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="name">{{ __('Product Name') }}</label>
                                             <input type="text" name="name" id="name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Name') }}" value="{{ $product->name }}" required autofocus>
@@ -72,7 +72,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('standard_price') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="standard_price">{{ __('Standard Price') }}</label>
                                             <input type="number" name="standard_price" id="standard_price" class="form-control form-control-alternative{{ $errors->has('standard_price') ? ' is-invalid' : '' }}" placeholder="{{ __('Standard Price') }}" value="{{ $product->standard_price }}" required autofocus>
@@ -80,6 +80,22 @@
                                             @if ($errors->has('standard_price'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('standard_price') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                      <div class="col-xl-4">
+                                        <div class="form-group{{ $errors->has('currency_id') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
+                                           <select name="currency_id" id="currency_id" class="form-control" data-toggle="select">
+                                                
+                                                    @foreach($currencies as $currency)
+                                                    <option value="{{ $currency->id }}" {{ $product->currency !='' && $product->currency->id  == $currency->id ? 'selected' :'' }}>{!! $currency->symbol !!}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('currency_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('currency_id') }}</strong>
                                                 </span>
                                             @endif
                                         </div>

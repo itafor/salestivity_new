@@ -326,7 +326,12 @@
                                               List parameters
                                             </a>
                                         </li>
-                                        
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('currency.index')}}">
+                                              Currencies
+                                            </a>
+                                        </li>
+                                       
                                 </ul>
                                 
                                 </ul>  

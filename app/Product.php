@@ -39,6 +39,11 @@ class Product extends Model
         return $this->hasMany(RenewalPayment::class);
     }
 
+    public function currency()
+    {
+        return $this->belongsTo('App\CurrencySymbol', 'currency_id','id');
+    }
+
       public static function updateProduct($data)
     {
 
@@ -47,9 +52,11 @@ class Product extends Model
         ])->update([
            'category_id' => $data['category_id'],
            'sub_category_id' => $data['sub_category_id'],
+           'currency_id' => $data['currency_id'],
            'name' => $data['name'],
            'description' =>  $data['description'],
            'standard_price' =>  $data['standard_price'],
+           'currency_id' =>  $data['currency_id'],
         ]); 
 
         return $product;
