@@ -157,7 +157,7 @@
             </tr>
         </table>
 
-<h4>Invoice payment DETAILS</h4>
+<h4>Invoice payment details</h4>
         <table class="table table-bordered" id="rental_table">
            @if(isset($paid_invoice))
                     <tbody>
@@ -169,14 +169,14 @@
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount') }}</b></td>
-                     <td>&#8358;{{ number_format($paid_invoice->invoice->billingAmount,2) }}
+                     <td> {!! $paid_invoice->invoice->prod && $paid_invoice->invoice->prod->currency ? $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->billingAmount,2) }}
                      </td>
                    </tr>
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount Paid') }}</b></td>
                      <!-- <td>&#8358;{{ number_format($paid_invoice->amount_paid,2) }} -->
-                     <td>&#8358;{{ number_format($paid_invoice->invoice->amount_paid,2)}}
+                     <td> {!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->amount_paid,2)}}
                      </td>
                    </tr>
                        <tr>
@@ -186,7 +186,7 @@
 
                    <tr>
                      <td style="width: 120px;"><b>{{ __('Balance') }}</b></td>
-                     <td>&#8358;{{ number_format($paid_invoice->billingbalance,2) }}
+                     <td>{!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->billingbalance,2) }}
                      </td>
                    </tr>
                     

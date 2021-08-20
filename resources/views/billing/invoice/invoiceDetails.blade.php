@@ -5,20 +5,9 @@
 
 
 @if(isset($invoice))
-                              <?php   
-                            $currentStatus= "";
-                            if(isset($invoice)){
-                            if($invoice->status == 'Partly paid'){
-                            $currentStatus = "partly_paid";
-                            }elseif($invoice->status == 'Pending'){
-                            $currentStatus = "outstanding";
-                            }elseif($invoice->status == 'Paid'){
-                            $currentStatus = "paid";
-                            }else{
-                            $currentStatus = "all";
-                            }
-                            }
-                            ?>
+              <?php   
+            $currentStatus= invoicePaymentStatus($invoice);
+              ?>
                          <div class="col-6">
                                  <a href="{{ route('billing.invoice.navigate', [$invoice->id, $currentStatus, 'previous']) }}" title="Previous {{$currentStatus}} Invoice">
                                 <button class="btn btn-default btn-sm float-left"
@@ -148,7 +137,7 @@
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
-                     <td>&#8358;{{ number_format($invoice->cost,2) }}
+                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->cost,2) }}
                      </td>
                    </tr>
 
@@ -161,17 +150,17 @@
 
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
-                     <td>&#8358;{{ number_format($invoice->billingAmount,2) }}
+                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingAmount,2) }}
                      </td>
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>&#8358;{{ number_format($invoice->amount_paid,2) }}
+                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->amount_paid,2) }}
                      </td>
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Balance') }}</b></td>
-                     <td>&#8358;{{ number_format($invoice->billingBalance,2) }}
+                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
                      </td>
                    </tr>
                    

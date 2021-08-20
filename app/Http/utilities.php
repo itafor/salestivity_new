@@ -292,3 +292,34 @@ function whatsappNotification($from_number, $to_number, $text_messages)
     $data = $response->getBody();
     Log::Info($data);
 }
+
+ function renewalPaymentStatus($renewal)
+   {
+        if(isset($renewal)){
+        if($renewal->status == 'Partly paid'){
+        return  "partly_paid";
+        }elseif($renewal->status == 'Pending'){
+         return "outstanding";
+        }elseif($renewal->status == 'Paid'){
+         return "paid";
+        }else{
+         return "all";
+        }
+        }
+    }
+
+    function invoicePaymentStatus($invoice)
+    {
+        if(isset($invoice)){
+        if($invoice->status == 'Partly paid'){
+        return "partly_paid";
+        }elseif($invoice->status == 'Pending'){
+        return "outstanding";
+        }elseif($invoice->status == 'Paid'){
+       return "paid";
+        }else{
+        return "all";
+        }
+        }
+
+    }

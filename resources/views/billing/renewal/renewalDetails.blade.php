@@ -3,18 +3,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <?php   
-                            $currentStatus= "";
-                            if(isset($renewal)){
-                            if($renewal->status == 'Partly paid'){
-                            $currentStatus = "partly_paid";
-                            }elseif($renewal->status == 'Pending'){
-                            $currentStatus = "outstanding";
-                            }elseif($renewal->status == 'Paid'){
-                            $currentStatus = "paid";
-                            }else{
-                            $currentStatus = "all";
-                            }
-                            }
+                            $currentStatus= renewalPaymentStatus($renewal);
                             ?>
                             <div class="col-6">
                                  <a href="{{ route('billing.renewal.navigate', [$renewal->id, $currentStatus, 'previous']) }}" title="Previous {{$currentStatus}} Recurring Invoice">

@@ -109,6 +109,7 @@
         <!-- <button type="button"  class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" {{$renewal->status == 'Pending' ? "" :"disabled"}} >
   Edit
 </button> -->
+<span class="currency">({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</span>
 </label>
 
                  <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $renewal->productPrice)}}" required  {{$renewal->status == 'Pending' ? "" :"readonly"}} >
@@ -138,7 +139,7 @@
 
    
 <div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
-    <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }}</label>
+    <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} <span class="currency">({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</span></label>
     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $renewal->billingAmount)}}" required readonly="">
 
     @if ($errors->has('billingAmount'))

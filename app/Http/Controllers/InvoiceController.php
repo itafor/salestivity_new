@@ -333,6 +333,7 @@ class InvoiceController extends Controller
         DB::beginTransaction();
         try {
             $paid_invoice =  InvoicePayment::createNew($request->all());
+            // dd($paid_invoice);
             $toEmail = $paid_invoice->customer->email;
             if ($toEmail) {
                 Mail::to($toEmail)->queue(new InvoicePaid($paid_invoice));
@@ -345,8 +346,9 @@ class InvoiceController extends Controller
             return back()->withInput();
         }
         
+         $paymentStatus = invoicePaymentStatus($paid_invoice->invoice);
         Alert::success('Invoice Payment', 'Invoice payment recorded successfully');
-        return redirect()->route('billing.invoice.show', $request->invoice_id);
+        return redirect()->route('billing.invoice.show', [$request->invoice_id, $paymentStatus, 'next']);
     }
 
 

@@ -10,6 +10,7 @@ use App\renewalContactEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 
@@ -47,9 +48,12 @@ trait RenewalPaymentTrait {
             
         }
         
+        $paymentStatus = renewalPaymentStatus($renewal_payment->renewal);
         Alert::success('Renewal Payment', 'Renewal payment recorded successfully');
-        return back();//redirect()->route('billing.renewal.show',$request->renewal_id);
+        
+        return redirect()->route('billing.renewal.show',[$request->renewal_id, $paymentStatus, 'next']);
     }
+
 
     public function sendPaymentReceiptToCustomer($renewal_payment){
 
