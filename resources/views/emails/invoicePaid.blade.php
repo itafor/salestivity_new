@@ -146,7 +146,7 @@
                             <td colspan="2">
                                 Dear {{$paid_invoice->customer->name}},<br>
                                 <em>
-                                 This is to confirm receipt of the sum of <strong>&#8358;{{number_format($paid_invoice->amount_paid,2)}}</strong> for the <strong>{{$paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A'}}</strong> for <strong>{{ $paid_invoice->customer->name }}</strong>
+                                 This is to confirm receipt of the sum of <strong> {!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{number_format($paid_invoice->amount_paid,2)}}</strong> for the <strong>{{$paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A'}}</strong> for <strong>{{ $paid_invoice->customer->name }}</strong>
                                  <br/>
                                   Please find details below;
                                 </em>

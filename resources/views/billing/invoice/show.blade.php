@@ -14,4 +14,9 @@
 
     </div>
 
+<script type="text/javascript">
+	function hideInvoicePaymentModal(argument) {
+    $("#invoice-payment-modal-form").modal("hide");
+	}
+</script>
 @endsection

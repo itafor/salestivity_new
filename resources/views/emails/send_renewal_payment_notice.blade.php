@@ -152,7 +152,8 @@
     <td colspan="2">
         Dear {{$renewal->customer->name}},<br>
         <em>
-         This is to confirm receipt of the sum of <strong>&#8358;{{number_format($renewal->amount_paid,2)}}</strong> for the <strong>{{$renewal->product->name}}</strong> for <strong>{{ $renewal->customer->name }}</strong>
+         This is to confirm receipt of the sum of <strong>{!! $renewal->product && $renewal->product->currency ? $renewal->product->currency->symbol : '&#8358;' !!}
+            {{number_format($renewal->amount_paid,2)}}</strong> for the <strong>{{$renewal->product->name}}</strong> for <strong>{{ $renewal->customer->name }}</strong>
          <br/>
           Please find details below;
         </em>
@@ -173,13 +174,13 @@
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount') }}</b></td>
-                     <td>&#8358;{{ number_format($renewal->renewal->billingAmount,2) }}
+                     <td>{!! $renewal->product && $renewal->product->currency ? $renewal->product->currency->symbol : '&#8358;' !!}{{ number_format($renewal->renewal->billingAmount,2) }}
                      </td>
                    </tr>
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>&#8358;{{ number_format($renewal->renewal->amount_paid,2) }}
+                     <td>{!! $renewal->product && $renewal->product->currency ? $renewal->product->currency->symbol : '&#8358;' !!}{{ number_format($renewal->renewal->amount_paid,2) }}
                      </td>
                    </tr>
                       <tr>
@@ -189,7 +190,7 @@
 
                    <tr>
                      <td style="width: 120px;"><b>{{ __('Balance') }}</b></td>
-                     <td>&#8358;{{ number_format($renewal->billingbalance,2) }}
+                     <td>{!! $renewal->product && $renewal->product->currency ? $renewal->product->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingbalance,2) }}
                      </td>
                    </tr>
                     

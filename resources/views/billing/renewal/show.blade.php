@@ -47,6 +47,12 @@
 </div>
     @endif
     </div>
+<script type="text/javascript">
+   
+    function hideRenewalPaymentModal(argument) {
+    $("#modal-form").modal("hide");
+    }
 
+</script>
 @endsection
 
