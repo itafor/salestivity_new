@@ -45,7 +45,7 @@ class RenewalPaid extends Mailable
         return $this->view('emails.renewalPaid')
             ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
             ->subject('Confirmation of Payment')
-            ->attachData($pdf->output(), $documentName);
-            // ->cc('billing@digitalweb247.com', 'Digitalweb247');
+            ->attachData($pdf->output(), $documentName)
+            ->cc('billing@digitalweb247.com', 'Digitalweb247');
     }
 }
