@@ -188,13 +188,9 @@ Find below the details of the invoice.
 </td>
 </tr>
 <tr>
-<td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
+<td style="width: 150px;"><b>{{ __('Total Amount') }}</b></td>
 <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
 </td>
-</tr>
-<tr>
-<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
-<td>{{ date("jS F, Y", strtotime($invoice->due_date)) }}</td>           
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Payment Method') }}</b></td>
@@ -209,6 +205,22 @@ Find below the details of the invoice.
 <span>No matching records found</span>
 @endif
 </table>
+<hr>
+<table class="table table-bordered" id="rental_table">
+    <tbody>
+<tr>
+<td style="width: 150px;"><b>{{ __('Payment Due') }}</b></td>
+<td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
+</td>
+</tr>
+<tr>
+<td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
+<td>{{ date("jS F, Y", strtotime($invoice->due_date)) }}</td>           
+</tr>
+</tbody>
+</table>
+<h4>Terms and conditions</h4>
+<p>{!! $invoice->term_condition !!}</p>
 <p>Thank you for your continuous patronage.</p>
 <p><b>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</b>  Billing Team.</p>
 

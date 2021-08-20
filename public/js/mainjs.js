@@ -169,6 +169,9 @@ $("#product_id").change(function () {
                 $("#billingAmount").val(
                     data.products.standard_price.toFixed(2)
                 );
+                 $("#payment_due").val(
+                    data.products.standard_price.toFixed(2)
+                );
                 $("#renewal_description").val(
                     data.category + ", " + data.subcategory
                 );
@@ -201,14 +204,18 @@ $("body").on("keyup", "#discount", function () {
             let discountedPrice = (discount / 100) * product_price;
             let final_price = (product_price - discountedPrice).toFixed(2);
             $("#billingAmount").val(final_price);
+           $("#payment_due").val(final_price);
+
             if (final_price == "" || discount == "") {
                 $("#billingAmount").val(billinga_amount);
+                $("#payment_due").val(billinga_amount);
             }
         }
     } else {
         $("#billingAmount").val("");
         $("#discount").val("");
         $("#billingAmount").val(billinga_amount);
+
         //alert('Discount must not be more than 100')
         swal("Maximun Discount!", "...Discount must not be more than 100 %!");
     }

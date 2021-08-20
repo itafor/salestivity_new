@@ -152,6 +152,8 @@ class InvoiceController extends Controller
             'company_email_id.required' => 'company email  is required',
             'company_bank_acc_id.required' => 'company bank account is required',
             'due_date.required' => 'Due date is required',
+            'payment_due.required' => 'Payment Due is required',
+            'term_condition.required' => 'Term and condition is required',
 
             
         ];
@@ -178,6 +180,8 @@ class InvoiceController extends Controller
         $invoice->company_bank_acc_id = $request->company_bank_acc_id;
         $invoice->due_date = Carbon::parse(formatDate($request->due_date, 'd/m/Y', 'Y-m-d'));
         $invoice->invoice_number = 'DW'.mt_rand(1000, 9999);
+        $invoice->payment_due = $request->payment_due;
+        $invoice->term_condition = $request->term_condition;
         $invoice->save();
 
         if ($invoice) {

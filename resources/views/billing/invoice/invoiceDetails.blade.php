@@ -190,6 +190,19 @@
                      <td style="width: 200px;"><b>{{ __('Delivery Email') }}</b></td>
                 <td>{{ $invoice->compEmail ? $invoice->compEmail->email : 'N/A' }}</td>           
               </tr>
+               <tr>
+                     <td style="width: 200px;"><b>{{ __('Payment Due') }}</b></td>
+                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
+                     </td>
+                   </tr>
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Terms and conditions') }}</b></td>
+                     <td>
+                      <p> {!!$invoice->term_condition ?  $invoice->term_condition : 'N/A' !!}</p>
+                     </td>
+                   </tr>
+
+
               <tr>
                  <td style="width: 200px;"><b>{{ __('Bank Account') }}</b></td>
                  <td> <strong>Bank</strong> : {{$invoice->compBankAcct ? $invoice->compBankAcct->bank_name : 'N/A' }}, <strong>Account Name</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_name : 'N/A' }}, <strong>Account Number</strong>: {{$invoice->compBankAcct ? $invoice->compBankAcct->account_number : 'N/A' }} </td>

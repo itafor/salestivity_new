@@ -97,7 +97,7 @@
                                  <div class="row">
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
+                                    <label class="form-control-label" for="cost">{{ __('Cost') }} <span class="currency"></span></label>
                                     <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
@@ -122,9 +122,9 @@
 
 
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                          <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }}</label>
+                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }} <span class="currency"></span></label>
                                     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
                                     @if ($errors->has('billingAmount'))
                                         <span class="invalid-feedback" role="alert">
@@ -134,7 +134,37 @@
                                 </div>
                                     </div>
 
-                                    <div class="col-4">
+                
+
+                                    <div class="col-6">
+                                             
+                                <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
+                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ old('timeline') }}" required>
+
+                                    @if ($errors->has('timeline'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('timeline') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-6">
+                                         <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="payment_due">{{ __('Payment Due') }} <span class="currency"></span></label>
+                                    <input type="number" min="1" name="payment_due" id="payment_due" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" placeholder="{{ __('Payment due') }}" value=" " required >
+                                    @if ($errors->has('payment_due'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('payment_due') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                    </div>
+
+                                    <div class="col-6">
                                              
                                 <div class="form-group{{ $errors->has('due_date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="timeline">{{ __('Due Date') }}</label>
@@ -148,15 +178,18 @@
                                 </div>
                                     </div>
 
-                                    <div class="col-4">
-                                             
-                                <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
-                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ old('timeline') }}" required>
+                                  
+                                </div>
 
-                                    @if ($errors->has('timeline'))
+                                <div class="row">
+                                    <div class="col-12">
+                                         <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="payment_due">{{ __('Terms and Conditions') }}</label>
+                                 
+                                    <textarea name="term_condition" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" placeholder="Terms and conditions" rows="5" required></textarea>
+                                    @if ($errors->has('payment_due'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('timeline') }}</strong>
+                                            <strong>{{ $errors->first('payment_due') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -211,5 +244,34 @@
         
         @include('layouts.footers.auth')
     </div>
+<script type="text/javascript">
+    //auto input billing balance when amout paid is entered
+$("body").on("keyup", "#payment_due", function () {
+    let paymentdue = $(this).val();
+    // alert(paymentdue);
+    let balance = 0;
+    let billingAmount = $("#billingAmount").val();
+    if (parseFloat(paymentdue) > parseFloat(billingAmount)) {
+        alert(
+            "Ooops!! Payment due exceed Billing Amount, please check and try again"
+        );
+        
+        $("#payment_due").val("");
+        $("#payment_due").val(billingAmount);
+
+    } else {
+        // $("#payment_due").val(billingAmount);
+    }
+});
+// disallow negative or zero input
+$(document).on("keyup", "#payment_due", function (e) {
+    e.preventDefault();
+    let value = e.target.value;
+    if (value <= 0) {
+        $(this).val("");
+    }
+});
+
+</script>
 
 @endsection
