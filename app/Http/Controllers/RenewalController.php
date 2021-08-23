@@ -94,7 +94,6 @@ class RenewalController extends Controller
      case 'due':
             $renewals = Renewal::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ['bill_status', 'Sent'],
         ['billingBalance', '>', 0],
     ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)
     ->orderby('created_at', 'asc')->with(['customers','prod'])->get();

@@ -268,22 +268,23 @@
 
                             <span style="color: gray; border-radius: 5px; display: none;" id="moreRenewalUpdateComment{{$update->id}}">{{$update->commments}} <b onclick="seeLessRenewalUpdateComment({{$update->id}})" style="cursor: pointer;">&nbsp;See Less</b></span>
 
-
-                                @if(loginUserId() == $update->user->id)
-                                <div class="row">
+                            <div class="row">
                                      <div class="col-8 d-flex mt-2">
                                         
+                                @if(loginUserId() == $update->user->id)
+                               
                                         <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit renewal update"></i> </span>&nbsp;&nbsp;
                                        
                                           <a onclick="return confirm_delete()"  href="{{route('items.destroy',['renewalUpdate',$update->id])}}">&nbsp;<i class="fa fa-trash text-danger" aria-hidden="true" title="Delete renewal update"></i>&nbsp; &nbsp; </a>
 
                                          <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; </span>&nbsp;&nbsp;
-                                    </div>
-                                     <div class="col-4">
+
+                                @endif
+                          </div>
+                          <div class="col-4">
                                         <div class="pull-right reply"> <span onclick="renewalUpdateReplies({{$update->id}})" style="cursor: pointer;">  <label id="hideRenewalReplyLabel{{$update->id}}" style="display: none;">Hide</label> <label id="">Replies</label> ({{count($update->updateReplies)}})</span> </div>
                                     </div>
                                 </div>
-                         @endif
 
                                 <!-- edit update form -->
             <div class="row mt-4" id="editRenewalUpdate{{$update->id}}form" style="display: none;">
