@@ -73,6 +73,8 @@
                 @endforeach
                 </tbody>
                 @include('billing.billfooter')
+
+         
                 </table>
 
                 </div>

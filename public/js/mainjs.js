@@ -50,7 +50,7 @@ $(".edit_bill_remark_class").change(function () {
 
 
 
-
+//Datatable
 $(document).ready(function () {
     $(".datatable").DataTable({
         dom: "lTfgitp",

@@ -10,14 +10,14 @@
               ?>
                          <div class="col-6">
                                  <a href="{{ route('billing.invoice.navigate', [$invoice->id, $currentStatus, 'previous']) }}" title="Previous {{$currentStatus}} Invoice">
-                                <button class="btn btn-default btn-sm float-left"
+                                <button class="btn btn-primary btn-sm float-left"
                                 {{isset($minId) && $minId == $currentId ? "disabled" : "" }} ><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
 
                                  </a>
 
                                   <a href="{{ route('billing.invoice.navigate', [$invoice->id, $currentStatus, 'next']) }}"  title="Next {{$currentStatus}} Invoice">                        
 
-                                    <button class="btn btn-default btn-sm float-right"
+                                    <button class="btn btn-primary btn-sm float-right"
                                     {{isset($maxId) && $maxId == $currentId ? "disabled" : "" }}><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                                  </a>
 
