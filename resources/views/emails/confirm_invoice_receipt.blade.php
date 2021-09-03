@@ -136,9 +136,16 @@ text-align: left;
 This is to inform you that the Invoice with Invoice Number <b>{{$invoice->invoice_number}}</b> has been confirmed by the recipient.
 </p>
 <p>
-Please click <a href="{{ route('billing.invoice.show', [$invoice->id]) }}">HERE</a> to view invoice details
+	@if(isset($invoice))
+              <?php   
+            $currentStatus= invoicePaymentStatus($invoice);
+              ?>
+
+Please click <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}">HERE</a> to view invoice details
 </p>
+@endif
 Thanks.
+
 </div>
 </div>
 </div>

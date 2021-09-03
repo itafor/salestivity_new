@@ -136,8 +136,16 @@ text-align: left;
 This is to inform you that the Recurring Invoice with Invoice Number <b>{{$renewal->invoice_number}}</b> has been confirmed by the recipient.
 </p>
 <p>
-Please click <a href="{{ route('billing.renewal.show', [$renewal->id]) }}">HERE</a> to view invoice details
+
+@if($renewal)
+
+<?php   
+   $currentStatus= renewalPaymentStatus($renewal);
+?>
+
+Please click <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'next']) }}">HERE</a> to view invoice details
 </p>
+@endif
 Thanks.
 </div>
 </div>

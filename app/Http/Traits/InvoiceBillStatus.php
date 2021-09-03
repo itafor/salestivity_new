@@ -36,31 +36,37 @@ public static function update_invoice_bill_status_to_confirmed($invoice){
 
    public function changeInvoiceBillStatusToConfirmed($invoice_id){
         $invoice = Invoice::find($invoice_id);
-
+         $paymentStatus = invoicePaymentStatus($invoice);
+        
         if($invoice->bill_status == 'Confirmed'){
              Alert::success('Bill Status', 'Bill status already changed to confirmed');
-    return redirect()->route('billing.invoice.show',$invoice_id);
+   
+    return redirect()->route('billing.invoice.show', [$invoice_id, $paymentStatus, 'next']);
+
         }else{
 
            self::update_invoice_bill_status_to_confirmed($invoice);
 
              Alert::success('Bill Status', 'Bill status changed to confirmed!!');
-    return redirect()->route('billing.invoice.show',$invoice_id);
+    return redirect()->route('billing.invoice.show', [$invoice_id, $paymentStatus, 'next']);
+
         }
 }
 
   public function changeInvoiceBillStatusToSent($invoice_id){
         $invoice = Invoice::find($invoice_id);
-        // dd($invoice);
+         $paymentStatus = invoicePaymentStatus($invoice);
+       
         if($invoice->bill_status == 'Sent'){
              Alert::success('Bill Status', 'Bill status already changed to sent');
-    return redirect()->route('billing.invoice.show',$invoice_id);
+    return redirect()->route('billing.invoice.show', [$invoice_id, $paymentStatus, 'next']);
+
         }else{
 
             self::update_invoice_bill_status_to_sent($invoice);
 
              Alert::success('Bill Status', 'Bill status changed to sent!!');
-    return redirect()->route('billing.invoice.show',$invoice_id);
+    return redirect()->route('billing.invoice.show', [$invoice_id, $paymentStatus, 'next']);
         }
 }
 

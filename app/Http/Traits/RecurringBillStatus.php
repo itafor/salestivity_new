@@ -30,31 +30,36 @@ public function confirmRecurringInvoiceReceipt($renewal_id){
 
    public function changeBillStatusToConfirmed($renewal_id){
         $renewal = Renewal::find($renewal_id);
-
+        $paymentStatus = renewalPaymentStatus($renewal);
         if($renewal->bill_status == 'Confirmed'){
              Alert::success('Bill Status', 'Bill status already changed to confirmed');
-    return redirect()->route('billing.renewal.show',$renewal_id);
+    return redirect()->route('billing.renewal.show',[$renewal_id, $paymentStatus, 'next']);
+
         }else{
 
             CronJobController::update_renewal_bill_status_to_confirmed($renewal);
 
              Alert::success('Bill Status', 'Bill status changed to confirmed!!');
-    return redirect()->route('billing.renewal.show',$renewal_id);
+    return redirect()->route('billing.renewal.show',[$renewal_id, $paymentStatus, 'next']);
+    
+
         }
 }
 
   public function changeBillStatusToSent($renewal_id){
         $renewal = Renewal::find($renewal_id);
-        // dd($renewal);
+         $paymentStatus = renewalPaymentStatus($renewal);
         if($renewal->bill_status == 'Sent'){
              Alert::success('Bill Status', 'Bill status already changed to sent');
-    return redirect()->route('billing.renewal.show',$renewal_id);
+    return redirect()->route('billing.renewal.show',[$renewal_id, $paymentStatus, 'next']);
+
         }else{
 
             CronJobController::update_renewal_bill_status_to_sent($renewal);
 
              Alert::success('Bill Status', 'Bill status changed to sent!!');
-    return redirect()->route('billing.renewal.show',$renewal_id);
+    return redirect()->route('billing.renewal.show',[$renewal_id, $paymentStatus, 'next']);
+
         }
 }
 
