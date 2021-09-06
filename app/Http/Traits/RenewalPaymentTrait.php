@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
+use PDF;
 
 trait RenewalPaymentTrait
 {
@@ -80,4 +81,20 @@ trait RenewalPaymentTrait
         Alert::success('Resend Renewal Payment', 'Renewal payment receipt resent.');
         return back();// redirect()->route('billing.renewal.show',$renewal_payment->renewal->id);
     }
+
+  public function downloadRenewalPaymentReceipt($renewal_payment_id){
+    
+        $renewal_payment = RenewalPayment::where('id', $renewal_payment_id)->first();
+
+       $pdf = PDF::loadView('emails.renewalPaid',[
+            'renewal'=> $renewal_payment,
+            'payment_status' => $renewal_payment
+            ]);
+
+        $documentName = 'paymentConfirmation_'.$renewal_payment->id.'.pdf';
+
+
+      return $pdf->download($documentName);
+   }
+
 }

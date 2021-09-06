@@ -31,6 +31,8 @@
 
                     <div class="col-4 text-right">
                         <a onclick="return confirmReceiptResend()" href="{{ route('resend.renewal.payment.receipt', [$payment->id]) }}" class="btn btn-sm btn-success" title="Resend Payment Receipt">Resend Receipt</a>
+
+                        <a  href="{{ route('download.renewal.payment.receipt', [$payment->id]) }}" class="btn btn-sm btn-success" title="Resend Payment Receipt">Download Receipt</a>
                       
                     </div>
                 </td>

@@ -177,6 +177,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('send/recurring/invoice/{id}', 'RenewalController@changeBillStatusToSent')->name('recurring.bill.status.sent');
 
     Route::get('resend/payment/receipt/{id}', 'RenewalController@resendRenwalPaymentReceipt')->name('resend.renewal.payment.receipt');
+   Route::get('download/payment/receipt/{id}', 'RenewalController@downloadRenewalPaymentReceipt')->name('download.renewal.payment.receipt');
+
 
     //renewal updates
     Route::post('renewal_update', 'RenewalUpdateController@storeUpdate')->name('renewal.update.store');

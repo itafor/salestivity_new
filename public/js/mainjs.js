@@ -96,7 +96,7 @@ $(document).ready(function () {
 
             // Update footer
             $(api.column(4).footer()).html(
-                "&#8358;" + pageTotal.toLocaleString() + " of &#8358;" + total.toLocaleString() + " total"
+                "&#8358;" + pageTotal.toLocaleString() + " of &#8358;" + total.toLocaleString()
             );
         },
     });

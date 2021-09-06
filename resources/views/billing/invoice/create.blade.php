@@ -125,7 +125,7 @@
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="discount">{{ __('Billing Amount') }} <span class="currency"></span></label>
-                                    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
+                                    <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required>
                                     @if ($errors->has('billingAmount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('billingAmount') }}</strong>
@@ -245,6 +245,22 @@
         @include('layouts.footers.auth')
     </div>
 <script type="text/javascript">
+
+    //Assign billing amount to payment due
+    $("#productPrice").on("keyup", function(){
+      let   productPrice = $(this).val();
+    $("#billingAmount").val(productPrice);
+    $("#payment_due").val(productPrice);
+    $("#discount").val('');
+    })
+
+//Assign billing amount to payment due
+    $("#billingAmount").on("keyup", function(){
+      let   billingAmount = $(this).val();
+    $("#payment_due").val(billingAmount);
+    $("#discount").val('');
+    })
+
     //auto input billing balance when amout paid is entered
 $("body").on("keyup", "#payment_due", function () {
     let paymentdue = $(this).val();
