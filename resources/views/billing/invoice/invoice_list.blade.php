@@ -15,8 +15,8 @@
     <th scope="col">{{ __('End Date') }}</th>
     <th scope="col">{{ __('Customer') }}</th>
     <th scope="col">{{ __('Author') }}</th>
-    <th scope="col">{{ __('Product') }}</th>
     <th scope="col">{{ __('Billing Amount (N)') }}</th>
+    <th scope="col">{{ __('Product') }}</th>
     <th scope="col">{{ __('Status') }}</th>
     <th scope="col">{{ __('Action') }}</th>
 </tr>
@@ -58,8 +58,9 @@
             @else
                 <td>Not Set</td>
             @endif
-            <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
             <td>{{ $invoice->billingAmount }}</td>
+            <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
+
             <td>{{ $invoice->status }}</td>
             <td>
                 <span>
@@ -70,7 +71,6 @@
     @endforeach
 @endif
 </tbody>
-@include('billing.billfooter')
 
 </table>
 </div>

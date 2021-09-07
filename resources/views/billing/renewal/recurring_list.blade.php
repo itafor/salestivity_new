@@ -15,7 +15,6 @@
                 <thead>
                 <tr>
                 <th ><b>{{ __('Due Date') }}</b></th>
-                <th ><b>{{ __('Invoice Number') }}</b></th>
                 <th ><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
                 <th ><b>{{ __('Billing Amount (N)') }}</b></th>
@@ -46,7 +45,6 @@
                     {{ date('Y/m/d', strtotime($renewal->end_date)) }}
                     </td>
 
-                <td>{{ $renewal->invoice_number ? $renewal->invoice_number : 'N/A' }}</td>
 
 
                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
@@ -72,7 +70,6 @@
                 </tr>
                 @endforeach
                 </tbody>
-                @include('billing.billfooter')
 
          
                 </table>

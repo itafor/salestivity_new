@@ -54,6 +54,42 @@ $(".edit_bill_remark_class").change(function () {
 $(document).ready(function () {
     $(".datatable").DataTable({
         dom: "lTfgitp",
+          "infoCallback": function( row, data, start, end, display, max ) {
+    var api = this.api();
+    var pageInfo = api.page.info();
+                data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === "string"
+                    ? i.replace(/[\$,]/g, "") * 1
+                    : typeof i === "number"
+                    ? i
+                    : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column(3)
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+
+            // Total over this page
+            pageTotal = api
+                .column(3, { page: "current" })
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+ 
+    return   max + '<br>' + 'Billing Total: '+ "&#8358;" + pageTotal.toLocaleString() + " of  &#8358;" + total.toLocaleString();
+  
+  },
+        "oLanguage": {
+               "sInfo" : "Showing _START_ to _END_ of _TOTAL_ entries",// text you want show for info section
+            },
         language: {
             paginate: {
                 next: "<i class='las la-angle-double-right'></i>",
