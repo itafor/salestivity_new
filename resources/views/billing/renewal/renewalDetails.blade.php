@@ -132,7 +132,7 @@
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
-                     <td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->productPrice,2) }}
+                     <td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->productPrice,2) }}
                      </td>
                    </tr>
 
@@ -145,17 +145,17 @@
 
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
-                     <td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingAmount,2) }}
+                     <td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingAmount,2) }}
                      </td>
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->amount_paid,2) }}
+                     <td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->amount_paid,2) }}
                      </td>
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Balance') }}</b></td>
-                     <td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingBalance,2) }}
+                     <td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingBalance,2) }}
                      </td>
                    </tr>
                     <tr>

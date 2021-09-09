@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id'
+        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id','currency_id'
     	];
 
     public function customers()
@@ -78,6 +78,11 @@ class Renewal extends Model
         return $this->belongsTo('App\CompanyAccountDetail', 'company_bank_acc_id','id');
     }
 
+     public function currency()
+    {
+        return $this->belongsTo('App\CurrencySymbol', 'currency_id','id');
+    }
+
     public static function createNew($data) {
 
         $guard_object = getActiveGuardType();
@@ -107,6 +112,7 @@ class Renewal extends Model
          'invoice_number' => 'DW'.mt_rand(1000, 9999),
         'company_email_id' => $data['company_email_id'],
         'company_bank_acc_id' => $data['company_bank_acc_id'],
+        'currency_id' => $data['currency_id'],
 
     	]);
 
@@ -142,6 +148,7 @@ class Renewal extends Model
         'duration_type' => $data['duration_type'],
         'company_email_id' => $data['company_email_id'],
         'company_bank_acc_id' => $data['company_bank_acc_id'],
+        'currency_id' => isset($data['currency_id']) ? $data['currency_id'] : $renewal->currency_id,
         ]); 
 
         self::updateRenewalReminderDuration($data);

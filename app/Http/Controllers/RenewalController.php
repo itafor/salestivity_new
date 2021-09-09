@@ -7,6 +7,7 @@ use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
 use App\Contact;
+use App\CurrencySymbol;
 use App\Customer;
 use App\Http\Controllers\CronJobController;
 use App\Http\Traits\RecurringBillStatus;
@@ -114,7 +115,7 @@ class RenewalController extends Controller
     public function create()
     {
         $guard_object = getActiveGuardType();
-
+         $data['currencies'] = CurrencySymbol::all();
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['products'] = Product::where([
@@ -141,7 +142,8 @@ class RenewalController extends Controller
             'sub_category_id' => 'required',
             'duration_type' =>'required',
             'company_email_id' =>'required',
-            'company_bank_acc_id' =>'required'
+            'company_bank_acc_id' =>'required',
+            'currency_id' =>'required'
         ]);
 
         if ($validator->fails()) {
@@ -317,7 +319,7 @@ class RenewalController extends Controller
     public function edit($id)
     {
         $userId = auth()->user()->id;
-
+          $data['currencies'] = CurrencySymbol::all();
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['renewal'] = Renewal::where('id', $id)->first();
@@ -360,7 +362,8 @@ class RenewalController extends Controller
             'description' => 'required',
             'duration_type' =>'required',
             'company_email_id' =>'required',
-            'company_bank_acc_id' =>'required'
+            'company_bank_acc_id' =>'required',
+            // 'currency_id' =>'required'
         ]);
 
         if ($validator->fails()) {

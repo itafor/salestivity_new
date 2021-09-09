@@ -87,14 +87,27 @@
 
   <div class="row">
     <div class="col">
-<label class="form-control-label" for="productPrice">{{ __('Product Price') }} <span class="currency"></span></label>
-    <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value=" " required readonly="">
+<label class="form-control-label" for="productPrice">{{ __('Product Price') }}</label>
+    <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value=" " required>
 
     @if ($errors->has('productPrice'))
         <span class="invalid-feedback" role="alert">
             <strong>{{ $errors->first('productPrice') }}</strong>
         </span>
     @endif
+    </div>
+         <div class="col">
+   <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
+     <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required>
+        <option value="">Choose a Currency</option>
+            @foreach($currencies as $currency)
+                <option value="{{ $currency->id }}" {{$currency->symbol == '&#8358;' ? 'selected' : ''}}>{!! $currency->symbol !!}</option>
+            @endforeach
+    </select>
+                                           
+   @error('currency_id')
+<small class="text-danger">{{$message}}</small>
+@enderror
     </div>
     <div class="col">
 <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
@@ -107,7 +120,7 @@
     @endif
     </div>
     <div class="col">
-<label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} <span class="currency"></span></label>
+<label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} </label>
         <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
 
         @if ($errors->has('billingAmount'))
@@ -296,7 +309,14 @@
         
         @include('layouts.footers.auth')
     </div>
+<script type="text/javascript">
+     $("#productPrice").on("keyup", function(){
+      let   productPrice = $(this).val();
+    $("#billingAmount").val(productPrice);
+    $("#discount").val('');
+    })
 
+</script>
 @endsection
 
 

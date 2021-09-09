@@ -190,7 +190,7 @@ Please click the button below to confirm receipt of this invoice.<br>
 @endif
 <tr>
 <td style="width: 150px;"><b>{{ __('Original Amount') }}</b></td>
-<td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->productPrice,2) }}
+<td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->productPrice,2) }}
 </td>
 </tr>
 <tr>
@@ -200,7 +200,7 @@ Please click the button below to confirm receipt of this invoice.<br>
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
-<td>{!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingBalance,2) }}
+<td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingBalance,2) }}
 </td>
 </tr>
 <tr>

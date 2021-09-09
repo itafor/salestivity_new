@@ -20,19 +20,19 @@
   <!--   </div>
   </div> -->
     <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Billing Amount({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Billing Amount({!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="text" min="1" name="billingAmount" class="form-control" id="billingAmount" readonly="">
     </div>
   </div>
   <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Amount Paid({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Amount Paid({!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="number" min="1" name="amount_paid"  class="form-control" id="amount_paid" placeholder="Enter amount paid" required>
     </div>
   </div>
    <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Billing Balance({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Billing Balance({!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="number" min="1" name="billingbalance"  class="form-control" id="billingbalance" placeholder="Enter balance" readonly="">
     </div>

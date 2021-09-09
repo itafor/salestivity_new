@@ -72,4 +72,8 @@ class Invoice extends Model
     {
         return $this->belongsTo('App\CompanyAccountDetail', 'company_bank_acc_id','id');
     }
+       public function currency()
+    {
+        return $this->belongsTo('App\CurrencySymbol', 'currency_id','id');
+    }
 }

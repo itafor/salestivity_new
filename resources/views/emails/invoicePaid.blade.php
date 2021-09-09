@@ -146,7 +146,7 @@
                             <td colspan="2">
                                 Dear {{$paid_invoice->customer->name}},<br>
                                 <em>
-                                 This is to confirm receipt of the sum of <strong> {!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{number_format($paid_invoice->amount_paid,2)}}</strong> for the <strong>{{$paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A'}}</strong> for <strong>{{ $paid_invoice->customer->name }}</strong>
+                                 This is to confirm receipt of the sum of <strong> {!!  $paid_invoice->invoice &&  $paid_invoice->invoice->currency ?  $paid_invoice->invoice->currency->symbol : '&#8358;' !!}{{number_format($paid_invoice->amount_paid,2)}}</strong> for the <strong>{{$paid_invoice->invoice->prod ? $paid_invoice->invoice->prod->name : 'N/A'}}</strong> for <strong>{{ $paid_invoice->customer->name }}</strong>
                                  <br/>
                                   Please find details below;
                                 </em>
@@ -169,14 +169,14 @@
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount') }}</b></td>
-                     <td> {!! $paid_invoice->invoice->prod && $paid_invoice->invoice->prod->currency ? $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->billingAmount,2) }}
+                     <td> {!! $paid_invoice->invoice && $paid_invoice->invoice->currency ? $paid_invoice->invoice->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->billingAmount,2) }}
                      </td>
                    </tr>
 
                     <tr>
                      <td style="width: 120px;"><b>{{ __('Amount Paid') }}</b></td>
                      <!-- <td>&#8358;{{ number_format($paid_invoice->amount_paid,2) }} -->
-                     <td> {!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->amount_paid,2)}}
+                     <td> {!!  $paid_invoice->invoice &&  $paid_invoice->invoice->currency ?  $paid_invoice->invoice->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->invoice->amount_paid,2)}}
                      </td>
                    </tr>
                        <tr>
@@ -186,7 +186,7 @@
 
                    <tr>
                      <td style="width: 120px;"><b>{{ __('Balance') }}</b></td>
-                     <td>{!!  $paid_invoice->invoice->prod &&  $paid_invoice->invoice->prod->currency ?  $paid_invoice->invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->billingbalance,2) }}
+                     <td>{!!  $paid_invoice->invoice &&  $paid_invoice->invoice->currency ?  $paid_invoice->invoice->currency->symbol : '&#8358;' !!}{{ number_format($paid_invoice->billingbalance,2) }}
                      </td>
                    </tr>
                     

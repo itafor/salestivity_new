@@ -179,7 +179,7 @@ Find below the details of the invoice.
 @endif
 <tr>
 <td style="width: 150px;"><b>{{ __('Original Amount') }}</b></td>
-<td> {!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->cost, 2) }}
+<td> {!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->cost, 2) }}
 </td>
 </tr>
 <tr>
@@ -189,7 +189,7 @@ Find below the details of the invoice.
 </tr>
 <tr>
 <td style="width: 150px;"><b>{{ __('Total Amount') }}</b></td>
-<td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
+<td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
 </td>
 </tr>
 <tr>
@@ -210,7 +210,7 @@ Find below the details of the invoice.
     <tbody>
 <tr>
 <td style="width: 150px;"><b>{{ __('Payment Due') }}</b></td>
-<td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
+<td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
 </td>
 </tr>
 <tr>

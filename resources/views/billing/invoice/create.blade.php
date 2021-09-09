@@ -95,9 +95,9 @@
                                 </div>
 
                                  <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                          <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="cost">{{ __('Cost') }} <span class="currency"></span></label>
+                                    <label class="form-control-label" for="cost">{{ __('Cost') }}</label>
                                     <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
@@ -107,7 +107,23 @@
                                 </div>
                                     </div>
 
-                                    <div class="col-6">
+                                           <div class="col-4">
+                                         <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
+                                   <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
+     <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required>
+        <option value="">Choose a Currency</option>
+            @foreach($currencies as $currency)
+                <option value="{{ $currency->id }}" {{$currency->symbol == '&#8358;' ? 'selected' : ''}}>{!! $currency->symbol !!}</option>
+            @endforeach
+    </select>
+                                           
+   @error('currency_id')
+<small class="text-danger">{{$message}}</small>
+@enderror
+                                </div>
+                                    </div>
+
+                                    <div class="col-4">
                                           <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
                                     <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" >
@@ -124,7 +140,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }} <span class="currency"></span></label>
+                                    <label class="form-control-label" for="discount">{{ __('Billing Amount') }}</label>
                                     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required>
                                     @if ($errors->has('billingAmount'))
                                         <span class="invalid-feedback" role="alert">
@@ -154,7 +170,7 @@
                                  <div class="row">
                                     <div class="col-6">
                                          <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="payment_due">{{ __('Payment Due') }} <span class="currency"></span></label>
+                                    <label class="form-control-label" for="payment_due">{{ __('Payment Due') }}</label>
                                     <input type="number" min="1" name="payment_due" id="payment_due" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" placeholder="{{ __('Payment due') }}" value=" " required >
                                     @if ($errors->has('payment_due'))
                                         <span class="invalid-feedback" role="alert">

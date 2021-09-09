@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
+use App\CurrencySymbol;
 use App\Customer;
 use App\Http\Traits\InvoiceBillStatus;
 use App\Invoice;
@@ -100,7 +101,7 @@ class InvoiceController extends Controller
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
-
+        $data['currencies'] = CurrencySymbol::all();
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
@@ -139,6 +140,7 @@ class InvoiceController extends Controller
             'company_email_id' => 'required',
             'company_bank_acc_id' => 'required',
             'due_date' => 'required',
+            'currency_id' => 'required',
 
 
         ];
@@ -154,6 +156,7 @@ class InvoiceController extends Controller
             'due_date.required' => 'Due date is required',
             'payment_due.required' => 'Payment Due is required',
             'term_condition.required' => 'Term and condition is required',
+            'currency_id.required' => 'Currency is required',
 
             
         ];
@@ -182,6 +185,7 @@ class InvoiceController extends Controller
         $invoice->invoice_number = 'DW'.mt_rand(1000, 9999);
         $invoice->payment_due = $request->payment_due;
         $invoice->term_condition = $request->term_condition;
+        $invoice->currency_id = $request->currency_id;
         $invoice->save();
 
         if ($invoice) {

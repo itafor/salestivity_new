@@ -21,19 +21,19 @@
   <!--   </div>
   </div> -->
     <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Billing Amount({!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Billing Amount({!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="text" min="1" name="billingAmount" class="form-control" id="billingAmount" readonly="">
     </div>
   </div>
   <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Amount Paid({!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Amount Paid({!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="number" min="1" name="amount_paid"  class="form-control" id="amount_paid" placeholder="Enter amount paid" required>
     </div>
   </div>
    <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Billing Balance({!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!})</label>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Billing Balance({!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!})</label>
     <div class="col-sm-10">
       <input type="number" min="1" name="billingbalance"  class="form-control" id="billingbalance" placeholder="Enter balance" readonly="">
     </div>

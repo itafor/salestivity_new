@@ -104,12 +104,9 @@
 
   </div>
     <div class="form-row">
-<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-4">
+<div class="form-group{{ $errors->has('productPrice') ? ' has-danger' : '' }} col-md-3">
     <label class="form-control-label" for="productPrice">{{ __('Product Price:') }}
-        <!-- <button type="button"  class="text-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" {{$renewal->status == 'Pending' ? "" :"disabled"}} >
-  Edit
-</button> -->
-<span class="currency">({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</span>
+
 </label>
 
                  <input type="number" min="1" name="productPrice" id="productPrice" class="form-control form-control-alternative{{ $errors->has('productPrice') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Price') }}" value="{{old('productPrice', $renewal->productPrice)}}" required  {{$renewal->status == 'Pending' ? "" :"readonly"}} >
@@ -122,7 +119,21 @@
     @endif
 </div> 
     
-<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-4" >
+    <div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-3">
+      <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
+     <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required   {{$renewal->status == 'Pending' ? "" :"disabled"}}>
+        <option value="">Choose a Currency</option>
+            @foreach($currencies as $currency)
+                <option value="{{ $currency->id }}" {{$renewal->currency && $renewal->currency->id == $currency->id ? 'selected':''}}>{!! $currency->symbol !!}</option>
+            @endforeach
+    </select>
+                                           
+   @error('currency_id')
+<small class="text-danger">{{$message}}</small>
+@enderror
+</div> 
+
+<div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }} col-md-3" >
     <label class="form-control-label" for="discount">{{ __('Discount') }}</label>
     <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount',$renewal->discount) }}" {{$renewal->status == 'Pending' ? "" :"readonly"}}>
 
@@ -133,13 +144,16 @@
     @endif
 </div>
     
+
+
+
   
 
 
 
    
-<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-4">
-    <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} <span class="currency">({!! $renewal->prod && $renewal->prod->currency ? $renewal->prod->currency->symbol : '&#8358;' !!})</span></label>
+<div class="form-group{{ $errors->has('billingAmount') ? ' has-danger' : '' }} col-md-3">
+    <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} </label>
     <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="{{old('billingAmount', $renewal->billingAmount)}}" required readonly="">
 
     @if ($errors->has('billingAmount'))
