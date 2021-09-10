@@ -17,8 +17,8 @@
                 <th ><b>{{ __('Due Date') }}</b></th>
                 <th ><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
-                <th ><b>{{ __('Billing Amount (N)') }}</b></th>
-                <th ><b>{{ __('payment Status') }}</b></th>
+                <th ><b>{{ __('Amount') }}</b></th>
+                <th ><b>{{ __('Status') }}</b></th>
 
                 <th class="text-center"><b>{{ __('Action') }}</b></th>
                 </tr>
@@ -59,12 +59,12 @@
 
                     <div class="col-4 text-right">
                         <a href="{{ route('billing.renewal.show', [$renewal->id, $currentStatus, 'next']) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
-                        @if($renewal->status == 'Paid')
+                        <!-- @if($renewal->status == 'Paid')
                         <a  class="btn btn-sm btn-primary" onclick="completelypayAlert()"title="Payment"><i class="las la-money-bill"></i></a>
                         @else
 
                         <a  class="btn btn-sm btn-primary" onclick="renewalPayment({{$renewal->id}})" title="Renewal"><i class="las la-comment-dollar"></i></a>
-                        @endif
+                        @endif -->
                     </div>
                 </td>
                 </tr>

@@ -84,7 +84,7 @@ $(document).ready(function () {
                     return intVal(a) + intVal(b);
                 }, 0);
  
-    return   max + '<br>' + 'Billing Total: '+ "&#8358;" + pageTotal.toLocaleString() + " of  &#8358;" + total.toLocaleString();
+    return   max + '<br>' + 'Total Amount: '+ "&#8358;" + pageTotal.toLocaleString() + " of  &#8358;" + total.toLocaleString();
   
   },
         "oLanguage": {

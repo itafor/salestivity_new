@@ -14,9 +14,8 @@
 <tr>
     <th scope="col">{{ __('End Date') }}</th>
     <th scope="col">{{ __('Customer') }}</th>
-    <th scope="col">{{ __('Author') }}</th>
-    <th scope="col">{{ __('Billing Amount (N)') }}</th>
     <th scope="col">{{ __('Product') }}</th>
+    <th scope="col">{{ __('Amount') }}</th>
     <th scope="col">{{ __('Status') }}</th>
     <th scope="col">{{ __('Action') }}</th>
 </tr>
@@ -50,16 +49,16 @@
             </td>
             <td>{{ $invoice->customers->name }}</td>
             
-            @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
+           <!--  @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
                         getCreatedByDetails($invoice->user_type, $invoice->created_by)['last_name']
                     }}
                 </td>
             @else
                 <td>Not Set</td>
-            @endif
-            <td>{{ $invoice->billingAmount }}</td>
+            @endif -->
             <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
+            <td>{{ $invoice->billingAmount }}</td>
 
             <td>{{ $invoice->status }}</td>
             <td>
