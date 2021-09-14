@@ -54,6 +54,29 @@ $(".edit_bill_remark_class").change(function () {
 $(document).ready(function () {
     $(".datatable").DataTable({
         dom: "lTfgitp",
+         
+        "oLanguage": {
+               "sInfo" : "Showing _START_ to _END_ of _TOTAL_ entries",// text you want show for info section
+            },
+        language: {
+            paginate: {
+                next: "<i class='las la-angle-double-right'></i>",
+                previous: "<i class='las la-angle-double-left'></i>",
+            },
+        },
+        aLengthMenu: [
+            [10, 25, 50, 75, 100, -1],
+            [10, 25, 50, 75, 100, "All"],
+        ],
+        iDisplayLength: 10,
+        
+    });
+});
+
+//Datatable
+$(document).ready(function () {
+    $(".invoices").DataTable({
+        dom: "lTfgitp",
           "infoCallback": function( row, data, start, end, display, max ) {
     var api = this.api();
     var pageInfo = api.page.info();
@@ -531,6 +554,7 @@ $("#customer").change(function () {
             dataType: "json",
             success: function (data) {
                 if (data.contacts != "") {
+                    // console.log('data.contacts', data.contacts)
                     $("#contact_emails").empty();
                     $("<option>")
                         .attr("selected", true)
@@ -545,7 +569,7 @@ $("#customer").change(function () {
                         $("<option>")
                             .attr("selected", false)
                             .val(v.id)
-                            .text(v.surname ? v.surname : "" + " " + v.name)
+                            .text(v.surname && v.surname + " " + v.name )
                             .appendTo("#contact_emails");
                     });
                 } else {
@@ -578,7 +602,7 @@ $("#customer").change(function () {
             dataType: "json",
             success: function (data) {
                 if (data.contact != "") {
-                    console.log(data.contact);
+                    // console.log(data.contact);
                     $("#company_email").empty();
                     $("<option>")
                         .attr("selected", true)

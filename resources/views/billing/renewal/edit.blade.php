@@ -12,7 +12,7 @@
             if($renewal->status == 'Partly paid'){
             $currentStatus = "partly_paid";
             }elseif($renewal->status == 'Pending'){
-            $currentStatus = "outstanding";
+            $currentStatus = "Pending";
             }elseif($renewal->status == 'Paid'){
             $currentStatus = "paid";
             }else{

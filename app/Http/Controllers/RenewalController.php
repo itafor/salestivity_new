@@ -68,12 +68,12 @@ class RenewalController extends Controller
         return view('billing.renewal.index', compact('renewals'));
 
                 break;
-     case 'outstanding':
+     case 'Pending':
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Pending']
         ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
-        return view('billing.renewal.outstanding', compact('renewals'));
+        return view('billing.renewal.pending', compact('renewals'));
                 
                 break;
      case 'paid':
@@ -90,6 +90,15 @@ class RenewalController extends Controller
             ['status', 'Partly paid']
         ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.partly_paid', compact('renewals'));
+                
+                break;
+       case 'outstanding':
+                $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['status', 'Partly paid'],
+        ])->orWhere('status', 'Pending')
+          ->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+        return view('billing.renewal.outstanding', compact('renewals'));
                 
                 break;
      case 'due':
@@ -233,7 +242,7 @@ class RenewalController extends Controller
         ['status', 'Partly paid'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
-        } elseif ($status == "outstanding" && $navStatus == "next") {
+        } elseif ($status == "Pending" && $navStatus == "next") {
             $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('Pending');
             $renewal = Renewal::where([
         $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
@@ -255,7 +264,7 @@ class RenewalController extends Controller
             ['status', 'Partly paid'],
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
-        } elseif ($status == "outstanding" && $navStatus == "previous") {
+        } elseif ($status == "Pending" && $navStatus == "previous") {
             $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Pending');
             $renewal = Renewal::where([
          $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,

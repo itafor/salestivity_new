@@ -299,7 +299,7 @@ function whatsappNotification($from_number, $to_number, $text_messages)
         if($renewal->status == 'Partly paid'){
         return  "partly_paid";
         }elseif($renewal->status == 'Pending'){
-         return "outstanding";
+         return "Pending";
         }elseif($renewal->status == 'Paid'){
          return "paid";
         }else{

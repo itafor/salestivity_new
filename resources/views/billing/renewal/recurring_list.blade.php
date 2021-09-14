@@ -11,13 +11,14 @@
 
                 <div class="table-responsive">
 
-                <table class="table table-bordered datatable"  style="width:100%">
+                <table class="table table-bordered invoices"  style="width:100%">
                 <thead>
                 <tr>
                 <th ><b>{{ __('Due Date') }}</b></th>
                 <th ><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
                 <th ><b>{{ __('Amount') }}</b></th>
+                <th ><b>{{ __('Balance') }}</b></th>
                 <th ><b>{{ __('Status') }}</b></th>
 
                 <th class="text-center"><b>{{ __('Action') }}</b></th>
@@ -31,7 +32,7 @@
                     if($renewal->status == 'Partly paid'){
                          $currentStatus = "partly_paid";
                     }elseif($renewal->status == 'Pending'){
-                         $currentStatus = "outstanding";
+                         $currentStatus = "Pending";
                     }elseif($renewal->status == 'Paid'){
                          $currentStatus = "paid";
                     }else{
@@ -50,6 +51,7 @@
                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                 <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
                 <td>{{ $renewal->billingAmount }}</td>
+                <td>{{ $renewal->billingBalance }}</td>
 
 
 

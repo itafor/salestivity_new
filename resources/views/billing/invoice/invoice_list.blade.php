@@ -9,7 +9,7 @@
 
 <div class="table-responsive">
 
-<table class="table  table-bordered datatable" style="width:100%" >
+<table class="table  table-bordered invoices" style="width:100%" >
 <thead>
 <tr>
     <th scope="col">{{ __('End Date') }}</th>

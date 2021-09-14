@@ -39,44 +39,8 @@
                             <div class="col-xl-6"></div>
                         </div>
 
+               @include('opportunity.opportunity_lists')
                         
-                            <table class="table align-items-center table-flush datatable">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">{{ __('Account') }}</th>
-                                        <th scope="col">{{ __('Name') }}</th>
-                                        <th scope="col">{{ __('Owner') }}</th>
-                                        <th scope="col">{{ __('Amount') }}</th>
-                                        <th scope="col">{{ __('Action') }}</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if($opportunities->isEmpty())
-                                        <tr>
-                                            <td colspan="8" style="text-align: center">
-                                                <h3>No data available</h3>
-                                            </td>
-                                        </tr>
-                                    @else
-                                        @foreach($opportunities as $opportunity)
-                                            <tr>
-                                            
-                                                <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
-                                                <td>{{ $opportunity->name }}</td>
-                                                 <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
-                                                 <td>&#8358;{{ number_format($opportunity->amount,2) }} </td>
-                                              
-                                                <td>
-                                                    <a href="{{ route('opportunity.show', [$opportunity->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
-                                                        <!-- <a href="{{-- route('billing.renewal.manage', [$renewal->id]) }}" class="btn btn-sm btn-primary">{{ __('Manage') --}}</a> -->
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                       
 
                     </div>
                 </div>
