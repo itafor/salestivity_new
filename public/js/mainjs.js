@@ -554,7 +554,8 @@ $("#customer").change(function () {
             dataType: "json",
             success: function (data) {
                 if (data.contacts != "") {
-                    // console.log('data.contacts', data.contacts)
+                    // console.log('contacts', data.contacts)
+                    // console.log('cutomer', data.customer)
                     $("#contact_emails").empty();
                     $("<option>")
                         .attr("selected", true)
@@ -565,12 +566,16 @@ $("#customer").change(function () {
                         "contact_emails",
                         JSON.stringify(data.contacts)
                     );
-                    $.each(data.contacts, function (k, v) {
+                    $.each(data.contacts, function (k, contact) {
+
+                        if(data.customer.email != contact.email){
                         $("<option>")
                             .attr("selected", false)
-                            .val(v.id)
-                            .text(v.surname && v.surname + " " + v.name )
+                            .val(contact.id)
+                            .text(contact.surname && contact.surname + " " + contact.name )
                             .appendTo("#contact_emails");
+                        }
+
                     });
                 } else {
                     $("#contact_emails").empty();

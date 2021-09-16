@@ -169,12 +169,9 @@ public function increaseStartDatebyOneYear($selected_date){
         return $increased_date;
     }
 public function getContactEmails($id) {
-    // $customer = Customer::where('id',$id)->first();
-    $contacts = Contact::where([
-        ['customer_id', $id],
-        ['contact_type', '=', null]
-    ])->get(); //$customer->contacts;
-        return response()->json(['contacts' => $contacts]);
+    $customer = Customer::where('id',$id)->first();
+    $contacts = $customer->contacts;
+        return response()->json(['contacts' => $contacts, 'customer'=>$customer]);
 }
 
 public function getCompanyEmail($id)

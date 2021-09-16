@@ -203,6 +203,7 @@ public static function createContact($customer,$data)
         $address = AddressCustomer::where('customer_id', $data['id'])->first();
 
         self::updateAddress($address,$data);
+        
         self::updateContacts($data,$customer);
 
         self::update_main_customer_detail_in_contact($data);
