@@ -38,6 +38,7 @@
                                             <th scope="col">{{ __('Customer') }}</th>
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Technician') }}</th>
+                                            <th scope="col">{{ __('Status') }}</th>
                                             <th scope="col">{{ __('Start Date') }}</th>
                                             <th scope="col">{{ __('End Date') }}</th>
                                             <th scope="col">{{ __('Author') }}</th>
@@ -57,6 +58,7 @@
                                                     <td>{{ $project->customer ? $project->customer->name : 'N/A' }}</td>
                                                     <td>{{ $project->product ? $project->product->name : 'N/A'}}</td>
                                                     <td>{{ $project->technician }}</td>
+                                                    <td>{{ $project->status ? $project->status : 'N/A' }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
                                                     @if(getCreatedByDetails($project->user_type, $project->created_by) !== null)

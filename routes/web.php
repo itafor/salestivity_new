@@ -70,8 +70,11 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('projects/new', ['as' => 'project.create', 'uses' => 'ProjectController@create']);
     Route::post('projects/new', ['as' => 'project.store', 'uses' => 'ProjectController@store']);
     Route::get('project/{id}/show', ['as' => 'project.show', 'uses' => 'ProjectController@show']);
-    Route::post('project/{id}', ['as' => 'project.update', 'uses' => 'ProjectController@update']);
+    Route::post('project-update', ['as' => 'project.update', 'uses' => 'ProjectController@update']);
+    Route::post('project_update', ['as' => 'project.newupdate', 'uses' => 'ProjectController@updateProject']);
     Route::get('project/{id}', ['as' => 'project.destroy', 'uses' => 'ProjectController@destroy']);
+Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectController@edit']);
+
 
     //Accounts
     Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);

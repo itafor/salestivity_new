@@ -56,7 +56,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('product_id') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-email">{{ __('Product Name') }}</label>
-                                        <!-- <input type="email" name="email" id="product_id-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required> -->
+                                        
                                     
                                         <select name="product_id" id="product_id" class="form-control" >
                                             <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -87,32 +87,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <!-- <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('start') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="start">{{ __('Start date') }}</label>
-                                        <input type="text" name="start" id="start" class="form-control form-control-alternative{{ $errors->has('start') ? ' is-invalid' : '' }}" placeholder="{{ __('Start date') }}" value="{{ date('M,j,Y H:ia', strtotime($project->start_date)) }}" required>
-
-                                        @if ($errors->has('start'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('start') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div> -->
-                            <!-- </div> -->
-                            <!-- <div class="row"> -->
-                                <!-- <div class="col-xl-6">
-                                    <div class="form-group{{ $errors->has('end') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="end">{{ __('End date') }}</label>
-                                        <input type="date" name="end" id="end" class="form-control form-control-alternative{{ $errors->has('end') ? ' is-invalid' : '' }}" placeholder="{{ __('End date') }}" value="{{ $project->end_date }}" required >
-
-                                        @if ($errors->has('end'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('end') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>    
-                                </div> -->
+                               
                                 <div class="col-xl-6">
                                    <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="notes">{{ __('Notes') }}</label>

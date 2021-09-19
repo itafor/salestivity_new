@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Project;
-use App\Product;
-use Session;
-use DB;
-use Storage;
 use App\Customer;
-use Validator;
+use App\Product;
+use App\Project;
+use Carbon\Carbon;
+use DB;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Session;
+use Storage;
+use Validator;
 
 
 class ProjectController extends Controller
@@ -66,8 +67,8 @@ class ProjectController extends Controller
             $validator = Validator::make($request->all(), [
                 'customer_account' => 'required',
                 'product_id' => 'required',
-                'start' => 'required',
-                'end' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
                 // 'uploads.*' => 'image|file',
                 ]);
 
@@ -82,26 +83,27 @@ class ProjectController extends Controller
             {
     
                 // save each file in the specified folder
-                foreach($request->file('uploads') as $file){
-                    $date = date('Y-m-d');
-                    $name=$file->getClientOriginalName();
-                    // create a folder according to dates
-                    if (!Storage::exists('/public/files/$date')) {
-                        Storage::makeDirectory('/public/files/$date');
-                    } 
-                    $file->move(public_path().'/files/'.$date, $name); 
-                    $data[] = $name; 
-                }
-                $project->uploads = json_encode($data); 
+                // foreach($request->file('uploads') as $file){
+                //     $date = date('Y-m-d');
+                //     $name=$file->getClientOriginalName();
+                //     // create a folder according to dates
+                //     if (!Storage::exists('/public/files/$date')) {
+                //         Storage::makeDirectory('/public/files/$date');
+                //     } 
+                //     $file->move(public_path().'/files/'.$date, $name); 
+                //     $data[] = $name; 
+                // }
+                $project->uploads = isset($data['uploads']) ? uploadImage($data['uploads']) : ''; //json_encode($data); 
                 $project->main_acct_id = $guard_object->main_acct_id;
                 $project->user_type = $guard_object->user_type;
                 $project->created_by = $guard_object->created_by;
                 $project->customer_account = $request->customer_account;
                 $project->product_id = $request->product_id;
                 $project->technician = $request->technician;
-                $project->start_date = $request->start;
-                $project->end_date = $request->end;
+                 $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
+            $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
                 $project->notes = $request->notes;
+                $project->status = $request->status;
                 $project->save();
             } else {
                 $project->main_acct_id = $guard_object->main_acct_id;
@@ -110,9 +112,10 @@ class ProjectController extends Controller
                 $project->customer_account = $request->customer_account;
                 $project->product_id = $request->product_id;
                 $project->technician = $request->technician;
-                $project->start_date = $request->start;
-                $project->end_date = $request->end;
+                 $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
+            $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
                 $project->notes = $request->notes;
+                $project->status = $request->status;
                 // dd($project);
                 $project->save();
             }
@@ -138,11 +141,13 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $userId = \getActiveGuardType()->main_acct_id;
-        $project = Project::where('main_acct_id', $userId)->first();
-        $products = Product::where('main_acct_id', $userId)->get();
-        $product = Product::where('id', $project->product_id)->where('main_acct_id', $userId)->first();
-        return view('project.show', compact('project', 'product', 'products'));
+        
+        $project = Project::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['id', $id]
+        ])->first();
+       
+        return view('project.viewProject', compact('project'));
     }
 
     /**
@@ -153,7 +158,17 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $userId = \getActiveGuardType()->main_acct_id;
+          $project = Project::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['id', $id]
+        ])->first();
+        $products = Product::where('main_acct_id', $userId)->get();
+          $customers = Customer::where('main_acct_id', $userId)->get();
+        $product = Product::where('id', $project->product_id)->where('main_acct_id', $userId)->first();
+
+        return view('project.edit', compact('project', 'product', 'products','customers'));
     }
 
     /**
@@ -163,8 +178,12 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {	
+
+        $id = $request->project_id;
+        $data = $request->all();
+        // dd($data);
         $userId = \getActiveGuardType()->main_acct_id;
         $project = Project::where('main_acct_id', $userId)->where('id', $id)->first();														
 				
@@ -172,31 +191,33 @@ class ProjectController extends Controller
         {
 
             // save each file in the specified folder
-        foreach($request->file('uploads') as $file){
-                $date = date('Y-m-d');
-                $name=$file->getClientOriginalName();
-                // create a folder according to dates
-                if (!Storage::exists('/public/files/$date')) {
-                    Storage::makeDirectory('/public/files/$date');
-                } 
-                $file->move(public_path().'/files/'.$date, $name); 
-                $data[] = $name; 
-            }
-            $project->uploads = json_encode($data); 
+        // foreach($request->file('uploads') as $file){
+        //         $date = date('Y-m-d');
+        //         $name=$file->getClientOriginalName();
+        //         // create a folder according to dates
+        //         if (!Storage::exists('/public/files/$date')) {
+        //             Storage::makeDirectory('/public/files/$date');
+        //         } 
+        //         $file->move(public_path().'/files/'.$date, $name); 
+        //         $data[] = $name; 
+        //     }
+            $project->uploads = isset($data['uploads']) ? uploadImage($data['uploads']) : ''; 
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
             $project->technician = $request->technician;
-            $project->start_date = $request->start;
-            $project->end_date = $request->end;
+            $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
+            $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
             $project->notes = $request->notes;
+            $project->status = $request->status;
             $project->update();
         } else {
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
             $project->technician = $request->technician;
-            $project->start_date = $request->start;
-            $project->end_date = $request->end;
+             $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
+            $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
             $project->notes = $request->notes;
+            $project->status = $request->status;
             $project->update();
         }
 
@@ -205,6 +226,28 @@ class ProjectController extends Controller
         
         return redirect()->route('project.index');
     }
+
+    public function updateProject(Request $request){
+
+         $userId = \getActiveGuardType()->main_acct_id;
+        $project = Project::where('main_acct_id', $userId)->where('id', $request->project_id)->first();                              
+
+        $project->customer_account = $request->customer_account;
+            $project->product_id = $request->product_id;
+            $project->technician = $request->technician;
+            $project->start_date = $request->start;
+            $project->end_date = $request->end;
+            $project->notes = $request->notes;
+            $project->status = $request->status;
+            $project->update();
+
+             $status = "Project Updated";
+        Session::flash('status', $status);
+        
+        return redirect()->route('project.index');
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
