@@ -1,7 +1,16 @@
 @extends('layouts.app', ['title' => __('Company Details'), 'icon' => 'las la-compass'])
 @section('content')
 @include('users.partials.header', ['title' => __('Company Details')])
-
+<style type="text/css">
+  div { display: table; }
+div.t {
+    display: table-cell;
+    width: 100%;
+}
+div.t > input {
+    width: 100%;
+}
+</style>
  <div class="container-fluid mt--7"> 
         <div class="row">
             <div class="col">
@@ -54,14 +63,46 @@
                         </div>
                    <div class="col-6">
            <h2>Company Name</h2>
-
-          <form action="{{route('company.update.name')}}" method="post" class="form-inline">
+          <form action="{{route('company.update.name')}}" method="post" autocomplete="off">
             @csrf
-            <div class="form-group mx-sm-3 mb-2">
                 <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
-            <input type="text" name="company_name" class="form-control" id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->name : ''}}">
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Save</button>
+
+                  <div style="width: 400px;">
+                    <div class="t"> 
+                         <input type="text" name="company_name"  id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->name : ''}}" required>
+            
+                    </div>
+                    <input type="submit" value="Save" />
+                    </div>
+            </form>
+
+            <h2>Mail From Name</h2>
+          <form action="{{route('company.update.mail_from_name')}}" method="post" autocomplete="off">
+            @csrf
+            <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
+                  <div style="width: 400px;">
+          <div class="t"> 
+               <input type="text" name="mail_from_name" class="" id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->mail_from_name : ''}}" required>
+          </div>
+          <input type="submit" value="Save" />
+      </div>
+            
+            </form>
+
+            <h2>ReplyTo Email Address</h2>
+          <form action="{{route('update.reply.to.email')}}" method="post" autocomplete="off">
+            @csrf
+
+             <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
+
+
+
+            <div style="width: 400px;">
+              <div class="t"> <!-- This is the wrapper div around the text input -->
+                  <input type="text" name="reply_to_email" class="" id="inputPassword2" placeholder="Company Reply To Email" value="{{$companyDetail ? $companyDetail->reply_to_email : ''}}" required>
+              </div>
+              <input type="submit" value="Save" />
+          </div>
             </form>
         </div>
             </div>

@@ -45,11 +45,9 @@ class SettingsController extends Controller
        return redirect()->route('company_details.index')->with('success','Company logo uploaded');
     }
 
-        public function updateCompanyName(Request $request)
+  public function updateCompanyName(Request $request)
     {
         $data = $request->all();
-
-       
             if(!isset($data['company_name'])){
                 $status = "Please enter your company name!!";
         Alert::warning('Company Name', $status);
@@ -75,6 +73,70 @@ class SettingsController extends Controller
         Alert::success('Company Name', $status);
         }
        return redirect()->route('company_details.index')->with('success','Company name updated');
+    }
+
+
+    public function updateMailFromName(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+            if(!isset($data['mail_from_name'])){
+                $status = "Please enter your Mail From Name!!";
+        Alert::warning('Mail From Name', $status);
+        return back();
+            }
+           
+
+        $user = CompanyDetail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['id', $data['company_detail_id']],
+            ])->first();
+        if($user){
+            $user->mail_from_name = isset($data['mail_from_name']) ? $data['mail_from_name'] : '';
+            $user->save();
+             $status = "Company mail from name updated!!";
+        Alert::success('Mail From Name', $status);
+        }else{
+            CompanyDetail::create([
+                    'main_acct_id' => getActiveGuardType()->main_acct_id,
+                    'mail_from_name' => $data['mail_from_name'],
+            ]);
+             $status = "Company name From updated!!";
+        Alert::success('Company Mail From Name', $status);
+        }
+       return redirect()->route('company_details.index')->with('success','Company mail from name updated');
+    }
+
+
+    public function updateReplyToEmailAddress(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+            if(!isset($data['reply_to_email'])){
+                $status = "Please enter your Mail From Name!!";
+        Alert::warning('Reply To Email', $status);
+        return back();
+            }
+           
+
+        $user = CompanyDetail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['id', $data['company_detail_id']],
+            ])->first();
+        if($user){
+            $user->reply_to_email = isset($data['reply_to_email']) ? $data['reply_to_email'] : '';
+            $user->save();
+             $status = "Company Reply To Email updated!!";
+        Alert::success('Mail From Name', $status);
+        }else{
+            CompanyDetail::create([
+                    'main_acct_id' => getActiveGuardType()->main_acct_id,
+                    'reply_to_email' => $data['reply_to_email'],
+            ]);
+             $status = "Company Reply To Email updated!!";
+        Alert::success('Company Reply to Email', $status);
+        }
+       return redirect()->route('company_details.index')->with('success','Company Reply to Email updated');
     }
 
          public function addCompanyEmail(Request $request)

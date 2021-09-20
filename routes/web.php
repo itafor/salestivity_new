@@ -286,6 +286,12 @@ Route::group([
 ], function () {
     Route::get('/', 'SettingsController@index')->name('company_details.index');
     Route::post('/update-name', 'SettingsController@updateCompanyName')->name('company.update.name');
+    Route::post('/update-mail-from-name', 'SettingsController@updateMailFromName')->name('company.update.mail_from_name');
+
+    Route::post('/update-reply-to-email', 'SettingsController@updateReplyToEmailAddress')->name('update.reply.to.email');
+
+
+    
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
     Route::post('/add-email', 'SettingsController@addCompanyEmail')->name('company.add.email');
     Route::post('/edit-email', 'SettingsController@updateCompanyEmail')->name('company.update.email');
