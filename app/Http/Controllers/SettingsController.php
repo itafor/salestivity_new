@@ -111,7 +111,15 @@ class SettingsController extends Controller
     public function updateReplyToEmailAddress(Request $request)
     {
         $data = $request->all();
-        // dd($data);
+
+         $validator = Validator::make($data, [
+                'reply_to_email' => ['required', 'string', 'email', 'max:255'],
+        ]);
+         if($validator->fails()){
+                 Alert::warning('Required Fields', 'Please enter a valid email address');
+            return back()->withInput();
+         }
+           
             if(!isset($data['reply_to_email'])){
                 $status = "Please enter your Mail From Name!!";
         Alert::warning('Reply To Email', $status);

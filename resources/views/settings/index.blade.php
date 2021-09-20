@@ -99,7 +99,7 @@ div.t > input {
 
             <div style="width: 400px;">
               <div class="t"> <!-- This is the wrapper div around the text input -->
-                  <input type="text" name="reply_to_email" class="" id="inputPassword2" placeholder="Company Reply To Email" value="{{$companyDetail ? $companyDetail->reply_to_email : ''}}" required>
+                  <input type="email" name="reply_to_email" class="" id="inputPassword2" placeholder="Company Reply To Email" value="{{$companyDetail ? $companyDetail->reply_to_email : ''}}" required>
               </div>
               <input type="submit" value="Save" />
           </div>
