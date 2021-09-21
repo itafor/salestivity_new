@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\CompanyEmailController;
 use Illuminate\Http\Request;
 
 /*
@@ -293,11 +295,26 @@ Route::group([
 
     
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
-    Route::post('/add-email', 'SettingsController@addCompanyEmail')->name('company.add.email');
-    Route::post('/edit-email', 'SettingsController@updateCompanyEmail')->name('company.update.email');
-    Route::post('/add-bank-account', 'SettingsController@addCompanyBankAccount')->name('company.add.bank_account.detail');
-    Route::post('/edit-bank-detail', 'SettingsController@updateCompanyBankDetail')->name('company.update.bank.account');
+   
+  
+   
       Route::get('/destroy/{id}', 'SettingsController@destroyCurrencySymbol')->name('destroy.currency.symbol');
+});
+
+Route::group([
+'prefix' => 'bank-account'], function(){
+    Route::get('/', 'BankAccountController@index')->name('bank.account.index');
+
+     Route::post('/add-new', 'BankAccountController@addCompanyBankAccount')->name('company.add.bank_account.detail');
+    Route::post('/update', 'BankAccountController@updateCompanyBankDetail')->name('company.update.bank.account');
+});
+
+Route::group([
+'prefix' => 'company-emails'], function(){
+    Route::get('/', 'CompanyEmailController@index')->name('company.email.index');
+
+     Route::post('/add-new', 'CompanyEmailController@addCompanyEmail')->name('company.add.email');
+    Route::post('/update', 'CompanyEmailController@updateCompanyEmail')->name('company.update.email');
 });
 
 Route::group([

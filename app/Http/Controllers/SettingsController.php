@@ -147,100 +147,11 @@ class SettingsController extends Controller
        return redirect()->route('company_details.index')->with('success','Company Reply to Email updated');
     }
 
-         public function addCompanyEmail(Request $request)
-    {
-        $data = $request->all();
+  
 
-       // dd($data);
-            if(!isset($data['company_email'])){
-                $status = "Please enter your company email!!";
-        Alert::warning('Company Email', $status);
-        return back();
-            }
-        
-            CompanyEmail::create([
-                    "main_acct_id" => getActiveGuardType()->main_acct_id,
-                    "email" => $data['company_email'],
-                    "driver"        =>      $data['driver'],
-                    "host"          =>      $data['hostName'],
-                    "port"          =>      $data['port'],
-                    "encryption"    =>      $data['encryption'],
-                    "user_name"     =>      $data['userName'],
-                    "password"      =>      $data['password'],
-                    "sender_name"   =>      $data['senderName'],
-            ]);
-             $status = "Company Email added!!";
-        Alert::success('Company Email', $status);
-        
-       return redirect()->route('company_details.index');
-    }
+  
 
-public function updateCompanyEmail(Request $request)
-    {
-        $data = $request->all();
-            if(!isset($data['company_email'])){
-                $status = "Please enter your company email!!";
-        Alert::warning('Company Email', $status);
-        return back();
-            }
-        
-            $compemail = CompanyEmail::where([
-            ['id', $data['company_email_id']],
-            ])->first();
-
-            if($compemail){
-             $compemail->email = $data['company_email'];
-            $compemail->driver      =      $data['driver'];
-            $compemail->host          =      $data['hostName'];
-            $compemail->port          =      $data['port'];
-            $compemail->encryption    =      $data['encryption'];
-            $compemail->user_name     =      $data['userName'];
-            $compemail->password    =      $data['password'];
-            $compemail->sender_name  =      $data['senderName'];
-
-            $compemail->save();
-            $status = "Company email updated!!";
-        Alert::success('Company Name', $status);
-            }
-        
-       return redirect()->route('company_details.index')->with('success','Company email updated!!');
-    }
-
-         public function addCompanyBankAccount(Request $request)
-    {
-        $data = $request->all();
-        
-            CompanyAccountDetail::create([
-                    'main_acct_id' => getActiveGuardType()->main_acct_id,
-                    'bank_name' => $data['bank_name'],
-                    'account_name' => $data['account_name'],
-                    'account_number' => $data['account_number'],
-            ]);
-             $status = "Company Bank Account detail added!!";
-        Alert::success('Company Bank Account Detail', $status);
-        
-       return redirect()->route('company_details.index');
-    }
-
-    public function updateCompanyBankDetail(Request $request)
-    {
-        $data = $request->all();
-        
-            $bank_account = CompanyAccountDetail::where([
-            ['id', $data['company_bank_account_id']],
-            ])->first();
-
-            if($bank_account){
-             $bank_account->bank_name = $data['bank_name'];
-             $bank_account->account_name = $data['account_name'];
-             $bank_account->account_number = $data['account_number'];
-            $bank_account->save();
-            $status = "Company bank account detail updated!!";
-               Alert::success('Company Bank Account', $status);
-            }
-        
-       return redirect()->route('company_details.index');
-    }
+ 
 
         /**
      * Remove the specified resource from storage.

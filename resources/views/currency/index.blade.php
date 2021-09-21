@@ -35,7 +35,7 @@
                                             <th scope="col">{{ __('Currency symbols') }}</th>
                                             <th scope="col">{{ __('Description') }}</th>
                                             
-                                            <th scope="col" class="text-center">{{ __('Action') }}</th>
+                                            <!-- <th scope="col" class="text-center">{{ __('Action') }}</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,19 +51,13 @@
                                                 <td>{!! $currency->symbol !!}</td>
                                                 <td>{!! $currency->description !!}</td>
                                               
-                                                <td>
-                                                    <div class="btn-group-justified text-center" role="group">
-                                                        <!-- <div class="btn-group" role="group">
-                                                            <a href="{{ route('currency.edit', [$currency->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
-                                                        </div>  -->
-                                                        <div class="btn-group" role="group">
-                                                            <form action="{{ route('destroy.currency.symbol', [$currency->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                                @csrf
-                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
-                                                            </form>
-                                                        </div>                                                        
-                                                    </div>                                                    
-                                                </td>
+                                                {{--<td>
+                                                           
+                                                            <a onclick="return confirm('Do you really want to delete this item?');" href="{{ route('destroy.currency.symbol', [$currency->id]) }}" class="btn-icon btn-tooltip text-danger" title="{{ __('Delete Currency') }}">
+                                                                <i class="las la-trash-alt"></i>
+                                                            </a>
+                                                                                                         
+                                                </td>--}}
                                             </tr>
                                             @endforeach
                                         @endif

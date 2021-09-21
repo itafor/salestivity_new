@@ -413,9 +413,29 @@
                                                             </a>
                                                         </li>
                                                     </ul>
+
                                                 </ul>
                                             </div>
                                         </ul>
+                                    </li>
+                                        <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('company_details.index') }}" >
+                                            <span class="nav-link-text">{{ __('Company Details') }}</span>
+                                        </a>
+                                    </li>                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('company.email.index') }}" >
+                                            <span class="nav-link-text">{{ __('Company Emails') }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('bank.account.index') }}" >
+                                            <span class="nav-link-text">{{ __('Bank Account') }}</span>
+                                        </a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('currency.index') }}" >
+                                            <span class="nav-link-text">{{ __(' Currency') }}</span>
+                                        </a>
                                     </li>
                                 </ul>        
                             </ul>

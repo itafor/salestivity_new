@@ -43,6 +43,7 @@ class RenewalPaid extends Mailable
         $documentName = 'paymentConfirmation_'.$this->renewal->id.'.pdf';
 
         return $this->view('emails.renewalPaid')
+            // ->from('notifications@salestivtity.com',$dynamicname)
             ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
             ->subject('Confirmation of Payment')
             ->attachData($pdf->output(), $documentName)
