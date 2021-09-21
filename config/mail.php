@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.digitalweb247.com'),
+    'host' => env('MAIL_HOST', 'mail.salestivity.com'),
 
     /*
     |--------------------------------------------------------------------------

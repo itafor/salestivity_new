@@ -47,7 +47,6 @@ class SendRenewalPaymentNotice extends Mailable
         $documentName = 'paymentConfirmation_'.'.pdf';
 
         return $this->view('emails.send_renewal_payment_notice')
-        ->from('noreply@myhelperapp.com','ItaforFrancis')
         ->attachData($pdf->output(), $documentName)
         ->subject('Confirmation of Payment');
     }
