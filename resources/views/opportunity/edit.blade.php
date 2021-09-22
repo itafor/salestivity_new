@@ -144,7 +144,7 @@
                                             <select name="owner_id" class="form-control" >
                                                     @if(count(mySubUsers()) >=1)
                                                 @foreach(mySubUsers() as $owner)
-                                                    <option value="{{ $owner->id }}" {{$owner->email == authUser()->email ? 'selected':''}}>{{ $owner->name }} {{ $owner->last_name }}</option>
+                                                    <option value="{{ $owner->id }}" {{$owner->id == $opportunity->owner->id ? 'selected':''}}>{{ $owner->name }} {{ $owner->last_name }}</option>
                                                 @endforeach
                                                  @else
 

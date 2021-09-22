@@ -295,7 +295,9 @@
                             </div>
                         <a class="nav-link" href="#navbar-invoicing-renewals" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                             <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
+                          
                             <span class="nav-link-text">{{ __('Recurring') }}</span>
+                              &nbsp;
                         </a>
                         <div class="collapse" id="navbar-invoicing-renewals">
                             <ul class="nav nav-sm flex-column">
@@ -314,28 +316,7 @@
                                 
                                 </ul>  
                         </div>
-                          <a class="nav-link" href="#navbar-billing-agent" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                            <i class="fa fa-recycle text-primary" aria-hidden="true"></i>
-                            <span class="nav-link-text">{{ __('Billing Parameters') }}</span>
-                        </a>
-                        <div class="collapse" id="navbar-billing-agent">
-                            <ul class="nav nav-sm flex-column">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                            <a class="nav-link" href="{{route('company_details.index')}}">
-                                              List parameters
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('currency.index')}}">
-                                              Currencies
-                                            </a>
-                                        </li>
-                                       
-                                </ul>
-                                
-                                </ul>  
-                        </div>
+                     
                         </ul>
                     </div>
                   </li>
@@ -418,7 +399,7 @@
                                             </div>
                                         </ul>
                                     </li>
-                                        <li class="nav-item">
+                                       <!--  <li class="nav-item">
                                         <a class="nav-link" href="{{ route('company_details.index') }}" >
                                             <span class="nav-link-text">{{ __('Company Details') }}</span>
                                         </a>
@@ -426,7 +407,7 @@
                                         <a class="nav-link" href="{{ route('company.email.index') }}" >
                                             <span class="nav-link-text">{{ __('Company Emails') }}</span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('bank.account.index') }}" >
                                             <span class="nav-link-text">{{ __('Bank Account') }}</span>

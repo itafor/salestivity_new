@@ -248,7 +248,7 @@ class UserController extends Controller
 
             $toEmail = $user->email;
             
-          Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));
+          Mail::to($toEmail)->queue(new SendSubuserEmailVerificationLink($user));
 
             Alert::success('User','User successfully created.');
             return redirect()->route('allSubUsers');
