@@ -16,7 +16,7 @@
                                 <h3 class="mb-0">{{ __('Manage Opportunity') }} </h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('opportunity.view',[$opportunity->id]) }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
+                                <a href="{{ route('opportunity.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
                         </div>
                     </div>
