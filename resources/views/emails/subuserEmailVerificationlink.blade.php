@@ -108,19 +108,24 @@
                     <table>
                         <tr>
                             <td colspan="2">
-                                Hello,
+                                Hello {{$subUser->name}}, <br>
+                                Welcome to Salestivity! 
                                 <p>
-                                Please click the button below to verify your email address.
+                                    {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of  {{$subUser->parent_user->company_detail->name ? $subUser->parent_user->company_detail->name : $subUser->parent_user->company_name }} has created an account for you on Salestivity.
+                                </p>
+                                <p>
+                               Please click the button below to verify your email address. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{$subUser->parent_user->company_detail->name ? $subUser->parent_user->company_detail->name : $subUser->parent_user->company_name }}
+                                <br>
                                 <br>
                                 <a href="{{route('email.verified')}}">
-                                <button class="btn btn-primary">Verify Email Address</button>
+                                <button class="btn btn-primary">Verify your email</button>
                                 </a>
                                 <br>
-                                If you did not create an account, no further action is required.
+                                
                                 <br>
                                Regards,
                                 <br>
-                               Salestivity
+                               Salestivity Team
                                 </p>
                             </td>
                         </tr>
