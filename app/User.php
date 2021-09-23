@@ -73,5 +73,9 @@ class User extends Authenticatable
         return $this->hasMany(EmailMarketing::class,'main_acct_id','id');
     }
 
+     public function replyToEmails()
+    {
+        return $this->hasMany(ReplyToEmail::class, 'main_acct_id','id');
+    }
     
 }

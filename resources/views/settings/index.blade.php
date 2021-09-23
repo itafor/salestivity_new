@@ -82,21 +82,7 @@ div.t > input {
             
             </form>
 
-            <h2>ReplyTo Email Address</h2>
-          <form action="{{route('update.reply.to.email')}}" method="post" autocomplete="off">
-            @csrf
-
-             <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
-
-
-
-            <div style="width: 400px;">
-              <div class="t"> <!-- This is the wrapper div around the text input -->
-                  <input type="email" name="reply_to_email" class="" id="inputPassword2" placeholder="Company Reply To Email" value="{{$companyDetail ? $companyDetail->reply_to_email : ''}}" required>
-              </div>
-              <input type="submit" value="Save" />
-          </div>
-            </form>
+         
         </div>
             </div>
 

@@ -108,45 +108,7 @@ class SettingsController extends Controller
     }
 
 
-    public function updateReplyToEmailAddress(Request $request)
-    {
-        $data = $request->all();
-
-         $validator = Validator::make($data, [
-                'reply_to_email' => ['required', 'string', 'email', 'max:255'],
-        ]);
-         if($validator->fails()){
-                 Alert::warning('Required Fields', 'Please enter a valid email address');
-            return back()->withInput();
-         }
-           
-            if(!isset($data['reply_to_email'])){
-                $status = "Please enter your Mail From Name!!";
-        Alert::warning('Reply To Email', $status);
-        return back();
-            }
-           
-
-        $user = CompanyDetail::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['id', $data['company_detail_id']],
-            ])->first();
-        if($user){
-            $user->reply_to_email = isset($data['reply_to_email']) ? $data['reply_to_email'] : '';
-            $user->save();
-             $status = "Company Reply To Email updated!!";
-        Alert::success('Mail From Name', $status);
-        }else{
-            CompanyDetail::create([
-                    'main_acct_id' => getActiveGuardType()->main_acct_id,
-                    'reply_to_email' => $data['reply_to_email'],
-            ]);
-             $status = "Company Reply To Email updated!!";
-        Alert::success('Company Reply to Email', $status);
-        }
-       return redirect()->route('company_details.index')->with('success','Company Reply to Email updated');
-    }
-
+    
   
 
   

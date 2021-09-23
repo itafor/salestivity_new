@@ -30,10 +30,61 @@ div.t > input {
                         @endif
                     </div>
 
-                          <div class="card-body">
-                          
-                   
+              <div class="card-body">
+                        <div class="container">
+                          <div class="row">
 
+
+   <form action="{{route('add.reply.to.email')}}" method="post" class="form-inline" autocomplete="off">
+            @csrf
+            <div class="form-group mb-2 mr-1">
+            <label for="reply_to_email" >ReplyTo Email</label>
+            <input type="text" class="form-control-plaintext" name="reply_to_email" placeholder="Enter ReplyTo Email" required>
+             @if ($errors->has('reply_to_email'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('reply_to_email') }}</strong>
+                                    </span>
+                                @endif
+            </div>
+           
+            <button type="submit" class="btn btn-primary mb--3">Add</button>
+            </form>
+                               
+       
+              </div> 
+
+                          <div class="row">
+<div class="table-responsive">
+            <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ReplyTo Email</th>
+     
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($reply_to_emails as $email)
+    <tr>
+      <td>{{$email->reply_to_email}}</td>
+     
+      <td>
+        
+
+        <button onclick="getReplyToEmailById({{$email->id}})" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyToEmail">
+   <i class="fa fa-edit ml-1" title="edit email"></i>
+</button>
+      </td>
+      
+    </tr>
+  @endforeach
+  </tbody>
+</table>
+</div>
+ </div>
+                        </div> 
+                   
+<hr>
 <div class="container">
 
 <h3>Server Eamil Configuration Details </h3>
@@ -174,7 +225,31 @@ div.t > input {
             
         @include('layouts.footers.auth')
     @include('settings.editEmail')
+    @include('settings.editReplyTOEmail')
    
 
     </div>
+
+
+    <script type="text/javascript">
+    // Delete data with ajax
+function getReplyToEmailById(reply_to_email_id) {
+// alert(reply_to_email_id)
+$.ajax({
+    url: baseUrl + "/company-emails/" + reply_to_email_id ,
+    type: "GET",
+    data: { reply_to_email_id: reply_to_email_id },
+    success: function (data) {
+        console.log('email: ',data.email);
+    
+        $("#reply_to_email_id").val(data.email.id)
+        $("#reply_to_email").val(data.email.reply_to_email)
+       
+    },
+});
+}
+
+
+
+</script>
     @endsection

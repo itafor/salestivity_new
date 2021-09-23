@@ -290,10 +290,6 @@ Route::group([
     Route::post('/update-name', 'SettingsController@updateCompanyName')->name('company.update.name');
     Route::post('/update-mail-from-name', 'SettingsController@updateMailFromName')->name('company.update.mail_from_name');
 
-    Route::post('/update-reply-to-email', 'SettingsController@updateReplyToEmailAddress')->name('update.reply.to.email');
-
-
-    
     Route::post('upload_logo', 'SettingsController@uploadCompanyLogo')->name('company.upload.logo');
    
   
@@ -315,6 +311,10 @@ Route::group([
 
      Route::post('/add-new', 'CompanyEmailController@addCompanyEmail')->name('company.add.email');
     Route::post('/update', 'CompanyEmailController@updateCompanyEmail')->name('company.update.email');
+    Route::post('/add-reply-to-email', 'CompanyEmailController@addReplyToEmails')->name('add.reply.to.email');
+
+    Route::get('/{id}', 'CompanyEmailController@getReplyToEmailById');
+    Route::post('/update-replyToEmail', 'CompanyEmailController@updateReplyToEmail')->name('update.replyToEmail');
 });
 
 Route::group([
