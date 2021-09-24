@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MainUserEmailVerification;
 use App\Mail\SendSubuserEmailVerificationLink;
 use App\User;
 use Illuminate\Auth\Events\Registered;
@@ -102,7 +103,8 @@ class RegisterController extends Controller
 
          $toEmail = $user->email;
             
-          Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));// send this user email verification link
+          Mail::to($toEmail)->send(new MainUserEmailVerification($user));// send this user email verification link
+          // Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));// send this user email verification link
 
         $this->guard()->login($user);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use App\Http\Requests\UserRequest;
+use App\Mail\MainUserEmailVerification;
 use App\Mail\SendSubuserEmailVerificationLink;
 use App\Role;
 use App\SubUser;
@@ -47,7 +48,7 @@ class UserController extends Controller
 
        $toEmail = $user->email;
 
-      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));
+      Mail::to($toEmail)->send(new MainUserEmailVerification($user));
 
       session(['emailResentToUser' => 'resentToMainuser']);
 

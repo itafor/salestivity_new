@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Subuser email verification</title>
+    <title>Email verification</title>
     
     <style>
     .invoice-box {
@@ -109,17 +109,13 @@
                         <tr>
                             <td colspan="2">
                                 
-                             
-                                Hello {{$subUser->name}}, <br>
-                                Welcome to Salestivity! 
-                                <p>
-                                    {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of  {{$subUser->parent_user->company_name ? $subUser->parent_user->company_name : $subUser->parent_user->company_name }} has created an account for you on Salestivity.
-                                </p>
-                                <p>
-                               Please click the button below to verify your email address. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{$subUser->parent_user->company_name ? $subUser->parent_user->company_name : $subUser->parent_user->company_name }}
-                                <br>
-                                <br>
-                            </p>
+                                
+                            Hello,<br>
+                          
+                            Please click the button below to verify your email address.
+                            If you did not create an account, no further action is required.
+                           
+                           
                             <p>
                                 <a href="{{route('email.verified')}}">
                                 <button class="btn btn-primary">Verify your email</button>
