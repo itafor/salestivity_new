@@ -17,6 +17,7 @@ class CreateReplyToEmailsTable extends Migration
             $table->id();
             $table->string('reply_to_email')->nullable();
             $table->integer('main_acct_id')->nullable();
+            $table->string('default_email')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

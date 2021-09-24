@@ -76,37 +76,7 @@ class SettingsController extends Controller
     }
 
 
-    public function updateMailFromName(Request $request)
-    {
-        $data = $request->all();
-        // dd($data);
-            if(!isset($data['mail_from_name'])){
-                $status = "Please enter your Mail From Name!!";
-        Alert::warning('Mail From Name', $status);
-        return back();
-            }
-           
-
-        $user = CompanyDetail::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['id', $data['company_detail_id']],
-            ])->first();
-        if($user){
-            $user->mail_from_name = isset($data['mail_from_name']) ? $data['mail_from_name'] : '';
-            $user->save();
-             $status = "Company mail from name updated!!";
-        Alert::success('Mail From Name', $status);
-        }else{
-            CompanyDetail::create([
-                    'main_acct_id' => getActiveGuardType()->main_acct_id,
-                    'mail_from_name' => $data['mail_from_name'],
-            ]);
-             $status = "Company name From updated!!";
-        Alert::success('Company Mail From Name', $status);
-        }
-       return redirect()->route('company_details.index')->with('success','Company mail from name updated');
-    }
-
+   
 
     
   

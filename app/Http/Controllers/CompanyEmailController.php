@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CompanyDetail;
 use App\CompanyEmail;
+use App\MailFromName;
 use App\ReplyToEmail;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class CompanyEmailController extends Controller
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
          $data['reply_to_emails'] = ReplyToEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+          $data['mail_from_names'] = MailFromName::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
       
             
         return view('settings.companyEmails', $data);
@@ -98,8 +101,9 @@ public function updateCompanyEmail(Request $request)
                 'reply_to_email' => ['required', 'string', 'email', 'max:255', 'unique:reply_to_emails'],
         ]);
          if($validator->fails()){
-                 Alert::warning('Required Fields', 'Please enter a valid email address');
-            return back()->withInput();
+                 
+             return back()->withInput()->withErrors($validator);
+
          }
 
             ReplyToEmail::create([
@@ -107,7 +111,7 @@ public function updateCompanyEmail(Request $request)
                     'reply_to_email' => $data['reply_to_email'],
             ]);
 
-             $status = "Company Reply To Email add!!";
+             $status = "Company Reply To Email added!!";
         Alert::success('Company Reply to Email', $status);
         
        return redirect()->route('company.email.index')->with('success','Company Reply to Email added');
@@ -123,14 +127,12 @@ public function updateCompanyEmail(Request $request)
     public function updateReplyToEmail(Request $request)
     {
         $data = $request->all();
-        // dd($data);
+        
          $validator = Validator::make($data, [
                 'replyToEmail' => ['required', 'string', 'email', 'max:255'],
                 'reply_to_email_id'=>'required',
         ]);
          if($validator->fails()){
-                 // Alert::warning($validator->);
-            // return back()->withInput();
              return back()->withErrors($validator);
          }
 
@@ -146,5 +148,53 @@ public function updateCompanyEmail(Request $request)
        return redirect()->route('company.email.index')->with('success','Company Reply to Email added');
     }
 
+    public function setDefaultToEmail($id){
+
+        $emails = ReplyToEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+      
+        if(count($emails) >=1){
+        foreach ($emails as $key => $email) {
+            $email->default_email = null;
+            $email->save();
+        }
+    }
+        $email = ReplyToEmail::findOrFail($id);
+
+        if($email){
+            $email->default_email = 'Default';
+            $email->save();
+            $status = "Default Email!!";
+        Alert::success('Default Email set successfully', $status);
+        return redirect()->route('company.email.index')->with('success','Default ReplyTo Email set');
+        }
+    }
+
+
+
+        public function addMailFromName(Request $request)
+    {
+        $data = $request->all();
+
+         $validator = Validator::make($data, [
+                'mail_from_name' => ['required', 'string', 'max:255', 'unique:mail_from_names'],
+        ]);
+         if($validator->fails()){
+                 
+             return back()->withInput()->withErrors($validator);
+
+         }
+
+            MailFromName::create([
+                    'main_acct_id' => getActiveGuardType()->main_acct_id,
+                    'mail_from_name' => $data['mail_from_name'],
+            ]);
+
+             $status = "Company Mail From Name added!";
+        Alert::success('Company Reply to Email', $status);
+        
+       return redirect()->route('company.email.index')->with('success','Company Mail From Name added');
+    }
 
 }

@@ -69,19 +69,6 @@ div.t > input {
                     </div>
             </form>
 
-            <h2>Mail From Name</h2>
-          <form action="{{route('company.update.mail_from_name')}}" method="post" autocomplete="off">
-            @csrf
-            <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
-                  <div style="width: 400px;">
-          <div class="t"> 
-               <input type="text" name="mail_from_name" class="" id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->mail_from_name : ''}}" required>
-          </div>
-          <input type="submit" value="Save" />
-      </div>
-            
-            </form>
-
          
         </div>
             </div>

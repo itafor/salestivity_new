@@ -108,15 +108,26 @@
                     <table>
                         <tr>
                             <td colspan="2">
+                                
+                                @if(getActiveGuardType() !=null && getActiveGuardType()->user_type == 'sub_users')
                                 Hello {{$subUser->name}}, <br>
                                 Welcome to Salestivity! 
                                 <p>
-                                    {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of  {{$subUser->parent_user->company_detail->name ? $subUser->parent_user->company_detail->name : $subUser->parent_user->company_name }} has created an account for you on Salestivity.
+                                    {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of  {{$subUser->parent_user->company_name ? $subUser->parent_user->company_name : $subUser->parent_user->company_name }} has created an account for you on Salestivity.
                                 </p>
                                 <p>
-                               Please click the button below to verify your email address. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{$subUser->parent_user->company_detail->name ? $subUser->parent_user->company_detail->name : $subUser->parent_user->company_name }}
+                               Please click the button below to verify your email address. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{$subUser->parent_user->company_name ? $subUser->parent_user->company_name : $subUser->parent_user->company_name }}
                                 <br>
                                 <br>
+                            </p>
+                            @else
+                            Hello,<br>
+                          
+                            Please click the button below to verify your email address.
+                            If you did not create an account, no further action is required.
+                            @endif
+                           
+                            <p>
                                 <a href="{{route('email.verified')}}">
                                 <button class="btn btn-primary">Verify your email</button>
                                 </a>
