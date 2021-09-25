@@ -36,7 +36,6 @@
               <h3 class="m-0">Something went wrong!</h3>
              
               <p>We sincerely apologize as it appears we are experiencing a problem that is preventing us from completing your current request. Please contact us or try again much later.</p>
-
               <a href="{{route('login')}}">Go Back To Site</a>
             </div>
           </div>
