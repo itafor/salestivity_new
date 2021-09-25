@@ -1,16 +1,6 @@
 @extends('layouts.app', ['title' => __('Company Emails '), 'icon' => 'las la-compass'])
 @section('content')
 @include('users.partials.header', ['title' => __('Company Email Details')])
-<style type="text/css">
-  div { display: table; }
-div.t {
-    display: table-cell;
-    width: 100%;
-}
-div.t > input {
-    width: 100%;
-}
-</style>
  <div class="container-fluid mt--7"> 
         <div class="row">
             <div class="col">

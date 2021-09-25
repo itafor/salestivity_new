@@ -1,16 +1,7 @@
 @extends('layouts.app', ['title' => __('Company Details'), 'icon' => 'las la-compass'])
 @section('content')
 @include('users.partials.header', ['title' => __('Company Details')])
-<style type="text/css">
-  div { display: table; }
-div.t {
-    display: table-cell;
-    width: 100%;
-}
-div.t > input {
-    width: 100%;
-}
-</style>
+
  <div class="container-fluid mt--7"> 
         <div class="row">
             <div class="col">
@@ -54,20 +45,21 @@ div.t > input {
                            <img src="{{$user->company_logo_url}}" alt="company logo" width="100" height="100">
                             @endif
                         </div>
-                   <div class="col-12">
-           <h2>Company Name</h2>
-          <form action="{{route('company.update.name')}}" method="post" autocomplete="off">
+                   <div class="col-6">
+           <h2 class="mt-30">Company Name</h2>
+          <form action="{{route('company.update.name')}}" method="post" autocomplete="off" class="form-inline ">
             @csrf
                 <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
 
-                  <div style="width: 400px;">
-                    <div class="t"> 
-                         <input type="text" name="company_name"  id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->name : ''}}" required>
+                 
+                    <div class="col-auto">
+                         <input type="text" name="company_name" class="form-control"  id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->name : ''}}" required>
+                       </div>
+                       <div class="col-auto">
+                    <button  type="submit" class="btn btn-primary">Save</button>
             
                     </div>
-                    <input type="submit" value="Save" />
-                    </div>
-            </form>
+                                </form>
 
          
         </div>

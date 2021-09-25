@@ -18,6 +18,9 @@ use Illuminate\Http\Request;
 // Route::get('testing-time', function () {
 //    echo date('m/d/Y H:i:s', 1611243565);
 // });
+
+    Route::get('/something-went-wrong', 'HomeController@displayNonHttpErrors')->name('non.http.errors');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@homepage');

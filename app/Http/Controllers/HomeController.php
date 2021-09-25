@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage']);
+        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage','displayNonHttpErrors']);
     }
 
     /**
@@ -31,6 +31,16 @@ class HomeController extends Controller
             return redirect()->route('home');
         }
         return view('welcome');
+    }
+
+     /**
+     * Display non http errors on page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function displayNonHttpErrors()
+    {
+        return view('errors.NonHttpErrors');
     }
 
      

@@ -399,11 +399,12 @@
                                             </div>
                                         </ul>
                                     </li>
-                                    <!--     <li class="nav-item">
+                                        <li class="nav-item">
                                         <a class="nav-link" href="{{ route('company_details.index') }}" >
                                             <span class="nav-link-text">{{ __('Company Details') }}</span>
                                         </a>
-                                    </li>                                    <li class="nav-item">
+                                    </li> 
+                                   <!--  <li class="nav-item">
                                         <a class="nav-link" href="{{ route('company.email.index') }}" >
                                             <span class="nav-link-text">{{ __('Company Emails') }}</span>
                                         </a>
