@@ -307,6 +307,41 @@
     @endif
     </div>
   </div>
+
+
+
+    <div class="row">
+      <div class="col">
+<label class="form-control-label" for="discount">{{ __('ReplyTo Email') }}</label>
+   <select class="form-control" name="reply_to_email_id" id="reply_to_email_id" required>
+       <option value="">Select delivery email</option>
+          @foreach($reply_to_emails as $email)
+        <option value="{{$email->id}}" {{$email->id == $renewal->reply_to_email_id ? 'selected' : ''}}>{{$email->reply_to_email}}</option>
+        @endforeach
+   </select>
+
+    @if ($errors->has('reply_to_email_id'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('reply_to_email_id') }}</strong>
+        </span>
+    @endif
+    </div>
+
+      <div class="col">
+<label class="form-control-label" for="discount">{{ __('Mail from Name') }}</label>
+         <select class="form-control" name="mail_from_name_id" id="mail_from_name_id" required>
+       <option value="">Select Mail from Name</option>
+          @foreach($mail_from_names as $name)
+        <option value="{{$name->id}}" {{$name->id == $renewal->mail_from_name_id ? 'selected' : ''}}>{{$name->mail_from_name}}</option>
+  @endforeach
+   </select>
+    @if ($errors->has('mail_from_name_id'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('mail_from_name_id') }}</strong>
+        </span>
+    @endif
+    </div>
+  </div>
  
     <div class="text-center">
     <button type="submit" class="btn btn-success mt-4" >{{ __('Save') }}</button>

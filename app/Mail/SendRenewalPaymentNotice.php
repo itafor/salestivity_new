@@ -47,6 +47,7 @@ class SendRenewalPaymentNotice extends Mailable
         $documentName = 'paymentConfirmation_'.'.pdf';
 
         return $this->view('emails.send_renewal_payment_notice')
+        ->from('noreply@salestivity.com', getMailFromName($this->renewal->renewal))
         ->attachData($pdf->output(), $documentName)
         ->subject('Confirmation of Payment');
     }

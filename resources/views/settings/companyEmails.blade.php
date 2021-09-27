@@ -106,9 +106,9 @@
       <td>{{$email->mail_from_name}}</td>
       <td>{{$email->default_name}}</td>
       <td colspan="2">
-      <a onclick="return confirm('Are you Sure?')" href="{{route('set.default.replyToEmail',[$email->id])}}">Set as default</a>
-      <span onclick="getReplyToEmailById({{$email->id}})" type="button"  data-bs-toggle="modal" data-bs-target="#replyToEmail">
-      <i class="fa fa-edit ml-1" title="edit email"></i>
+      <a onclick="return confirm('Are you Sure?')" href="{{route('set.default.mail.from.name',[$email->id])}}">Set as default</a>
+      <span onclick="getMailFromNameById({{$email->id}})" type="button"  data-bs-toggle="modal" data-bs-target="#mailFrormName">
+      <i class="fa fa-edit ml-1" title="edit mail from name"></i>
       </span>
       </td>
       </tr>
@@ -287,6 +287,21 @@ $.ajax({
 });
 }
 
+function getMailFromNameById(mail_from_name_id) {
+// alert(reply_to_email_id)
+$.ajax({
+    url: baseUrl + "/company-emails/mail_from_name/" + mail_from_name_id ,
+    type: "GET",
+    data: { mail_from_name_id: mail_from_name_id },
+    success: function (data) {
+        console.log('email: ',data.email);
+    
+        $("#mail_from_name_id").val(data.email.id)
+        $("#mail_from_name").val(data.email.mail_from_name)
+       
+    },
+});
+}
 
 
 </script>

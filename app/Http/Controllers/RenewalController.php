@@ -14,6 +14,7 @@ use App\Http\Traits\RecurringBillStatus;
 use App\Http\Traits\RenewalInvoiceTrait;
 use App\Http\Traits\RenewalPaymentTrait;
 use App\Jobs\SendRenewalPaymentNotification;
+use App\MailFromName;
 use App\Mail\ConfirmRecurringInvoiceRecceipt;
 use App\Mail\RenewalPaid;
 use App\Notifications\RenewalCreated;
@@ -22,6 +23,7 @@ use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
 use App\RenewalUpdate;
+use App\ReplyToEmail;
 use App\SubCategory;
 use App\User;
 use App\renewalContactEmail;
@@ -132,6 +134,16 @@ class RenewalController extends Controller
         ])->get();
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+        $data['mail_from_names'] = MailFromName::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+         $data['reply_to_emails'] = ReplyToEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+      
+
         return view('billing.renewal.create', $data);
     }
 
@@ -152,7 +164,9 @@ class RenewalController extends Controller
             'duration_type' =>'required',
             'company_email_id' =>'required',
             'company_bank_acc_id' =>'required',
-            'currency_id' =>'required'
+            'currency_id' =>'required',
+            'reply_to_email_id' =>'required',
+            'mail_from_name_id' =>'required',
         ]);
 
         if ($validator->fails()) {
@@ -341,9 +355,13 @@ class RenewalController extends Controller
         
         $data['product'] = $data['renewal']->prod;
 
-        // $discountValue =  $data['renewal']->discount == '' ? 0 :  $data['renewal']->discount;
-        // $discountedPrice = ($discountValue / 100) * $data['product']->standard_price;
-        // $data['currentBillingBalance'] = $data['product']->standard_price - $discountedPrice;
+         $data['mail_from_names'] = MailFromName::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+         $data['reply_to_emails'] = ReplyToEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
 
         return view('billing.renewal.edit', $data);
     }
@@ -372,7 +390,8 @@ class RenewalController extends Controller
             'duration_type' =>'required',
             'company_email_id' =>'required',
             'company_bank_acc_id' =>'required',
-            // 'currency_id' =>'required'
+            'reply_to_email_id' =>'required',
+            'mail_from_name_id' =>'required',
         ]);
 
         if ($validator->fails()) {

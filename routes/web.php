@@ -323,7 +323,10 @@ Route::group([
 
 
      Route::post('/add-mail-from-name', 'CompanyEmailController@addMailFromName')->name('add.mail.from.name');
-     Route::post('/update-mail-from-name', 'CompanyEmailController@updateReplyToEmail')->name('update.mail.from.name');
+     Route::post('/update-mail-from-name', 'CompanyEmailController@updateMailFromName')->name('update.mail.from.name');
+    Route::get('/mail_from_name/{id}', 'CompanyEmailController@getMailFromNameById');
+ Route::get('/default/email/from-name/{id}', 'CompanyEmailController@setDefaultMailFromName')->name('set.default.mail.from.name');
+
 
 });
 

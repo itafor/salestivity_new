@@ -9,6 +9,7 @@ use App\Contact;
 use App\Country;
 use App\Customer;
 use App\Industry;
+use App\MailFromName;
 use App\Product;
 use App\State;
 use App\SubCategory;
@@ -322,4 +323,20 @@ function whatsappNotification($from_number, $to_number, $text_messages)
         }
         }
 
+    }
+
+    function getMailFromName($invoice)
+    {
+        $default_mail_from_name = MailFromName::where([
+            ['main_acct_id', $invoice->user->id],
+            ['default_name', 'Default'],
+        ])->first();
+
+        if($invoice->getMailFromName){
+            return $invoice->getMailFromName->mail_from_name;
+        }elseif($default_mail_from_name){
+            return $default_mail_from_name->mail_from_name;
+        }else{
+            return $invoice->user->company_name;
+        }
     }

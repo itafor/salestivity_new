@@ -2,7 +2,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="replyToEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="mailFrormName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,12 +13,12 @@
          <form action="{{route('update.mail.from.name')}}" method="post" class="form-inline" autocomplete="off">
             @csrf
             <div class="form-group mb-2 mr-1">
-              <input type="hidden" name="mail_from_nameId" id="mail_from_nameId">
-            <label for="reply_to_email" >ReplyTo Email</label>
-            <input type="email" class="form-control-plaintext" name="replyToEmail" id="reply_to_email" placeholder="Enter ReplyTo Email" required>
-             @if ($errors->has('replyToEmail'))
+              <input type="hidden" name="mail_from_name_id" id="mail_from_name_id">
+            <label for="reply_to_email" >Mail From Name</label>
+            <input type="text" class="form-control-plaintext" name="mail_from_name" id="mail_from_name" placeholder="Enter ReplyTo Email" required>
+             @if ($errors->has('mail_from_name'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('replyToEmail') }}</strong>
+                                        <strong>{{ $errors->first('mail_from_name') }}</strong>
                                     </span>
                                 @endif
             </div>

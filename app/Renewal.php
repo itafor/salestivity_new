@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id','currency_id'
+        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id','currency_id','reply_to_email_id','mail_from_name_id'
     	];
 
     public function customers()
@@ -68,6 +68,16 @@ class Renewal extends Model
         return $this->belongsTo('App\User', 'main_acct_id');
     }
 
+     public function replyToEmailAddress()
+    {
+        return $this->belongsTo('App\ReplyToEmail', 'reply_to_email_id');
+    }
+
+    public function getMailFromName()
+    {
+        return $this->belongsTo('App\MailFromName', 'mail_from_name_id');
+    }
+
      public function compEmail()
     {
         return $this->belongsTo('App\CompanyEmail', 'company_email_id','id');
@@ -113,6 +123,8 @@ class Renewal extends Model
         'company_email_id' => $data['company_email_id'],
         'company_bank_acc_id' => $data['company_bank_acc_id'],
         'currency_id' => $data['currency_id'],
+        'mail_from_name_id' => $data['mail_from_name_id'],
+        'reply_to_email_id' => $data['reply_to_email_id'],
 
     	]);
 
@@ -149,6 +161,9 @@ class Renewal extends Model
         'company_email_id' => $data['company_email_id'],
         'company_bank_acc_id' => $data['company_bank_acc_id'],
         'currency_id' => isset($data['currency_id']) ? $data['currency_id'] : $renewal->currency_id,
+        'mail_from_name_id' => $data['mail_from_name_id'],
+        'reply_to_email_id' => $data['reply_to_email_id'],
+
         ]); 
 
         self::updateRenewalReminderDuration($data);

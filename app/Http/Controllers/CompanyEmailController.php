@@ -123,6 +123,37 @@ public function updateCompanyEmail(Request $request)
         return response()->json(['email'=>$email]);
     }
 
+      public function getMailFromNameById($id){
+        $email = MailFromName::findOrFail($id);
+        return response()->json(['email'=>$email]);
+    }
+
+        public function updateMailFromName(Request $request)
+    {
+        $data = $request->all();
+        
+         $validator = Validator::make($data, [
+                'mail_from_name' => ['required', 'string', 'max:255'],
+                'mail_from_name_id'=>'required',
+        ]);
+         if($validator->fails()){
+             return back()->withErrors($validator);
+         }
+
+           $email = MailFromName::findOrFail($data['mail_from_name_id']);
+           if($email){
+            $email->mail_from_name = $data['mail_from_name'];
+            $email->save();
+           }
+
+             $status = "Mail From Name updated!!";
+        Alert::success('Mail From Name', $status);
+        
+       return redirect()->route('company.email.index')->with('success','Company Mail From Name updated');
+    }
+
+
+
 
     public function updateReplyToEmail(Request $request)
     {
@@ -195,6 +226,29 @@ public function updateCompanyEmail(Request $request)
         Alert::success('Company Reply to Email', $status);
         
        return redirect()->route('company.email.index')->with('success','Company Mail From Name added');
+    }
+
+        public function setDefaultMailFromName($id){
+
+        $emails = MailFromName::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+      
+        if(count($emails) >=1){
+        foreach ($emails as $key => $email) {
+            $email->default_name = null;
+            $email->save();
+        }
+    }
+        $email = MailFromName::findOrFail($id);
+
+        if($email){
+            $email->default_name = 'Default';
+            $email->save();
+            $status = "Default Mail From Name!!";
+        Alert::success('Default Mail From Name set successfully', $status);
+        return redirect()->route('company.email.index')->with('success','Default Mail From Name set');
+        }
     }
 
 }

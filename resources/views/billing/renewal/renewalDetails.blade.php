@@ -210,6 +210,16 @@
                      <td style="width: 200px;"><b>{{ __('Delivery Email') }}</b></td>
                 <td>{{ $renewal->compEmail ? $renewal->compEmail->email : 'N/A' }}</td>           
               </tr>
+
+              <tr>
+                     <td style="width: 200px;"><b>{{ __('ReplyTo Email') }}</b></td>
+                <td>{{ $renewal->replyToEmailAddress ? $renewal->replyToEmailAddress->reply_to_email : 'N/A' }}</td>           
+              </tr>
+
+               <tr>
+                     <td style="width: 200px;"><b>{{ __('Mail From Name') }}</b></td>
+                <td>{{ $renewal->getMailFromName ? $renewal->getMailFromName->mail_from_name : 'N/A' }}</td>           
+              </tr>
               <tr>
                  <td style="width: 200px;"><b>{{ __('Bank Account') }}</b></td>
                  <td> <strong>Bank</strong> : {{$renewal->compBankAcct ? $renewal->compBankAcct->bank_name : 'N/A' }}, <strong>Account Name</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_name : 'N/A' }}, <strong>Account Number</strong>: {{$renewal->compBankAcct ? $renewal->compBankAcct->account_number : 'N/A' }} </td>
