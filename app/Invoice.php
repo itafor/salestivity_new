@@ -40,6 +40,16 @@ class Invoice extends Model
         return $this->belongsTo('App\User', 'main_acct_id');
     }
 
+    public function replyToEmailAddress()
+    {
+        return $this->belongsTo('App\ReplyToEmail', 'reply_to_email_id');
+    }
+
+    public function getMailFromName()
+    {
+        return $this->belongsTo('App\MailFromName', 'mail_from_name_id');
+    }
+
     public function getCustomerName($id)
     {
         $invoice = Invoice::where('customer', $id)->get()->first();

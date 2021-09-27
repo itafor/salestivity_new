@@ -11,6 +11,7 @@ use App\Customer;
 use App\Industry;
 use App\MailFromName;
 use App\Product;
+use App\ReplyToEmail;
 use App\State;
 use App\SubCategory;
 use App\SubUser;
@@ -338,5 +339,21 @@ function whatsappNotification($from_number, $to_number, $text_messages)
             return $default_mail_from_name->mail_from_name;
         }else{
             return $invoice->user->company_name;
+        }
+    }
+
+  function getReplyToEmailAddress($invoice)
+    {
+        $default_replyTo_email = ReplyToEmail::where([
+            ['main_acct_id', $invoice->user->id],
+            ['default_email', 'Default'],
+        ])->first();
+
+        if($invoice->replyToEmailAddress){
+            return $invoice->replyToEmailAddress->reply_to_email;
+        }elseif($default_replyTo_email){
+            return $default_replyTo_email->reply_to_email;
+        }else{
+            return $invoice->user->email;
         }
     }
