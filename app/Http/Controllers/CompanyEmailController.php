@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CarbonCopyEmail;
 use App\CompanyDetail;
 use App\CompanyEmail;
 use App\MailFromName;
@@ -28,6 +29,8 @@ class CompanyEmailController extends Controller
          $data['reply_to_emails'] = ReplyToEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
           $data['mail_from_names'] = MailFromName::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+           $data['cc_emails'] = CarbonCopyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
       
             
         return view('settings.companyEmails', $data);
@@ -125,6 +128,11 @@ public function updateCompanyEmail(Request $request)
 
       public function getMailFromNameById($id){
         $email = MailFromName::findOrFail($id);
+        return response()->json(['email'=>$email]);
+    }
+
+     public function getCCEmailById($id){
+        $email = CarbonCopyEmail::findOrFail($id);
         return response()->json(['email'=>$email]);
     }
 
@@ -249,6 +257,55 @@ public function updateCompanyEmail(Request $request)
         Alert::success('Default Mail From Name set successfully', $status);
         return redirect()->route('company.email.index')->with('success','Default Mail From Name set');
         }
+    }
+
+        public function addCcEmails(Request $request)
+    {
+        $data = $request->all();
+
+         $validator = Validator::make($data, [
+                'cc_email' => ['required', 'string', 'email', 'max:255', 'unique:carbon_copy_emails'],
+        ]);
+         if($validator->fails()){
+                 
+             return back()->withInput()->withErrors($validator);
+
+         }
+
+            CarbonCopyEmail::create([
+                    'main_acct_id' => getActiveGuardType()->main_acct_id,
+                    'cc_email' => $data['cc_email'],
+            ]);
+
+             $status = "Company CC Email added!!";
+        Alert::success('Company CC Email', $status);
+        
+       return redirect()->route('company.email.index')->with('success','Company cc Email added');
+    }
+
+
+  public function updateCCEmail(Request $request)
+    {
+        $data = $request->all();
+        
+         $validator = Validator::make($data, [
+                'ccEamil' => ['required', 'string', 'email', 'max:255'],
+                'cc_email_id'=>'required',
+        ]);
+         if($validator->fails()){
+             return back()->withErrors($validator);
+         }
+
+           $email = CarbonCopyEmail::findOrFail($data['cc_email_id']);
+           if($email){
+            $email->cc_email = $data['ccEamil'];
+            $email->save();
+           }
+
+             $status = "Company CC Email updated!!";
+        Alert::success('Company CC Email', $status);
+        
+       return redirect()->route('company.email.index')->with('success','Company CC Email updated');
     }
 
 }

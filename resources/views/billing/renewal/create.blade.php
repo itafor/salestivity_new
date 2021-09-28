@@ -297,6 +297,22 @@
     @endif
     </div>
 
+             <div class="col">
+<label class="form-control-label" for="discount">{{ __('CC:') }}</label>
+   <select class="form-control" name="cc_email_id" id="cc_email_id" required>
+       <option value="">Select cc email</option>
+          @foreach($cc_emails as $email)
+        <option value="{{$email->id}}">{{$email->cc_email}}</option>
+        @endforeach
+   </select>
+
+    @if ($errors->has('cc_email_id'))
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('cc_email_id') }}</strong>
+        </span>
+    @endif
+    </div>
+
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Mail from Name') }}</label>
          <select class="form-control" name="mail_from_name_id" id="mail_from_name_id" required>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CarbonCopyEmail;
 use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
@@ -10,10 +11,12 @@ use App\Customer;
 use App\Http\Traits\InvoiceBillStatus;
 use App\Invoice;
 use App\InvoicePayment;
+use App\MailFromName;
 use App\Mail\InvoicePaid;
 use App\Mail\SendInvoice;
 use App\Payment;
 use App\Product;
+use App\ReplyToEmail;
 use App\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -115,6 +118,18 @@ class InvoiceController extends Controller
          
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
+        $data['mail_from_names'] = MailFromName::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+         $data['reply_to_emails'] = ReplyToEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+          $data['cc_emails'] = CarbonCopyEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
         return view('billing.invoice.create', $data);
     }
 
@@ -157,6 +172,9 @@ class InvoiceController extends Controller
             'payment_due.required' => 'Payment Due is required',
             'term_condition.required' => 'Term and condition is required',
             'currency_id.required' => 'Currency is required',
+            'mail_from_name_id.required' => 'Mail From Name is required',
+            'reply_to_email_id.required' => 'ReplyToEmail is required',
+            'cc_email_id.required' => 'CC email is required',
 
             
         ];
@@ -186,6 +204,10 @@ class InvoiceController extends Controller
         $invoice->payment_due = $request->payment_due;
         $invoice->term_condition = $request->term_condition;
         $invoice->currency_id = $request->currency_id;
+        $invoice->mail_from_name_id = $request->mail_from_name_id;
+        $invoice->reply_to_email_id = $request->reply_to_email_id;
+        $invoice->cc_email_id = $request->cc_email_id;
+
         $invoice->save();
 
         if ($invoice) {
@@ -398,6 +420,14 @@ class InvoiceController extends Controller
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
          
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+        $data['mail_from_names'] = MailFromName::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+         $data['reply_to_emails'] = ReplyToEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
 
         return view('billing.invoice.edit', $data);
     }

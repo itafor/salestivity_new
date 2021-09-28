@@ -48,10 +48,10 @@ class EmailInvoiceRenewalToCustomer extends Mailable
         $documentName = 'invoiceRenewal_'.$this->renewal->invoice_number.'.pdf';
 
          return $this->view('emails.email_invoice_renewal_to_customer')
-        ->from('noreply@salestivity.com', getMailFromName($this->renewal))
+        ->from('notifications@salestivtity.com', getMailFromName($this->renewal))
         ->replyTo(getReplyToEmailAddress($this->renewal))
         ->subject('Managed Hosting Invoice')
         ->attachData($pdf->output(), $documentName)
-        ->cc('billing@digitalweb247.com','Digitalweb247');
+        ->cc(getUserCCEmailAddress($this->renewal));
     }
 }

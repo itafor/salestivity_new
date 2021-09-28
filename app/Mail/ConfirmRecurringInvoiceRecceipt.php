@@ -30,7 +30,7 @@ class ConfirmRecurringInvoiceRecceipt extends Mailable
     public function build()
     {
         return $this->view('emails.confirm_recurring_invoice_recceipt')
-        ->from('noreply@salestivity.com', getMailFromName($this->renewal))
+        ->from('notifications@salestivtity.com', getMailFromName($this->renewal))
         ->subject('Recurring Invoice Receipt Confirmation');
 
     }

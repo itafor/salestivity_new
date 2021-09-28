@@ -217,6 +217,11 @@
               </tr>
 
                <tr>
+                     <td style="width: 200px;"><b>{{ __('CC Email') }}</b></td>
+                <td>{{ $renewal->ccEmailAddress ? $renewal->ccEmailAddress->cc_email : 'N/A' }}</td>           
+              </tr>
+
+               <tr>
                      <td style="width: 200px;"><b>{{ __('Mail From Name') }}</b></td>
                 <td>{{ $renewal->getMailFromName ? $renewal->getMailFromName->mail_from_name : 'N/A' }}</td>           
               </tr>

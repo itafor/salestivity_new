@@ -27,7 +27,7 @@
       @csrf
       <div class="form-group mb-2 mr-1">
       <label for="reply_to_email" >ReplyTo Email</label>
-      <input type="text" class="form-control-plaintext" name="reply_to_email" placeholder="Enter ReplyTo Email" required>
+      <input type="email" class="form-control-plaintext" name="reply_to_email" placeholder="Enter ReplyTo Email" required>
       @if ($errors->has('reply_to_email'))
                     <span class="invalid-feedback" style="display: block;" role="alert">
                         <strong>{{ $errors->first('reply_to_email') }}</strong>
@@ -66,10 +66,50 @@
       </table>
       </div>
       </div>
-   
+<hr>
 
+ <div class="row">
+      <form action="{{route('add.cc.email')}}" method="post" class="form-inline" autocomplete="off">
+      @csrf
+      <div class="form-group mb-2 mr-1">
+      <label for="cc_email" >CC Email</label>
+      <input type="email" class="form-control-plaintext" name="cc_email" placeholder="Enter CC Email" required>
+      @if ($errors->has('cc_email'))
+                    <span class="invalid-feedback" style="display: block;" role="alert">
+                        <strong>{{ $errors->first('cc_email') }}</strong>
+                    </span>
+                @endif
+      </div>
+      <button type="submit" class="btn btn-primary mb--3">Add</button>
+      </form>
+      </div> 
 
+      <div class="row">
+      <div class="table-responsive">
+      <table class="table">
+      <thead>
+      <tr>
+      <th scope="col">CC Email</th>
 
+      <th scope="col" colspan="2">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach($cc_emails as $email)
+      <tr>
+      <td>{{$email->cc_email}}</td>
+      <td colspan="2">
+     
+      <span onclick="getCcEmailById({{$email->id}})" type="button"  data-bs-toggle="modal" data-bs-target="#cc-email-modal">
+      <i class="fa fa-edit ml-1" title="edit email"></i>
+      </span>
+      </td>
+      </tr>
+      @endforeach
+      </tbody>
+      </table>
+      </div>
+      </div>
 
 <hr>
 
@@ -263,6 +303,7 @@
         @include('layouts.footers.auth')
     @include('settings.editEmail')
     @include('settings.editReplyTOEmail')
+    @include('settings.editCCEmail')
     @include('settings.editMailfromName')
    
 
@@ -298,6 +339,22 @@ $.ajax({
     
         $("#mail_from_name_id").val(data.email.id)
         $("#mail_from_name").val(data.email.mail_from_name)
+       
+    },
+});
+}
+
+function getCcEmailById(cc_email_id) {
+// alert(reply_to_email_id)
+$.ajax({
+    url: baseUrl + "/company-emails/cc-email/" + cc_email_id ,
+    type: "GET",
+    data: { cc_email_id: cc_email_id },
+    success: function (data) {
+        console.log('email: ',data.email);
+    
+        $("#cc_email_id").val(data.email.id)
+        $("#cc_email").val(data.email.cc_email)
        
     },
 });

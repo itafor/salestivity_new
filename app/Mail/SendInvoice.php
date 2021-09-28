@@ -45,10 +45,11 @@ class SendInvoice extends Mailable
         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
     
         return $this->view('emails.sendinvoice')
-         ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
+        ->from('notifications@salestivtity.com', getMailFromName($this->invoice))
+        ->replyTo(getReplyToEmailAddress($this->invoice))
         ->attachData($pdf->output(), $documentName)
         ->subject('Invoice Notification')
-        ->cc('billing@digitalweb247.com', 'Digitalweb247');
-        // ->cc($this->invoice->compEmail ? $this->invoice->compEmail->email : $this->invoice->user->email);
+        ->cc(getUserCCEmailAddress($this->invoice));
+        
     }
 }

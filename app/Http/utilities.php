@@ -1,5 +1,6 @@
 <?php
 
+use App\CarbonCopyEmail;
 use App\Category;
 use App\City;
 use App\CompanyAccountDetail;
@@ -353,6 +354,16 @@ function whatsappNotification($from_number, $to_number, $text_messages)
             return $invoice->replyToEmailAddress->reply_to_email;
         }elseif($default_replyTo_email){
             return $default_replyTo_email->reply_to_email;
+        }else{
+            return $invoice->user->email;
+        }
+    }
+
+     function getUserCCEmailAddress($invoice)
+    {
+        
+        if($invoice->ccEmailAddress){
+            return $invoice->ccEmailAddress->cc_email;
         }else{
             return $invoice->user->email;
         }

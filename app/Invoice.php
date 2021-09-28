@@ -50,6 +50,11 @@ class Invoice extends Model
         return $this->belongsTo('App\MailFromName', 'mail_from_name_id');
     }
 
+     public function ccEmailAddress()
+    {
+        return $this->belongsTo('App\CarbonCopyEmail', 'cc_email_id');
+    }
+
     public function getCustomerName($id)
     {
         $invoice = Invoice::where('customer', $id)->get()->first();

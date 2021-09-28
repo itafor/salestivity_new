@@ -36,8 +36,9 @@ class InvoicePaid extends Mailable
         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
 
         return $this->view('emails.invoicePaid')
-         ->replyTo('billing@digitalweb247.com', 'Digitalweb247')
+         ->from('notifications@salestivtity.com', getMailFromName($this->paid_invoice->invoice))
+         ->replyTo(getReplyToEmailAddress($this->paid_invoice->invoice))
         ->subject('Confirmation of Payment')
-        ->cc('billing@digitalweb247.com', 'Digitalweb247');
+        ->cc(getUserCCEmailAddress($this->paid_invoice->invoice));
     }
 }

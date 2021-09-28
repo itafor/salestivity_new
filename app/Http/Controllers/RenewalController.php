@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BillingAgent;
+use App\CarbonCopyEmail;
 use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
@@ -142,7 +143,11 @@ class RenewalController extends Controller
          $data['reply_to_emails'] = ReplyToEmail::where([
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
-      
+
+       $data['cc_emails'] = CarbonCopyEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
 
         return view('billing.renewal.create', $data);
     }
@@ -363,6 +368,10 @@ class RenewalController extends Controller
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
+          $data['cc_emails'] = CarbonCopyEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
         return view('billing.renewal.edit', $data);
     }
 
@@ -392,6 +401,7 @@ class RenewalController extends Controller
             'company_bank_acc_id' =>'required',
             'reply_to_email_id' =>'required',
             'mail_from_name_id' =>'required',
+            'cc_email_id' =>'required',
         ]);
 
         if ($validator->fails()) {

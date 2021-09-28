@@ -191,6 +191,20 @@
                 <td>{{ $invoice->compEmail ? $invoice->compEmail->email : 'N/A' }}</td>           
               </tr>
                <tr>
+                     <td style="width: 200px;"><b>{{ __('ReplyTo Email') }}</b></td>
+                <td>{{ $invoice->replyToEmailAddress ? $invoice->replyToEmailAddress->reply_to_email : 'N/A' }}</td>           
+              </tr>
+
+               <tr>
+                     <td style="width: 200px;"><b>{{ __('CC Email') }}</b></td>
+                <td>{{ $invoice->ccEmailAddress ? $invoice->ccEmailAddress->cc_email : 'N/A' }}</td>           
+              </tr>
+
+               <tr>
+                     <td style="width: 200px;"><b>{{ __('Mail From Name') }}</b></td>
+                <td>{{ $invoice->getMailFromName ? $invoice->getMailFromName->mail_from_name : 'N/A' }}</td>           
+              </tr>
+               <tr>
                      <td style="width: 200px;"><b>{{ __('Payment Due') }}</b></td>
                      <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
                      </td>

@@ -30,6 +30,7 @@ class ConfirmInvoiceRecceipt extends Mailable
     public function build()
     {
         return $this->view('emails.confirm_invoice_receipt')
+        ->from('notifications@salestivtity.com', getMailFromName($this->invoice))
          ->subject('Invoice Receipt Confirmation');
     }
 }
