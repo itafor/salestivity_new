@@ -63,13 +63,10 @@
                                                 <td>
                                                     <div class="btn-group-justified text-center" role="group">
                                                         <div class="btn-group" role="group">
-                                                            <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                            <a href="{{ route('product.show', [$product->id]) }}" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
                                                         </div> 
                                                         <div class="btn-group" role="group">
-                                                            <form action="{{ route('product.destroy', [$product->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                                @csrf
-                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
-                                                            </form>
+                                                             <a onclick="return confirm('Do you really want to delete this item?');" href="{{route('product.destroy', [$product->id]) }}" class="btn-icon btn-tooltip" title="Delete"><i class="las la-trash-alt"></i></a>
                                                         </div>                                                        
                                                     </div>                                                    
                                                 </td>

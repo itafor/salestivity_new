@@ -21,4 +21,9 @@ class Project extends Model
     {
         return $this->belongsTo('App\Product');
     }
+
+     public function getTechnician()
+    {
+        return $this->belongsTo('App\SubUser', 'technician_id');
+    }
 }

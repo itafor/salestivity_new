@@ -37,8 +37,7 @@ class TargetController extends Controller
         $account_owner = User::find($userId);
 
          $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
-        $salesPersons = SubUser::where('main_acct_id', $userId)
-        ->where('email', '!=', $account_owner->email)->get();
+        $salesPersons = SubUser::where('main_acct_id', $userId)->get();
 
         $products = Product::where('main_acct_id', $userId)->get();
         return view('target.create', compact('salesPersons', 'products','departments'));
@@ -50,7 +49,11 @@ class TargetController extends Controller
 
       
         $data['account_owner'] = User::find(getActiveGuardType()->main_acct_id);
-       
+        
+        $data['categories'] = Category::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
         $data['products'] = Product::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();

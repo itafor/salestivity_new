@@ -61,15 +61,9 @@
                                                 <td>{{ strftime('%e %B %G', strtotime($category->created_at)) }}</td>
                                                 <td>
                                                     <div class="btn-group-justified text-center" role="group">
-                                                        <!-- <div class="btn-group" role="group">
-                                                            <a href="{{ route('product.category.show', [$category->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success">{{ __('View') }}</a>
-                                                        </div>   -->
 
                                                         <div class="btn-group" role="group">
-                                                            <form action="{{ route('product.category.destroy', [$category->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                                @csrf
-                                                                <button type="submit" style="margin-right: 10px;" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
-                                                            </form>
+                                                            <a onclick="return confirm('Do you really want to delete this item?');" href="{{route('product.category.destroy', [$category->id])}}" class="btn-icon btn-tooltip" title="Delete"><i class="las la-trash-alt"></i></a>
                                                         </div>
                                                     </div>
                                                 </td>

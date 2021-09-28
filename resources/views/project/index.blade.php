@@ -37,7 +37,6 @@
                                         <tr>
                                             <th scope="col">{{ __('Customer') }}</th>
                                             <th scope="col">{{ __('Product') }}</th>
-                                            <th scope="col">{{ __('Technician') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
                                             <th scope="col">{{ __('Start Date') }}</th>
                                             <th scope="col">{{ __('End Date') }}</th>
@@ -57,7 +56,6 @@
                                                 <tr>
                                                     <td>{{ $project->customer ? $project->customer->name : 'N/A' }}</td>
                                                     <td>{{ $project->product ? $project->product->name : 'N/A'}}</td>
-                                                    <td>{{ $project->technician }}</td>
                                                     <td>{{ $project->status ? $project->status : 'N/A' }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->start_date)) }}</td>
                                                     <td>{{ strftime('%d-%b-%Y', strtotime($project->end_date)) }}</td>
@@ -73,16 +71,12 @@
 
                                                         <div class="btn-group-justified text-center" role="group">
                                                             <div class="btn-group" role="group">
-                                                            <a href="{{ route('project.show', [$project->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                            <a href="{{ route('project.show', [$project->id]) }}" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
                                                             </div>  
 
                                                             <div class="btn-group" role="group">
-                                                            <form action="{{ route('project.destroy', [$project->id]) }}" method="delete" onsubmit="return confirm('Do you really want to delete this item?');" >
-                                                                @csrf
-                                                                <div class="col-4 text-right">
-                                                                    <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button>
-                                                                </div>
-                                                            </form>
+                                                         
+                                                             <a onclick="return confirm('Do you really want to delete this item?');" href="{{ route('project.destroy', [$project->id]) }}" style="margin-right: 10px;" title="Delete" class="btn-icon btn-tooltip btn-sm btn-success" ><i class="las la-trash"></i></a>
                                                             </div>
                                                         </div>
                                                     </td>                                                    

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Product;
 use App\Project;
+use App\SubUser;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -46,8 +47,9 @@ class ProjectController extends Controller
         $userId = \getActiveGuardType()->main_acct_id;
         $customers = Customer::where('main_acct_id', $userId)->get();
         $products = Product::where('main_acct_id', $userId)->get();
+        $salesPerson = SubUser::where('main_acct_id', $userId)->get();
         
-        return view('project.create', compact('products', 'customers'));
+        return view('project.create', compact('products', 'customers','salesPerson'));
     }
 
     /**
@@ -99,7 +101,7 @@ class ProjectController extends Controller
                 $project->created_by = $guard_object->created_by;
                 $project->customer_account = $request->customer_account;
                 $project->product_id = $request->product_id;
-                $project->technician = $request->technician;
+                $project->technician_id = $request->technician_id;
                  $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
             $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
                 $project->notes = $request->notes;
@@ -111,7 +113,7 @@ class ProjectController extends Controller
                 $project->created_by = $guard_object->created_by;
                 $project->customer_account = $request->customer_account;
                 $project->product_id = $request->product_id;
-                $project->technician = $request->technician;
+                $project->technician_id = $request->technician_id;
                  $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
             $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
                 $project->notes = $request->notes;
@@ -167,8 +169,9 @@ class ProjectController extends Controller
         $products = Product::where('main_acct_id', $userId)->get();
           $customers = Customer::where('main_acct_id', $userId)->get();
         $product = Product::where('id', $project->product_id)->where('main_acct_id', $userId)->first();
+        $salesPerson = SubUser::where('main_acct_id', $userId)->get();
 
-        return view('project.edit', compact('project', 'product', 'products','customers'));
+        return view('project.edit', compact('project', 'product', 'products','customers','salesPerson'));
     }
 
     /**
@@ -204,7 +207,7 @@ class ProjectController extends Controller
             $project->uploads = isset($data['uploads']) ? uploadImage($data['uploads']) : ''; 
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
-            $project->technician = $request->technician;
+            $project->technician_id = $request->technician_id;
             $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
             $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
             $project->notes = $request->notes;
@@ -213,7 +216,7 @@ class ProjectController extends Controller
         } else {
             $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
-            $project->technician = $request->technician;
+            $project->technician_id = $request->technician_id;
              $project->start_date = Carbon::parse(formatDate($request->start_date, 'd/m/Y', 'Y-m-d'));
             $project->end_date =  Carbon::parse(formatDate($request->end_date, 'd/m/Y', 'Y-m-d'));
             $project->notes = $request->notes;
@@ -234,7 +237,7 @@ class ProjectController extends Controller
 
         $project->customer_account = $request->customer_account;
             $project->product_id = $request->product_id;
-            $project->technician = $request->technician;
+            $project->technician_id = $request->technician_id;
             $project->start_date = $request->start;
             $project->end_date = $request->end;
             $project->notes = $request->notes;

@@ -69,11 +69,11 @@
                                                     <td>
                                                         <div class="btn-group-justified text-center" role="group">
                                                             <div class="btn-group" role="group">
-                                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                                <a href="{{ route('customer.show', [$customer->id]) }}" style="margin-right: 10px;" title="View" class="btn-icon btn-tooltip btn-sm btn-success" ><i class="las la-eye"></i></a>
                                                             </div>  
 
                                                             <div class="btn-group" role="group">
-                                                                <a onclick="deleteData('customer','destroy',{{$customer->id}})"><button class="btn btn-sm btn-danger" title="Delete"><i class="las la-trash-alt"></i></button></a>
+                                                                <a onclick="deleteData('customer','destroy',{{$customer->id}})" class="btn-icon btn-tooltip" title="Delete"><i class="las la-trash-alt"></i></a>
                                                             </div>
                                                         </div>
                                                     </td>

@@ -38,7 +38,7 @@
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('technician') }}</b></td>
-                     <td>{{ $project->technician ? $project->technician :'N/A' }}</td>
+                     <td>{{ $project->getTechnician ? $project->getTechnician->name .' '.$project->getTechnician->last_name :'N/A' }}</td>
                    </tr>
 
                     <tr>

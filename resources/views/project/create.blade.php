@@ -62,10 +62,16 @@
                                 <div class="col-xl-6">
                                     <div class="form-group{{ $errors->has('technician') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-password">{{ __('Technician') }}</label>
-                                        <input type="text" name="technician" id="technician" class="form-control form-control-alternative{{ $errors->has('technician') ? ' is-invalid' : '' }}" placeholder="{{ __('Technician') }}" value="{{ old('technician') }}" required>
-                                        @if ($errors->has('technician'))
+                                       <select name="technician_id" id="sales_person" class="form-control form-control-alternative border-input {{ $errors->has('technician_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('technician_id') }}" >
+                                                <option value="">Select Technician</option>
+                                                @foreach($salesPerson as $sales)
+                                                    <option value="{{ $sales->id }}">{{ $sales->name }} {{ $sales->last_name }}</option>
+                                                @endforeach
+                                                 
+                                            </select>
+                                        @if ($errors->has('technician_id'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('technician') }}</strong>
+                                                <strong>{{ $errors->first('technician_id') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -84,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xl-4">
+                                    <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('end') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="end">{{ __('End date') }}</label>
                                             <input type="text" name="end_date" id="end" class="form-control form-control-alternative border-input{{ $errors->has('end') ? ' is-invalid' : '' }}" placeholder="{{ __('End date') }}" data-toggle="datepicker" value="{{ old('end') }}" required >
@@ -96,20 +102,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-xl-4">
-                                        <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="notes">{{ __('Notes') }}</label>
-                                            <input type="textarea" name="notes" id="notes" class="form-control form-control-alternative border-input{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Notes') }}" value="{{ old('notes') }}" >
+                               
 
-                                            @if ($errors->has('notes'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('notes') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                       <div class="col-xl-4">
+                                       <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="notes">{{ __('Status') }}</label>
                                             <select  name="status" id="status" class="form-control form-control-alternative border-input{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Status') }}" value="{{ old('status') }}" >
@@ -129,6 +124,22 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                        <div class="form-group{{ $errors->has('notes') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="notes">{{ __('Notes') }}</label>
+                                            <textarea cols="10"  name="notes" id="notes" class="form-control form-control-alternative border-input{{ $errors->has('notes') ? ' is-invalid' : '' }}" placeholder="{{ __('Notes') }}" value="{{ old('notes') }}" ></textarea>
+
+                                            @if ($errors->has('notes'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('notes') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    
+
+
+
                                 <div class="form-group{{ $errors->has('uploads') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="uploads">{{ __('Uploads') }}</label>
                                         <input type="file" name="uploads" id="uploads" class="form-control form-control-alternative file-input {{ $errors->has('uploads') ? ' is-invalid' : '' }}">

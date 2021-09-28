@@ -31,7 +31,7 @@
                                             <select name="sales" id="input-sales" class="form-control form-control-alternative border-input {{ $errors->has('sales') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales') }}" >
                                                 <option value="">Select Sales Person</option>
                                                 @foreach($salesPersons as $sales)
-                                                    <option value="{{$sales->id}}">{{ $sales->name }}</option>
+                                                    <option value="{{$sales->id}}">{{ $sales->name .' '. $sales->last_name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('sales'))
@@ -47,7 +47,7 @@
                                             <select name="manager" id="input-manager" class="form-control form-control-alternative border-input {{ $errors->has('manager') ? ' is-invalid' : '' }}" placeholder="{{ __('Line Manager') }}" value="{{ old('manager') }}" >
                                                 <option value="">Select Manager</option>
                                                 @foreach($salesPersons as $sales)
-                                                    <option value="{{$sales->id}}">{{ $sales->name }}</option>
+                                                    <option value="{{$sales->id}}">{{ $sales->name .' '. $sales->last_name}}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('manager'))
