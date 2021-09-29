@@ -69,7 +69,19 @@ function getStates()
 
 function getCities()
 {
+
     $cities = City::all();
+    
+    // $chunkedCities = [];
+    // City::chunk(100, function($cities) use (&$chunkedCities){
+    //     foreach ($cities as $key => $city) {
+    //        $chunkedCities[] = $city;
+    //     }
+    // });
+    // if ($chunkedCities) {
+    //     return $chunkedCities;
+    // }
+
     if ($cities) {
         return $cities;
     }

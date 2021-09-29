@@ -304,7 +304,15 @@ class RetailFieldSalesController extends Controller
         return view('sales.location.show', compact('countries', 'location'));
     }
 
-    public function updateLocation(Request $request, $id)
+        public function editLocation($id)
+    {
+        $userId = getActiveGuardType()->main_acct_id;
+        $countries = Country::all();
+        $location = SalesLocation::where('main_acct_id', $userId)->where('id', $id)->first();
+        return view('sales.location.edit', compact('countries', 'location'));
+    }
+
+    public function updateLocation(Request $request)
     {
         try {
             $userId = getActiveGuardType()->main_acct_id;
@@ -317,6 +325,7 @@ class RetailFieldSalesController extends Controller
                 'state_id' => 'required',
                 'city_id' => 'required',
                 'address' => 'required',
+                'location_id'=>'required',
             ];
             $message = [
                 'location.required' => 'Location is required',
@@ -324,6 +333,7 @@ class RetailFieldSalesController extends Controller
                 'state_id.required' => 'State is required',
                 'city_id.required' => 'City is required',
                 'address.required' => 'Address is required',
+                'location_id.required' => 'location id is required',
                 
             ];
             $validator = Validator::make($input, $rules, $message);
@@ -332,7 +342,7 @@ class RetailFieldSalesController extends Controller
             }
     
     
-            $location = SalesLocation::where('main_acct_id', $userId)->where('id', $id)->first();
+            $location = SalesLocation::where('main_acct_id', $userId)->where('id', $input['location_id'])->first();
     
             $location->location = $request->input('location');
             $location->country_id = $request->input('country_id');

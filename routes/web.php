@@ -250,7 +250,9 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     // Retail Field Sales Management
     Route::get('location', ['as' => 'sales.location.index', 'uses' => 'RetailFieldSalesController@allLocation']);
     Route::get('location/show/{id}', ['as' => 'sales.location.show', 'uses' => 'RetailFieldSalesController@showLocation']);
-    Route::post('location/show/{id}', ['as' => 'sales.location.update', 'uses' => 'RetailFieldSalesController@updateLocation']);
+    Route::get('location/edit/{id}', ['as' => 'sales.location.edit', 'uses' => 'RetailFieldSalesController@editLocation']);
+
+    Route::post('location/show', ['as' => 'sales.location.update', 'uses' => 'RetailFieldSalesController@updateLocation']);
     Route::get('sales', ['as' => 'sales.index', 'uses' => 'RetailFieldSalesController@index']);
     Route::get('sales/new', ['as' => 'sales.create', 'uses' => 'RetailFieldSalesController@create']);
     Route::post('sales/new', ['as' => 'sales.store', 'uses' => 'RetailFieldSalesController@store']);
