@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::post('project-update', ['as' => 'project.update', 'uses' => 'ProjectController@update']);
     Route::post('project_update', ['as' => 'project.newupdate', 'uses' => 'ProjectController@updateProject']);
     Route::get('project/{id}', ['as' => 'project.destroy', 'uses' => 'ProjectController@destroy']);
-Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectController@edit']);
+    Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectController@edit']);
 
 
     //Accounts
@@ -147,7 +147,7 @@ Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectContr
     Route::get('billing/invoice/new', ['as' => 'billing.invoice.create', 'uses' => 'InvoiceController@create']);
     Route::post('billing/invoice/new', ['as' => 'billing.invoice.store', 'uses' => 'InvoiceController@store']);
     Route::get('billing/invoice/{id}/{status}/{navStatus}/show', ['as' => 'billing.invoice.show', 'uses' => 'InvoiceController@show']);
-     Route::get('billing/invoice/{id}/{status}/{navStatus}', ['as' => 'billing.invoice.navigate', 'uses' => 'InvoiceController@navigateInvoices']);
+    Route::get('billing/invoice/{id}/{status}/{navStatus}', ['as' => 'billing.invoice.navigate', 'uses' => 'InvoiceController@navigateInvoices']);
     Route::get('billing/invoice/{id}/manage', ['as' => 'billing.invoice.manage', 'uses' => 'InvoiceController@manage']);
     Route::post('billing/invoice/pay', ['as' => 'billing.invoice.pay', 'uses' => 'InvoiceController@pay']);
     Route::post('billing/invoice/update', ['as' => 'billing.invoice.update', 'uses' => 'InvoiceController@update']);
@@ -185,7 +185,7 @@ Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectContr
     Route::get('send/recurring/invoice/{id}', 'RenewalController@changeBillStatusToSent')->name('recurring.bill.status.sent');
 
     Route::get('resend/payment/receipt/{id}', 'RenewalController@resendRenwalPaymentReceipt')->name('resend.renewal.payment.receipt');
-   Route::get('download/payment/receipt/{id}', 'RenewalController@downloadRenewalPaymentReceipt')->name('download.renewal.payment.receipt');
+    Route::get('download/payment/receipt/{id}', 'RenewalController@downloadRenewalPaymentReceipt')->name('download.renewal.payment.receipt');
 
 
     //renewal updates
@@ -233,7 +233,7 @@ Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectContr
 
 
     // Target Management
-    Route::get('targets', ['as' => 'target.index', 'uses' => 'TargetController@index']);
+    Route::get('targets/sales-person/{id}/{saleperson}', ['as' => 'target.index', 'uses' => 'TargetController@index']);
     Route::get('target/new', ['as' => 'target.create', 'uses' => 'TargetController@create']);
     Route::post('target/new', ['as' => 'target.store', 'uses' => 'TargetController@store']);
     Route::get('target/{id}/show', ['as' => 'target.show', 'uses' => 'TargetController@show']);
@@ -241,7 +241,9 @@ Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectContr
     Route::post('target/{id}', ['as' => 'target.update', 'uses' => 'TargetController@update']);
     Route::get('target/{id}', ['as' => 'target.destroy', 'uses' => 'TargetController@destroy']);
     Route::post('add-product-totarget', 'TargetController@addProductToTarget')->name('target.product.add');
-    ;
+
+    Route::get('targets/sales-persons', ['as' => 'target.sales.persons', 'uses' => 'TargetController@getTargetsBySalesPerson']);
+    
 
     
 
@@ -297,22 +299,22 @@ Route::group([
    
   
    
-      Route::get('/destroy/{id}', 'SettingsController@destroyCurrencySymbol')->name('destroy.currency.symbol');
+    Route::get('/destroy/{id}', 'SettingsController@destroyCurrencySymbol')->name('destroy.currency.symbol');
 });
 
 Route::group([
-'prefix' => 'bank-account'], function(){
+'prefix' => 'bank-account'], function () {
     Route::get('/', 'BankAccountController@index')->name('bank.account.index');
 
-     Route::post('/add-new', 'BankAccountController@addCompanyBankAccount')->name('company.add.bank_account.detail');
+    Route::post('/add-new', 'BankAccountController@addCompanyBankAccount')->name('company.add.bank_account.detail');
     Route::post('/update', 'BankAccountController@updateCompanyBankDetail')->name('company.update.bank.account');
 });
 
 Route::group([
-'prefix' => 'company-emails'], function(){
+'prefix' => 'company-emails'], function () {
     Route::get('/', 'CompanyEmailController@index')->name('company.email.index');
 
-     Route::post('/add-new', 'CompanyEmailController@addCompanyEmail')->name('company.add.email');
+    Route::post('/add-new', 'CompanyEmailController@addCompanyEmail')->name('company.add.email');
     Route::post('/update', 'CompanyEmailController@updateCompanyEmail')->name('company.update.email');
     Route::post('/add-reply-to-email', 'CompanyEmailController@addReplyToEmails')->name('add.reply.to.email');
 
@@ -322,14 +324,14 @@ Route::group([
     Route::get('/default/replyToEmail/{id}', 'CompanyEmailController@setDefaultToEmail')->name('set.default.replyToEmail');
 
 
-     Route::post('/add-mail-from-name', 'CompanyEmailController@addMailFromName')->name('add.mail.from.name');
-     Route::post('/update-mail-from-name', 'CompanyEmailController@updateMailFromName')->name('update.mail.from.name');
+    Route::post('/add-mail-from-name', 'CompanyEmailController@addMailFromName')->name('add.mail.from.name');
+    Route::post('/update-mail-from-name', 'CompanyEmailController@updateMailFromName')->name('update.mail.from.name');
     Route::get('/mail_from_name/{id}', 'CompanyEmailController@getMailFromNameById');
     Route::get('/cc-email/{id}', 'CompanyEmailController@getCCEmailById');
- Route::get('/default/email/from-name/{id}', 'CompanyEmailController@setDefaultMailFromName')->name('set.default.mail.from.name');
+    Route::get('/default/email/from-name/{id}', 'CompanyEmailController@setDefaultMailFromName')->name('set.default.mail.from.name');
 
-Route::post('/add-cc-email', 'CompanyEmailController@addCcEmails')->name('add.cc.email');
- Route::post('/update-cc-email', 'CompanyEmailController@updateCCEmail')->name('update.cc.email');
+    Route::post('/add-cc-email', 'CompanyEmailController@addCcEmails')->name('add.cc.email');
+    Route::post('/update-cc-email', 'CompanyEmailController@updateCCEmail')->name('update.cc.email');
 });
 
 Route::group([

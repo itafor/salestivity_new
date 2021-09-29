@@ -62,13 +62,14 @@ class Target extends Model
 
     public static function add_target_products($target,$product) {
 
-    
        $targetProd = new TargetProduct();
        $targetProd->target_id = $target->id;
        $targetProd->product_id = $product['product_id'];
        $targetProd->unit_price = $product['unit_price'];
        $targetProd->quantity = $product['quantity'];
        $targetProd->amount = $product['unit_price'] * $product['quantity']; 
+       $targetProd->category_id = $product['category_id'];
+       $targetProd->sub_category_id = $product['sub_category_id'];
        $targetProd->save();
     
 return $targetProd;

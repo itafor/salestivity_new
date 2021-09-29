@@ -226,8 +226,9 @@
                     <div class="collapse" id="navbar-target">
                         <ul class="nav nav-sm flex-column">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('target.index') }}">
+                               
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('target.sales.persons') }}">
                                         {{ __('List Targets') }}
                                     </a>
                                 </li>

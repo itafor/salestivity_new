@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">{{ __('Target Details') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('target.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-left"></i></a>
+                                <a href="{{ route('target.sales.persons') }}" class="btn-icon btn-tooltip" title="{{ __('Back to List') }}"><i class="las la-angle-double-left"></i></a>
                             </div>
         
                         </div>
@@ -84,6 +84,8 @@
                                 <table class="table align-items-center table-bordered datatable">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th scope="col">{{ __('Category') }}</th>
+                                            <th scope="col">{{ __('Sub Category') }}</th>
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Unit Price') }}</th>
                                             <th scope="col">{{ __('Quantity') }}</th>
@@ -101,7 +103,11 @@
                                         @else
                                             @foreach($target->products as $targetProd)
                                                 <tr>
+                                                        
+                                                        <td>{{ $targetProd->category ? $targetProd->category->name : 'N/A' }}</td>
+                                                        <td>{{ $targetProd->subcategory ? $targetProd->subcategory->name : 'N/A' }}</td>
                                                         <td>{{ $targetProd->product ? $targetProd->product->name : 'N/A' }}</td>
+
                                                         <td> &#8358;{{ $targetProd->unit_price ? number_format($targetProd->unit_price,2) : 'N/A' }}</td>
                                                         <td>{{ $targetProd->quantity ? $targetProd->quantity : 'N/A' }}</td>
                                                         <td> &#8358;{{ $targetProd->amount ? number_format($targetProd->amount,2) : 'N/A' }}</td>

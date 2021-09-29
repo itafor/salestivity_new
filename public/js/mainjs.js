@@ -1286,7 +1286,7 @@ $(document).on("keyup", "#target_quantity", function (e) {
     e.preventDefault();
     let quantity = $(this).val();
     console.log(quantity);
-    const unitPrice = $("#unit_price").val();
+    const unitPrice = $("#productPrice").val();
     let target_amount = unitPrice * quantity;
     $("#target_amount").val(target_amount);
 

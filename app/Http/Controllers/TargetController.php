@@ -18,36 +18,47 @@ use Validator;
 
 class TargetController extends Controller
 {
-
-      public function __construct()
+    public function __construct()
     {
         $this->middleware(['auth','mainuserVerified','subuserVerified']);
     }
 
-    public function index()
+    public function index($sales_person_id, $salesPersons)
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $targets = Target::where('main_acct_id', $userId)->get();
-        return view('target.index', compact('targets'));
+        $targets = Target::where([
+            ['main_acct_id', $userId],
+            ['sales_person_id', $sales_person_id]
+        ])->get();
+        
+        return view('target.index', compact('targets', 'salesPersons'));
     }
+
+
+    public function getTargetsBySalesPerson()
+    {
+        $userId = \getActiveGuardType()->main_acct_id;
+        $targetSalesPersons = Target::where('main_acct_id', $userId)->distinct()->get('sales_person_id');
+        // dd($targetSalesPersons);
+        return view('target.sales-persons', compact('targetSalesPersons'));
+    }
+
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
 
         $account_owner = User::find($userId);
 
-         $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
+        $departments = Department::where('main_acct_id', $userId)->get()->unique('name')->values()->all();
         $salesPersons = SubUser::where('main_acct_id', $userId)->get();
 
         $products = Product::where('main_acct_id', $userId)->get();
-        return view('target.create', compact('salesPersons', 'products','departments'));
+        return view('target.create', compact('salesPersons', 'products', 'departments'));
     }
 
 
-   public function show($id)
+    public function show($id)
     {
-
-      
         $data['account_owner'] = User::find(getActiveGuardType()->main_acct_id);
         
         $data['categories'] = Category::where([
@@ -65,15 +76,15 @@ class TargetController extends Controller
 
         $data['sales_person'] = $data['target']->salesPerson;
 
-       $data['salesPersoncloseWonOpportunitiesAmount'] = Opportunity::where([
+        $data['salesPersoncloseWonOpportunitiesAmount'] = Opportunity::where([
             ['created_by', $data['sales_person'] ? $data['sales_person']->id : null],
             ['user_type', 'sub_users'],
             ['status', 'Closed Won']
         ])->whereBetween('created_at', [$data['target']->start_date, $data['target']->end_date])->get()->sum('amount');
 
-       if($data['target_amount'] >= 1){
-         $data['percentage_amount']  = round(($data['salesPersoncloseWonOpportunitiesAmount'] / $data['target_amount']) * 100, 2);
-       }
+        if ($data['target_amount'] >= 1) {
+            $data['percentage_amount']  = round(($data['salesPersoncloseWonOpportunitiesAmount'] / $data['target_amount']) * 100, 2);
+        }
 
 
         return view('target.show', $data);
@@ -85,19 +96,19 @@ class TargetController extends Controller
     {
         //dd($request->all());
        
-       $data = $request->all();
+        $data = $request->all();
             
-            $input = $request->all();
+        $input = $request->all();
 
-            // dd($input);
-            $rules = [
+        // dd($input);
+        $rules = [
      
                 'sales' => 'required',
                 'manager' => 'required',
                  'start_date' => 'required',
                 'end_date' => 'required',
             ];
-            $message = [
+        $message = [
                 'sales.required' => 'Sales Person is required',
                 'manager.required' => 'Line Manager is required',
                 'start_date.required' => 'Please select a start date',
@@ -105,13 +116,13 @@ class TargetController extends Controller
                
                 
             ];
-            $validator = Validator::make($input, $rules, $message);
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator);
-            }
+        $validator = Validator::make($input, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
 
-           $target = Target::buildNewTarget($input);
-      if(!$target){
+        $target = Target::buildNewTarget($input);
+        if (!$target) {
             Alert::error('Build Target', 'The process could not be completed');
             return back()->withInput()->withErrors($validator);
         }
@@ -119,38 +130,43 @@ class TargetController extends Controller
 
         $status = 'Target has been created';
         Alert::success('Target', $status);
-        return redirect()->route('target.show',[$target->id]);
+        return redirect()->route('target.show', [$target->id]);
     }
 
-    public function addProductToTarget(Request $request){
+    public function addProductToTarget(Request $request)
+    {
         $input = $request->all();
-        //dd($input);
-            $rules = [
+        // dd($input);
+        $rules = [
      
                 'target_id' => 'required',
                 'product_id' => 'required',
                 'unit_price' => 'required',
                 'quantity' => 'required',
                 'amount' => 'required',
+                'category_id' => 'required',
+                'sub_category_id' => 'required',
             ];
-            $message = [
+        $message = [
                 'product_id.required' => 'Product Person is required',
                 'unit_price.required' => 'unit price is required',
                 'quantity.required' => 'quantity is required',
                 'target_id.required' => 'Target id is required',
                 'amount.required' => 'Amount is required',
+                'category_id.required' => 'Product Category is required',
+                'sub_category_id.required' => 'Product sub Category is required',
                
                 
             ];
-            $validator = Validator::make($input, $rules, $message);
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator);
-            }
+        $validator = Validator::make($input, $rules, $message);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
 
-            $target = Target::find($input['target_id']);
+        $target = Target::find($input['target_id']);
 
-           $target_product = Target::add_target_products($target, $input);
-      if(!$target_product){
+        $target_product = Target::add_target_products($target, $input);
+        if (!$target_product) {
             Alert::error('Build Target', 'The process could not be completed');
             return back()->withInput()->withErrors($validator);
         }
@@ -158,12 +174,11 @@ class TargetController extends Controller
 
         $status = 'Product has been added to target this target';
         Alert::success('Target', $status);
-        return redirect()->route('target.show',[$target->id]);
+        return redirect()->route('target.show', [$target->id]);
     }
 
     public function getSalesDept($id)
     {
-
         $userId = \getActiveGuardType()->main_acct_id;
         $user = auth()->user()->department_id;
         $depts = Department::where('id', $user)->where('main_acct_id', $userId)->first();
@@ -205,7 +220,7 @@ class TargetController extends Controller
 
         try {
             $userId = \getActiveGuardType()->main_acct_id;
-            // Find the target 
+            // Find the target
             $target = Target::find($id);
     
             $target->sales_person_id = $request->input('sales');
@@ -224,7 +239,7 @@ class TargetController extends Controller
     
             $status = 'Target has been successfully updated';
             Alert::success('Target', $status);
-            return redirect()->route('target.index');
+            return redirect()->route('target.sales.persons');
         } catch (\Throwable $th) {
             Alert::error('Error', 'The Process could not be completed');
             return \back()->withInput()->withErrors($validator);
