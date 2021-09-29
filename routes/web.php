@@ -256,7 +256,8 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::post('sales/new', ['as' => 'sales.store', 'uses' => 'RetailFieldSalesController@store']);
     Route::get('sales/{id}/show', ['as' => 'sales.show', 'uses' => 'RetailFieldSalesController@show']);
     Route::get('sales/{id}/manage', ['as' => 'sales.manage', 'uses' => 'RetailFieldSalesController@manage']);
-    Route::post('sales/{id}', ['as' => 'sales.update', 'uses' => 'RetailFieldSalesController@update']);
+     Route::get('sales/edit/{id}', ['as' => 'sales.edit', 'uses' => 'RetailFieldSalesController@edit']);
+    Route::post('update-sales', ['as' => 'sales.update', 'uses' => 'RetailFieldSalesController@update']);
     Route::get('sales/{id}', ['as' => 'sales.destroy', 'uses' => 'RetailFieldSalesController@destroy']);
     Route::get('sales/location/new', ['as' => 'sales.location.create', 'uses' => 'RetailFieldSalesController@createLocation']);
     Route::post('sales/location/new', ['as' => 'sales.location.store', 'uses' => 'RetailFieldSalesController@storeLocation']);

@@ -2,177 +2,83 @@
 @section('content')
 @include('users.partials.header', ['title' => __('Add Sales')])
 
-<script>
-    $(document).ready(function(){
-		/*Disable all input type="text" box*/
-		$('#form1 input').prop("disabled", true);
-		$('#form1 button').hide();
-        $('#form1 select').prop("disabled", true);
-
-		$('#edit').click(function(){
-		$('#form1 input').prop("disabled", false);
-        $('#form1 button').toggle();
-        $('#form1 select').prop("disabled", false);
-		$('#edit').toggle();
-		})
-		
-	});
-</script>
 
 <div class="container-fluid mt--7">
         <div class="row">
-            <div class="col-xl-12 order-xl-1">
-                <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0">{{ __('Add New Sale') }}</h3>
-                            </div>
-                            <div class="col-4 text-right">
-                                <button id="edit" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <form method="post" action="{{ route('sales.update', $sale->id) }}" autocomplete="off" id="form1">
-                            @csrf
-                            <h6 class="heading-small text-muted mb-4">{{ __('Sales information') }}</h6>
-                            <div class="pl-lg-4">
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-product">{{ __('Product') }}</label>
-                                            <select name="product" id="input-product" class="form-control form-control-alternative{{ $errors->has('product') ? ' is-invalid' : '' }}" placeholder="{{ __('Product') }}" value="{{ old('product') }}" >
-                                                <option value="{{ $sale->product_id }}">{{ $sale->products->name }}</option>
-                                                @foreach($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @if ($errors->has('product'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('product') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="qty">{{ __('Quantity') }}</label>
-                                            <input type="number" name="quantity" id="qty" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" placeholder="{{ __('Quantity') }}" value="{{ $sale->quantity }}" required>
-                                            @if ($errors->has('quantity'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('quantity') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-price">{{ __('Price') }}</label>
-                                            <input type="number" name="price" id="input-price" class="form-control form-control-alternative{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ __('Price') }}" value="{{ $sale->price }}" required>
-                                            @if ($errors->has('price'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('price') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('total_amount') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="input-amount">{{ __('Total Amount') }}</label>
-                                            <input type="text" name="total_amount" id="input-amount" class="form-control form-control-alternative{{ $errors->has('total_amount') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Amount') }}" value="{{ $sale->total_amount }}" required>
-                                            @if ($errors->has('total_amount'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('total_amount') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>   
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('sales_person_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="sales_person">{{ __('Sales Person') }}</label>
-                                            <select name="sales_person_id" id="sales_person" class="form-control form-control-alternative{{ $errors->has('sales_person_id') ? ' is-invalid' : '' }}" placeholder="{{ __('Sales Person') }}" value="{{ old('sales_person_id') }}" >
-                                                <option value="{{ $sale->sales_person_id }}">{{ $sale->salesPerson->name }}</option>
-                                                @foreach($salesPerson as $sales)
-                                                    <option value="{{ $sales->id }}">{{ $sales->name }} {{ $sales->last_name }}</option>
-                                                @endforeach
-                                                    <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }} {{ auth()->user()->last_name }}</option>
-                                            </select>
-                                            @if ($errors->has('sales_person_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('sales_person_id') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group{{ $errors->has('location_id') ? ' has-danger' : '' }}">
-                                            <label class="form-control-label" for="location">{{ __('Location') }}</label>
-                                            <select name="location_id" id="location" class="form-control form-control-alternative{{ $errors->has('location_id') ? ' is-invalid' : '' }}" required >
-                                                <option value="{{ $sale->location_id }}">{{ $sale->location->location }}</option>
-                                                @foreach($locations as $locate)
-                                                    <option value="{{ $locate->id }}">{{ $locate->location }}</option>
-                                                @endforeach
-                                                
-                                            </select>
-                                            @if ($errors->has('location_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('location_id') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>   
-                                </div>
+<div class="col-xl-12 order-xl-1">
+  <div class="card shadow">
+  
+
+    <div class="card-header bg-white">
+      <div class="row align-items-center">
+          <div class="col-8">
+              <h3 class="mb-0">{{ __('Project Details') }}</h3>
+          </div>
+          <div class="col-4 text-right">
+              <a href="{{route('sales.edit',[$sale->id])}}" class="btn-icon btn-tooltip" title="{{ __('Edit') }}"><i class="las la-edit"></i></a>
+              <a href="{{ route('sales.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
+          </div>
+      </div>
+    </div>
+
+  <div class="card-body">
+             <table class="table table-bordered" style="background-color: #ffffff;">
+           @if(isset($sale))
+                    <tbody>
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Category') }}</b></td>
+                     <td>{{$sale->category ? $sale->category->name : "N/A"}}</td>
+                   </tr>
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Sub Category') }}</b></td>
+                     <td>{{$sale->subcategory ? $sale->subcategory->name : "N/A"}}</td>
+                   </tr>
+                 <tr>
+                     <td style="width: 200px;"><b>{{ __('Product') }}</b></td>
+                     <td>{{ $sale->products ? $sale->products->name :'N/A' }}</td>
+                   </tr>
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Quantity') }}</b></td>
+                     <td>{{ $sale->quantity ? $sale->quantity :'N/A' }}</td>
+                   </tr>
+
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
+                     <td>{{ $sale->price ? $sale->price :'N/A' }}</td>
+                   </tr>
+                   <tr>
+                     <td style="width: 200px;"><b>{{ __('Total Amount') }}</b></td>
+                     <td>{{ $sale->total_amount ? $sale->total_amount :'N/A' }}</td>
+                   </tr>
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Sales Person') }}</b></td>
+                     <td>{{ $sale->salesPerson ? $sale->salesPerson->name.' '.$sale->salesPerson->last_name :'N/A' }}</td>
+                   </tr>
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Location') }}</b></td>
+                     <td>{{ $sale->location ? $sale->location->location :'N/A' }}</td>
+                   </tr>
+
+                    
+                         
+             
+
+                    </tbody>
+                    @else
+                    <span>No matching records found</span>
+
+                    @endif
+                  </table> 
                 
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+  </div>
+</div>
+         </div>
         </div>
         
         @include('layouts.footers.auth')
     </div>
-    
-    <script>
 
-        // Auto fill unit price when a product has been picked
-        function selectProduct(value) {
-            $.get('/getproductprice/' + value, function (data) {
-                // console.log(data.products);
-                // $('#input-unit').html("");
-                // $('#input-unit').append("");
-                jQuery.each(data.products, function (i, val) {
-                    $('#input-price').val(val.standard_price);
-                });
-            });
-        }
 
-        $('#input-product').change(function () {
-            selectProduct($(this).val());
-            // $('#input-unit').prop('disabled', false)
-        });
-
-        // calculate value for Total Amount according to number of quantity
-        $('.form-group').on('input', '#qty', function(){
-            var totalAmount = $('#input-price').val().replace( /,/g, '');
-    
-            // console.log(totalAmount);
-            $('.form-group #qty').each(function(){
-                var inputVal = $(this).val();
-                if($.isNumeric(inputVal)){
-                    totalAmount *= parseFloat(inputVal)
-                }
-            });
-            $('#input-amount').val(totalAmount);
-        });
-    </script>
 @endsection

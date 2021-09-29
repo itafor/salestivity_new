@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Category;
+use App\Country;
 use App\Product;
-use App\User;
-use App\SalesLocation;
 use App\RetailFieldSale;
+use App\SalesLocation;
+use App\SubUser;
+use App\User;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
-use App\Country;
-use App\SubUser;
 
 class RetailFieldSalesController extends Controller
 {
@@ -35,13 +35,17 @@ class RetailFieldSalesController extends Controller
     public function create()
     {
         $userId = \getActiveGuardType()->main_acct_id;
-        $products = Product::where('main_acct_id', $userId)->get();
+         $data['products'] = Product::where('main_acct_id', $userId)->get();
         // $salesPerson = User::where('profile_id', $userId)->get();
-        $salesPerson = SubUser::where('main_acct_id', $userId)->get();
+         $data['salesPerson'] = SubUser::where('main_acct_id', $userId)->get();
 
-        $locations = SalesLocation::where('main_acct_id', $userId)->get();
+         $data['locations'] = SalesLocation::where('main_acct_id', $userId)->get();
 
-        return view('sales.create', compact('products', 'salesPerson', 'locations'));
+         $data['categories'] = Category::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+        return view('sales.create',  $data);
     }
 
     /**
@@ -65,6 +69,9 @@ class RetailFieldSalesController extends Controller
             'total_amount' => 'required',
             'sales_person_id' => 'required',
             'location_id' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+
         ];
         $message = [
             'sales_person_id.required' => 'Sales Person is required',
@@ -73,6 +80,8 @@ class RetailFieldSalesController extends Controller
             'total_amount.required' => 'Amount a product',
             'location_id.required' => 'Location is required',
             'quantity.required' => 'Quantity is required',
+            'category_id.required' => 'category is required',
+            'sub_category_id.required' => 'sub category is required',
             
         ];
         $validator = Validator::make($input, $rules, $message);
@@ -92,6 +101,8 @@ class RetailFieldSalesController extends Controller
             $sale->total_amount = $totalAmount;
             $sale->sales_person_id = $request->sales_person_id;
             $sale->location_id = $request->location_id;
+            $sale->category_id = $request->category_id;
+            $sale->sub_category_id = $request->sub_category_id;
             
             $sale->save();
         } catch (\Throwable $th) {
@@ -120,7 +131,10 @@ class RetailFieldSalesController extends Controller
         $products = Product::where('main_acct_id', $userId)->get();
         $salesPerson = SubUser::where('main_acct_id', $userId)->get();
         $locations = SalesLocation::where('main_acct_id', $userId)->get();
-        $sale = RetailFieldSale::where('main_acct_id', $userId)->first();
+        $sale = RetailFieldSale::where([
+            ['main_acct_id', $userId],
+            ['id', $id]
+        ])->first();
         return view('sales.show', compact('products', 'salesPerson', 'locations', 'sale'));
     }
 
@@ -132,7 +146,19 @@ class RetailFieldSalesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $userId = \getActiveGuardType()->main_acct_id;
+
+        $data['sale'] = RetailFieldSale::findOrFail($id);
+        $data['categories'] = Category::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+          $data['products'] = Product::where('main_acct_id', $userId)->get();
+        // $salesPerson = User::where('profile_id', $userId)->get();
+         $data['salesPerson'] = SubUser::where('main_acct_id', $userId)->get();
+
+         $data['locations'] = SalesLocation::where('main_acct_id', $userId)->get();
+
+    return view('sales.edit', $data);
     }
 
     /**
@@ -142,12 +168,13 @@ class RetailFieldSalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $userId = \getActiveGuardType()->main_acct_id;
-        $sale = RetailFieldSale::where('id', $id)->where('main_acct_id', $userId)->first();
-        
         $input = $request->all();
+        
+        $userId = \getActiveGuardType()->main_acct_id;
+        $sale = RetailFieldSale::where('id', $input['sales_id'])->where('main_acct_id', $userId)->first();
+        
         $rules = [
  
             'product' => 'required',
@@ -156,6 +183,8 @@ class RetailFieldSalesController extends Controller
             'total_amount' => 'required',
             'sales_person_id' => 'required',
             'location_id' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
         ];
         $message = [
             'sales_person_id.required' => 'Sales Person is required',
@@ -164,7 +193,8 @@ class RetailFieldSalesController extends Controller
             'total_amount.required' => 'Amount a product',
             'location_id.required' => 'Location is required',
             'quantity.required' => 'Quantity is required',
-            
+            'category_id.required' => 'category is required',
+            'sub_category_id.required' => 'sub category is required',
         ];
         $validator = Validator::make($input, $rules, $message);
         if ($validator->fails()) {
@@ -177,7 +207,8 @@ class RetailFieldSalesController extends Controller
         $sale->total_amount = $request->input('total_amount');
         $sale->sales_person_id = $request->input('sales_person_id');
         $sale->location_id = $request->input('location_id');
-    
+        $sale->category_id = $request->category_id;
+        $sale->sub_category_id = $request->sub_category_id;
         $sale->update();
 
         $status = "Sale has been successfully updated ";
