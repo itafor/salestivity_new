@@ -63,12 +63,16 @@ class OpportunityController extends Controller
 
                $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
-                ['user_type', 'users']
+                ['user_type', 'users'],
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won']
             ])->get();
 
              // fetch the opportunities of  subusers under parent users
             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
-                ['user_type', 'sub_users']
+                ['user_type', 'sub_users'],
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won']
             ])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
@@ -101,13 +105,17 @@ class OpportunityController extends Controller
 
                   $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
-                ['user_type', 'sub_users']
+                ['user_type', 'sub_users'],
+                 ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won']
             ])->get();
 
              // fetch the opportunities of  subusers under parent users
             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
             ->where([
-                ['user_type', 'sub_users']
+                ['user_type', 'sub_users'],
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won']
             ])->get();
 
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
@@ -346,6 +354,26 @@ class OpportunityController extends Controller
 
             return view('opportunity.lost', compact('opportunities'));
     break;
+
+         case 7:
+            $parent_user_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','users']
+            ])->where([
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won']
+            ])->get();
+
+            $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)->where([
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won'],
+                ['user_type', '=', 'sub_users']
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
+            return view('opportunity.open', compact('opportunities'));
+    break;
                  
         default:
                      # code...
@@ -452,7 +480,7 @@ class OpportunityController extends Controller
 
             return view('opportunity.won', compact('opportunities'));
         
-        } else {
+        } elseif ($id == 6) {
 
              $parent_user_opportunities = Opportunity::where([
                 ['created_by', $userId],
@@ -468,6 +496,25 @@ class OpportunityController extends Controller
             $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
 
             return view('opportunity.lost', compact('opportunities'));
+        }else{
+             $parent_user_opportunities = Opportunity::where([
+                ['created_by', $userId],
+                ['user_type','sub_users']
+            ])->where([
+                 ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won'],
+            ])->get();
+
+             $users_that_reports_to_parent_user_opportunities = Opportunity::whereIn('created_by', $idsOfUsersUnderParentUser)
+            ->where([
+                ['user_type', 'sub_users'],
+                ['status', '!=', 'Closed Lost'],
+                ['status', '!=', 'Closed Won'],
+            ])->get();
+
+            $opportunities = $parent_user_opportunities->merge($users_that_reports_to_parent_user_opportunities);
+
+            return view('opportunity.open', compact('opportunities'));
         }
     }
        

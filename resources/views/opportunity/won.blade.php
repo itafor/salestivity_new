@@ -30,8 +30,10 @@
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=2]) }}">Closing this month</a>
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=3]) }}">Closing next month</a>
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=4]) }}">Own By Me</a>
-                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=5]) }}">Won</a>
+                                       
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=6]) }}">Lost</a>
+                                        <a class="dropdown-item" href="{{ route('opportunity.view', [$id=7]) }}">Open</a>
+
                                     </div>
                                 </div>
                             </div>

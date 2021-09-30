@@ -23,7 +23,7 @@
                             <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        All Opportunites
+                                        Open Opportunities
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ route('opportunity.view', [$id=1]) }}">All Opportunities</a>

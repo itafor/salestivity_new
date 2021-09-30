@@ -5,8 +5,9 @@
                                             <th scope="col">{{ __('Start Date') }}</th>
                                             <th scope="col">{{ __('Account') }}</th>
                                             <th scope="col">{{ __('Name') }}</th>
-                                            <th scope="col">{{ __('Owner') }}</th>
                                             <th scope="col">{{ __('Amount') }}</th>                                           
+                                            <th scope="col">{{ __('Owner') }}</th>
+                                            <th scope="col">{{ __('Status') }}</th>                                           
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -27,8 +28,10 @@
                                                     </td>
                                                     <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
                                                     <td>{{ $opportunity->name }}</td>
-                                                     <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
                                                      <td>{{ number_format($opportunity->amount,2) }} </td>
+                                                     <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
+                                                    
+                                                    <td>{{ $opportunity->status }}</td>
                                                   
                                                     <td>
                                                         <a href="{{ route('opportunity.show', [$opportunity->id]) }}" title="View" class="btn-icon btn-tooltip">
