@@ -63,7 +63,7 @@
             <td>{{ $invoice->status }}</td>
             <td>
                 <span>
-                    <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                    <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
                 </span>                                                       
             </td>                                                    
         </tr>

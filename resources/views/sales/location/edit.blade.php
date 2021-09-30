@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('sales.location.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('sales.location.update') }}" autocomplete="off">
                             @csrf
                             <input type="hidden" name="location_id" value="{{$location->id}}">
                             <h6 class="heading-small text-muted mb-4">{{ __('Sales Location information') }}</h6>
@@ -68,11 +68,7 @@
                                             <label class="form-control-label" for="city_id">{{ __('City') }}</label>
                                             <select name="city_id" id="city_id" class="form-control form-control-alternative border-input {{ $errors->has('city_id') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city_id') }}" >
                                                 <option value="">Select City</option>
-                                                    @foreach((array)getCities() as $city)
-                                                    <option value="{{ $city->id }}"
-                                             {{$city->id == $location->city_id ? 'selected' : ''}}
-                                                        >{{ $state->name }}</option>
-                                                @endforeach
+                                                    <option value="{{ $city->id }}" selected="true">{{ $city->name }}</option>
                                             </select>
                                             @if ($errors->has('city_id'))
                                                 <span class="invalid-feedback" role="alert">

@@ -68,7 +68,7 @@
                                             <td>   
                                                     <span>
                                                         <div class="col-4 text-right">
-                                                            <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn btn-sm btn-success" title="View"><i class="las la-eye"></i></a>
+                                                            <a href="{{ route('sales.location.show', [$location->id]) }}" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
                                                             
                                                         </div>
                                                     </span>

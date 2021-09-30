@@ -2,6 +2,7 @@
  <table class="table table-bordered align-items-center table-flush invoices">
                                     <thead class="thead-dark">
                                         <tr>
+                                            <th scope="col">{{ __('Start Date') }}</th>
                                             <th scope="col">{{ __('Account') }}</th>
                                             <th scope="col">{{ __('Name') }}</th>
                                             <th scope="col">{{ __('Owner') }}</th>
@@ -20,22 +21,25 @@
                                             @foreach($opportunities as $opportunity)
                                                 <tr>
                                                 
-                                                    
+                                                    <td>
+                    {{ date('Y/m/d', strtotime($opportunity->initiation_date)) }}
+                                                        
+                                                    </td>
                                                     <td>{{ $opportunity->customer ? $opportunity->customer->name : 'N/A'}}</td>
                                                     <td>{{ $opportunity->name }}</td>
                                                      <td>{{ $opportunity->owner ? $opportunity->owner->name .' '.$opportunity->owner->last_name : 'N/A'  }}</td>
                                                      <td>{{ number_format($opportunity->amount,2) }} </td>
                                                   
                                                     <td>
-                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" title="View">
-                                                            <button  class="btn btn-sm text-success">
+                                                        <a href="{{ route('opportunity.show', [$opportunity->id]) }}" title="View" class="btn-icon btn-tooltip">
+                                                            
                                                             <i class="las la-eye"></i>
-                                                            </button>
+                                                           
                                                         </a>
 
-                                                         <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunity',$opportunity->id])}}" title="Delete"><button class="btn  text-danger">
+                                                         <a onclick="return confirm_delete()"  href="{{route('items.destroy',['opportunity',$opportunity->id])}}" title="Delete" class="btn-icon btn-tooltip">
                                                              <i class="las la-trash"></i>
-                                                         </button>
+                                                      
                                                             
                                                         </a>
                                                     </td>

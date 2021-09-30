@@ -202,7 +202,7 @@
                                          <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="payment_due">{{ __('Terms and Conditions') }}</label>
                                  
-                                    <textarea name="term_condition" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" placeholder="Terms and conditions" rows="5" required></textarea>
+                                    <textarea name="term_condition" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" id="term_condition" placeholder="Terms and conditions" rows="5" required></textarea>
                                     @if ($errors->has('payment_due'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('payment_due') }}</strong>

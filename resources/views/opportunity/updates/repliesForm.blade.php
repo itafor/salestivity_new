@@ -8,10 +8,10 @@
                                 
                           </div>
                         <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="width: 600px;">
                                         <div class="form-group{{ $errors->has('reply') ? ' has-danger' : '' }}">
 <!--                                             <label class="form-control-label" for="input-comment">{{ __('Comment') }}</label> -->
-                                            <textarea class="form-control" name="reply"  placeholder="Type a reply" rows="2" required></textarea>
+                                            <textarea class="form-control" name="reply"  placeholder="Type a reply" rows="4" required></textarea>
 
                                             @if ($errors->has('reply'))
                                                 <span class="invalid-feedback" role="alert">

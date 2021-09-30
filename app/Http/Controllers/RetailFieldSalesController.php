@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\City;
 use App\Country;
 use App\Product;
 use App\RetailFieldSale;
@@ -309,7 +310,9 @@ class RetailFieldSalesController extends Controller
         $userId = getActiveGuardType()->main_acct_id;
         $countries = Country::all();
         $location = SalesLocation::where('main_acct_id', $userId)->where('id', $id)->first();
-        return view('sales.location.edit', compact('countries', 'location'));
+        $city = City::where('id', $location->city_id)->first();
+
+        return view('sales.location.edit', compact('countries', 'location','city'));
     }
 
     public function updateLocation(Request $request)

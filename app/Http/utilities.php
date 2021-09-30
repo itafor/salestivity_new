@@ -71,7 +71,9 @@ function getCities()
 {
 
     $cities = City::all();
-    
+    if ($cities) {
+        return $cities;
+    }
     // $chunkedCities = [];
     // City::chunk(100, function($cities) use (&$chunkedCities){
     //     foreach ($cities as $key => $city) {
@@ -82,9 +84,7 @@ function getCities()
     //     return $chunkedCities;
     // }
 
-    if ($cities) {
-        return $cities;
-    }
+    
 }
 
 function productCategories()

@@ -237,6 +237,10 @@ $("#product_id").change(function () {
                 billinga_amount = data.products.standard_price.toFixed(2);
                 $('.currency').empty();
                 $('.currency').append("(" + data.currency + ")");
+
+               $("term_condition").empty();
+
+               $("#term_condition").text(data.products.description)
             },
         });
     } else {
@@ -244,6 +248,8 @@ $("#product_id").change(function () {
         $("#billingAmount").val("");
         $("#renewal_description").val("");
         $("#discount").val("");
+        $("term_condition").text("");
+
         product_price = 0;
         billinga_amount = 0;
     }
@@ -1100,6 +1106,8 @@ function editOpportunityUpdate(id) {
 
 function replyOpportunityUpdate(id) {
     $("#replytopportunityupdate" + id + "form").toggle();
+
+    // $("#replytopportunityupdate" + id + "form").css('display', 'inline');
 }
 
 function editOpportunityUpdateReply(id) {

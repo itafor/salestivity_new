@@ -7,7 +7,7 @@
                                 
                           </div>
                         <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="width: 600px;">
                                         <div class="form-group{{ $errors->has('reply') ? ' has-danger' : '' }}">
                                             <textarea class="form-control" name="reply" id="reply{{$reply->id}}"  placeholder="Type reply" rows="2" required></textarea>
 
