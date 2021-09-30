@@ -226,7 +226,7 @@
                                     @endif
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                             <div class="col-md-2">
                                 <div class="form-group{{ $errors->has('contact_name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-contact_name">Other Names</label>
                                     <input type="text" name="customerContacts[{{$contact->id}}][contact_name]" id="input-contact_name" class="form-control {{ $errors->has('contact_name') ? ' is-invalid' : '' }} contact_name" placeholder="Enter other names" value="{{old('contact_name',$contact->name)}}">
@@ -238,7 +238,7 @@
                                     @endif
                                 </div> 
                                 </div>
-                                 <div class="col-md-3">                  
+                                 <div class="col-md-2">                  
                                 <div class="form-group{{ $errors->has('contact_email') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-contact_email">{{ __('Email') }}</label>
                                     <input type="email" name="customerContacts[{{$contact->id}}][contact_email]" id="input-contact_email" class="form-control {{ $errors->has('contact_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('contact_email',$contact->email)}}">
@@ -246,6 +246,18 @@
                                     @if ($errors->has('contact_email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('contact_email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                                  <div class="col-md-2">                  
+                                <div class="form-group{{ $errors->has('alternative_email') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-alternative_email">{{ __('Alternaive Email') }}</label>
+                                    <input type="email" name="customerContacts[{{$contact->id}}][alternative_email]" id="input-alternative_email" class="form-control {{ $errors->has('alternative_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('alternative_email',$contact->alternative_email)}}">
+
+                                    @if ($errors->has('alternative_email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('alternative_email') }}</strong>
                                         </span>
                                     @endif
                                 </div>

@@ -278,9 +278,7 @@
                                     <div class="form-group{{ $errors->has('rent_commission') ? ' has-danger' : '' }} ">
                                         <label class="form-control-label" for="input-contact_phone">{{ __('Phone') }}</label>
                                         <div class="input-group mb-3">
-                                           <!--  <div class="input-group-prepend">
-                                                <span class="input-group-text country-code" id="basic-addon1">+{{$getCountry->phonecode}}</span>
-                                            </div> -->
+                                          
                                             <input type="tel"  name="contacts[112211][contact_phone]" id="input-contact_phone" class="form-control {{ $errors->has('contact_phone') ? ' is-invalid' : '' }} contact_phone" 
                                                     placeholder=" e.g 80678908032" value="{{old('contact_phone')}}">
                                         </div>
@@ -293,6 +291,18 @@
                                         @endif
                                     </div>
                                 </div>
+                              <div class="col-md-4">                  
+                                <div class="form-group{{ $errors->has('alternative_email') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-alternative_email">{{ __('Alternative Email (Optional)') }}</label>
+                                    <input type="email" name="contacts[112211][alternative_email]" id="input-alternative_email" class="form-control {{ $errors->has('alternative_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('alternative_email')}}">
+
+                                    @if ($errors->has('alternative_email'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('alternative_email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                             </div>
                         </fieldset>
                     </div>

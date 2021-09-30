@@ -11,6 +11,7 @@
                 <th scope="col">{{ __('Other Names') }}</th>
                 <th scope="col">{{ __('Phone') }}</th>
                 <th scope="col">{{ __('Email') }}</th>
+                <th scope="col">{{ __('Alternative Email') }}</th>
                 <th scope="col">{{ __('Delete') }}</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                     <td>{{$contact->name}}</td>
                     <td>{{$contact->phone}}</td>
                     <td>{{$contact->email}}</td>
+                    <td>{{$contact->alternative_email ? $contact->alternative_email : 'N/A'}}</td>
                     <td>
                         <a onclick="deleteData('contact','destroy',{{$contact->id}})" title="Delete" class="btn-icon btn-tooltip">
                             <i class="las la-trash-alt"></i>

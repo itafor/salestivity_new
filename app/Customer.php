@@ -177,6 +177,7 @@ public static function createContact($customer,$data)
                 'phone' => $contact['contact_phone'],
                 'email' => $contact['contact_email'],
                 'main_acct_id' => getActiveGuardType()->main_acct_id,
+                'alternative_email' => isset($contact['alternative_email']) ? $contact['alternative_email'] : null,
             ]);
         }
     }
@@ -249,6 +250,7 @@ public static function createContact($customer,$data)
                 $cont->name = $contact['contact_name'];
                 $cont->email = $contact['contact_email'];
                 $cont->phone = $contact['contact_phone'];
+                $cont->alternative_email = isset($contact['alternative_email']) ? $contact['alternative_email'] : null;
                 $cont->save();
             }
         }
@@ -264,6 +266,7 @@ public static function createContact($customer,$data)
                 'phone' => $contact['contact_phone'],
                 'email' => $contact['contact_email'],
                 'main_acct_id' => getActiveGuardType()->main_acct_id,
+                'alternative_email' => isset($contact['alternative_email']) ? $contact['alternative_email'] : null,
             ]);
         }  
     }

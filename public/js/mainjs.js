@@ -740,6 +740,15 @@ $("#addMore").click(function (e) {
             "</div>" +
             "</div>" +
             '<div style="clear:both"></div>' +
+            '<div class="form col-md-4">' +
+            '<div class="form-group{{ $errors->has("alternative_email") ? "has-danger" : "" }} col-md-3">' +
+            '    <label class="form-control-label" for="input-alternative_email">Alternative Email (Optional)</label>' +
+            '    <input type="email" name="contacts[' +
+            rowId +
+            '][alternative_email]" class="alternative_email form-control {{ $errors->has("alternative_email") ? "is-invalid" : "" }} alternative_email" placeholder="Enter contact email" value="" >' +
+            "</div>" +
+            "</div>" +
+            '<div style="clear:both"></div>' +
             "</div>" +
             "</div>"
     );
