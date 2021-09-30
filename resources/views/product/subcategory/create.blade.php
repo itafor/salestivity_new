@@ -30,10 +30,10 @@
                         <form method="post" action="{{ route('product.subcategory.store') }}" autocomplete="off">
                             @csrf
                             
-                            <!-- <h6 class="heading-small text-muted mb-4">{{ __('Add Sub Category') }}</h6> -->
-                            <div class="pl-lg-4 pr-lg-4">
-                 <div class="col-md-12 pl-1">
-                      <div class="form-group">
+                           
+            
+                 <div class="col-md-6">
+                    
                         <label for="category_id"> Category <span class="text-danger">*</span></label>
                         <select name="category_id" class="form-control" required>
                           <option>Select a category</option>
@@ -41,24 +41,24 @@
                           <option value="{{$category->id}}">{{$category->name}}</option>
                           @endforeach
                         </select>
-                        </div>
+                        
                         @error('category_id')
                     <small style="color: red; font-size: 14px;"> {{ $message }}</small>
                     @enderror
                     </div>
-                  </div>
+                 
 
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                   <label class="form-control-label" for="input-property_type">{{ __('Sub Category') }}</label>
                   <input type="text" name="subcategories[112211][name]"  class="form-control" required>
                 </div>
 
                 <div style="clear:both"></div>
-                <div id="subcaegoryContainer" class="col-md-12">
+                <div id="subcaegoryContainer" class="col-md-6">
                 </div>   
                 <div style="clear:both"></div>
 
-                   <div class="form-group">
+                   <div class="col-md-6 mt-2">
                   <button type="button" id="addMoreSubcategory" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i>  Add more Sub Category</button>
                 </div>
                             

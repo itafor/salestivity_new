@@ -66,7 +66,8 @@ class CustomerCorporateController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $data = $request->all();
+
          $validator = Validator::make($request->all(), [
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
@@ -84,6 +85,16 @@ class CustomerCorporateController extends Controller
             Alert::warning('Required Fields', 'Please fill in a required fields');
             return back()->withInput();
         }
+
+        $incoming_contacts= isset($data['contacts']) ? $data['contacts'] : [];
+
+
+        $emailExist =  Customer::contactEmailAlreadyExist($incoming_contacts);
+        if ($emailExist) {
+            Alert::error('Contact Email', 'The contact email you entered already exists');
+                return back()->withInput();
+        }
+     
         
     DB::beginTransaction();
         try{
@@ -143,8 +154,8 @@ class CustomerCorporateController extends Controller
      */
     public function update(Request $request)
     {
-       //dd($request->all());
-
+       $data = $request->all();
+       // dd($data);
          $validator = Validator::make($request->all(), [
             'company_name' => 'required|max:255|min:2',
             'industry' => 'required',
@@ -162,6 +173,19 @@ class CustomerCorporateController extends Controller
             Alert::warning('Required Fields', 'Please fill in a required fields');
             return back()->withInput();
         }
+
+
+         $incoming_contacts= isset($data['contacts']) ? $data['contacts'] : [];
+
+
+        $emailExist =  Customer::contactEmailAlreadyExist($incoming_contacts);
+        if ($emailExist) {
+            Alert::error('Contact Email', 'The contact email you entered already exists');
+                return back()->withInput();
+        }
+
+
+     // dd($incoming_contacts);
         
     DB::beginTransaction();
         try{

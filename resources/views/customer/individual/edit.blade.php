@@ -190,6 +190,7 @@
     <h2>{{ __('Contacts:') }}</h2>
       @if ($customer->contacts->count() > 0)
                     @foreach ($customer->contacts as $contact)
+                      @if($customer->email != $contact->email)
                      <div style="float:right;cursor: pointer;"><a onclick="deleteData('contact','destroy',{{$contact->id}})" class="btn btn-danger btn-sm text-white" title="Delete Contact">
                         <i class="fa fa-trash" ></i> Delete
                      </a></div>
@@ -241,7 +242,7 @@
                                  <div class="col-md-2">                  
                                 <div class="form-group{{ $errors->has('contact_email') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-contact_email">{{ __('Email') }}</label>
-                                    <input type="email" name="customerContacts[{{$contact->id}}][contact_email]" id="input-contact_email" class="form-control {{ $errors->has('contact_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('contact_email',$contact->email)}}">
+                                    <input type="email" name="customerContacts[{{$contact->id}}][contact_email]" id="input-contact_email" class="form-control {{ $errors->has('contact_email') ? ' is-invalid' : '' }} standard_price" placeholder="Enter contact email" value="{{old('contact_email',$contact->email)}}" readonly>
 
                                     @if ($errors->has('contact_email'))
                                         <span class="invalid-feedback" role="alert">
@@ -275,6 +276,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                               @endforeach
                               @else
                               <h4>No contact record found</h4>

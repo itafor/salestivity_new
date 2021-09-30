@@ -6,6 +6,7 @@ use App\AddressCustomer;
 use App\Contact;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Customer extends Model
 {
@@ -336,6 +337,21 @@ public static function update_main_customer_detail_in_contact($data){
         $contactExist->name = isset($data['company_name']) ? $data['company_name'] : $data['name'];
         $contactExist->phone = isset($data['company_phone']) ? $data['company_phone'] : $data['phone'];
         $contactExist->save();
+    }
+}
+
+public static function contactEmailAlreadyExist($incoming_contacts)
+{
+            $existing_contacts = Contact::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+
+            if (count($incoming_contacts) >=1 && count($existing_contacts) >= 1) {
+                foreach ($existing_contacts as $key => $existing_contact) {
+                foreach ($incoming_contacts as $key => $contact) {
+                if($existing_contact->email == $contact['contact_email']){
+                    return $existing_contact->email;
+                }
+             }
+        }
     }
 }
 

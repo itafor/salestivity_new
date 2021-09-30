@@ -69,6 +69,8 @@ class CustomerIndividualController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:255|min:2',
             'last_name' => 'required|max:255|min:2',
@@ -86,6 +88,15 @@ class CustomerIndividualController extends Controller
          if ($validator->fails()) {
             // Alert::warning('Required Fields', 'Please fill in a required fields');
             return back()->withInput()->withErrors($validator->errors());
+        }
+
+          $incoming_contacts= isset($data['contacts']) ? $data['contacts'] : [];
+
+
+        $emailExist =  Customer::contactEmailAlreadyExist($incoming_contacts);
+        if ($emailExist) {
+            Alert::error('Contact Email', 'The contact email you entered already exists');
+                return back()->withInput();
         }
     
      DB::beginTransaction();
@@ -143,6 +154,7 @@ class CustomerIndividualController extends Controller
      */
      public function update(Request $request)
     {
+        $data = $request->all();
       // dd($request->all());
 
          $validator = Validator::make($request->all(), [
@@ -160,6 +172,15 @@ class CustomerIndividualController extends Controller
          if ($validator->fails()) {
             Alert::warning('Required Fields', 'Please fill in a required fields');
             return back()->withInput();
+        }
+
+         $incoming_contacts= isset($data['contacts']) ? $data['contacts'] : [];
+
+
+        $emailExist =  Customer::contactEmailAlreadyExist($incoming_contacts);
+        if ($emailExist) {
+            Alert::error('Contact Email', 'The contact email you entered already exists');
+                return back()->withInput();
         }
         
     DB::beginTransaction();

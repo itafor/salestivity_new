@@ -18,7 +18,7 @@
         <tbody>
             @if($contacts->count() >=1)
             @foreach($contacts as $contact)
-             @if($customer->email != $contact->email && $contact->title !=null )
+             @if($customer->email != $contact->email)
                 <tr>
                     <td>{{$contact->title}}</td>
                     <td>{{$contact->surname}}</td>
