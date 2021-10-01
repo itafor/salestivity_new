@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+         // 
     ];
 
     /**
@@ -46,19 +46,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($this->isHttpException($exception)) {
-            
-        if ($exception->getStatusCode() == 404) {
-            return response()->view('errors.' . '404', [], 404);
-        }
-        if ($exception->getStatusCode() == 500) {
-            return response()->view('errors.' . '500', [], 500);
-        }
-    }
-     
+            // dd($exception->getMessage());
+    if ($exception->getMessage() == "Unauthenticated.") {
+        return parent::render($request, $exception);
+           
+    }elseif ($exception) {
         return redirect()->route('non.http.errors');
-    
-     // dd($exception->getMessage());
-        // return parent::render($request, $exception);
+        
     }
+    
+    
+        return parent::render($request, $exception);
+    }
+
 }
