@@ -21,7 +21,7 @@ class SettingsController extends Controller
      public function index()
     {
         $data['user'] = User::where('id', getActiveGuardType()->main_acct_id)->first();
-        $data['companyDetail'] = CompanyDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->first();
+        // $data['companyDetail'] = CompanyDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->first();
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
             
@@ -55,20 +55,13 @@ class SettingsController extends Controller
             }
            
 
-        $user = CompanyDetail::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['id', $data['company_detail_id']],
-            ])->first();
+         $user = User::where([
+                ['id', getActiveGuardType()->main_acct_id],
+        ])->first();
+
         if($user){
-            $user->name = isset($data['company_name']) ? $data['company_name'] : '';
+            $user->company_name = isset($data['company_name']) ? $data['company_name'] : '';
             $user->save();
-             $status = "Company name updated!!";
-        Alert::success('Company Name', $status);
-        }else{
-            CompanyDetail::create([
-                    'main_acct_id' => getActiveGuardType()->main_acct_id,
-                    'name' => $data['company_name'],
-            ]);
              $status = "Company name updated!!";
         Alert::success('Company Name', $status);
         }

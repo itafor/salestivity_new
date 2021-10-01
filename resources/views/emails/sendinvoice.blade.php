@@ -126,7 +126,10 @@
 <div class="card-body">
     @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
-<p>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</p>
+@endif
+
+@if(isset($invoice->user))
+<p>{{getCompanyName($invoice->user) }}</p>
 @endif
 
 <p class="card-text">Dear {{$invoice->customers->name}},</p>
@@ -222,7 +225,11 @@ Find below the details of the invoice.
 <h4>Terms and conditions</h4>
 <p>{!! $invoice->term_condition !!}</p>
 <p>Thank you for your continuous patronage.</p>
-<p><b>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</b>  Billing Team.</p>
+<p><b>
+    @if(isset($invoice->user))
+<p>{{getCompanyName($invoice->user) }}</p>
+@endif
+</b>  Billing Team.</p>
 
 <p>
     Please click the button below to confirm receipt of this invoice.<br>

@@ -166,22 +166,6 @@
                               <div class="row">
 
       <div class="col">
-<label class="form-control-label" for="company_email_id">{{ __('Delivery Email') }}</label>
-   <select class="form-control" name="company_email_id" id="company_email_id" required>
-       <option value="">Select delivery email</option>
-          @foreach($companyEmails as $email)
-        <option value="{{$email->id}}" {{$email->id == $invoice->company_email_id ? 'selected' : ''}}>{{$email->email}}</option>
-        @endforeach
-   </select>
-
-    @if ($errors->has('company_email_id'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('company_email_id') }}</strong>
-        </span>
-    @endif
-    </div>
-
-      <div class="col">
 <label class="form-control-label" for="company_bank_acc_id">{{ __('Company Bank Account') }}</label>
          <select class="form-control" name="company_bank_acc_id" id="company_bank_acc_id" required>
        <option value="">Select bank account</option>

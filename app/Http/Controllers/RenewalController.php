@@ -136,9 +136,9 @@ class RenewalController extends Controller
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
-        $data['mail_from_names'] = MailFromName::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->get();
+        $data['mail_from_name'] = User::where([
+                ['id', getActiveGuardType()->main_acct_id],
+        ])->first();
 
          $data['reply_to_emails'] = ReplyToEmail::where([
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
@@ -167,11 +167,11 @@ class RenewalController extends Controller
             'category_id' => 'required',
             'sub_category_id' => 'required',
             'duration_type' =>'required',
-            'company_email_id' =>'required',
+            // 'company_email_id' =>'required',
             'company_bank_acc_id' =>'required',
             'currency_id' =>'required',
             'reply_to_email_id' =>'required',
-            'mail_from_name_id' =>'required',
+            // 'mail_from_name_id' =>'required',
         ]);
 
         if ($validator->fails()) {
@@ -360,9 +360,9 @@ class RenewalController extends Controller
         
         $data['product'] = $data['renewal']->prod;
 
-         $data['mail_from_names'] = MailFromName::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->get();
+        $data['mail_from_name'] = User::where([
+                ['id', getActiveGuardType()->main_acct_id],
+        ])->first();
 
          $data['reply_to_emails'] = ReplyToEmail::where([
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
@@ -397,10 +397,10 @@ class RenewalController extends Controller
             'billingAmount' => 'required|numeric',
             'description' => 'required',
             'duration_type' =>'required',
-            'company_email_id' =>'required',
+            // 'company_email_id' =>'required',
             'company_bank_acc_id' =>'required',
             'reply_to_email_id' =>'required',
-            'mail_from_name_id' =>'required',
+            // 'mail_from_name_id' =>'required',
             'cc_email_id' =>'required',
         ]);
 

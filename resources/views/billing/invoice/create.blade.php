@@ -215,22 +215,6 @@
         <div class="row">
 
       <div class="col">
-<label class="form-control-label" for="discount">{{ __('Delivery Email') }}</label>
-   <select class="form-control" name="company_email_id" id="company_email_id" required>
-       <option value="">Select delivery email</option>
-          @foreach($companyEmails as $email)
-        <option value="{{$email->id}}">{{$email->email}}</option>
-        @endforeach
-   </select>
-
-    @if ($errors->has('company_email_id'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('company_email_id') }}</strong>
-        </span>
-    @endif
-    </div>
-
-      <div class="col">
 <label class="form-control-label" for="discount">{{ __('Company Bank Account') }}</label>
          <select class="form-control" name="company_bank_acc_id" id="company_bank_acc_id" required>
        <option value="">Select bank account</option>
@@ -251,7 +235,7 @@
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('ReplyTo Email') }}</label>
    <select class="form-control" name="reply_to_email_id" id="reply_to_email_id" required>
-       <option value="">Select delivery email</option>
+       <option value="">Select replyTo email</option>
           @foreach($reply_to_emails as $email)
         <option value="{{$email->id}}">{{$email->reply_to_email}}</option>
         @endforeach
@@ -282,15 +266,12 @@
 
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Mail from Name') }}</label>
-         <select class="form-control" name="mail_from_name_id" id="mail_from_name_id" required>
-       <option value="">Select Mail From Name</option>
-          @foreach($mail_from_names as $name)
-        <option value="{{$name->id}}">{{$name->mail_from_name}}</option>
-  @endforeach
-   </select>
-    @if ($errors->has('mail_from_name_id'))
+         <input class="form-control" name="mail_from_name" id="mail_from_name" value="{{$mail_from_name->company_name}}" required>
+  
+  
+    @if ($errors->has('mail_from_name'))
         <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('mail_from_name_id') }}</strong>
+            <strong>{{ $errors->first('mail_from_name') }}</strong>
         </span>
     @endif
     </div>

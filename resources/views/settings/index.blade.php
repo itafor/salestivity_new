@@ -49,11 +49,9 @@
            <h2 class="mt-30">Company Name</h2>
           <form action="{{route('company.update.name')}}" method="post" autocomplete="off" class="form-inline ">
             @csrf
-                <input type="hidden" name="company_detail_id" value="{{$companyDetail ? $companyDetail->id : ''}}">
-
                  
                     <div class="col-auto">
-                         <input type="text" name="company_name" class="form-control"  id="inputPassword2" placeholder="Company Name" value="{{$companyDetail ? $companyDetail->name : ''}}" required>
+                         <input type="text" name="company_name" class="form-control"  id="inputPassword2" placeholder="Company Name" value="{{$user ? $user->company_name : ''}}" required>
                        </div>
                        <div class="col-auto">
                     <button  type="submit" class="btn btn-primary">Save</button>

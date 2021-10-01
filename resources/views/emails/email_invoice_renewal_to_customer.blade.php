@@ -128,8 +128,12 @@ text-align: left;
 
 @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
-<p>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</p>
 @endif
+
+@if(isset($renewal->user))
+<p>{{getCompanyName($renewal->user) }}</p>
+@endif
+
 
 <p class="card-text">Dear {{$renewal->customers->name}},</p>
 <p>Please be informed that for the <strong>{{ $renewal->prod ? $renewal->prod->name : 'N/A' }}</strong> for <strong>{{ $renewal->customers->name }}</strong> is due for renewal
@@ -221,8 +225,12 @@ Please click the button below to confirm receipt of this invoice.<br>
 @endif
 </table>
 <p>Thank you for your continuous patronage.<br>
-{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }} Billing Team</p><br>
-<p>Important Domain Expiration Information
+  @if(isset($renewal->user))
+{{getCompanyName($renewal->user) }}
+@endif  Billing Team</p><br>
+
+<h2>Important Domain Expiration Information</h2>
+<p>
 Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.
 </p>
 <p>

@@ -7,7 +7,10 @@
 
 @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
-<p>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</p>
+@endif
+
+@if(isset($invoice->user))
+<p>{{getCompanyName($invoice->user) }}</p>
 @endif
 
 Dear {{$invoice->customers->name}}
@@ -56,7 +59,11 @@ Bank Transfer
 @endif
 
 <p>Thank you for your continuous patronage.</p>
-<p><b>{{$invoice->user->company_detail ? $invoice->user->company_detail->name : '' }}</b>  Billing Team.</p>
+<p><b>
+	@if(isset($invoice->user))
+<p>{{getCompanyName($invoice->user) }}</p>
+@endif
+</b>  Billing Team.</p>
 </div>
 </div>
 

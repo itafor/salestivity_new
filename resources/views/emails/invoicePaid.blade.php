@@ -129,7 +129,10 @@
             @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 <br>
-<p>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</p>
+@endif
+
+@if(isset($paid_invoice->invoice->user))
+<p>{{getCompanyName($paid_invoice->invoice->user) }}</p>
 @endif
                             
                             
@@ -206,7 +209,12 @@
                   </table>
 
                   <p>Thank you for your continued patronage.</p>
-<p><b>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</b> Billing Team</p>
+<p><b>
+  
+  @if(isset($paid_invoice->invoice->user))
+{{getCompanyName($paid_invoice->invoice->user) }}
+@endif
+</b> Billing Team</p>
          
 
     </div>

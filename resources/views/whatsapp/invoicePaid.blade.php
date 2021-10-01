@@ -5,8 +5,13 @@
 @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 *Confirmation of Payment*
-<span>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</span>
+
 @endif
+
+@if(isset($paid_invoice->invoice->user))
+<p>{{getCompanyName($paid_invoice->invoice->user) }}</p>
+@endif
+
 
 Dear {{$paid_invoice->customer->name}},<br>
 <p>
@@ -36,7 +41,11 @@ Please find details below;
 @endif
 
 <span>Thank you for your continued patronage.</span>
-<span><b>{{$paid_invoice->invoice->user->company_detail ? $paid_invoice->invoice->user->company_detail->name : '' }}</b> Billing Team</span>
+<span><b>
+	@if(isset($paid_invoice->invoice->user))
+{{getCompanyName($paid_invoice->invoice->user) }}
+@endif
+</b> Billing Team</span>
 </div>
 </body>
 </html>

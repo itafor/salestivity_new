@@ -128,7 +128,11 @@
 <div class="card-body">
     @if(isset($customerRenewal->user) && $customerRenewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$customerRenewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
-<p>{{$customerRenewal->user->company_detail ? $customerRenewal->user->company_detail->name : '' }}</p>
+
+@endif
+
+@if(isset($customerRenewal->user))
+<p>{{getCompanyName($customerRenewal->user) }}</p>
 @endif
 
 <p class="card-text">Dear {{$customerContact->name}},</p>
@@ -220,7 +224,10 @@ Find below the details of the invoice. Kindly make payment before the due date t
 @endif
 </table>
 <p>Thank you for your continuous patronage.<br>
-{{$customerRenewal->user->company_detail ? $customerRenewal->user->company_detail->name : '' }}  Billing Team</p><br>
+@if(isset($customerRenewal->user))
+{{getCompanyName($customerRenewal->user) }}
+@endif
+  Billing Team</p><br>
 <p>Important Domain Expiration Information
 Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.
 </p>

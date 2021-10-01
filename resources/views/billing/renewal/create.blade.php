@@ -247,7 +247,7 @@
     @endif
     </div>
 
-      <div class="col">
+<!--       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Delivery Email') }}</label>
    <select class="form-control" name="company_email_id" id="company_email_id" required>
        <option value="">Select delivery email</option>
@@ -261,7 +261,7 @@
             <strong>{{ $errors->first('company_email_id') }}</strong>
         </span>
     @endif
-    </div>
+    </div> -->
 
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Company Bank Account') }}</label>
@@ -284,7 +284,7 @@
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('ReplyTo Email') }}</label>
    <select class="form-control" name="reply_to_email_id" id="reply_to_email_id" required>
-       <option value="">Select delivery email</option>
+       <option value="">Select replyTo email</option>
           @foreach($reply_to_emails as $email)
         <option value="{{$email->id}}">{{$email->reply_to_email}}</option>
         @endforeach
@@ -315,12 +315,8 @@
 
       <div class="col">
 <label class="form-control-label" for="discount">{{ __('Mail from Name') }}</label>
-         <select class="form-control" name="mail_from_name_id" id="mail_from_name_id" required>
-       <option value="">Select Mail From Name</option>
-          @foreach($mail_from_names as $name)
-        <option value="{{$name->id}}">{{$name->mail_from_name}}</option>
-  @endforeach
-   </select>
+       <input class="form-control" name="mail_from_name" id="mail_from_name" value="{{$mail_from_name->company_name}}" required>
+  
     @if ($errors->has('mail_from_name_id'))
         <span class="invalid-feedback" role="alert">
             <strong>{{ $errors->first('mail_from_name_id') }}</strong>

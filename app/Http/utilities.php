@@ -341,16 +341,14 @@ function whatsappNotification($from_number, $to_number, $text_messages)
 
     function getMailFromName($invoice)
     {
-        $default_mail_from_name = MailFromName::where([
-            ['main_acct_id', $invoice->user->id],
-            ['default_name', 'Default'],
-        ])->first();
+        // $default_mail_from_name = MailFromName::where([
+        //     ['main_acct_id', $invoice->user->id],
+        //     ['default_name', 'Default'],
+        // ])->first();
 
-        if($invoice->getMailFromName){
-            return $invoice->getMailFromName->mail_from_name;
-        }elseif($default_mail_from_name){
-            return $default_mail_from_name->mail_from_name;
-        }else{
+        if($invoice->mail_from_name){
+            return $invoice->mail_from_name;
+       }else{
             return $invoice->user->company_name;
         }
     }
@@ -384,9 +382,7 @@ function whatsappNotification($from_number, $to_number, $text_messages)
     function getCompanyName($user)
     {
         
-        if($user && $user->company_detail){
-            return $user->company_detail->name;
-        }else{
+        if($user){
             return $user->company_name;
         }
     }

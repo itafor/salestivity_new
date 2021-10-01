@@ -113,7 +113,7 @@
 
 <hr>
 
-   <div class="row">
+ <!--   <div class="row">
       <form action="{{route('add.mail.from.name')}}" method="post" class="form-inline" autocomplete="off">
       @csrf
       <div class="form-group mb-2 mr-1">
@@ -127,14 +127,14 @@
       </div>
       <button type="submit" class="btn btn-primary mb--3">Add</button>
       </form>
-      </div> 
+      </div> --> 
 
-      <div class="row">
+<!--       <div class="row">
       <div class="table-responsive">
       <table class="table">
       <thead>
       <tr>
-      <th scope="col">ReplyTo Email</th>
+      <th scope="col">mail From name</th>
       <th scope="col">Default</th>
 
       <th scope="col" colspan="2">Action</th>
@@ -156,12 +156,12 @@
       </tbody>
       </table>
       </div>
-      </div>
+      </div> -->
    
 
     </div> 
                    
-<hr>
+<!-- <hr>
 <div class="container">
 
 <h3>Server Eamil Configuration Details </h3>
@@ -290,7 +290,7 @@
 </div>
  </div>
 </div>
-
+ -->
 </div>
 
   </div>

@@ -18,6 +18,7 @@ use App\Payment;
 use App\Product;
 use App\ReplyToEmail;
 use App\SubCategory;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -114,13 +115,13 @@ class InvoiceController extends Controller
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
-        $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        // $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
          
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
-        $data['mail_from_names'] = MailFromName::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->get();
+        $data['mail_from_name'] = User::where([
+                ['id', getActiveGuardType()->main_acct_id],
+        ])->first();
 
          $data['reply_to_emails'] = ReplyToEmail::where([
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
@@ -152,10 +153,12 @@ class InvoiceController extends Controller
             'cost' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
-            'company_email_id' => 'required',
             'company_bank_acc_id' => 'required',
             'due_date' => 'required',
             'currency_id' => 'required',
+            'reply_to_email_id' => 'required',
+            'cc_email_id' => 'required',
+            'mail_from_name' => 'required',
 
 
         ];
@@ -166,13 +169,12 @@ class InvoiceController extends Controller
             'cost.required' => 'Please input cost',
             'category_id.required' => 'Product category is required',
             'sub_category_id.required' => 'Product subcategory is required',
-            'company_email_id.required' => 'company email  is required',
             'company_bank_acc_id.required' => 'company bank account is required',
             'due_date.required' => 'Due date is required',
             'payment_due.required' => 'Payment Due is required',
             'term_condition.required' => 'Term and condition is required',
             'currency_id.required' => 'Currency is required',
-            'mail_from_name_id.required' => 'Mail From Name is required',
+            'mail_from_name.required' => 'Mail From Name is required',
             'reply_to_email_id.required' => 'ReplyToEmail is required',
             'cc_email_id.required' => 'CC email is required',
 
@@ -197,14 +199,14 @@ class InvoiceController extends Controller
         $invoice->status = 'Pending';
         $invoice->billingAmount = $request->billingAmount;
         $invoice->billingBalance = $request->billingAmount;
-        $invoice->company_email_id = $request->company_email_id;
+       
         $invoice->company_bank_acc_id = $request->company_bank_acc_id;
         $invoice->due_date = Carbon::parse(formatDate($request->due_date, 'd/m/Y', 'Y-m-d'));
         $invoice->invoice_number = 'DW'.mt_rand(1000, 9999);
         $invoice->payment_due = $request->payment_due;
         $invoice->term_condition = $request->term_condition;
         $invoice->currency_id = $request->currency_id;
-        $invoice->mail_from_name_id = $request->mail_from_name_id;
+        $invoice->mail_from_name = $request->mail_from_name;
         $invoice->reply_to_email_id = $request->reply_to_email_id;
         $invoice->cc_email_id = $request->cc_email_id;
 
@@ -452,7 +454,6 @@ class InvoiceController extends Controller
             'category_id' => 'required',
             'sub_category_id' => 'required',
             'due_date' => 'required',
-            'company_email_id' => 'required',
             'company_bank_acc_id' => 'required',
         ];
         $message = [
@@ -464,7 +465,6 @@ class InvoiceController extends Controller
             'sub_category_id.required' => 'Product subcategory is required',
             'invoice_id.required' => 'Invoice ID is required',
             'due_date.required' => 'Due Date is required',
-            'company_email_id.required' => 'Company email is required',
             'company_bank_acc_id.required' => 'Company bank detail is required',
         ];
         $validator = Validator::make($input, $rules, $message);
@@ -484,7 +484,7 @@ class InvoiceController extends Controller
         $invoice->billingAmount = $request->billingAmount;
         $invoice->billingBalance = $request->billingAmount;
         // $invoice->status = $request->input('status');
-        $invoice->company_email_id = $input['company_email_id'];
+     
         $invoice->company_bank_acc_id = $input['company_bank_acc_id'];
         $invoice->due_date = Carbon::parse(formatDate($input['due_date'], 'd/m/Y', 'Y-m-d'));
         $invoice->update();

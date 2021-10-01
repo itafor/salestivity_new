@@ -144,8 +144,10 @@
                   @if(isset($renewal))
 <img class="card-img-top" src="{{ $renewal && $renewal->user ? $renewal->user->company_logo_url : ""}}" alt="company logo" style="margin: auto; height: 140px; width: 150px;  align-content: center;">
 <br>
-      
-{{ $renewal && $renewal->user ? $renewal->user->company_detail->name : ""}}
+@endif
+
+@if(isset($renewal->user))
+<p>{{getCompanyName($renewal->user) }}</p>
 @endif
 
 <table>
@@ -224,7 +226,12 @@
                   </table>
 
                   <p>Thank you for your continued patronage.</p>
-<p><b>{{$renewal->user->company_detail ? $renewal->user->company_detail->name : '' }}</b> Billing Team</p>
+<p><b>
+    @if(isset($renewal->user))
+{{getCompanyName($renewal->user) }}
+@endif
+</b>
+ Billing Team</p>
 
     </div>
 </body>

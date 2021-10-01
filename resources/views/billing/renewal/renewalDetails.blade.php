@@ -206,10 +206,6 @@
                  <td> First : {{$renewal->duration ? $renewal->duration->first_duration.'days' : 'N/A' }}, Second: {{$renewal->duration ? $renewal->duration->second_duration.'days' : 'N/A' }}, Third: {{$renewal->duration ? $renewal->duration->third_duration.'days' : 'N/A' }} </td>
                  </tr>
 
-                 <tr>
-                     <td style="width: 200px;"><b>{{ __('Delivery Email') }}</b></td>
-                <td>{{ $renewal->compEmail ? $renewal->compEmail->email : 'N/A' }}</td>           
-              </tr>
 
               <tr>
                      <td style="width: 200px;"><b>{{ __('ReplyTo Email') }}</b></td>
@@ -223,7 +219,7 @@
 
                <tr>
                      <td style="width: 200px;"><b>{{ __('Mail From Name') }}</b></td>
-                <td>{{ $renewal->getMailFromName ? $renewal->getMailFromName->mail_from_name : 'N/A' }}</td>           
+                <td>{{ $renewal->mail_from_name ? $renewal->mail_from_name : 'N/A' }}</td>           
               </tr>
               <tr>
                  <td style="width: 200px;"><b>{{ __('Bank Account') }}</b></td>
