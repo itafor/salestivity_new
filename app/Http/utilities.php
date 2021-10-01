@@ -380,3 +380,13 @@ function whatsappNotification($from_number, $to_number, $text_messages)
             return $invoice->user->email;
         }
     }
+
+    function getCompanyName($user)
+    {
+        
+        if($user && $user->company_detail){
+            return $user->company_detail->name;
+        }else{
+            return $user->company_name;
+        }
+    }

@@ -70,12 +70,17 @@ class UserController extends Controller
 
  public function emailverified()
     {
+
+      if(getActiveGuardType() == null){
+        return 'Please login first to verify your email';
+      }else{
         if(getActiveGuardType()->user_type == 'users'){
        
         $userId = Auth::User()->id;
         $user = User::where('id',$userId)->first();
         $user->email_verified_at = Carbon::now();
         $user->save();
+        // dd($user);
 
         return redirect()->route('home');
         }elseif (getActiveGuardType()->user_type == 'sub_users') {
@@ -87,6 +92,7 @@ class UserController extends Controller
 
         return redirect()->route('home');
     }
+}
 }
     
    

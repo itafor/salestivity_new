@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 // });
 
     Route::get('/something-went-wrong', 'HomeController@displayNonHttpErrors')->name('non.http.errors');
+    Route::get('email-verified', 'UserController@emailverified')->name('email.verified');
 
 Auth::routes(['verify' => true]);
 
@@ -30,7 +31,6 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     //subuser Email verification
     Route::get('verify-your-email', 'UserController@verifySubuserEmail')->name('subuser.verify.email');
     Route::get('email/verification-link', 'UserController@resendEmailVerificationink')->name('resend.email.verification.link');
-    Route::get('email-verified', 'UserController@emailverified')->name('email.verified');
 
     //primary user email verification
     Route::get('email/verify', 'UserController@verifyMainuserEmail')->name('mainuser.verify.email');
