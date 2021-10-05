@@ -14,7 +14,7 @@ class InvoicePayment extends Model
       protected $fillable = [
         'productPrice','billingAmount', 'amount_paid','billingbalance','discount',
         'payment_date','customer_id','product_id','created_by_id','invoice_id',
-        'status','user_type','amount_paid'
+        'status','user_type','amount_paid','main_acct_id'
     ];
 
      public function product(){
@@ -42,7 +42,8 @@ class InvoicePayment extends Model
 		'payment_date' => Carbon::parse(formatDate($data['payment_date'], 'd/m/Y', 'Y-m-d')),
 		'customer_id' => $data['customer_id'],
 		'product_id' => $data['product_id'],
-		'invoice_id' => $data['invoice_id'],
+    'invoice_id' => $data['invoice_id'],
+		'main_acct_id' => getActiveGuardType()->main_acct_id,
     	]);
 
 

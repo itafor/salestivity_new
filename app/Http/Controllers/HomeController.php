@@ -243,149 +243,149 @@ class HomeController extends Controller
          $data['total_won_opportunity_count'] = count($last_month_won_opportunities) +  $data['ytd_won_opp_count'];
 
         // ......................Outstanding Renewal (Recurring) current mmonth......................
-        $current_month_partly_paid_renewal = Renewal::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        // $current_month_partly_paid_renewal = Renewal::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
-         $current_month_pending_renewal = Renewal::where([
-            ['status', 'Pending'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        //  $current_month_pending_renewal = Renewal::where([
+        //     ['status', 'Pending'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
       
 
-         $data['current_month_outstanding_renewal_amt'] = $current_month_partly_paid_renewal->sum('billingBalance') + $current_month_pending_renewal->sum('billingAmount');
+        //  $data['current_month_outstanding_renewal_amt'] = $current_month_partly_paid_renewal->sum('billingBalance') + $current_month_pending_renewal->sum('billingAmount');
 
-          $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
+        //   $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
 
            // ......................Outstanding Renewal (Recurring) year to date......................
-        $ytd_partly_paid_renewal = Renewal::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        // $ytd_partly_paid_renewal = Renewal::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
 
-         $ytd_pending_renewal = Renewal::where([
-            ['status', 'Pending'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        //  $ytd_pending_renewal = Renewal::where([
+        //     ['status', 'Pending'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
       
 
-         $data['ytd_outstanding_renewal_amt'] = $ytd_partly_paid_renewal->sum('billingBalance') + $ytd_pending_renewal->sum('billingAmount');
+        //  $data['ytd_outstanding_renewal_amt'] = $ytd_partly_paid_renewal->sum('billingBalance') + $ytd_pending_renewal->sum('billingAmount');
 
-          $data['ytd__outstanding_renewal_count'] = count($ytd_partly_paid_renewal->merge($ytd_pending_renewal));
+        //   $data['ytd__outstanding_renewal_count'] = count($ytd_partly_paid_renewal->merge($ytd_pending_renewal));
 
           // dd($data['ytd_outstanding_renewal_amt']);
 
         // ......................Paid Renewal (Recurring) current mmonth......................
-        $current_month_paid_renewal = Renewal::where([
-            ['status', 'Paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        // $current_month_paid_renewal = Renewal::where([
+        //     ['status', 'Paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
 
-         $data['current_month_paid_renewal_amt'] = $current_month_paid_renewal->sum('billingBalance');
+        //  $data['current_month_paid_renewal_amt'] = $current_month_paid_renewal->sum('billingBalance');
 
-          $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
+        //   $data['current_month_outstanding_renewal_count'] = count($current_month_partly_paid_renewal->merge($current_month_pending_renewal));
        
          // ......................paid Renewal (Recurring) current mmonth......................
-        $currentMonthpartially_paid_renewal = Renewal::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+    //     $currentMonthpartially_paid_renewal = Renewal::where([
+    //         ['status', 'Partly paid'],
+    //        ['main_acct_id', getActiveGuardType()->main_acct_id]
+    //     ])->whereMonth('created_at', $curr_momth)->get();
 
-         $current_month_completely_paid_renewal = Renewal::where([
-            ['status', 'Paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+    //      $current_month_completely_paid_renewal = Renewal::where([
+    //         ['status', 'Paid'],
+    //        ['main_acct_id', getActiveGuardType()->main_acct_id]
+    //     ])->whereMonth('created_at', $curr_momth)->get();
       
 
-     $data['current_month_partially_paid_renewal_amt'] = $currentMonthpartially_paid_renewal->sum('billingAmount') - $currentMonthpartially_paid_renewal->sum('billingBalance');
+    //  $data['current_month_partially_paid_renewal_amt'] = $currentMonthpartially_paid_renewal->sum('billingAmount') - $currentMonthpartially_paid_renewal->sum('billingBalance');
 
-     $data['current_month_completely_paid_renewal_amt'] = $current_month_completely_paid_renewal->sum('billingAmount'); 
+    //  $data['current_month_completely_paid_renewal_amt'] = $current_month_completely_paid_renewal->sum('billingAmount'); 
 
-     $data['paid_recurring_amount_for_current_month'] = $data['current_month_partially_paid_renewal_amt'] + $data['current_month_completely_paid_renewal_amt'];
+    //  $data['paid_recurring_amount_for_current_month'] = $data['current_month_partially_paid_renewal_amt'] + $data['current_month_completely_paid_renewal_amt'];
 
-    $data['paid_recurring_count_for_current_month'] = count($current_month_completely_paid_renewal) + count($currentMonthpartially_paid_renewal);
+    // $data['paid_recurring_count_for_current_month'] = count($current_month_completely_paid_renewal) + count($currentMonthpartially_paid_renewal);
 
      // ......................paid Renewal (Recurring) Year to Date ......................
-        $yearToDatepartially_paid_renewal = Renewal::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+    //     $yearToDatepartially_paid_renewal = Renewal::where([
+    //         ['status', 'Partly paid'],
+    //        ['main_acct_id', getActiveGuardType()->main_acct_id]
+    //     ])->whereYear('created_at', $curr_year)->get();
 
-         $year_to_date_completely_paid_renewal = Renewal::where([
-            ['status', 'Paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+    //      $year_to_date_completely_paid_renewal = Renewal::where([
+    //         ['status', 'Paid'],
+    //        ['main_acct_id', getActiveGuardType()->main_acct_id]
+    //     ])->whereYear('created_at', $curr_year)->get();
       
 
-     $data['yeartodate_partially_paid_renewal_amt'] = $yearToDatepartially_paid_renewal->sum('billingAmount') - $yearToDatepartially_paid_renewal->sum('billingBalance');
+    //  $data['yeartodate_partially_paid_renewal_amt'] = $yearToDatepartially_paid_renewal->sum('billingAmount') - $yearToDatepartially_paid_renewal->sum('billingBalance');
 
-     $data['year_to_date_completely_paid_renewal_amt'] = $year_to_date_completely_paid_renewal->sum('billingAmount'); 
+    //  $data['year_to_date_completely_paid_renewal_amt'] = $year_to_date_completely_paid_renewal->sum('billingAmount'); 
 
-     $data['paid_recurring_amount_for_year_to_date'] = $data['yeartodate_partially_paid_renewal_amt'] + $data['year_to_date_completely_paid_renewal_amt'];
+    //  $data['paid_recurring_amount_for_year_to_date'] = $data['yeartodate_partially_paid_renewal_amt'] + $data['year_to_date_completely_paid_renewal_amt'];
 
-    $data['paid_recurring_count_for_year_to_date'] = count($year_to_date_completely_paid_renewal) + count($yearToDatepartially_paid_renewal);
+    // $data['paid_recurring_count_for_year_to_date'] = count($year_to_date_completely_paid_renewal) + count($yearToDatepartially_paid_renewal);
 
  // ......................paid Invoice for current mmonth......................
-        $currentMonthpartially_paid_invoice = Invoice::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        // $currentMonthpartially_paid_invoice = Invoice::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
-         $current_month_completely_paid_invoice = Invoice::where([
-            ['status', 'Paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        //  $current_month_completely_paid_invoice = Invoice::where([
+        //     ['status', 'Paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
-         $data['current_month_paid_invoice_amount'] = $currentMonthpartially_paid_invoice->sum('amount_paid') + $current_month_completely_paid_invoice->sum('amount_paid');
+        //  $data['current_month_paid_invoice_amount'] = $currentMonthpartially_paid_invoice->sum('amount_paid') + $current_month_completely_paid_invoice->sum('amount_paid');
 
-         $data['current_month_paid_invoice_count'] = count($currentMonthpartially_paid_invoice) + count( $current_month_completely_paid_invoice);
+        //  $data['current_month_paid_invoice_count'] = count($currentMonthpartially_paid_invoice) + count( $current_month_completely_paid_invoice);
 
  // ......................paid Invoice year tod date......................
-        $year_to_date_partially_paid_invoice = Invoice::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        // $year_to_date_partially_paid_invoice = Invoice::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
 
-         $year_to_date_completely_paid_invoice = Invoice::where([
-            ['status', 'Paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        //  $year_to_date_completely_paid_invoice = Invoice::where([
+        //     ['status', 'Paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
 
-         $data['ytd_paid_invoice_amount'] = $year_to_date_partially_paid_invoice->sum('amount_paid') + $year_to_date_completely_paid_invoice->sum('amount_paid');
+        //  $data['ytd_paid_invoice_amount'] = $year_to_date_partially_paid_invoice->sum('amount_paid') + $year_to_date_completely_paid_invoice->sum('amount_paid');
 
-         $data['ytd_paid_invoice_count'] = count($year_to_date_partially_paid_invoice) + count( $year_to_date_completely_paid_invoice);
+        //  $data['ytd_paid_invoice_count'] = count($year_to_date_partially_paid_invoice) + count( $year_to_date_completely_paid_invoice);
 
          // ......................outstanding Invoice for current mmonth......................
-        $current_Monthpartly_paid_invoice = Invoice::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        // $current_Monthpartly_paid_invoice = Invoice::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
-         $current_month_pending_invoice = Invoice::where([
-            ['status', 'Pending'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereMonth('created_at', $curr_momth)->get();
+        //  $current_month_pending_invoice = Invoice::where([
+        //     ['status', 'Pending'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereMonth('created_at', $curr_momth)->get();
 
-         $data['current_month_outstanding_invoice_amount'] = $current_Monthpartly_paid_invoice->sum('billingBalance') + $current_month_pending_invoice->sum('billingAmount');
+        //  $data['current_month_outstanding_invoice_amount'] = $current_Monthpartly_paid_invoice->sum('billingBalance') + $current_month_pending_invoice->sum('billingAmount');
 
-         $data['current_month_outstanding_invoice_count'] = count($current_Monthpartly_paid_invoice) + count( $current_month_pending_invoice);
+        //  $data['current_month_outstanding_invoice_count'] = count($current_Monthpartly_paid_invoice) + count( $current_month_pending_invoice);
 
             // ......................outstanding Invoice since ytd......................
-        $year_to_date_partly_paid_invoice = Invoice::where([
-            ['status', 'Partly paid'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        // $year_to_date_partly_paid_invoice = Invoice::where([
+        //     ['status', 'Partly paid'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
 
-         $year_to_date_pending_invoice = Invoice::where([
-            ['status', 'Pending'],
-           ['main_acct_id', getActiveGuardType()->main_acct_id]
-        ])->whereYear('created_at', $curr_year)->get();
+        //  $year_to_date_pending_invoice = Invoice::where([
+        //     ['status', 'Pending'],
+        //    ['main_acct_id', getActiveGuardType()->main_acct_id]
+        // ])->whereYear('created_at', $curr_year)->get();
 
-         $data['ytd_outstanding_invoice_amount'] = $year_to_date_partly_paid_invoice->sum('billingBalance') + $year_to_date_pending_invoice->sum('billingAmount');
+        //  $data['ytd_outstanding_invoice_amount'] = $year_to_date_partly_paid_invoice->sum('billingBalance') + $year_to_date_pending_invoice->sum('billingAmount');
 
-         $data['ytd_outstanding_invoice_count'] = count($year_to_date_partly_paid_invoice) + count($year_to_date_pending_invoice);
+        //  $data['ytd_outstanding_invoice_count'] = count($year_to_date_partly_paid_invoice) + count($year_to_date_pending_invoice);
 
          // dd($data['ytd_outstanding_invoice_count']);
 

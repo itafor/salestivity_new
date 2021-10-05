@@ -179,16 +179,16 @@
 
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">{{$current_month}} ({{$current_month_paid_invoice_count}}) : </span>
+                                <span class="text-nowrap">{{$current_month}} ({{currentMonthPaidInvoice()['invoice_count']}}) : </span>
 
-                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_paid_invoice_amount, 2)}}</span>
+                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(currentMonthPaidInvoice()['invoice_amount'], 2)}}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$ytd_paid_invoice_count}}) : </span>
+                                <span class="text-nowrap">Year to Date ({{yearToDatePaidInvoice()['invoice_count']}}) : </span>
 
-                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_paid_invoice_amount, 2)}}</span>
+                                 <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(yearToDatePaidInvoice()['invoice_amount'], 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -212,16 +212,16 @@
 
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">{{$current_month}} ({{$current_month_outstanding_invoice_count}}) : </span>
+                                <span class="text-nowrap">{{$current_month}} ({{currentMonthOutstandingInvoices()['invoiceCount']}}) : </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_outstanding_invoice_amount, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(currentMonthOutstandingInvoices()['invoice'], 2)}}</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$ytd_outstanding_invoice_count}}) : </span>
+                                <span class="text-nowrap">Year to Date ({{yearToDateOutstandingInvoices()['invoiceCount']}}) : </span>
                                     
-                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_outstanding_invoice_amount, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(yearToDateOutstandingInvoices()['invoice'], 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -243,19 +243,18 @@
                             </div>
                     </div>
                 </div>
-
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">{{$current_month}} ({{$paid_recurring_count_for_current_month}}): </span>
+                 <span class="text-nowrap">{{$current_month}} ({{currentMonthPaidRenewalInvoices()['numberOfRenewals']}}): </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($paid_recurring_amount_for_current_month, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(currentMonthPaidRenewalInvoices()['paid_amount'], 2)}}</span>
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to Date ({{$paid_recurring_count_for_year_to_date}}) : </span>
+                                <span class="text-nowrap">Year to Date ({{yearToDatePaidRenewal()['numberOfRenewals']}}) : </span>
 
-                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($paid_recurring_amount_for_year_to_date, 2)}}</span>
+                                    <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(yearToDatePaidRenewal()['paid_amount'], 2)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -278,14 +277,14 @@
                 </div>
                             <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">{{$current_month}} ({{$current_month_outstanding_renewal_count}}) : </span>
-                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($current_month_outstanding_renewal_amt, 2)}}</span>
+                                <span class="text-nowrap">{{$current_month}} ({{currentMonthOutstandingRenewal()['renewalCount']}}) : </span>
+                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(currentMonthOutstandingRenewal()['renewal'], 2)}}</span>
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col">
-                                <span class="text-nowrap">Year to date ({{$ytd__outstanding_renewal_count}}) : </span>
-                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format($ytd_outstanding_renewal_amt, 2)}}</span>
+                                <span class="text-nowrap">Year to date ({{yearToDateOutstandingRenewal()['renewalCount']}}) : </span>
+                               <span class="h4 font-weight-bold mb-0">&#8358;{{number_format(yearToDateOutstandingRenewal()['renewal'], 2)}}</span>
                                 </div>
                             </div>
                             

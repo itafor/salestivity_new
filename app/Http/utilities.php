@@ -10,8 +10,12 @@ use App\Contact;
 use App\Country;
 use App\Customer;
 use App\Industry;
+use App\Invoice;
+use App\InvoicePayment;
 use App\MailFromName;
 use App\Product;
+use App\Renewal;
+use App\RenewalPayment;
 use App\ReplyToEmail;
 use App\State;
 use App\SubCategory;
@@ -19,6 +23,7 @@ use App\SubUser;
 use App\User;
 use Carbon\Carbon;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\DB;
 
 function formatDate($date, $oldFormat, $newFormat)
 {
@@ -386,3 +391,184 @@ function whatsappNotification($from_number, $to_number, $text_messages)
             return $user->company_name;
         }
     }
+
+
+ // ......paid Renewal (Recurring) Year to Date ......................
+    function yearToDatePaidRenewal()
+    {
+        $curr_year = Carbon::now('y');
+
+        $yearToDatepartially_paid_renewal = RenewalPayment::where([
+            ['status', 'Partly paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereYear('payment_date', $curr_year)->get();
+
+         $year_to_date_completely_paid_renewal = RenewalPayment::where([
+            ['status', 'Paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereYear('payment_date', $curr_year)->get();
+      
+
+     $data['yeartodate_partially_paid_renewal_amt'] = $yearToDatepartially_paid_renewal->sum('amount_paid');
+
+     $data['year_to_date_completely_paid_renewal_amt'] = $year_to_date_completely_paid_renewal->sum('amount_paid'); 
+
+     $data['paid_recurring_amount_for_year_to_date'] = $data['yeartodate_partially_paid_renewal_amt'] + $data['year_to_date_completely_paid_renewal_amt'];
+
+       $paid_renewal_count = RenewalPayment::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+     ])->whereYear('payment_date', $curr_year)->distinct()->get('renewal_id');
+
+     return [
+        'paid_amount' =>   $data['paid_recurring_amount_for_year_to_date'],
+        'numberOfRenewals' => count($paid_renewal_count)
+     ];
+
+    }
+
+    function currentMonthPaidRenewalInvoices()
+    {
+        $curr_momth = Carbon::now('m');
+
+     $currentMonthpartially_paid_renewal = RenewalPayment::where([
+            ['status', 'Partly paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereMonth('payment_date', $curr_momth)->get();
+
+         $current_month_completely_paid_renewal = RenewalPayment::where([
+            ['status', 'Paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereMonth('payment_date', $curr_momth)->get();
+      
+
+     $data['current_month_partially_paid_renewal_amt'] = $currentMonthpartially_paid_renewal->sum('amount_paid');
+
+     $data['current_month_completely_paid_renewal_amt'] = $current_month_completely_paid_renewal->sum('amount_paid'); 
+
+     $data['paid_recurring_amount_for_current_month'] = $data['current_month_partially_paid_renewal_amt'] + $data['current_month_completely_paid_renewal_amt'];
+
+     $paid_renewal_count = RenewalPayment::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+     ])->whereMonth('payment_date', $curr_momth)->distinct()->get('renewal_id');
+
+     return [
+        'paid_amount' =>  $data['paid_recurring_amount_for_current_month'],
+        'numberOfRenewals' => count($paid_renewal_count)
+     ];
+
+    }
+
+    function currentMonthOutstandingRenewal()
+    {
+        $curr_momth = Carbon::now('m');
+
+        $renewals = Renewal::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['billingBalance', '>', 0],
+    ])->whereMonth('created_at', $curr_momth)->get();
+
+     return [
+        'renewal' => $renewals->sum('billingBalance'),
+        'renewalCount' => count($renewals)
+     ];
+    }
+
+  function yearToDateOutstandingRenewal()
+    {
+        $curr_year = Carbon::now('y');
+
+        $renewals = Renewal::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['billingBalance', '>', 0],
+    ])->whereYear('created_at', $curr_year)->get();
+
+     return [
+        'renewal' => $renewals->sum('billingBalance'),
+        'renewalCount' => count($renewals)
+     ];
+    }
+
+    function currentMonthPaidInvoice()
+    {
+        $curr_momth = Carbon::now('m');
+
+         $currentMonthpartially_paid_invoice = InvoicePayment::where([
+            ['status', 'Partly paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereMonth('payment_date', $curr_momth)->get();
+
+         $current_month_completely_paid_invoice = InvoicePayment::where([
+            ['status', 'Paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereMonth('payment_date', $curr_momth)->get();
+
+         $current_month_paid_invoice_amount = $currentMonthpartially_paid_invoice->sum('amount_paid') + $current_month_completely_paid_invoice->sum('amount_paid');
+
+     $invoice_count = InvoicePayment::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+     ])->whereMonth('payment_date', $curr_momth)->distinct()->get('invoice_id');
+
+     return [
+        'invoice_amount' =>  $current_month_paid_invoice_amount,
+        'invoice_count' => count($invoice_count)
+     ];
+
+    }
+
+    function yearToDatePaidInvoice()
+    {
+        $curr_year = Carbon::now('y');
+
+         $year_to_date_partially_paid_invoice = InvoicePayment::where([
+            ['status', 'Partly paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereYear('payment_date', $curr_year)->get();
+
+         $year_to_date_completely_paid_invoice = InvoicePayment::where([
+            ['status', 'Paid'],
+           ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->whereYear('payment_date', $curr_year)->get();
+
+         $ytd_paid_invoice_amount = $year_to_date_partially_paid_invoice->sum('amount_paid') + $year_to_date_completely_paid_invoice->sum('amount_paid');
+
+        $invoice_count = InvoicePayment::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+     ])->whereYear('payment_date', $curr_year)->distinct()->get('invoice_id');
+
+     return [
+        'invoice_amount' =>  $ytd_paid_invoice_amount,
+        'invoice_count' => count($invoice_count)
+     ];
+
+    }
+
+  function currentMonthOutstandingInvoices()
+    {
+        $curr_momth = Carbon::now('m');
+
+        $invoices = Invoice::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['billingBalance', '>', 0],
+    ])->whereMonth('created_at', $curr_momth)->get();
+
+     return [
+        'invoice' => $invoices->sum('billingBalance'),
+        'invoiceCount' => count($invoices)
+     ];
+    }
+
+      function yearToDateOutstandingInvoices()
+    {
+        $curr_year = Carbon::now('y');
+
+        $invoices = Invoice::where([
+        ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ['billingBalance', '>', 0],
+    ])->whereYear('created_at', $curr_year)->get();
+
+     return [
+        'invoice' => $invoices->sum('billingBalance'),
+        'invoiceCount' => count($invoices)
+     ];
+    }
+
