@@ -348,6 +348,16 @@ Route::group([
 });
 
   Route::resource('currency', CurrencyController::class);
+
+  Route::group([
+    'prefix' => 'subcription'
+], function () {
+
+    Route::get('plans', 'SubscriptionsController@getPlans')->name('subcription.plans');
+    Route::get('/fetch-plan-details/{plan_id}', 'SubscriptionsController@fetchPlanDetails');
+    Route::post('/update-plan', 'SubscriptionsController@updatePlan')->name('update.plan');
+
+});
  
 // Route::group([
 //     'prefix' => 'location'
@@ -368,6 +378,12 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
     Route::get('location/create/city', 'LocationController@createCity')->name('location.create.city');
     Route::post('location/add/city', 'LocationController@AddCity')->name('location.add.city');
     Route::get('cities', 'LocationController@fetchCities')->name('location.view.cities');
+    Route::get('plans', 'PlanController@index')->name('plans.index');
+    Route::get('create', 'PlanController@createPlan')->name('plans.create');
+    Route::post('store', 'PlanController@storePlan')->name('plans.store');
+    Route::get('plans/{id}', 'PlanController@edit')->name('plans.edit');
+    Route::post('update/plan', 'PlanController@updatePlan')->name('plans.update');
+
 });
 
 //billing receipt confirmation

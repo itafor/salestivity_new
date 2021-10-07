@@ -24,10 +24,16 @@ use App\User;
 use Carbon\Carbon;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 function formatDate($date, $oldFormat, $newFormat)
 {
     return Carbon::createFromFormat($oldFormat, $date)->format($newFormat);
+}
+
+function generateUUID()
+{
+    return Str::uuid()->toString();
 }
 
 function compareEndStartDate($start_date, $end_date)

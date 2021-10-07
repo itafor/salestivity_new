@@ -367,6 +367,27 @@
                     </div>
                 </li>
 
+                 @if(auth()->user()->role_id == 1)
+                      <li class="nav-item">
+                    <a class="nav-link" href="#navbar-get-plans" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="fa fa-compass text-primary" aria-hidden="true"></i>
+                        <span class="nav-link-text">{{ __('Plan') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-get-plans">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('subcription.plans') }}">
+                                        {{ __('List Plans') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
+
+                @endif
                 @if(auth()->user()->role_id == 1)
                     <li class="nav-item">
                         <a class="nav-link" href="#navbar-parameters" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">

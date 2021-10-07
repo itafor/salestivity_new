@@ -83,6 +83,25 @@
                         </div>
                     </ul>
                 </li> 
+                 <li class="nav-item">
+                    <a class="nav-link" href="#navbar-plan" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-tv-2"></i>
+                        <span class="nav-link-text">{{ __('Plans') }}</span>
+                    </a>
+                    <ul class="flex-column">
+                        <div class="collapse" id="navbar-plan">
+                            <ul class="nav nav-sm flex-column" >
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                         <a href="{{route('admin.plans.index')}}" class="nav-link">
+                                        <span class="nav-link-text">{{ __('List Plans') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </ul>
+                </li>
             </ul> 
 
         </div>
