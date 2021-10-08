@@ -30,7 +30,7 @@ class Subscription extends Model
             'user_id' => getActiveGuardType()->main_acct_id,
             'reference' => generateUUID(),
             'plan_id' => $data['plan_id'],
-            'status' => 'Pending',
+            'status' => $data['status'],
             'channel' => 'Bank Transfer'
         ]);
     }

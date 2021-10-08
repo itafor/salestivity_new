@@ -24,7 +24,7 @@ class Plan extends Model
         ]);
     }
 
-     public static function updatePlan($data)
+     public static function upgradePlan($data)
     {
         $plan = self::findOrFail($data['plan_id']);
         if($plan){

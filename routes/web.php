@@ -383,6 +383,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
     Route::post('store', 'PlanController@storePlan')->name('plans.store');
     Route::get('plans/{id}', 'PlanController@edit')->name('plans.edit');
     Route::post('update/plan', 'PlanController@updatePlan')->name('plans.update');
+    Route::get('all-subscriptions', 'PlanController@allSubscriptions')->name('sub.all');
 
 });
 

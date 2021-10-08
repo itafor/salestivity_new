@@ -237,6 +237,10 @@ class UserController extends Controller
         return $validate_Level;
        }
 
+       if(usersCount() >= activeSubscription()['plan']->number_of_subusers){
+        return back()->withFail(' You are on '.activeSubscription()['plan']->name.' plan. You can only manage '.activeSubscription()['plan']->number_of_subusers.' users.');
+       }
+
             $user = new SubUser;
             $user->name = $request->name;
             $user->last_name = $request->last_name;

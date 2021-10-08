@@ -281,6 +281,7 @@
 
 {{addMainAccountOwnerToSubUser()}}
 {{updatePrimaryUserLevel()}}
+{{autoFreeSubscription()}}
         @include('layouts.footers.auth')
     </div>
 @endsection

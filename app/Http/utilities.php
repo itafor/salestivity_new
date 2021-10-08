@@ -26,6 +26,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+
 function formatDate($date, $oldFormat, $newFormat)
 {
     return Carbon::createFromFormat($oldFormat, $date)->format($newFormat);
@@ -578,3 +579,4 @@ function whatsappNotification($from_number, $to_number, $text_messages)
      ];
     }
 
+  

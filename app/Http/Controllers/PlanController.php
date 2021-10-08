@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
+use App\Subscription;
 use Illuminate\Http\Request;
 use Validator;
 
 class PlanController extends Controller
 {
 
+
     public function index()
     {
         $data['plans'] = Plan::all();
         return view('zeus.plans.index', $data);
+    }
+
+   public function allSubscriptions()
+    {
+        $data['subscriptions'] = Subscription::where('status', '!=', 'Revoked')->get();
+        return view('zeus.plans.subscriptions', $data);
     }
 
     public function createPlan()
@@ -63,7 +71,7 @@ class PlanController extends Controller
                         ->withInput()->with('error', 'Please fill in a required fields');
         }
 
-        Plan::updatePlan($request->all());
+        Plan::upgradePlan($request->all());
 
         return redirect()->route('admin.plans.index')->with('success', 'Plan updated successfully');
     }

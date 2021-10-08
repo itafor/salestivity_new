@@ -98,24 +98,23 @@ class CustomerIndividualController extends Controller
             Alert::error('Contact Email', 'The contact email you entered already exists');
                 return back()->withInput();
         }
-    
-     DB::beginTransaction();
-        try{
+
+
+            if( activeSubscription()['plan']->number_of_accounts == "Unlimited"){
+         $account =   Customer::createIndividualCustomer($request->all());
+         Alert::success('Add Individual Account', 'Account added');
+
+        return redirect()->route('customer.index');
+     }elseif(customerCount() >= activeSubscription()['plan']->number_of_accounts){
+        return back()->withFail(' You are on '.activeSubscription()['plan']->name.' plan. You can only manage '.activeSubscription()['plan']->number_of_accounts.' accounts.');
+       }else{
          $account =   Customer::createIndividualCustomer($request->all());
 
-            DB::commit();
-        }
-        catch(Exception $e){
-            DB::rollback();
-            
-            Alert::error('Add Individual Account', 'An attempt to add create new account failed');
-         return back()->withInput();
-            
-        }
-        
         Alert::success('Add Individual Account', 'Account added');
 
         return redirect()->route('customer.index');
+       }
+    
     }
 
     /**

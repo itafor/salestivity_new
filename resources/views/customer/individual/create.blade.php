@@ -18,6 +18,8 @@
                         </div>
                     </div>
                     <div class="card-body">
+             @include('alerts.messages')
+                        
                         <form method="post" action="{{ route('customer.individual.store') }}" autocomplete="off">
                             @csrf
                             

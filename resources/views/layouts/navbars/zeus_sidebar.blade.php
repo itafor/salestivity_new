@@ -97,6 +97,11 @@
                                         <span class="nav-link-text">{{ __('List Plans') }}</span>
                                         </a>
                                     </li>
+                                     <li class="nav-item">
+                                         <a href="{{route('admin.sub.all')}}" class="nav-link">
+                                        <span class="nav-link-text">{{ __(' Subscriptions') }}</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </ul>
                         </div>

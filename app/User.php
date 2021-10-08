@@ -77,5 +77,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReplyToEmail::class, 'main_acct_id','id');
     }
+
+      public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'user_id','id');
+    }
+
+    
     
 }

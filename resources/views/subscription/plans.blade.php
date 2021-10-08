@@ -15,6 +15,8 @@
     </style>
 @endsection
 <div class="container-fluid mt--7 main-container">
+             @include('alerts.messages')
+
         <div class="row">
             <div class="col-xl-12 order-xl-1">
                 <div class="card shadow">
@@ -23,9 +25,9 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ __('Upgrade Plan') }}</h3>
                             </div>
-                            <div class="col-4 text-right">
+                           <!--  <div class="col-4 text-right">
                                 <a href="{{ route('project.index') }}" class="btn-icon btn-tooltip" title="{{ __('Back To List') }}"><i class="las la-angle-double-left"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                      <div class="card-body">
@@ -59,7 +61,18 @@
                                                 </ul>
 
                                                 <div class="pt-2">
+                                                    @if( mySubscriptionStatus($plan->id) && mySubscriptionStatus($plan->id) =="Active")
+                                                    <button class="btn btn-sm bg-green">
+                                                        {{mySubscriptionStatus($plan->id)}}
+                                                    </button>
+
+                                                    @elseif( mySubscriptionStatus($plan->id) && mySubscriptionStatus($plan->id) =="Pending")
+                                                    <button class="btn btn-sm bg-yellow">
+                                                        {{mySubscriptionStatus($plan->id)}}
+                                                    </button>
+                                                    @else
                                                   <button onclick="getSelectedPlan({{$plan->id}})" class="btn btn-primary btn-sm">Upgrade</button>
+                                               @endif
                                                 </div>
 
                                             </div>
@@ -81,48 +94,38 @@
 <div id="payment_detail" style="display: none;">
 <h2>Payment Details</h2>
 
-               <table class="table table-bordered mt-2" style="background-color: #ffffff;">
-                    <tbody>
+ <div class="table-responsive">
+                                <table class="table table-bordered table-hover  align-items-center">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">{{ __('Bank') }}</th>
+                                            <th scope="col">{{ __('Account Number') }}</th>
+                                            <th scope="col">{{ __('Account Name') }}</th>
+                                            <th scope="col">{{ __('Plan Name') }}</th>
+                                            <th scope="col">{{ __('Price') }}</th>
+                                            <th scope="col">{{ __('Number of Users') }}</th>
+                                            <th scope="col">{{ __('Number of Account') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                             <td> First Bank</td>
+                                              <td> 0975432321</td>
+                                               <td> Itafor Francis</td>
+                                                <td id="plan_name"></td>
+                                                 <td id="plan_price"></td>
+                                                  <td id="number_of_subusers"></td>
+                                                   <td id="number_of_accounts">
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Bank') }}</b></td>
-                     <td> First Bank</td>
-                   </tr>
-                     <tr>
-                     <td style="width: 200px;"><b>{{ __('Account Number') }}</b></td>
-                     <td> 0975432321</td>
-                   </tr>
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Account Name') }}</b></td>
-                     <td> Itafor Francis</td>
-                   </tr>
-                   <tr>
-                     <td style="width: 200px;"><b>{{ __('Plan Name') }}</b></td>
-                     <td id="plan_name"></td>
-                   </tr>
-                 <tr>
-                     <td style="width: 200px;"><b>{{ __('Price') }}</b></td>
-                     <td id="plan_price"></td>
-                   </tr>
-
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Number Of Sub users') }}</b></td>
-                     <td id="number_of_subusers"></td>
-                   </tr>
-
-                    <tr>
-                     <td style="width: 200px;"><b>{{ __('Number of Account') }}</b></td>
-                     <td id="number_of_accounts">
-                     </td>
-                   </tr>
-                    </tbody>
-                   
-                  </table> 
-
-                  <form method="post" action="{{ route('update.plan') }}" class="mt-2" autocomplete="off">
+                  <form method="post" action="{{ route('update.plan') }}" class="mt-2" autocomplete="off" id="delete" >
                             @csrf
                             <input type="hidden" name="plan_id" id="plan_id">
-                            <button onsubmit="return confirm("Are you sure")" type="submit" class="btn btn-primary btn-sm">Confirm</button>
+                            <input type="hidden" name="status" value="Pending">
+                            <button id="delete_button"  type="submit" class="btn btn-primary btn-sm">Confirm</button>
                         </form>
                     </div>
                             </div>
@@ -155,5 +158,15 @@
         },
     });
     }
+
+    $(function() {
+   $("#delete_button").click(function(){
+      if (confirm("Click OK to confirm!")){
+         $('form#delete').submit();
+      }else{
+        return false;
+      }
+   });
+});
 </script>
 @endsection
