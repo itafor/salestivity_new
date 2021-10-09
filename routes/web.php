@@ -384,6 +384,8 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
     Route::get('plans/{id}', 'PlanController@edit')->name('plans.edit');
     Route::post('update/plan', 'PlanController@updatePlan')->name('plans.update');
     Route::get('all-subscriptions', 'PlanController@allSubscriptions')->name('sub.all');
+    Route::get('activate/{userId}/{planId}/{subId}', 'PlanController@activatePendingSubscription');
+    Route::get('revoke/sub/{userId}/{planId}/{subId}', 'PlanController@revokeActiveSubscription');
 
 });
 

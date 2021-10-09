@@ -38,6 +38,8 @@
                           <th><b>Users</b></th>
                           <th><b>Accounts</b></th>
                           <th><b>Status</b></th>
+                          <th><b>Start Date</b></th>
+                          <th><b>End Date</b></th>
                           <th class="text-center"><b>Action</b></th>
                       </tr>
                     </thead>
@@ -51,13 +53,19 @@
                           <td>{{$sub->plan->number_of_subusers}}</td>
                           <td>{{$sub->plan->number_of_accounts}}</td>
                           <td>{{$sub->status}}</td>
+                          <td>
+                            {{ $sub->start_date ? date('d/m/Y', strtotime($sub->start_date)) : 'N/A' }}
+                          </td>
+                           <td>
+                            {{ $sub->end_date ? date('d/m/Y', strtotime($sub->end_date)) : 'N/A' }}
+                          </td>
                           <td class="text-center">
                             @if($sub->status == "Active")
-                                  <a class="btn btn-sm bg-yellow" href="{{route('admin.plans.edit', [$sub->id])}}">
+                                  <a onclick="revokeSubscription({{$sub->user->id}}, {{$sub->plan->id}}, {{$sub->id}})" class="btn btn-sm bg-yellow" href="#">
                                       Revoke
                                   </a>
                                  @elseif($sub->status == "Pending")
-                                  <a class="btn btn-sm btn-success" href="{{route('admin.plans.edit', [$sub->id])}}">
+                                  <a onclick="activateSubscription({{$sub->user->id}}, {{$sub->plan->id}}, {{$sub->id}})" class="btn btn-sm btn-success" href="#">
                                       Activate
                                   </a>
                                  @endif
@@ -79,4 +87,65 @@
         @include('layouts.footers.auth')
     </div>
 
+
+
+<script type="text/javascript">
+
+  function revokeSubscription(userId, planId, subId) {
+    swal({
+        title: "Revoke Selected subscription",
+        text: "Do you really want to revoke the selected subscription? This action will revoke the selected subscription and activate the Starter(Free) plan since a user must have at least on active plan",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: baseUrl + "/admin/revoke/sub/" + userId + "/" + planId + "/"+subId,
+                type: "GET",
+                data: { userId: userId },
+                success: function (data) {
+                    console.log(data);
+                    swal("Poof! The selected subscription has been revoked!", {
+                        icon: "success",
+                    });
+                    location.reload();
+                },
+            });
+        } else {
+            swal("Action cancelled!");
+        }
+    });
+}
+    // Delete data with ajax
+function activateSubscription(userId, planId, subId) {
+    swal({
+        title: "Activate Selected subscription",
+        text: "Do you really want to activate the selected subscription?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: baseUrl + "/admin/activate/" + userId + "/" + planId + "/"+subId,
+                type: "GET",
+                data: { userId: userId },
+                success: function (data) {
+                  
+                    swal("Poof! The selected subscription has been activated!", {
+                        icon: "success",
+                    });
+                    location.reload();
+                },
+            });
+        } else {
+            swal("Action cancelled!");
+        }
+    });
+}
+
+
+
+</script>
 @endsection

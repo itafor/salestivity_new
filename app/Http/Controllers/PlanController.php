@@ -4,11 +4,67 @@ namespace App\Http\Controllers;
 
 use App\Plan;
 use App\Subscription;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
 class PlanController extends Controller
 {
+
+  public function activatePendingSubscription($user_id, $plan_id, $sub_id)
+    {
+
+        $subscriptions = Subscription::where([
+            ['user_id', $user_id],
+          ])->get();
+
+            if(count($subscriptions)>=1){
+                foreach ($subscriptions as $key => $sub) {
+                    $sub->status = "Revoked";
+                    $sub->save();
+                }
+            }
+
+          $sub = Subscription::where([
+            ['id', $sub_id],
+            ['user_id', $user_id],
+            ['plan_id', $plan_id]
+          ])->first();
+
+            if($sub){
+                    $sub->status = "Active";
+                    $sub->start_date = Carbon::now('PST');
+                    $sub->end_date = Carbon::now('PST')->addYear();
+                    $sub->save();
+                    return $sub;
+            }
+    }
+
+
+    public function revokeActiveSubscription($user_id, $plan_id, $sub_id)
+    {
+
+        $sub = Subscription::where([
+            ['user_id', $user_id],
+            ['plan_id', $plan_id],
+            ['id', $sub_id],
+          ])->first();
+
+            if($sub){
+                    $sub->status = "Revoked";
+                    $sub->save();
+                }
+
+         return Subscription::create([
+            'user_id' => $user_id,
+            'reference' => generateUUID(),
+            'plan_id' => 1,
+            'status' => 'Active',
+            'channel' => 'Bank Transfer'
+        ]);
+         
+    }
+
 
 
     public function index()
