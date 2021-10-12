@@ -70,7 +70,7 @@
 
               
                     <tr>
-                     <td style="width: 200px;"><b>{{ __('Discription') }}</b></td>
+                     <td style="width: 200px;"><b>{{ __('Description') }}</b></td>
                      <td>{{ $product->description }}
                      </td>
                    </tr>

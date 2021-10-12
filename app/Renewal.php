@@ -16,7 +16,7 @@ class Renewal extends Model
         'end_date','amount','productPrice',
         'discount','billingAmount','billingBalance',
         'description','status','userType','created_by_id','amount_paid',
-        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id','currency_id','reply_to_email_id','mail_from_name_id','cc_email_id','mail_from_name'
+        'category_id','subcategory_id','product_id','duration_type', 'first_reminder_sent', 'invoice_number','company_email_id','company_bank_acc_id','currency_id','reply_to_email_id','mail_from_name_id','cc_email_id','mail_from_name','value_added_tax','withholding_tax'
     	];
 
     public function customers()
@@ -106,6 +106,16 @@ class Renewal extends Model
         $discountValue = $data['discount'] == '' ? 0 : $data['discount'];
         $discountedPrice = ($discountValue / 100) * $data['productPrice'];
         $finalPrice = $data['productPrice'] - $discountedPrice;
+
+        $vat = $data['value_added_tax'] == '' ? 0 : $data['value_added_tax'];
+        $vat_Price = ($vat / 100) * $finalPrice;
+        $finalPrice = $vat_Price + $finalPrice;
+
+        $wht = $data['withholding_tax'] == '' ? 0 : $data['withholding_tax'];
+        $wht_Price = ($wht / 100) * $finalPrice;
+        $finalPrice = $wht_Price  + $finalPrice;
+
+        dd($finalPrice);
 
     	$renewal = self::create([
     	'main_acct_id' => getActiveGuardType()->main_acct_id,

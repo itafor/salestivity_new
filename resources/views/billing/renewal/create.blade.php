@@ -121,7 +121,7 @@
     </div>
     <div class="col">
 <label class="form-control-label" for="productPrice">{{ __('Billing Amount') }} </label>
-        <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value=" " required readonly="">
+        <input type="number" min="1" name="billingAmount" id="billingAmount" class="form-control form-control-alternative{{ $errors->has('billingAmount') ? ' is-invalid' : '' }}" placeholder="{{ __('Billing Amount') }}" value="" required readonly>
 
         @if ($errors->has('billingAmount'))
             <span class="invalid-feedback" role="alert">
@@ -130,6 +130,34 @@
         @endif
     </div>
   </div>
+
+  <div class="row">
+
+    <div class="col-xl-6">
+        <div class="form-group{{ $errors->has('value_added_tax') ? ' has-danger' : '' }}">
+            <label class="form-control-label" for="value_added_tax">{{ __('Value Added Tax (%)') }}</label>   
+            <input type="number" name="value_added_tax" id="value_added_tax" class="form-control" placeholder="Enter VAT in percentage">
+            @if ($errors->has('value_added_tax'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('value_added_tax') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+      <div class="col-xl-6">
+        <div class="form-group{{ $errors->has('withholding_tax') ? ' has-danger' : '' }}">
+            <label class="form-control-label" for="product">{{ __('Withholding Tax (%)') }}</label>
+           <input type="number" name="withholding_tax" id="withholding_tax" class="form-control" placeholder="Enter WHT in percentage">   
+            @if ($errors->has('withholding_tax'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('withholding_tax') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+</div>
 
 
     <div class="row mt-2">
@@ -342,11 +370,27 @@
         @include('layouts.footers.auth')
     </div>
 <script type="text/javascript">
+
      $("#productPrice").on("keyup", function(){
       let   productPrice = $(this).val();
     $("#billingAmount").val(productPrice);
     $("#discount").val('');
     })
+
+     $("#value_added_tax").on("keyup", function(){
+      var  vat = $(this).val();
+       calculateVat(vat);
+      
+    })
+
+   $("#withholding_tax").on("keyup", function(){
+      let  wht = $(this).val();
+     
+      calculateWht(wht);
+      
+    })
+
+ 
 
 </script>
 @endsection

@@ -218,7 +218,7 @@ $("#product_id").change(function () {
             type: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.category == "") {
                     $("#renewal_description").val("");
                 }
@@ -1340,3 +1340,42 @@ $(document).ready(function () {
         $("#customersList").fadeOut();
     });
 });
+
+
+  function calculateVat(vat){
+     let discount = $("#discount").val();
+    let productPrice = $("#productPrice").val();
+    let discountedPrice = (discount / 100) * productPrice;
+    let price = (productPrice - discountedPrice).toFixed(2);
+      if(vat <= 0){
+        $(this).val("");
+    $("#billingAmount").val("");
+
+      $("#billingAmount").val(price);
+      }else{
+         vat = vat == '' ? 0 : vat;
+     vat_Price = (vat / 100) * parseFloat(price);
+     final_Price = vat_Price + parseFloat(price);
+    
+    $("#billingAmount").val(final_Price.toFixed(2));
+      }
+   }
+
+   function calculateWht(wht){
+        let discount = $("#discount").val();
+    let productPrice = $("#productPrice").val();
+    let discountedPrice = (discount / 100) * productPrice;
+    let price = (productPrice - discountedPrice).toFixed(2);
+      if(wht <= 0){
+        $(this).val("");
+    $("#billingAmount").val("");
+
+      $("#billingAmount").val(price);
+      }else{
+         wht = wht == '' ? 0 : wht;
+     wht_Price = (wht / 100) * parseFloat(price);
+     final_Price = wht_Price + parseFloat(price);
+    
+    $("#billingAmount").val(final_Price.toFixed(2));
+      }
+   }
