@@ -110,7 +110,7 @@
 @enderror
     </div>
     <div class="col">
-<label class="form-control-label" for="discount">{{ __('Discount') }}</label>
+<label class="form-control-label" for="discount">{{ __('Discount (%)') }}</label>
     <input type="number" min="1" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Product Discount') }}" value="{{ old('discount') }}">
 
     @if ($errors->has('discount'))
@@ -375,6 +375,8 @@
       let   productPrice = $(this).val();
     $("#billingAmount").val(productPrice);
     $("#discount").val('');
+    $("#withholding_tax").val('');
+    $("#value_added_tax").val('');
     })
 
      $("#value_added_tax").on("keyup", function(){

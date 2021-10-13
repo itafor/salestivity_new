@@ -257,6 +257,8 @@ $("#product_id").change(function () {
 
 $("body").on("keyup", "#discount", function () {
     product_price = $("#productPrice").val();
+     $("#withholding_tax").val('');
+       $("#value_added_tax").val('');
     let discount = $(this).val();
     if (0 <= discount && discount < 101) {
         if (parseFloat(product_price) <= 0) {
@@ -280,6 +282,7 @@ $("body").on("keyup", "#discount", function () {
         $("#billingAmount").val("");
         $("#discount").val("");
         $("#billingAmount").val(billinga_amount);
+       
 
         //alert('Discount must not be more than 100')
         swal("Maximun Discount!", "...Discount must not be more than 100 %!");
@@ -1350,32 +1353,56 @@ $(document).ready(function () {
       if(vat <= 0){
         $(this).val("");
     $("#billingAmount").val("");
-
-      $("#billingAmount").val(price);
+        let billbal = (parseFloat(price) + withholdingTax(price) + valueAddedTax(price)).toFixed(2);
+      $("#billingAmount").val(billbal);
+      $("#payment_due").val("");
+        $("#payment_due").val(billbal);
       }else{
-         vat = vat == '' ? 0 : vat;
-     vat_Price = (vat / 100) * parseFloat(price);
-     final_Price = vat_Price + parseFloat(price);
+         // vat = vat == '' ? 0 : vat;
+     // vat_Price = (vat / 100) * parseFloat(price);
+     final_Price = valueAddedTax(parseFloat(price)) + parseFloat(price) + withholdingTax(parseFloat(price));
     
     $("#billingAmount").val(final_Price.toFixed(2));
+     $("#payment_due").val("");
+        $("#payment_due").val(final_Price.toFixed(2));
       }
    }
 
    function calculateWht(wht){
-        let discount = $("#discount").val();
+    let discount = $("#discount").val();
     let productPrice = $("#productPrice").val();
     let discountedPrice = (discount / 100) * productPrice;
     let price = (productPrice - discountedPrice).toFixed(2);
       if(wht <= 0){
         $(this).val("");
     $("#billingAmount").val("");
-
-      $("#billingAmount").val(price);
+        let bill_bal = (parseFloat(price) + valueAddedTax(price) + withholdingTax(price)).toFixed(2);
+      $("#billingAmount").val(bill_bal);
+       $("#payment_due").val("");
+        $("#payment_due").val(bill_bal);
       }else{
-         wht = wht == '' ? 0 : wht;
-     wht_Price = (wht / 100) * parseFloat(price);
-     final_Price = wht_Price + parseFloat(price);
+         // wht = wht == '' ? 0 : wht;
+     // wht_Price = (wht / 100) * parseFloat(price);
+     final_Price = withholdingTax(parseFloat(price)) +  parseFloat(price) + valueAddedTax(parseFloat(price));
     
     $("#billingAmount").val(final_Price.toFixed(2));
+     $("#payment_due").val("");
+        $("#payment_due").val(final_Price.toFixed(2));
       }
+   }
+
+   function valueAddedTax(price){
+    let vat = $("#value_added_tax").val();
+         vat = vat == '' ? 0 : vat;
+    let  vat_Price = (vat / 100) * parseFloat(price);
+     return vat_Price;
+
+   }
+
+   function withholdingTax(price){
+    let wht = $("#withholding_tax").val();
+         wht = wht == '' ? 0 : wht;
+    let  wht_Price = (wht / 100) * parseFloat(price);
+     return wht_Price;
+
    }

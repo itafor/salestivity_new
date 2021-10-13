@@ -136,6 +136,34 @@
                                     </div>
                                 </div>
 
+                                  <div class="row">
+
+    <div class="col-xl-6">
+        <div class="form-group{{ $errors->has('value_added_tax') ? ' has-danger' : '' }}">
+            <label class="form-control-label" for="value_added_tax">{{ __('Value Added Tax (%)') }}</label>   
+            <input type="number" name="value_added_tax" id="value_added_tax" class="form-control" placeholder="Enter VAT in percentage">
+            @if ($errors->has('value_added_tax'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('value_added_tax') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+      <div class="col-xl-6">
+        <div class="form-group{{ $errors->has('withholding_tax') ? ' has-danger' : '' }}">
+            <label class="form-control-label" for="product">{{ __('Withholding Tax (%)') }}</label>
+           <input type="number" name="withholding_tax" id="withholding_tax" class="form-control" placeholder="Enter WHT in percentage">   
+            @if ($errors->has('withholding_tax'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('withholding_tax') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+</div>
+
 
                                 <div class="row">
                                     <div class="col-6">
@@ -151,24 +179,7 @@
                                     </div>
 
                 
-
-                                    <div class="col-6">
-                                             
-                                <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
-                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ old('timeline') }}" required>
-
-                                    @if ($errors->has('timeline'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('timeline') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                    </div>
-                                </div>
-
-                                 <div class="row">
-                                    <div class="col-6">
+                                       <div class="col-6">
                                          <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="payment_due">{{ __('Payment Due') }}</label>
                                     <input type="number" min="1" name="payment_due" id="payment_due" class="form-control form-control-alternative{{ $errors->has('payment_due') ? ' is-invalid' : '' }}" placeholder="{{ __('Payment due') }}" value=" " required >
@@ -179,8 +190,12 @@
                                     @endif
                                 </div>
                                     </div>
+                               
+                                </div>
 
-                                    <div class="col-6">
+                                 <div class="row">
+
+                                       <div class="col-6">
                                              
                                 <div class="form-group{{ $errors->has('due_date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="timeline">{{ __('Due Date') }}</label>
@@ -193,6 +208,23 @@
                             @endif
                                 </div>
                                     </div>
+                                 
+                         <div class="col-6">
+                                             
+                                <div class="form-group{{ $errors->has('timeline') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="timeline">{{ __('Timeline (in days)') }}</label>
+                                    <input type="text" name="timeline" id="timeline" class="form-control form-control-alternative{{ $errors->has('timeline') ? ' is-invalid' : '' }}" placeholder="{{ __('Timeline') }}" value="{{ old('timeline') }}" required>
+
+                                    @if ($errors->has('timeline'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('timeline') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                    </div>
+
+
+                                 
 
                                   
                                 </div>
@@ -299,6 +331,8 @@
     $("#billingAmount").val(productPrice);
     $("#payment_due").val(productPrice);
     $("#discount").val('');
+     $("#withholding_tax").val('');
+    $("#value_added_tax").val('');
     })
 
 //Assign billing amount to payment due
@@ -334,6 +368,20 @@ $(document).on("keyup", "#payment_due", function (e) {
         $(this).val("");
     }
 });
+
+
+ $("#value_added_tax").on("keyup", function(){
+      var  vat = $(this).val();
+       calculateVat(vat);
+      
+    })
+
+   $("#withholding_tax").on("keyup", function(){
+      let  wht = $(this).val();
+     
+      calculateWht(wht);
+      
+    })
 
 </script>
 

@@ -148,19 +148,33 @@
                      </td>
                    </tr>
 
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Value Added Task') }}</b></td>
+                     <td>
+                        {{ $invoice->value_added_tax == '' ? 'N/A' : $invoice->value_added_tax.'%'}} 
+                     </td>
+                   </tr>
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Withholding Task') }}</b></td>
+                     <td>
+                        {{ $invoice->withholding_tax == '' ? 'N/A' : $invoice->withholding_tax.'%'}} 
+                     </td>
+                   </tr>
+
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
-                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingAmount,2) }}
+                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingAmount,2) }}
                      </td>
                    </tr>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Amount Paid') }}</b></td>
-                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->amount_paid,2) }}
+                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->amount_paid,2) }}
                      </td>
                    </tr>
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Balance') }}</b></td>
-                     <td>{!! $invoice->prod && $invoice->prod->currency ? $invoice->prod->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
+                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
                      </td>
                    </tr>
                    

@@ -103,19 +103,13 @@ class Renewal extends Model
         $guard_object = getActiveGuardType();
         $contactEmails = isset($data['contact_emails']) ? $data['contact_emails'] : '' ;
        
-        $discountValue = $data['discount'] == '' ? 0 : $data['discount'];
-        $discountedPrice = ($discountValue / 100) * $data['productPrice'];
-        $finalPrice = $data['productPrice'] - $discountedPrice;
+        // $discountValue = $data['discount'] == '' ? 0 : $data['discount'];
+        // $discountedPrice = ($discountValue / 100) * $data['productPrice'];
+        // $final_Price = $data['productPrice'] - $discountedPrice;
 
-        $vat = $data['value_added_tax'] == '' ? 0 : $data['value_added_tax'];
-        $vat_Price = ($vat / 100) * $finalPrice;
-        $finalPrice = $vat_Price + $finalPrice;
+        $finalPrice = getFinalPrice($data['discount'], $data['productPrice'],  $data['value_added_tax'], $data['withholding_tax']);
 
-        $wht = $data['withholding_tax'] == '' ? 0 : $data['withholding_tax'];
-        $wht_Price = ($wht / 100) * $finalPrice;
-        $finalPrice = $wht_Price  + $finalPrice;
-
-        dd($finalPrice);
+        // $finalPrice = $final_Price + getValueAddedTax($final_Price, $data['value_added_tax']) + getWithholdingTax($final_Price, $data['withholding_tax']);
 
     	$renewal = self::create([
     	'main_acct_id' => getActiveGuardType()->main_acct_id,
@@ -141,6 +135,8 @@ class Renewal extends Model
         'mail_from_name' => $data['mail_from_name'],
         'reply_to_email_id' => $data['reply_to_email_id'],
         'cc_email_id' => $data['cc_email_id'],
+        'value_added_tax' => isset($data['value_added_tax']) ? $data['value_added_tax'] : null,
+        'withholding_tax' => isset($data['withholding_tax']) ? $data['withholding_tax'] : null,
 
     	]);
 
@@ -157,9 +153,9 @@ class Renewal extends Model
         $renewal =  self::where('id', $data['renewal_id'])->first();
         $existingBillBal = $renewal->billingBalance;
         $existingBillAmt = $renewal->billingAmount;
-        // $paymentStatus = self::getRenewalPaymentStatus($existingBillBal, $existingBillAmt, $data['billingAmount'], $renewal->status);
 
-        // dd($paymentStatus);
+          $finalPrice = getFinalPrice($data['discount'], $data['productPrice'],  $data['value_added_tax'], $data['withholding_tax']);
+       
 
         self::where('id', $data['renewal_id'])->update([
         'customer_id' => $data['customer_id'],
@@ -168,8 +164,8 @@ class Renewal extends Model
         'product_id' => $data['product'],
         'productPrice' => $data['productPrice'],
         'discount' => isset($data['discount']) ? $data['discount'] : null,
-        'billingAmount' => $renewal->status == 'Pending' ? $data['billingAmount'] : $renewal->billingAmount,
-        'billingBalance' => $renewal->status == 'Pending' ? $data['billingAmount'] : $renewal->billingBalance,
+        'billingAmount' => $renewal->status == 'Pending' ? $finalPrice : $renewal->billingAmount,
+        'billingBalance' => $renewal->status == 'Pending' ? $finalPrice : $renewal->billingBalance,
         'description' => $data['description'],
         'start_date' => Carbon::parse(formatDate($data['start_date'], 'd/m/Y', 'Y-m-d')),
         'end_date' => Carbon::parse(formatDate($data['end_date'], 'd/m/Y', 'Y-m-d')),
@@ -180,6 +176,8 @@ class Renewal extends Model
         'mail_from_name' => $data['mail_from_name'],
         'reply_to_email_id' => $data['reply_to_email_id'],
         'cc_email_id' => $data['cc_email_id'],
+        'value_added_tax' => isset($data['value_added_tax']) ? $data['value_added_tax'] : null,
+        'withholding_tax' => isset($data['withholding_tax']) ? $data['withholding_tax'] : null,
 
         ]); 
 
@@ -258,4 +256,5 @@ class Renewal extends Model
        $reminderDuration->save();
     }
  }
+
 }

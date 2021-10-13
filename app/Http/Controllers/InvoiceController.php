@@ -185,6 +185,8 @@ class InvoiceController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
+         $finalPrice = getFinalPrice($input['discount'], $input['cost'],  $input['value_added_tax'], $input['withholding_tax']);
+
         $invoice = new Invoice;
         $invoice->created_by = $guard_object->created_by;
         $invoice->user_type = $guard_object->user_type;
@@ -197,8 +199,8 @@ class InvoiceController extends Controller
         $invoice->cost = $request->cost;
         $invoice->discount = $request->discount;
         $invoice->status = 'Pending';
-        $invoice->billingAmount = $request->billingAmount;
-        $invoice->billingBalance = $request->billingAmount;
+        $invoice->billingAmount = $finalPrice;
+        $invoice->billingBalance = $finalPrice;
        
         $invoice->company_bank_acc_id = $request->company_bank_acc_id;
         $invoice->due_date = Carbon::parse(formatDate($request->due_date, 'd/m/Y', 'Y-m-d'));
@@ -209,7 +211,8 @@ class InvoiceController extends Controller
         $invoice->mail_from_name = $request->mail_from_name;
         $invoice->reply_to_email_id = $request->reply_to_email_id;
         $invoice->cc_email_id = $request->cc_email_id;
-
+        $invoice->value_added_tax = $request->value_added_tax;
+        $invoice->withholding_tax = $request->withholding_tax;
         $invoice->save();
 
         if ($invoice) {

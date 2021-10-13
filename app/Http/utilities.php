@@ -579,4 +579,28 @@ function whatsappNotification($from_number, $to_number, $text_messages)
      ];
     }
 
-  
+     function getValueAddedTax($price, $vat){
+         $vat = $vat == '' ? 0 : $vat;
+
+    $vat_Price = ($vat / 100) * $price;
+     return $vat_Price;
+
+   }
+
+   function getWithholdingTax($price, $wht){
+         $wht = $wht == '' ? 0 : $wht;
+    $wht_Price = ($wht / 100) * $price;
+     return $wht_Price;
+
+   }
+
+ function getFinalPrice($discount, $productPrice, $value_added_tax, $withholding_tax)
+ {
+     $discountValue = $discount == '' ? 0 : $discount;
+        $discountedPrice = ($discountValue / 100) * $productPrice;
+        $final_Price = $productPrice - $discountedPrice;
+
+        $finalPrice = $final_Price + getValueAddedTax($final_Price, $value_added_tax) + getWithholdingTax($final_Price, $withholding_tax);
+
+        return $finalPrice;
+ }

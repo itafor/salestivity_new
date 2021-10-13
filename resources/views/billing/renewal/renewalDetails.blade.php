@@ -143,6 +143,20 @@
                      </td>
                    </tr>
 
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Value Added Task') }}</b></td>
+                     <td>
+                        {{ $renewal->value_added_tax == '' ? 'N/A' : $renewal->value_added_tax.'%'}} 
+                     </td>
+                   </tr>
+
+                    <tr>
+                     <td style="width: 200px;"><b>{{ __('Withholding Task') }}</b></td>
+                     <td>
+                        {{ $renewal->withholding_tax == '' ? 'N/A' : $renewal->withholding_tax.'%'}} 
+                     </td>
+                   </tr>
+
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Billing Amount') }}</b></td>
                      <td>{!! $renewal && $renewal->currency ? $renewal->currency->symbol : '&#8358;' !!}{{ number_format($renewal->billingAmount,2) }}
