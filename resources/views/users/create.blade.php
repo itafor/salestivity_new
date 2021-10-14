@@ -20,7 +20,7 @@
                     <div class="card-body bg-white">
                       @include('alerts.errorStatus')
                         
-             @include('alerts.messages')
+             <!-- @include('alerts.messages') -->
             
                         <form method="post" action="{{ route('storeuser') }}" autocomplete="off">
                             @csrf
@@ -116,7 +116,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group{{ $errors->has('report') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-report">{{ __('Reports To') }}</label>
-                                            <select name="report" id="userId" class="form-control" data-toggle="select">
+                                            <select name="report" id="userId" class="form-control" data-toggle="select" required>
                                                 <option value="">No one</option>
                                                 @foreach($reportsTo as $report)
                                                     <option value="{{ $report->id }}">{{ $report->name }} {{ $report->last_name }} ({{$report->level}})</option>

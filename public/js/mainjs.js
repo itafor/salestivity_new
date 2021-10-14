@@ -1037,9 +1037,9 @@ $("#userId").change(function () {
                     );
                 }
 
-                if (data.user && data.user.level >= level) {
+                if (data.user && data.user.level > level) {
                     swal(
-                        "A user can only report to another user with a lower level number i.e 2 can report to 1!"
+                        "A user can only report to another user with a lower or equal level i.e 2 can report to 1, 1 can also report to 1, but 1 cannot report to 2 respectively!"
                     );
                 }
             },

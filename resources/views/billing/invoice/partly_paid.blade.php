@@ -32,6 +32,8 @@
 
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['paid']) }}">Paid</a>
 
+                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['pending']) }}">Pending</a>
+
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
                                     </div>

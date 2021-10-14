@@ -120,10 +120,11 @@
 
 <body>
     <div class="invoice-box">
-       <h2>Invoice Notification</h2>
+      
 
 <div class="card">
 <div class="card-body">
+    <div class="row" style="float: right;">
     @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif
@@ -131,8 +132,9 @@
 @if(isset($invoice->user))
 <p>{{getCompanyName($invoice->user) }}</p>
 @endif
+</div>
 
-<p class="card-text">Dear {{$invoice->customers->name}},</p>
+{{--<p class="card-text">Dear {{$invoice->customers->name}},</p>
 <p>Please be informed that for the <strong>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}</strong> for <strong>{{ $invoice->customers->name }}</strong> is due for payment.
 </p>
 <p>
@@ -143,8 +145,16 @@ Find below the details of the invoice.
     <a href="{{ route('invoice.billing.confirm', [$invoice->id]) }}">
     <button type="button" class="btn btn-sm btn-success"> Confirm Invoice Receipt</button>
 </a>
-</p>
-<h4>Invoice Details</h4>
+</p>--}}
+
+<div class="row">
+<div class="col-4" style="float: left;">
+              <h3>Managed Hosting Invoice</h3>
+          </div>
+          <div class="col-8" style="float: right;">
+            <b>Invoiced to:</b> {{$invoice->customers->name}}
+          </div>
+          </div>
 <table class="table table-bordered" id="rental_table">
 @if(isset($invoice))
 <tbody>
@@ -185,11 +195,27 @@ Find below the details of the invoice.
 <td> {!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->cost, 2) }}
 </td>
 </tr>
+@if($invoice->discount)
 <tr>
 <td style="width: 150px;"><b>{{ __('Discount') }}</b></td>
 <td>{{ $invoice->discount ? $invoice->discount : 'N/A' }}
 </td>
 </tr>
+@endif
+@if($invoice->value_added_tax)
+<tr>
+<td style="width: 150px;"><b>{{ __('VAT') }}</b></td>
+<td>{{ $invoice->value_added_tax ? $invoice->value_added_tax : 'N/A' }}
+</td>
+</tr>
+@endif
+@if($invoice->withholding_tax)
+<tr>
+<td style="width: 150px;"><b>{{ __('WHT') }}</b></td>
+<td>{{ $invoice->withholding_tax ? $invoice->withholding_tax : 'N/A' }}
+</td>
+</tr>
+@endif
 <tr>
 <td style="width: 150px;"><b>{{ __('Total Amount') }}</b></td>
 <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->billingBalance,2) }}
@@ -225,11 +251,12 @@ Find below the details of the invoice.
 <h4>Terms and conditions</h4>
 <p>{!! $invoice->term_condition !!}</p>
 <p>Thank you for your continuous patronage.</p>
-<p><b>
+
+{{--<p><b>
     @if(isset($invoice->user))
 <p>{{getCompanyName($invoice->user) }}</p>
 @endif
-</b>  Billing Team.</p>
+</b>  Billing Team.</p>--}}
 
 <p>
     Please click the button below to confirm receipt of this invoice.<br>

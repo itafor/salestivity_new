@@ -23,16 +23,19 @@
                           <div class="col-xl-6">
                                 <div class="form-group dropdown">
                                     <button type="button" class="btn btn-icon btn-sm dropdown-toggle invoiceTab" data-toggle="dropdown">
-                                        All 
+                                        Outstanding 
                                     </button>
                                     <div class="dropdown-menu">
+
+                                        <a class="dropdown-item" href="{{ route('billing.invoice.view', ['all']) }}">All</a>
+
 
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['paid']) }}">Paid</a>
 
                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['partly_paid']) }}">Partly Paid</a>
 
+                                         <a class="dropdown-item" href="{{ route('billing.invoice.view', ['pending']) }}">Pending</a>
 
-                                        <a class="dropdown-item" href="{{ route('billing.invoice.view', ['outstanding']) }}">Outstanding</a>
                                        
                                     </div>
                                 </div>

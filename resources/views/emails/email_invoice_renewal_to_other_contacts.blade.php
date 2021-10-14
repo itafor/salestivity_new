@@ -122,10 +122,11 @@ text-align: left;
 
 <body>
 <div class="invoice-box">
-<h2>Managed Hosting Invoice</h2>
+
 
 <div class="card">
 <div class="card-body">
+	<div class="row" style="float: right;">
 @if(isset($customerRenewal->user) && $customerRenewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$customerRenewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif
@@ -133,8 +134,8 @@ text-align: left;
 @if(isset($customerRenewal->user))
 <p>{{getCompanyName($customerRenewal->user) }}</p>
 @endif
-
-<p class="card-text">Dear {{$customerContact->name}},</p>
+</div>
+{{--<p class="card-text">Dear {{$customerContact->name}},</p>
 <p>Please be informed that for the <strong>{{ $customerRenewal->prod ? $customerRenewal->prod->name : 'N/A' }}</strong> for <strong>{{ $customerRenewal->customers->name }}</strong> is due for renewal
 @if(isset($remaing_days) && $remaing_days >= 1)
     in <strong>{{$remaing_days}}</strong> days.
@@ -150,8 +151,15 @@ Please click the button below to confirm receipt of this invoice.<br>
 <a href="{{ route('recurring.billing.confirm', [$customerRenewal->id]) }}">
 <button type="button" class="btn btn-sm btn-success"> Confirm Invoice Receipt</button>
 </a>
-</p>
-<h4>Invoice Details</h4>
+</p>--}}
+<div class="row">
+  <div class="col-4" style="float: left;">
+              <h3 >Managed Hosting Invoice</h3>
+          </div>
+          <div class="col-8" style="float: right;">
+            <b>Invoiced to:</b> {{ $customerRenewal->customers->name }}
+          </div>
+      </div>
 <table class="table table-bordered" id="rental_table">
 @if(isset($customerRenewal))
 <tbody>
@@ -195,11 +203,27 @@ Please click the button below to confirm receipt of this invoice.<br>
 <td>{!! $customerRenewal && $customerRenewal->currency ? $customerRenewal->currency->symbol : '&#8358;' !!}{{ number_format($customerRenewal->productPrice,2) }}
 </td>
 </tr>
+@if($customerRenewal->discount)
 <tr>
 <td style="width: 150px;"><b>{{ __('Discount') }}</b></td>
 <td>{{ $customerRenewal->discount ? $customerRenewal->discount : 'N/A' }}
 </td>
 </tr>
+@endif
+@if($customerRenewal->value_added_tax)
+<tr>
+<td style="width: 150px;"><b>{{ __('VAT') }}</b></td>
+<td>{{ $customerRenewal->value_added_tax ? $customerRenewal->value_added_tax : 'N/A' }}
+</td>
+</tr>
+@endif
+@if($customerRenewal->withholding_tax)
+<tr>
+<td style="width: 150px;"><b>{{ __('WHT') }}</b></td>
+<td>{{ $customerRenewal->withholding_tax ? $customerRenewal->withholding_tax : 'N/A' }}
+</td>
+</tr>
+@endif
 <tr>
 <td style="width: 150px;"><b>{{ __('Amount Due') }}</b></td>
 <td> {!! $customerRenewal && $customerRenewal->currency ? $customerRenewal->currency->symbol : '&#8358;' !!}{{ number_format($customerRenewal->billingBalance,2) }}
@@ -222,12 +246,7 @@ Please click the button below to confirm receipt of this invoice.<br>
 <span>No matching records found</span>
 @endif
 </table>
-<p>Thank you for your continuous patronage.<br>
-@if(isset($customerRenewal->user))
-{{getCompanyName($customerRenewal->user) }}
-@endif
 
-  Billing Team</p><br>
 <h2>Important Domain Expiration Information</h2>
   
 <p>

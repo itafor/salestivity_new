@@ -11,7 +11,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Pending Recurring Invoices') }} </h3>
+                                <h3 class="mb-0">{{ __('Outstanding Recurring Invoices') }} </h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('billing.renewal.create') }}" class="btn-icon btn-tooltip" title="{{ __('Create Recurring') }}"><i class="las la-plus-circle"></i></a>

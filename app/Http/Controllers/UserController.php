@@ -291,24 +291,26 @@ class UserController extends Controller
 
     public function updateSubUser(Request $request, $id)
     {
+      $input = $request->all();
+        $user = SubUser::find($id);
 
       $validate_Level = $this->validateLevel($request->report, $request->level);
-       if($validate_Level){
+       if(isset($input['report']) && $validate_Level){
         return $validate_Level;
        }
 
-        $user = SubUser::find($id);
         $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->role_id = $request->input('role_id');
         $user->level = $request->input('level');
-        $user->reports_to = $request->input('report');
+        $user->reports_to = isset($input['report']) ? $input['report'] : null;
         $user->status = $request->input('status');
         
-        $user->update();
+        $user->save();
         
         return redirect()->route('allSubUsers')->withStatus(__('User successfully updated.'));
+
     }
 
     public function deleteSubUSer($id)
@@ -343,8 +345,8 @@ class UserController extends Controller
          if ($userToReportTo == null) {
           return redirect()->back()->withStatus(__('The selected  user to be reported to has not been assigned to a level!'));
                 }
-           if ($userToReportTo && $userToReportTo->level >= $level) {
-          return redirect()->back()->withInput()->withStatus(__('A user can only report to another user with a lower level number i.e 2 can report to 1!'));
+           if ($userToReportTo && $userToReportTo->level > $level) {
+          return redirect()->back()->withInput()->withStatus(__('A user can only report to another user with a lower or equal level i.e 2 can report to 1, 1 can also report to 1, but 1 cannot report to 2 respectively!'));
             }
     }
 

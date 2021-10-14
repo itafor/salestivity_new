@@ -162,6 +162,12 @@
         </td>
     </tr>
 </table>
+ <div class="col-4" style="float: left;">
+              <h3 >Receipt</h3>
+          </div>
+          <div class="col-8" style="float: right;">
+            <b>Invoiced to:</b> {{$renewal->customer->name}}
+          </div>
       <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>
