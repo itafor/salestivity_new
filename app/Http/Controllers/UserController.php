@@ -238,7 +238,7 @@ class UserController extends Controller
        // }
 
        if(usersCount() >= activeSubscription()['plan']->number_of_subusers){
-        return back()->withFail(' You are on '.activeSubscription()['plan']->name.' plan. You can only manage '.activeSubscription()['plan']->number_of_subusers.' users.');
+        return back()->withFail(' You are on '.activeSubscription()['plan']->name.' plan. You can only manage '.activeSubscription()['plan']->number_of_subusers.' users. Please upgrade.');
        }
 
             $user = new SubUser;

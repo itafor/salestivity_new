@@ -20,7 +20,7 @@
                     <div class="card-body bg-white">
                       @include('alerts.errorStatus')
                         
-             <!-- @include('alerts.messages') -->
+             @include('alerts.messages')
             
                         <form method="post" action="{{ route('storeuser') }}" autocomplete="off">
                             @csrf
