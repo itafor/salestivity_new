@@ -109,9 +109,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                             <td> First Bank</td>
-                                              <td> 0975432321</td>
-                                               <td> Itafor Francis</td>
+                                             <td> Access(Diamond) Bank plc</td>
+                                              <td>  0044102222</td>
+                                               <td> Digitalweb Application Development Limited</td>
                                                 <td id="plan_name"></td>
                                                  <td id="plan_price"></td>
                                                   <td id="number_of_subusers"></td>
