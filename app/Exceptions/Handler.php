@@ -51,9 +51,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
            
     }elseif ($exception) {
-        // return redirect()->route('non.http.errors');
-        return parent::render($request, $exception);
-        
+        return redirect()->route('non.http.errors');
         
     }
     
