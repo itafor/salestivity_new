@@ -45,7 +45,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($allusers->isEmpty())
+                                    @if(count($allusers) <=0)
                                         <tr>
                                             <td colspan="8" style="text-align: center">
                                                 <h3>No data available</h3>
@@ -118,11 +118,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer py-4">
-                            <nav class="d-flex justify-content-end" aria-label="...">
-                                {{ $allusers->links() }}
-                            </nav>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

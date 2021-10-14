@@ -193,8 +193,8 @@ class UserController extends Controller
         $userId = \getActiveGuardType()->main_acct_id;
         // dd($userId);
         
-        $allUsers = SubUser::where('main_acct_id', '=', $userId);
-        return view('users.index', ['allusers' => $allUsers->paginate(15)]);
+        $allUsers = SubUser::where('main_acct_id', '=', $userId)->get();
+        return view('users.index', ['allusers' => $allUsers]);
     }
     
     public function createsubuser()
@@ -232,18 +232,18 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator);
         }
        
-       $validate_Level = $this->validateLevel($request->report, $request->level);
-       if($validate_Level){
-        return $validate_Level;
-       }
+       // $validate_Level = $this->validateLevel($request->report, $request->level);
+       // if($validate_Level){
+       //  return $validate_Level;
+       // }
 
        if(usersCount() >= activeSubscription()['plan']->number_of_subusers){
         return back()->withFail(' You are on '.activeSubscription()['plan']->name.' plan. You can only manage '.activeSubscription()['plan']->number_of_subusers.' users.');
        }
 
             $user = new SubUser;
-            $user->name = $request->name;
-            $user->last_name = $request->last_name;
+            $user->name = isset($input['name']) ? ucfirst($input['name']) : null ;
+            $user->last_name = isset($input['last_name']) ? ucfirst($input['last_name']) : null;
             $user->created_by = $guard_object->created_by;
             $user->user_type = $guard_object->user_type;
             $user->email = $request->email;
@@ -299,8 +299,8 @@ class UserController extends Controller
         return $validate_Level;
        }
 
-        $user->name = $request->input('name');
-        $user->last_name = $request->input('last_name');
+        $user->name = isset($request->name) ? ucfirst($request->name) : null;
+        $user->last_name = isset($request->last_name) ? ucfirst($request->last_name) : null;
         $user->email = $request->input('email');
         $user->role_id = $request->input('role_id');
         $user->level = $request->input('level');

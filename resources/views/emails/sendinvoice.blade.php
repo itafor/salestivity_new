@@ -124,7 +124,7 @@
 
 <div class="card">
 <div class="card-body">
-    <div class="row" style="float: right;">
+    <div class="row">
     @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif

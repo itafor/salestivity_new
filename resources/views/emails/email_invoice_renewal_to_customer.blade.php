@@ -124,7 +124,7 @@ text-align: left;
 <div class="card">
 
 <div class="card-body">
-<div class="row" style="float: right;">
+<div class="row">
 @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif

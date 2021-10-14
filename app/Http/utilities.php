@@ -210,15 +210,22 @@ function mySubUsers()
 function addMainAccountOwnerToSubUser()
 {
     if (getActiveGuardType()->user_type == 'users') {
-        $emailExist = SubUser::where('email', authUser()->email)->first();
-        if (!$emailExist) {
+        $main_user = SubUser::where('email', authUser()->email)->first();
+        if (!$main_user) {
             $user = new SubUser;
             $user->name = authUser()->name;
             $user->last_name = authUser()->last_name;
             $user->email = authUser()->email;
             $user->main_acct_id = authUser()->id;
+            $user->role_id = 1;
             $user->password = Hash::make('password1xxx');
             $user->save();
+        }else{
+            $main_user->role_id = 1;
+            $main_user->created_by = getActiveGuardType()->created_by;
+            $main_user->user_type = getActiveGuardType()->user_type;
+            $main_user->save();
+
         }
     }
 }
