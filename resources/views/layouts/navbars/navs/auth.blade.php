@@ -11,7 +11,11 @@
         
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex right">
-               
+               @if(auth()->user()->role_id == 1)
+             <span class="text-white" style="font-size: 14px;">
+            You are on  {{activeSubscription()['plan']->name}} plan. You can only manage {{activeSubscription()['plan']->number_of_subusers}} users and {{activeSubscription()['plan']->number_of_accounts}} accounts.  <a href="{{route('subcription.plans')}}" class="text-white">Upgrade Now</a>
+           </span>
+           @endif
             <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
