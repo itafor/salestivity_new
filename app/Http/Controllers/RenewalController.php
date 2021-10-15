@@ -55,9 +55,8 @@ class RenewalController extends Controller
     {
         $data['renewals'] = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Partly paid'],
-        ])->orWhere('status', 'Pending')
-        ->select('renewals.*', DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date) AS remainingDays'))->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+            ['status', '!=', 'Paid'],
+        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
         // dd($data['renewals']);
         return view('billing.renewal.index', $data);
     }
@@ -100,9 +99,8 @@ class RenewalController extends Controller
        case 'outstanding':
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Partly paid'],
-        ])->orWhere('status', 'Pending')
-          ->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+            ['status', '!=', 'Paid'],
+        ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.outstanding', compact('renewals'));
                 
                 break;

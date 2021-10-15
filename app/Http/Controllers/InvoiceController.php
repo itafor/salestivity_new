@@ -46,9 +46,8 @@ class InvoiceController extends Controller
     {
         $data['invoices'] = Invoice::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Pending'],
-        ])->orWhere('status', 'partly Paid')
-        ->orderBy('due_date', 'asc')->with(['customers','prod'])->get();
+            ['status', '!=', 'Paid'],
+        ])->orderBy('due_date', 'asc')->with(['customers','prod'])->get();
 
 
         return view('billing.invoice.index', $data);
@@ -86,9 +85,8 @@ class InvoiceController extends Controller
         case 'outstanding':
                $data['invoices'] = Invoice::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'partly Paid']
-        ])->orWhere('status', 'Pending')
-          ->orderBy('due_date', 'asc')->with(['customers','prod'])->get();
+            ['status', '!=', 'Paid'],
+        ])->orderBy('due_date', 'asc')->with(['customers','prod'])->get();
 
         return view('billing.invoice.outstanding', $data);
               break;
