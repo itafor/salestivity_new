@@ -83,7 +83,13 @@
 #rental_table .rent_title{
   width: 150px;
 }
+.logo_name{
+    float: right;
+}
 
+.receipt_title{
+    float: left;
+}
     
     @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td {
@@ -140,7 +146,7 @@
                 </td>
             </tr>
         </table>
-
+<div class="logo_name">
                   @if(isset($renewal))
 <img class="card-img-top" src="{{ $renewal && $renewal->user ? $renewal->user->company_logo_url : ""}}" alt="company logo" style="margin: auto; height: 140px; width: 150px;  align-content: center;">
 <br>
@@ -149,7 +155,7 @@
 @if(isset($renewal->user))
 <p>{{getCompanyName($renewal->user) }}</p>
 @endif
-
+</div>
 <table>
       <tr>
         <td colspan="2">
@@ -162,12 +168,15 @@
         </td>
     </tr>
 </table>
+<div class="row receipt_title">
+
  <div class="col-4" style="float: left;">
               <h3 >Receipt</h3>
           </div>
-          <div class="col-8" style="float: right;">
+          <div class="col-8" style="float: right; margin-left: 400px;">
             <b>Invoiced to:</b> {{$renewal->customer->name}}
           </div>
+      </div>
       <table class="table table-bordered" id="rental_table">
            @if(isset($renewal))
                     <tbody>

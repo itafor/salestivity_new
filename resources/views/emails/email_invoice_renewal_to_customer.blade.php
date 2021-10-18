@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Managed Hosting Invoice</title>
-
+ 
 <style>
 .invoice-box {
 max-width: 800px;
@@ -84,6 +84,13 @@ padding: 8px;
 width: 150px;
 }
 
+.logo_name{
+	float: right;
+}
+
+.receipt_title{
+	float: left;
+}
 
 @media only screen and (max-width: 600px) {
 .invoice-box table tr.top table td {
@@ -124,7 +131,7 @@ text-align: left;
 <div class="card">
 
 <div class="card-body">
-<div class="row">
+	<div class="logo_name">
 @if(isset($renewal->user) && $renewal->user->company_logo_url !='')
 <img class="card-img-top" src="{{$renewal->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif
@@ -152,7 +159,7 @@ Please click the button below to confirm receipt of this invoice.<br>
 <button type="button" class="btn btn-sm btn-success"> Confirm Invoice Receipt</button>
 </a>
 </p>--}}
-<div class="row">
+<div class="receipt_title">
 <div class="col-4" style="float: left;">
               <h3>Managed Hosting Invoice</h3>
           </div>
@@ -247,7 +254,8 @@ Please click the button below to confirm receipt of this invoice.<br>
 @endif
 </table>
 
-
+<br>
+<br>
 <h2>Important Domain Expiration Information</h2>
 <p>
 Please note after the due date your domain name, website alongside emails and other services will stop working. Please endeavour to make payments before this date to avoid service interruptions.

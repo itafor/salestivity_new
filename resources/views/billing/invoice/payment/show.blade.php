@@ -1,5 +1,5 @@
 <div class="col-8">
-	<h2 class="mb-0">{{ __('Payments History') }}</h2>
+	<h2 class="mb-0">{{ __('Payment History') }}</h2>
 </div>
 					
 <div class="table-responsive">
@@ -12,6 +12,7 @@
                 <th scope="col">{{ __('Amount Paid') }}</th>
                 <th scope="col">{{ __('Outstanding') }}</th>
                 <th scope="col">{{ __('Payment Date') }}</th>
+                <th scope="col">{{ __('Action') }}</th>
                 
             </tr>
         </thead>
@@ -26,6 +27,14 @@
                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($payment->amount_paid,2)}}</td>
                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($payment->billingbalance,2)}}</td>
                     <td>{{ date("jS F, Y", strtotime($payment->payment_date)) }}</td>
+                      <td>
+                      <div class="col-4 text-right">
+                        <a onclick="return confirm('Are you sure?')" href="{{ route('resend.invoice.payment.receipt', [$payment->id]) }}" class="btn btn-sm btn-success" title="Resend Payment Receipt">Resend Receipt</a>
+
+                       {{--<a  href="{{ route('download.invoice.payment.receipt', [$payment->id]) }}" class="btn btn-sm btn-success" title="Resend Payment Receipt">Download Receipt</a>--}}
+                      
+                    </div>
+                </td>
               </tr>                 
                 @endforeach      
             @else
@@ -38,6 +47,7 @@
             </button>
         </a>
                 </td>
+              
             </tr>
             @endif
         </tbody>

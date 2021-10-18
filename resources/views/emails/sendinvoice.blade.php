@@ -84,6 +84,14 @@
   width: 150px;
 }
 
+
+.logo_name{
+    float: right;
+}
+
+.receipt_title{
+    float: left;
+}
     
     @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td {
@@ -124,7 +132,7 @@
 
 <div class="card">
 <div class="card-body">
-    <div class="row">
+    <div style="float: right;">
     @if(isset($invoice->user) && $invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
 @endif
@@ -147,7 +155,7 @@ Find below the details of the invoice.
 </a>
 </p>--}}
 
-<div class="row">
+<div style="float: left;">
 <div class="col-4" style="float: left;">
               <h3>Managed Hosting Invoice</h3>
           </div>
@@ -239,15 +247,24 @@ Find below the details of the invoice.
     <tbody>
 <tr>
 <td style="width: 150px;"><b>{{ __('Payment Due') }}</b></td>
-<td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($invoice->payment_due,2) }}
+<td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}
+   
+    @if($invoice->status =='Partly paid')
+    {{ number_format($invoice->billingBalance,2) }}
+    @else
+    {{ number_format($invoice->payment_due ? $invoice->payment_due : $invoice->billingBalance,2) }}
+    @endif
+
 </td>
 </tr>
+
 <tr>
 <td style="width: 150px;"><b>{{ __('Due Date') }}</b></td>
 <td>{{ date("jS F, Y", strtotime($invoice->due_date)) }}</td>           
 </tr>
 </tbody>
 </table>
+<br>
 <h4>Terms and conditions</h4>
 <p>{!! $invoice->term_condition !!}</p>
 <p>Thank you for your continuous patronage.</p>

@@ -84,6 +84,13 @@
   width: 150px;
 }
 
+.logo_name{
+  float: right;
+}
+
+.receipt_title{
+  }
+
     
     @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td {
@@ -125,6 +132,7 @@
                 <td colspan="2">
                     <table>
                         <tr>
+<div class="logo_name">
                        
             @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
 <img class="card-img-top" src="{{$paid_invoice->invoice->user->company_logo_url}}" alt="company logo" style="margin: auto; height: 140px; width: 150px; align-content: center;">
@@ -134,7 +142,7 @@
 @if(isset($paid_invoice->invoice->user))
 <p>{{getCompanyName($paid_invoice->invoice->user) }}</p>
 @endif
-                            
+</div>                     
                             
                            
                         </tr>

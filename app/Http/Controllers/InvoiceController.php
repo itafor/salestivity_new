@@ -566,4 +566,34 @@ class InvoiceController extends Controller
         $invoice->bill_status = 'Sent';
         $invoice->save();
     }
+
+    public function resendInvoicePaymentReceipt($invoice_payment_id)
+    {
+        $paid_invoice =InvoicePayment::where('id', $invoice_payment_id)->first();
+
+         $toEmail = $paid_invoice->customer->email;
+            if ($toEmail) {
+                Mail::to($toEmail)->queue(new InvoicePaid($paid_invoice));
+            }
+
+        Alert::success('Resend Invoice Payment', 'Invoice payment receipt resent.');
+        return back();// redirect()->route('billing.renewal.show',$renewal_payment->renewal->id);
+    }
+
+    public function downloadInvoicePaymentReceipt($invoice_payment_id){
+        $paid_invoice = InvoicePayment::where('id', $invoice_payment_id)->first();
+        if($paid_invoice){
+       $pdf = PDF::loadView('emails.invoicePaid', [
+            'paid_invoice' => $paid_invoice
+            ]);
+
+    dd($paid_invoice);
+
+
+        $documentName = 'paymentConfirmation_'.$paid_invoice->id.'.pdf';
+
+
+      return $pdf->download($documentName);
+  }
+   }
 }

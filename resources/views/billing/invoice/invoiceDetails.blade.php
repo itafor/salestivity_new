@@ -70,7 +70,7 @@
             </button>
         </a>
 
-         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-success">{{ __('Resend Invoice') }}</button></a>
+         <a onclick="return confirm_invoice_payment_resend()" href="{{route('invoice.payment.resend',[$invoice->id])}}"><button class="btn btn-sm btn-success" {{$invoice->status == 'Paid' ? 'disabled' : ''}}>{{ __('Resend Invoice') }}</button></a>
             </div>
             @endif
                         </div>

@@ -163,6 +163,9 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('confirm/invoice/{id}', 'InvoiceController@changeInvoiceBillStatusToConfirmed')->name('invoice.bill.status.confirm');
     Route::get('send/invoice/{id}', 'InvoiceController@changeInvoiceBillStatusToSent')->name('invoice.bill.status.sent');
 
+    Route::get('resend/invoice-payment/receipt/{id}', 'InvoiceController@resendInvoicePaymentReceipt')->name('resend.invoice.payment.receipt');
+    Route::get('download/invoice-payment/receipt/{id}', 'InvoiceController@downloadInvoicePaymentReceipt')->name('download.invoice.payment.receipt');
+
     // Renewal
     Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
     Route::get('billing/renewal/new', ['as' => 'billing.renewal.create', 'uses' => 'RenewalController@create']);
