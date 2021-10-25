@@ -45,7 +45,7 @@ class SubscriptionsController extends Controller
 
        $sub = Subscription::upgradePlan($data);
        if($sub){
-        return back()->withSuccess('Plan upgrade request submitted successfully. Currenly pending for approval.');
+        return back()->withSuccess('Plan upgrade request submitted successfully. Currently pending for approval.');
 
     }else{
         return back()->withFail('Something went wrong! Try again later');

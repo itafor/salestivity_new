@@ -116,7 +116,7 @@
                                     {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of  {{getCompanyName($subUser->parent_user)}} has created an account for you on Salestivity.
                                 </p>
                                 <p>
-                               Please click the button below to verify your email address. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{getCompanyName($subUser->parent_user)}}
+                              Please click the button below to verify your email address then log in with your email address and password as password. Be sure to update your password once you log in. Please ignore this mail if you are unfamiliar with {{$subUser->parent_user ? $subUser->parent_user->name : 'N/A' }} of {{getCompanyName($subUser->parent_user)}}
                                 <br>
                                 <br>
                             </p>
