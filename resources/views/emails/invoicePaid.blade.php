@@ -127,11 +127,7 @@
 
 <body>
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
-            <tr class="top">
-                <td colspan="2">
-                    <table>
-                        <tr>
+
 <div class="logo_name">
                        
             @if(isset($paid_invoice->invoice->user) && $paid_invoice->invoice->user->company_logo_url !='')
@@ -145,10 +141,7 @@
 </div>                     
                             
                            
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+        <table cellpadding="0" cellspacing="0">
             
             <tr class="information">
                 <td colspan="2">

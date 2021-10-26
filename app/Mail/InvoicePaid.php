@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use PDF;
 
 class InvoicePaid extends Mailable
 {
@@ -35,10 +36,17 @@ class InvoicePaid extends Mailable
          
         whatsappNotification('14157386170', '2347065907948', strip_tags($text));
 
+         $pdf = PDF::loadView('emails.invoicePaid', [
+            'paid_invoice' => isset($this->paid_invoice) ? $this->paid_invoice : null
+            ]);
+
+        $documentName = 'paymentConfirmation_'.$this->paid_invoice->id.'.pdf';
+
         return $this->view('emails.invoicePaid')
          ->from('notifications@salestivtity.com', getMailFromName($this->paid_invoice->invoice))
          ->replyTo(getReplyToEmailAddress($this->paid_invoice->invoice))
         ->subject('Confirmation of Payment')
+        ->attachData($pdf->output(), $documentName)
         ->cc(getUserCCEmailAddress($this->paid_invoice->invoice));
     }
 }
