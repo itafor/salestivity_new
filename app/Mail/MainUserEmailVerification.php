@@ -12,14 +12,17 @@ class MainUserEmailVerification extends Mailable
     use Queueable, SerializesModels;
 
      public $user;
+    public $user_type;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $userType)
     {
          $this->user = $user;
+         $this->user_type = $userType;
     }
 
     /**

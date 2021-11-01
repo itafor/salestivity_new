@@ -68,29 +68,26 @@ class UserController extends Controller
    
 }
 
- public function emailverified()
+ public function emailverified($userId, $userType)
     {
 
-      if(getActiveGuardType() == null){
-        return 'Please login first to verify your email';
-      }else{
-        if(getActiveGuardType()->user_type == 'users'){
+      if($userId && $userType){
+      
+        if($userType == 'users'){
        
-        $userId = Auth::User()->id;
         $user = User::where('id',$userId)->first();
         $user->email_verified_at = Carbon::now();
         $user->save();
-        // dd($user);
 
-        return redirect()->route('home');
-        }elseif (getActiveGuardType()->user_type == 'sub_users') {
-       $subuserId = Auth::guard('sub_user')->user()->id;
+        return redirect()->route('login')->withSuccess('Your email has been verified, Please login');
+       
+        }elseif ($userType == 'sub_users') {
       
-        $subuser = SubUser::where('id',$subuserId)->first();
+        $subuser = SubUser::where('id',$userId)->first();
         $subuser->email_verified_at = Carbon::now();
         $subuser->save();
 
-        return redirect()->route('home');
+        return redirect()->route('login')->withSuccess('Your email has been verified, Please login');
     }
 }
 }
@@ -258,8 +255,9 @@ class UserController extends Controller
             $user->save();
 
             $toEmail = $user->email;
-            
-          Mail::to($toEmail)->queue(new SendSubuserEmailVerificationLink($user));
+            $user_type = 'sub_users';
+
+          Mail::to($toEmail)->queue(new SendSubuserEmailVerificationLink($user, $user_type));
 
             Alert::success('User','User successfully created.');
             return redirect()->route('allSubUsers');

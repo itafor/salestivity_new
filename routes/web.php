@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 // });
 
     Route::get('/something-went-wrong', 'HomeController@displayNonHttpErrors')->name('non.http.errors');
-    Route::get('email-verified', 'UserController@emailverified')->name('email.verified');
+    Route::get('email-verified/{userId}/{user_type}', 'UserController@emailverified')->name('email.verified');
 
 Auth::routes(['verify' => true]);
 
