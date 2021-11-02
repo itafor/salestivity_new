@@ -47,8 +47,9 @@ class UserController extends Controller
              $user =  Auth::user();
 
        $toEmail = $user->email;
+         $user_type = 'users';
 
-      Mail::to($toEmail)->send(new MainUserEmailVerification($user));
+      Mail::to($toEmail)->send(new MainUserEmailVerification($user, $user_type));
 
       session(['emailResentToUser' => 'resentToMainuser']);
 
@@ -58,8 +59,9 @@ class UserController extends Controller
            $subuser =  Auth::guard('sub_user')->user();
 
        $toEmail = $subuser->email;
+       $user_type = 'sub_users';
 
-      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($subuser));
+      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($subuser, $user_type));
 
       session(['emailResent' => 'resentToSubuser']);
 
