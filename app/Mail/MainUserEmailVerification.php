@@ -33,7 +33,7 @@ class MainUserEmailVerification extends Mailable
     public function build()
     {
         return $this->view('emails.mainEmailVerificationlink')
-        ->from('noreply@salestivity.com', 'Salestivity')
+        ->from('notifications@salestivtity.com', 'Salestivity')
         ->subject('Verify your email');
     }
 }

@@ -104,7 +104,7 @@ class RegisterController extends Controller
          $toEmail = $user->email;
          $user_type = 'users';
          
-          Mail::to($toEmail)->send(new MainUserEmailVerification($user, $user_type));// send this user email verification link
+          Mail::to($toEmail)->queue(new MainUserEmailVerification($user, $user_type));// send this user email verification link
           // Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($user));// send this user email verification link
 
         $this->guard()->login($user);
