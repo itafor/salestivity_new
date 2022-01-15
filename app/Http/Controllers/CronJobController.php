@@ -128,9 +128,9 @@ public static function notifyCustomer($renewal){
         $discountedPrice = ($discountValue / 100) * $renewal->productPrice;
         $finalPrice = $renewal->productPrice - $discountedPrice;
 
-        $data['first_duration'] = 60; // $renewal->duration->first_duration;
-        $data['second_duration'] = 30; //$renewal->duration->second_duration;
-        $data['third_duration'] = 7;  //$renewal->duration->third_duration;
+         $data['first_duration'] = $renewal->duration ? $renewal->duration->first_duration : 60;
+        $data['second_duration'] = $renewal->duration ? $renewal->duration->second_duration : 30;
+        $data['third_duration'] = $renewal->duration ? $renewal->duration->third_duration : 7;
 
         $new_renewal = new Renewal();
         $new_renewal->main_acct_id = $renewal->main_acct_id;

@@ -100,6 +100,9 @@
 
     <script>
         var baseUrl = '{{url("/")}}';
+        
+var product_categories = <?php echo json_encode(isset($categories) ? $categories : ''); ?>;
+
     </script>
 
     </head>
