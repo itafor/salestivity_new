@@ -64,7 +64,9 @@ $("#addMoreProduct").click(function (e) {
             rowId +
             '][sub_category_id]"  class="form-control sub_category_id' +
             rowId +
-            '" required>' +
+            '"  id="sub_category_id' +
+            rowId +
+            '" onchange="getProducts('+rowId+')" required>' +
             '<option value="">Select Sub Category</option>' +
             
             "</select>" +
@@ -78,11 +80,11 @@ $("#addMoreProduct").click(function (e) {
             rowId +
             '][product_id]"  class="form-control product_id' +
             rowId +
-            '" required>' +
-            '<option value="">Select title</option>' +
-            '<option value="Mr.">Mr.</option>' +
-            '<option value="Mrs.">Mrs.</option>' +
-            '<option value="Miss">Miss</option>' +
+            '" id="product_id' +
+            rowId +
+            '"  onchange="getProductCost('+rowId+')" required>' +
+            '<option value="">Select a product</option>' +
+           
             "</select>" +
             "</div>" +
             "</div>" +
@@ -94,7 +96,9 @@ $("#addMoreProduct").click(function (e) {
             rowId +
             '][product_cost]"  class="form-control product_cost' +
             rowId +
-            '" required>' +
+            '"  id="product_cost' +
+            rowId +
+            '"  placeholder="Product Cost" readonly required>' +
            
            
             "</div>" +
@@ -123,39 +127,91 @@ $("#product_container_id").on("click", ".remove_product", function (e) {
 
 
 
-
+//auto populate subcategories when a category is selected
 function getProductSubcategories(row_id){
-    // alert(row_id);
 
     $("#product_container_id").on("change", "#category_id"+row_id, function (e) {
     e.preventDefault();
      var category = $(this).val();
-    alert(category)
+    if (category) {
+        $(".sub_category_id"+row_id).empty();
+        $("<option>").val("").text("Loading...").appendTo(".sub_category_id"+row_id);
+        $.ajax({
+            url: baseUrl + "/get-product-subcategory/" + category,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $(".sub_category_id"+row_id).empty();
+                $("<option>")
+                    .val("")
+                    .text("Select Product Sub Category")
+                    .appendTo(".sub_category_id"+row_id);
+                $.each(data.prod_sub_categories, function (k, v) {
+                    $("<option>")
+                        .val(v.id)
+                        .text(v.name)
+                        .appendTo(".sub_category_id"+row_id);
+                });
+            },
+        });
+    }
+
 });
-// $("#category_id1").change(function () {
-//     var category = $(this).val();
-//     alert(category)
-    // if (category) {
-    //     $("#sub_category_id").empty();
-    //     $("<option>").val("").text("Loading...").appendTo("#sub_category_id");
-    //     $.ajax({
-    //         url: baseUrl + "/get-product-subcategory/" + category,
-    //         type: "GET",
-    //         dataType: "json",
-    //         success: function (data) {
-    //             $("#sub_category_id").empty();
-    //             $("<option>")
-    //                 .val("")
-    //                 .text("Select Product Sub Category")
-    //                 .appendTo("#sub_category_id");
-    //             $.each(data.prod_sub_categories, function (k, v) {
-    //                 $("<option>")
-    //                     .val(v.id)
-    //                     .text(v.name)
-    //                     .appendTo("#sub_category_id");
-    //             });
-    //         },
-    //     });
-    // }
-// });
+
 }
+
+//auto populate products  when a subcategory is selected
+function getProducts(row_id){
+      $("#product_container_id").on("change", "#sub_category_id"+row_id, function (e) {
+    e.preventDefault();
+     var sub_category_id = $(this).val();
+        if (sub_category_id) {
+        $("#product_id"+row_id).empty();
+        $("<option>").val("").text("Loading...").appendTo("#product_id"+row_id);
+        $.ajax({
+            url: baseUrl + "/get-product-by-subcategoryid/" + sub_category_id,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $("#product_id"+row_id).empty();
+                $("<option>")
+                    .val("")
+                    .text("Select Product")
+                    .appendTo("#product_id"+row_id);
+                $.each(data.products, function (k, v) {
+                    $("<option>")
+                        .val(v.id)
+                        .text(v.name)
+                        .appendTo("#product_id"+row_id);
+                });
+            },
+        });
+    }
+        });
+
+    }
+
+    function getProductCost(row_id){
+        $("#product_container_id").on("change", "#product_id"+row_id, function (e) {
+    e.preventDefault();
+    var product_id = $(this).val();
+         if (product_id != "" && !isNaN(parseFloat(product_id))) {
+        $.ajax({
+            url: baseUrl + "/fetch-product-price/" + product_id,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log(data.products.standard_price);
+                
+                $("#product_cost"+row_id).empty();
+                $("#product_cost"+row_id).val(data.products.standard_price.toFixed(2));
+                
+            },
+        });
+    } 
+
+            });
+
+    }
+
+

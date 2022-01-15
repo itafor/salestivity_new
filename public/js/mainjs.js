@@ -206,54 +206,54 @@ $("#input-dept").change(function () {
 });
 
 //Auto fill product price when a product has been picked
-let product_price = 0;
-let billinga_amount = 0;
-$("#product_id").change(function () {
-    var product_id = $(this).val();
-    $("#discount").val("");
+// let product_price = 0;
+// let billinga_amount = 0;
+// $("#product_id").change(function () {
+//     var product_id = $(this).val();
+//     $("#discount").val("");
 
-    if (product_id != "" && !isNaN(parseFloat(product_id))) {
-        $.ajax({
-            url: baseUrl + "/fetch-product-price/" + product_id,
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                // console.log(data);
-                if (data.category == "") {
-                    $("#renewal_description").val("");
-                }
-                $("#productPrice").empty();
-                product_price = data.products.standard_price;
-                $("#productPrice").val(data.products.standard_price.toFixed(2));
-                $("#billingAmount").val(
-                    data.products.standard_price.toFixed(2)
-                );
-                 $("#payment_due").val(
-                    data.products.standard_price.toFixed(2)
-                );
-                $("#renewal_description").val(
-                    data.category + ", " + data.subcategory
-                );
-                billinga_amount = data.products.standard_price.toFixed(2);
-                $('.currency').empty();
-                $('.currency').append("(" + data.currency + ")");
+//     if (product_id != "" && !isNaN(parseFloat(product_id))) {
+//         $.ajax({
+//             url: baseUrl + "/fetch-product-price/" + product_id,
+//             type: "GET",
+//             dataType: "json",
+//             success: function (data) {
+//                 // console.log(data);
+//                 if (data.category == "") {
+//                     $("#renewal_description").val("");
+//                 }
+//                 $("#productPrice").empty();
+//                 product_price = data.products.standard_price;
+//                 $("#productPrice").val(data.products.standard_price.toFixed(2));
+//                 $("#billingAmount").val(
+//                     data.products.standard_price.toFixed(2)
+//                 );
+//                  $("#payment_due").val(
+//                     data.products.standard_price.toFixed(2)
+//                 );
+//                 $("#renewal_description").val(
+//                     data.category + ", " + data.subcategory
+//                 );
+//                 billinga_amount = data.products.standard_price.toFixed(2);
+//                 $('.currency').empty();
+//                 $('.currency').append("(" + data.currency + ")");
 
-               $("term_condition").empty();
+//                $("term_condition").empty();
 
-               $("#term_condition").text(data.products.description)
-            },
-        });
-    } else {
-        $("#productPrice").val("");
-        $("#billingAmount").val("");
-        $("#renewal_description").val("");
-        $("#discount").val("");
-        $("term_condition").text("");
+//                $("#term_condition").text(data.products.description)
+//             },
+//         });
+//     } else {
+//         $("#productPrice").val("");
+//         $("#billingAmount").val("");
+//         $("#renewal_description").val("");
+//         $("#discount").val("");
+//         $("term_condition").text("");
 
-        product_price = 0;
-        billinga_amount = 0;
-    }
-});
+//         product_price = 0;
+//         billinga_amount = 0;
+//     }
+// });
 
 $("body").on("keyup", "#discount", function () {
     product_price = $("#productPrice").val();

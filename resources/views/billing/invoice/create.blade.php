@@ -27,12 +27,13 @@
                             @csrf
                             <!-- <input type="hidden" name="status" value="Not Confirmed"> -->
                             <div class="pl-lg-4 pr-lg-4">
+                                 <div id="product_container_id">
                                   <div class="row">
                                 
                                     <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
-                                            <select name="products[112211][category_id]" id="category_id" class="form-control border-input" data-toggle="select">
+                            <select name="products[112211][category_id]" id="category_id112211" class="form-control border-input category_id112211" data-toggle="select" onchange="getProductSubcategories('112211')">
                                                 <option value="">Choose a Category</option>
                                                     @foreach($categories as $category)
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -49,7 +50,7 @@
                                       <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
-                                            <select name="products[112211][sub_category_id]" id="sub_category_id" class="form-control border-input" data-toggle="select">
+                                            <select name="products[112211][sub_category_id]" id="sub_category_id112211" class="form-control border-input sub_category_id112211" onchange="getProducts('112211')" data-toggle="select">
                                                 <option value="">Choose a Sub Category</option>
                                               
                                             </select>     
@@ -65,7 +66,7 @@
                                            <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="product">{{ __('Product') }}</label>
                                 
-                                    <select name="products[112211][product_id]" id="product_id" class="form-control " data-toggle="select">
+                                    <select name="products[112211][product_id]" id="product_id112211" class="form-control product_id112211" data-toggle="select" onchange="getProductCost('112211')">
                                         <option value="">Choose a Product</option>
                                            
                                     </select>
@@ -75,16 +76,16 @@
 
                                    <div class="col-3">
                                       <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
-                                   <label class="form-control-label" for="product">{{ __('Cost') }}</label>
-                                      <input type="number" name="products[112211][product_cost]"  class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }} product_cost" placeholder="{{ __('Product Price') }}" value="{{ old('cost') }}" required >
+                                   <label class="form-control-label" for="product">{{ __('Product Cost') }}</label>
+                                      <input type="number" name="products[112211][product_cost]"  class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }} product_cost" id="product_cost112211" placeholder="{{ __('Product Cost') }}" value="{{ old('cost') }}" readonly required >
                                 </div>  
                                 </div>
 
                                 </div>
 
 
-                               <div style="clear:both"></div>
-                                <div id="product_container_id">
+                               <!-- <div style="clear:both"></div> -->
+                               
                                 </div>   
 
                                    <div class="row">
@@ -120,8 +121,8 @@
                                  <div class="row">
                                     <div class="col-4">
                                          <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="cost">{{ __('Amount') }}</label>
-                                    <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Cost') }}" value="{{ old('cost') }}" required >
+                                    <label class="form-control-label" for="cost">{{ __('Total Cost') }}</label>
+                                    <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Cost') }}" value="{{ old('cost') }}" required >
                                     @if ($errors->has('cost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('cost') }}</strong>
