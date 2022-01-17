@@ -33,7 +33,7 @@ $("#addMoreProduct").click(function (e) {
 
     $("#product_container_id").append(
         "<div>" +
-            '<div style="float:right" class="remove_product"><span style="cursor:pointer" class="btn btn-danger btn-sm" border="2"><i class="fa fa-minus-circle"></i> Remove</span></div>' +
+            '<div style="float:right" class="remove_product" onclick="removeProductCostFromSum('+rowId+')"><span style="cursor:pointer" class="btn btn-danger btn-sm" border="2"><i class="fa fa-minus-circle"></i> Remove</span></div>' +
             '<div style="clear:both"></div>' +
             '<div class="row" id="rowNumber' +
             rowId +
@@ -191,6 +191,9 @@ function getProducts(row_id){
 
     }
 
+ 
+    var product_cost_object = {};
+
     function getProductCost(row_id){
         $("#product_container_id").on("change", "#product_id"+row_id, function (e) {
     e.preventDefault();
@@ -205,6 +208,10 @@ function getProducts(row_id){
                 
                 $("#product_cost"+row_id).empty();
                 $("#product_cost"+row_id).val(data.products.standard_price.toFixed(2));
+
+                product_cost_object[row_id]=data.products.standard_price;
+
+                    SumProductCost(data.products.standard_price);
                 
             },
         });
@@ -214,4 +221,45 @@ function getProducts(row_id){
 
     }
 
+    
+// Sum all selected products costs
+    function SumProductCost(product_cost){
+
+    var total_product_price = obj => Object.values(obj).reduce((a,b)=>a+b);
+
+    $("#productPrice").val('');
+    $("#productPrice").val(total_product_price(product_cost_object));
+  
+
+    var vat =  $("#withholding_tax").val();
+    var wht = $("#value_added_tax").val();
+    
+     calculateVat(vat)
+     
+     calculateWht(wht)
+    }
+
+// Remove selected product cost from total sum and sum the remaining objects values
+function removeProductCostFromSum(row_id)
+{
+
+     var product_price = $('#product_cost'+row_id).val();
+
+        delete product_cost_object[row_id];
+
+         var total_product_price = obj => Object.values(obj).reduce((a,b)=>a+b);
+
+
+    $("#productPrice").val('');
+    $("#productPrice").val(total_product_price(product_cost_object));
+    
+
+    var vat =  $("#withholding_tax").val();
+    var wht = $("#value_added_tax").val();
+    
+     calculateVat(vat)
+    
+     calculateWht(wht)
+
+}
 
