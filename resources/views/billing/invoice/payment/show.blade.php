@@ -6,7 +6,7 @@
     <table class="table align-items-center table-flush">
         <thead>
             <tr>
-                <th scope="col">{{ __('Product') }}</th>
+                <!-- <th scope="col">{{ __('Product') }}</th> -->
                 <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Billing AMT') }}</th>
                 <th scope="col">{{ __('Amount Paid') }}</th>
@@ -20,7 +20,7 @@
             @if($invoice->invoicePayment->count() >=1)
             @foreach($invoice->invoicePayment as $payment)
                 <tr>
-                    <td>{{$payment->product ? $payment->product->name : 'N/A' }}</td>
+                    <!-- <td>{{$payment->product ? $payment->product->name : 'N/A' }}</td> -->
                     <td>{{$payment->status}}</td>
                      
                     <td>{!! $invoice && $invoice->currency ? $invoice->currency->symbol : '&#8358;' !!}{{ number_format($payment->billingAmount,2)}}</td>
@@ -43,7 +43,7 @@
                 <h5>No payment record found</h5> 
             <a onclick="invoice_payment({{$invoice->id}})" >
                 <button class="btn btn-sm btn-primary" >
-            {{ __('Make Payment') }}
+            {{ __('Add Payment') }}
             </button>
         </a>
                 </td>

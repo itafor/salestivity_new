@@ -44,7 +44,7 @@
         @else
                <a onclick="invoice_payment({{$invoice->id}})" >
                 <button class="btn btn-sm btn-primary" >
-            {{ __('Payment') }}
+            {{ __('Add Payment') }}
             </button>
         </a>
 
@@ -239,6 +239,11 @@
                     @endif
                   </table>
                     </div>
+
+                      @if($invoice->invoiceProducts !='')
+                    @include('billing.invoice.products.show_products')
+                      @endif
+
                      @if($invoice->invoicePayment !='')
                     @include('billing.invoice.payment.show')
                       @endif

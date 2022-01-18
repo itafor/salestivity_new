@@ -33,7 +33,7 @@
                                     <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
-                            <select name="products[112211][category_id]" id="category_id112211" class="form-control border-input category_id112211" data-toggle="select" onchange="getProductSubcategories('112211')">
+                            <select name="products[112211][category_id]" id="category_id112211" class="form-control border-input category_id112211" data-toggle="select" onchange="getProductSubcategories('112211')" required>
                                                 <option value="">Choose a Category</option>
                                                     @foreach($categories as $category)
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -50,7 +50,7 @@
                                       <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
-                                            <select name="products[112211][sub_category_id]" id="sub_category_id112211" class="form-control border-input sub_category_id112211" onchange="getProducts('112211')" data-toggle="select">
+                                            <select name="products[112211][sub_category_id]" id="sub_category_id112211" class="form-control border-input sub_category_id112211" onchange="getProducts('112211')" data-toggle="select" required>
                                                 <option value="">Choose a Sub Category</option>
                                               
                                             </select>     
@@ -62,11 +62,11 @@
                                         </div>
                                     </div>
 
-                                     <div class="col-3">
+                                     <div class="col-xl-3">
                                            <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="product">{{ __('Product') }}</label>
                                 
-                                    <select name="products[112211][product_id]" id="product_id112211" class="form-control product_id112211" data-toggle="select" onchange="getProductCost('112211')">
+                                    <select name="products[112211][product_id]" id="product_id112211" class="form-control product_id112211" data-toggle="select" onchange="getProductCost('112211')" required>
                                         <option value="">Choose a Product</option>
                                            
                                     </select>
@@ -74,7 +74,7 @@
                                 </div>  
                                 </div>
 
-                                   <div class="col-3">
+                                   <div class="col-xl-3">
                                       <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                    <label class="form-control-label" for="product">{{ __('Product Cost') }}</label>
                                       <input type="number" name="products[112211][product_cost]"  class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }} product_cost" id="product_cost112211" placeholder="{{ __('Product Cost') }}" value="{{ old('cost') }}" readonly required >
@@ -90,18 +90,18 @@
 
                                    <div class="row">
                               
-                                <div class="form-group pl-lg-4 pr-lg-4" style="margin-top: 20px;">
+                                <div class="form-group pl-lg-4 pr-lg-4" style="margin-top: 5px;">
                                     <button type="button" id="addMoreProduct" class="btn btn-default btn-sm"><i class="fa fa-plus-circle"></i>  Add More Product</button>
                                 </div> 
                                     
                                 </div>
 
 
-                                <div class="row">
-                          
+                                
 
-                                    <div class="col-12">
-                                            <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }}">
+                                 <div class="row">
+                                     <div class="col-xl-4">
+                                      <div class="form-group{{ $errors->has('customer') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="customer">{{ __('Customer Name') }}</label>
                                  
                                     <select name="customer" id="customer" class="form-control" onchange="myFunction(event)">
@@ -112,14 +112,9 @@
                                     </select>
                                  
                                 </div>
-                                    </div>
-
-                                   
-
                                 </div>
 
-                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-xl-4">
                                          <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="cost">{{ __('Total Cost') }}</label>
                                     <input type="number" name="cost" id="productPrice" class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }}" placeholder="{{ __('Total Cost') }}" value="{{ old('cost') }}" required >
@@ -131,25 +126,11 @@
                                 </div>
                                     </div>
 
-                                           <div class="col-4">
-                                         <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
-                                   <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
-     <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required>
-        <option value="">Choose a Currency</option>
-            @foreach($currencies as $currency)
-                <option value="{{ $currency->id }}" {{$currency->symbol == '&#8358;' ? 'selected' : ''}}>{!! $currency->symbol !!}</option>
-            @endforeach
-    </select>
-                                           
-   @error('currency_id')
-<small class="text-danger">{{$message}}</small>
-@enderror
-                                </div>
-                                    </div>
 
-                                    <div class="col-4">
+
+                                      <div class="col-xl-2">
                                           <div class="form-group{{ $errors->has('discount') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="discount">{{ __('Discount(in %)') }}</label>
+                                    <label class="form-control-label" for="discount">{{ __('Discount (%)') }}</label>
                                     <input type="number" name="discount" id="discount" class="form-control form-control-alternative{{ $errors->has('discount') ? ' is-invalid' : '' }}" placeholder="{{ __('Discount') }}" value="{{ old('discount') }}" >
                                     @if ($errors->has('discount'))
                                         <span class="invalid-feedback" role="alert">
@@ -158,6 +139,24 @@
                                     @endif
                                 </div>
                                     </div>
+
+                                   <div class="col-2">
+                                 <div class="form-group{{ $errors->has('cost') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
+                                <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required>
+                                <option value="">Choose a Currency</option>
+                                @foreach($currencies as $currency)
+                                <option value="{{ $currency->id }}" {{$currency->symbol == '&#8358;' ? 'selected' : ''}}>{!! $currency->symbol !!}</option>
+                                @endforeach
+                                </select>
+                                   
+                                @error('currency_id')
+                                <small class="text-danger">{{$message}}</small>
+                                @enderror
+                                </div>
+                                </div>
+
+                                  
                                 </div>
 
                                   <div class="row">

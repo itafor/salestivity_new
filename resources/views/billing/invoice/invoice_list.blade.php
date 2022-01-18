@@ -14,6 +14,7 @@
 <tr>
     <th scope="col">{{ __('End Date') }}</th>
     <th scope="col">{{ __('Customer') }}</th>
+    <th scope="col">{{ __('Phone Number') }}</th>
     <th scope="col">{{ __('Product') }}</th>
     <th scope="col">{{ __('Amount') }}</th>
     <th scope="col">{{ __('Status') }}</th>
@@ -48,6 +49,7 @@
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
             </td>
             <td>{{ $invoice->customers->name }}</td>
+            <td>{{ $invoice->customers->phone }}</td>
             
            <!--  @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.

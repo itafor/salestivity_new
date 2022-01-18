@@ -51,7 +51,7 @@
       <input type="hidden" name="customer_id" class="form-control" id="customer_id" placeholder="Enter Customer">
    
  
-      <input type="hidden" name="product_id" class="form-control" id="product_id" placeholder="Enter Product">
+      <!-- <input type="hidden" name="product_id" class="form-control" id="product_id" placeholder="Enter Product"> -->
  
   
       <input type="hidden" name="invoice_id" class="form-control" id="invoice_id">

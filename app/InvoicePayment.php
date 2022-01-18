@@ -41,7 +41,7 @@ class InvoicePayment extends Model
 		'billingbalance' =>$data['billingAmount'] - $data['amount_paid'],
 		'payment_date' => Carbon::parse(formatDate($data['payment_date'], 'd/m/Y', 'Y-m-d')),
 		'customer_id' => $data['customer_id'],
-		'product_id' => $data['product_id'],
+		// 'product_id' => $data['product_id'],
     'invoice_id' => $data['invoice_id'],
 		'main_acct_id' => getActiveGuardType()->main_acct_id,
     	]);

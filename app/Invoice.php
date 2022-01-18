@@ -91,4 +91,9 @@ class Invoice extends Model
     {
         return $this->belongsTo('App\CurrencySymbol', 'currency_id','id');
     }
+
+    public function invoiceProducts()
+     {
+        return $this->hasMany(InvoiceProduct::class,'billing_invoice_id','id');
+    }
 }

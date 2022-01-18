@@ -8,6 +8,7 @@ use App\CompanyAccountDetail;
 use App\CompanyEmail;
 use App\CurrencySymbol;
 use App\Customer;
+use App\Http\Services\Billing\BillingInvoiceServices;
 use App\Http\Traits\InvoiceBillStatus;
 use App\Invoice;
 use App\InvoicePayment;
@@ -31,10 +32,12 @@ use Validator;
 class InvoiceController extends Controller
 {
     use InvoiceBillStatus;
+    public $billing_invoice;
   
-    public function __construct()
+    public function __construct(BillingInvoiceServices $billinginvoice)
     {
         $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['homepage','verifySubuserEmail','confirmInvoiceReceipt']);
+        $this->billing_invoice = $billinginvoice;
     }
 
     /**
@@ -158,11 +161,11 @@ class InvoiceController extends Controller
         $rules = [
             
             'customer' => 'required',
-            'product' => 'required',
+            // 'product' => 'required',
             'timeline' => 'required',
             'cost' => 'required',
-            'category_id' => 'required',
-            'sub_category_id' => 'required',
+            // 'category_id' => 'required',
+            // 'sub_category_id' => 'required',
             'company_bank_acc_id' => 'required',
             'due_date' => 'required',
             'currency_id' => 'required',
@@ -226,6 +229,9 @@ class InvoiceController extends Controller
         $invoice->save();
 
         if ($invoice) {
+
+            $this->billing_invoice->storeInvoiceProducts($input, $invoice);
+
             $toEmail = $invoice->customers->email;
 
             Mail::to($toEmail)->queue(new SendInvoice($invoice));
@@ -253,13 +259,14 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id);
         $customers = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $products = Product::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        $invoice_products = $invoice->invoiceProducts;
 
         $maxId = 0;
         $minId = 0;
         $currentId = $id;
        
         
-        return view('billing.invoice.show', compact('invoice', 'maxId', 'minId', 'currentId'));
+        return view('billing.invoice.show', compact('invoice', 'maxId', 'minId', 'currentId', 'invoice_products'));
     }
 
     /**
@@ -365,7 +372,7 @@ class InvoiceController extends Controller
             'amount_paid' => 'required|numeric',
             'billingbalance' => 'required',
             'customer_id' => 'required|numeric',
-            'product_id' => 'required|numeric',
+            // 'product_id' => 'required|numeric',
             'invoice_id' => 'required|numeric',
             'payment_date' => 'required',
         ]);
