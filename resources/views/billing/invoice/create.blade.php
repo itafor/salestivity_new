@@ -346,69 +346,6 @@
         
         @include('layouts.footers.auth')
     </div>
-<script type="text/javascript">
 
-    //Assign billing amount to payment due
-    $("#productPrice").on("keyup", function(){
-      let   productPrice = $(this).val();
-    $("#billingAmount").val(productPrice);
-    $("#payment_due").val(productPrice);
-    $("#discount").val('');
-     $("#withholding_tax").val('');
-    $("#value_added_tax").val('');
-    })
-
-//Assign billing amount to payment due
-    $("#billingAmount").on("keyup", function(){
-      let   billingAmount = $(this).val();
-    $("#payment_due").val(billingAmount);
-    $("#discount").val('');
-    })
-
-    //auto input billing balance when amout paid is entered
-$("body").on("keyup", "#payment_due", function () {
-    let paymentdue = $(this).val();
-    // alert(paymentdue);
-    let balance = 0;
-    let billingAmount = $("#billingAmount").val();
-    if (parseFloat(paymentdue) > parseFloat(billingAmount)) {
-        alert(
-            "Ooops!! Payment due exceed Billing Amount, please check and try again"
-        );
-        
-        $("#payment_due").val("");
-        $("#payment_due").val(billingAmount);
-
-    } else {
-        // $("#payment_due").val(billingAmount);
-    }
-});
-// disallow negative or zero input
-$(document).on("keyup", "#payment_due", function (e) {
-    e.preventDefault();
-    let value = e.target.value;
-    if (value <= 0) {
-        $(this).val("");
-    }
-});
-
-
- $("#value_added_tax").on("keyup", function(){
-      var  vat = $(this).val();
-       calculateVat(vat);
-      
-    })
-
-   $("#withholding_tax").on("keyup", function(){
-      let  wht = $(this).val();
-     
-      calculateWht(wht);
-      
-    })
-
-
-
-
-</script>
  <script src="{{url('js/add_more_products.js')}}"></script>
 @endsection

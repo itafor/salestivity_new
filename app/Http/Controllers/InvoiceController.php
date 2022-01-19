@@ -431,25 +431,34 @@ class InvoiceController extends Controller
     {
         $data['invoice'] = Invoice::find($id);
 
-        $data['categories'] = Category::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->get();
-
+        $userId = \getActiveGuardType()->main_acct_id;
+        $data['currencies'] = CurrencySymbol::all();
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
-        $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+       
+        $data['categories'] = Category::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+        // $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
          
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
-        $data['mail_from_names'] = MailFromName::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->get();
+        $data['mail_from_name'] = User::where([
+                ['id', getActiveGuardType()->main_acct_id],
+        ])->first();
 
          $data['reply_to_emails'] = ReplyToEmail::where([
                 ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
+
+          $data['cc_emails'] = CarbonCopyEmail::where([
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+
+        $data['invoice_products'] = $data['invoice']->invoiceProducts;
 
         return view('billing.invoice.edit', $data);
     }

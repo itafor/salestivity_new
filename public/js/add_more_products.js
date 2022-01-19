@@ -1,4 +1,60 @@
+ //Assign billing amount to payment due
+    $("#productPrice").on("keyup", function(){
+      let   productPrice = $(this).val();
+    $("#billingAmount").val(productPrice);
+    $("#payment_due").val(productPrice);
+    $("#discount").val('');
+     $("#withholding_tax").val('');
+    $("#value_added_tax").val('');
+    })
 
+//Assign billing amount to payment due
+    $("#billingAmount").on("keyup", function(){
+      let   billingAmount = $(this).val();
+    $("#payment_due").val(billingAmount);
+    $("#discount").val('');
+    })
+
+    //auto input billing balance when amout paid is entered
+$("body").on("keyup", "#payment_due", function () {
+    let paymentdue = $(this).val();
+    // alert(paymentdue);
+    let balance = 0;
+    let billingAmount = $("#billingAmount").val();
+    if (parseFloat(paymentdue) > parseFloat(billingAmount)) {
+        alert(
+            "Ooops!! Payment due exceed Billing Amount, please check and try again"
+        );
+        
+        $("#payment_due").val("");
+        $("#payment_due").val(billingAmount);
+
+    } else {
+        // $("#payment_due").val(billingAmount);
+    }
+});
+// disallow negative or zero input
+$(document).on("keyup", "#payment_due", function (e) {
+    e.preventDefault();
+    let value = e.target.value;
+    if (value <= 0) {
+        $(this).val("");
+    }
+});
+
+
+ $("#value_added_tax").on("keyup", function(){
+      var  vat = $(this).val();
+       calculateVat(vat);
+      
+    })
+
+   $("#withholding_tax").on("keyup", function(){
+      let  wht = $(this).val();
+     
+      calculateWht(wht);
+      
+    })
 
 
    function identifier() {
@@ -130,8 +186,22 @@ $("#product_container_id").on("click", ".remove_product", function (e) {
 //auto populate subcategories when a category is selected
 function getProductSubcategories(row_id){
 
+
+
+
     $("#product_container_id").on("change", "#category_id"+row_id, function (e) {
     e.preventDefault();
+
+    $("#product_id"+row_id).empty();
+        $("<option>").val("").text("Select product").appendTo("#product_id"+row_id);
+
+         delete product_cost_object[row_id];
+
+    console.log('new product_cost_object', product_cost_object);
+         $("#product_cost"+row_id).val("");
+
+
+
      var category = $(this).val();
     if (category) {
         $(".sub_category_id"+row_id).empty();
@@ -155,6 +225,7 @@ function getProductSubcategories(row_id){
             },
         });
     }
+         SumProductCost();
 
 });
 
@@ -204,14 +275,14 @@ function getProducts(row_id){
             type: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data.products.standard_price);
                 
                 $("#product_cost"+row_id).empty();
                 $("#product_cost"+row_id).val(data.products.standard_price.toFixed(2));
 
                 product_cost_object[row_id]=data.products.standard_price;
+                console.log('product_cost_object', product_cost_object);
 
-                    SumProductCost(data.products.standard_price);
+                    SumProductCost();
                 
             },
         });
@@ -223,7 +294,7 @@ function getProducts(row_id){
 
     
 // Sum all selected products costs
-    function SumProductCost(product_cost){
+    function SumProductCost(){
 
     var total_product_price = obj => Object.values(obj).reduce((a,b)=>a+b);
 
@@ -247,6 +318,9 @@ function removeProductCostFromSum(row_id)
 
         delete product_cost_object[row_id];
 
+    console.log('new product_cost_object', product_cost_object);
+
+
          var total_product_price = obj => Object.values(obj).reduce((a,b)=>a+b);
 
 
@@ -262,4 +336,5 @@ function removeProductCostFromSum(row_id)
      calculateWht(wht)
 
 }
+
 
