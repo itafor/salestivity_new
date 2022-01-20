@@ -23,11 +23,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('billing.invoice.store') }}" autocomplete="off">
+                        <form method="post" action="{{ route('billing.invoice.update') }}" autocomplete="off">
                             @csrf
                             <!-- <input type="hidden" name="status" value="Not Confirmed"> -->
                             <div class="pl-lg-4 pr-lg-4">
                                  <div id="product_container_id">
+                                    <input type="hidden" name="invoiceproductLenght" value="{{count($invoice_products)}}" id="invoiceproductLenght">
                                  @if(isset($invoice_products))
                                    @foreach ($invoice_products as $key => $invoiceproduct)
                                   <div class="row">
@@ -35,7 +36,7 @@
                                     <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="category_id">{{ __('Category') }}</label>   
-                            <select name="products[{{$key}}][category_id]" id="category_id{{$key}}" class="form-control border-input category_id{{$key}}" data-toggle="select" onchange="getProductSubcategories('{{$key}}')" required>
+                            <select name="editableproducts[{{$key}}][category_id]" id="category_id{{$key}}" class="form-control border-input category_id{{$key}}" data-toggle="select" onchange="getProductSubcategories('{{$key}}')" required>
                                                 <option value="">Choose a Category</option>
                                                
                                                     @foreach($categories as $category)
@@ -53,7 +54,7 @@
                                       <div class="col-xl-3">
                                         <div class="form-group{{ $errors->has('sub_category_id') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="product">{{ __('Sub Category') }}</label>
-                                            <select name="products[{{$key}}][sub_category_id]" id="sub_category_id{{$key}}" class="form-control border-input sub_category_id{{$key}}" onchange="getProducts('{{$key}}')" data-toggle="select" required>
+                                            <select name="editableproducts[{{$key}}][sub_category_id]" id="sub_category_id{{$key}}" class="form-control border-input sub_category_id{{$key}}" onchange="getProducts('{{$key}}')" data-toggle="select" required>
                                                 <option value="{{$invoiceproduct->product ? $invoiceproduct->product->sub_category->id : '' }}" selected>{{$invoiceproduct->product ? $invoiceproduct->product->sub_category->name : '' }}</option>
                                               
                                             </select>     
@@ -69,7 +70,7 @@
                                            <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                   <label class="form-control-label" for="product">{{ __('Product') }}</label>
                                 
-                                    <select name="products[{{$key}}][product_id]" id="product_id{{$key}}" class="form-control product_id{{$key}}" data-toggle="select" onchange="getProductCost('{{$key}}')" required>
+                                    <select name="editableproducts[{{$key}}][product_id]" id="product_id{{$key}}" class="form-control product_id{{$key}}" data-toggle="select" onchange="getProductCost('{{$key}}')" required>
                                         <option selected value="{{$invoiceproduct->product ? $invoiceproduct->product->id : '' }}">{{$invoiceproduct->product ? $invoiceproduct->product->name : '' }}</option>
                                            
                                     </select>
@@ -80,7 +81,7 @@
                                    <div class="col-xl-3">
                                       <div class="form-group{{ $errors->has('product') ? ' has-danger' : '' }}">
                                    <label class="form-control-label" for="product">{{ __('Product Cost') }}</label>
-                                      <input type="number" name="products[{{$key}}][product_cost]"  class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }} product_cost" id="product_cost{{$key}}" placeholder="{{ __('Product Cost') }}" value="{{$invoiceproduct->product ? $invoiceproduct->product->standard_price : '' }}" readonly required >
+                                      <input type="number" name="editableproducts[{{$key}}][product_cost]"  class="form-control form-control-alternative{{ $errors->has('cost') ? ' is-invalid' : '' }} product_cost" id="product_cost{{$key}}" placeholder="{{ __('Product Cost') }}" value="{{$invoiceproduct->product ? $invoiceproduct->product->standard_price : '' }}" readonly required >
                                 </div>  
                                 </div>
 
@@ -99,9 +100,6 @@
                                 </div> 
                                     
                                 </div>
-
-
-                                
 
                                  <div class="row">
                                      <div class="col-xl-4">
@@ -180,7 +178,7 @@
       <div class="col-xl-6">
         <div class="form-group{{ $errors->has('withholding_tax') ? ' has-danger' : '' }}">
             <label class="form-control-label" for="product">{{ __('Withholding Tax (%)') }}</label>
-           <input type="number" name="withholding_tax" value="{{ $invoice->withholding_tax }} id="withholding_tax" class="form-control" placeholder="Enter WHT in percentage">   
+           <input type="number" name="withholding_tax" value="{{ $invoice->withholding_tax }}" id="withholding_tax" class="form-control" placeholder="Enter WHT in percentage">   
             @if ($errors->has('withholding_tax'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('withholding_tax') }}</strong>
@@ -339,7 +337,7 @@
                                                         
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
                                 </div>
                             </div>
                         </form>

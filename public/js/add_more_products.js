@@ -181,12 +181,18 @@ $("#product_container_id").on("click", ".remove_product", function (e) {
     row--;
 });
 
+//object that holds all product cost and it associated row id
+    var product_cost_object = {};
 
 
 //auto populate subcategories when a category is selected
 function getProductSubcategories(row_id){
+    var invoiceproductLenght = parseInt($('#invoiceproductLenght').val());
+   //Insert all editable products cost to product_cost_object variable
+    for (var i = 0; i < invoiceproductLenght; i++) {
+        product_cost_object[i] = parseInt($("#product_cost"+i).val());
 
-
+    }
 
 
     $("#product_container_id").on("change", "#category_id"+row_id, function (e) {
@@ -263,7 +269,6 @@ function getProducts(row_id){
     }
 
  
-    var product_cost_object = {};
 
     function getProductCost(row_id){
         $("#product_container_id").on("change", "#product_id"+row_id, function (e) {

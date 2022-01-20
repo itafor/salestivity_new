@@ -477,11 +477,11 @@ class InvoiceController extends Controller
         $rules = [
             'invoice_id' => 'required',
             'customer' => 'required',
-            'product' => 'required',
+            // 'product' => 'required',
             'timeline' => 'required',
             'cost' => 'required',
-            'category_id' => 'required',
-            'sub_category_id' => 'required',
+            // 'category_id' => 'required',
+            // 'sub_category_id' => 'required',
             'due_date' => 'required',
             'company_bank_acc_id' => 'required',
         ];
@@ -504,9 +504,9 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::find($input['invoice_id']);
         $invoice->customer = $input['customer'];
-        $invoice->category_id = $input['category_id'];
-        $invoice->subcategory_id = $input['sub_category_id'];
-        $invoice->product_id = $input['product'];
+        // $invoice->category_id = $input['category_id'];
+        // $invoice->subcategory_id = $input['sub_category_id'];
+        // $invoice->product_id = $input['product'];
         $invoice->timeline = $input['timeline'];
         $invoice->cost = $input['cost'];
         $invoice->discount = isset($input['discount']) ? $input['discount'] : null;
@@ -516,8 +516,19 @@ class InvoiceController extends Controller
      
         $invoice->company_bank_acc_id = $input['company_bank_acc_id'];
         $invoice->due_date = Carbon::parse(formatDate($input['due_date'], 'd/m/Y', 'Y-m-d'));
-        $invoice->update();
+         $invoice->payment_due = $request->payment_due;
+        $invoice->term_condition = $request->term_condition;
+        $invoice->currency_id = $request->currency_id;
+        $invoice->mail_from_name = $request->mail_from_name;
+        $invoice->reply_to_email_id = $request->reply_to_email_id;
+        $invoice->cc_email_id = $request->cc_email_id;
+        $invoice->value_added_tax = $request->value_added_tax;
+        $invoice->withholding_tax = $request->withholding_tax;
+        $invoice->save();
         if ($invoice) {
+
+            $this->billing_invoice->updateInvoiceProducts($input, $invoice);
+            
             $toEmail = $invoice->customers->email;
 
             Mail::to($toEmail)->queue(new SendInvoice($invoice));

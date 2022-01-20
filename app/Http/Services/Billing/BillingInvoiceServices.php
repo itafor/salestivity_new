@@ -21,4 +21,24 @@ class BillingInvoiceServices
         }
     }
 	}
+
+   public function updateInvoiceProducts($data, $invoice)
+    {
+ if(isset($data['editableproducts']))
+   {
+        foreach($data['editableproducts'] as $product){
+           $prodInvoice = InvoiceProduct::where([
+                ['billing_invoice_id', $invoice->id],
+                ['product_id', $product['product_id']],
+            ])->first();
+
+                $prodInvoice->billing_invoice_id = $invoice->id;
+                $prodInvoice->product_id = $product['product_id'];
+              $prodInvoice->save();
+            
+        }
+    }
+    $this->storeInvoiceProducts($data, $invoice);
+    }
+
 }
