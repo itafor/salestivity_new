@@ -214,6 +214,15 @@
                     @endif
                   </table>
 
+                  <hr>
+                  @php
+                  $invoice = $paid_invoice->invoice;
+                  @endphp
+  @if(isset($invoice) && $invoice->invoiceProducts !='')
+                @include('billing.invoice.products.show_products')
+           @endif
+<hr>
+
                   <p>Thank you for your continued patronage.</p>
 <p><b>
   

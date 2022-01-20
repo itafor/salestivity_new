@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Invoice  Notification</title>
+
     
     <style>
     .invoice-box {
@@ -163,14 +164,16 @@ Find below the details of the invoice.
             <b>Invoiced to:</b> {{$invoice->customers->name}}
           </div>
           </div>
+
+         
 <table class="table table-bordered" id="rental_table">
 @if(isset($invoice))
 <tbody>
-<tr>
+<!-- <tr>
 <td style="width: 150px;"><b>{{ __('Item') }}</b></td>
 <td>{{ $invoice->prod ? $invoice->prod->name : 'N/A' }}
 </td>
-</tr>
+</tr> -->
 <tr>
 <td style="width: 150px;"><b>{{ __('Invoice Number') }}</b></td>
 <td>{{ $invoice->invoice_number ? $invoice->invoice_number : 'N/A' }}
@@ -242,6 +245,7 @@ Find below the details of the invoice.
 <span>No matching records found</span>
 @endif
 </table>
+
 <hr>
 <table class="table table-bordered" id="rental_table">
     <tbody>
@@ -264,6 +268,12 @@ Find below the details of the invoice.
 </tr>
 </tbody>
 </table>
+<hr>
+  @if(isset($invoice) && $invoice->invoiceProducts !='')
+                @include('billing.invoice.products.show_products')
+           @endif
+<hr>
+           
 <br>
 <h4>Terms and conditions</h4>
 <p>{!! $invoice->term_condition !!}</p>
