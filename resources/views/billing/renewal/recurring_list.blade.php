@@ -16,11 +16,11 @@
                 <tr>
                 <th ><b>{{ __('Due Date') }}</b></th>
                 <th ><b>{{ __('Customer') }}</b></th>
-                <th ><b>{{ __('Phone Number') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
                 <th ><b>{{ __('Amount') }}</b></th>
                 <th ><b>{{ __('Balance') }}</b></th>
                 <th ><b>{{ __('Status') }}</b></th>
+                <th ><b>{{ __('Phone Number') }}</b></th>
 
                 <th class="text-center"><b>{{ __('Action') }}</b></th>
                 </tr>
@@ -50,7 +50,6 @@
 
 
                 <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
-                <td>{{ $renewal->customers ? $renewal->customers->phone : '' }}</td>
                 <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
                 <td>{{ $renewal->billingAmount }}</td>
                 <td>{{ $renewal->billingBalance }}</td>
@@ -58,6 +57,8 @@
 
 
                 <td>{{$renewal->status}}</td>
+                <td>{{ $renewal->customers ? $renewal->customers->phone : '' }}</td>
+                
 
                 <td>
 
