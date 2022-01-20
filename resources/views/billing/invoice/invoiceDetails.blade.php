@@ -117,23 +117,30 @@
                      <td style="width: 200px;"><b>{{ __('Phone') }}</b></td>
                      <td>{{ $invoice->customers ? $invoice->customers->phone : 'N/A' }}</td>
                    </tr>
+                     @if($invoice->category)
+
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Category') }}</b></td>
                      <td>{{ $invoice->category? $invoice->category->name:'N/A' }}
                      </td>
                    </tr>
-
+                   @endif
+                   
+                     @if($invoice->subcategory)
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Sub Category') }}</b></td>
                      <td>{{ $invoice->subcategory? $invoice->subcategory->name:'N/A' }}
                      </td>
                    </tr>
+                   @endif
 
+                    @if($invoice->prod)
                      <tr>
                      <td style="width: 200px;"><b>{{ __('Product') }}</b></td>
                      <td>{{ $invoice->prod? $invoice->prod->name:'N/A' }}
                      </td>
                    </tr>
+                   @endif
 
                     <tr>
                      <td style="width: 200px;"><b>{{ __('Price') }}</b></td>

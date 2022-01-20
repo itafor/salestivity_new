@@ -29,6 +29,8 @@
                             <div class="pl-lg-4 pr-lg-4">
                                  <div id="product_container_id">
                                     <input type="hidden" name="invoiceproductLenght" value="{{count($invoice_products)}}" id="invoiceproductLenght">
+                            <input type="hidden" name="invoice_id" value="{{$invoice->id}}">
+                                    
                                  @if(isset($invoice_products))
                                    @foreach ($invoice_products as $key => $invoiceproduct)
                                   <div class="row">

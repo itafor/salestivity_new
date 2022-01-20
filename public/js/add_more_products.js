@@ -187,6 +187,7 @@ $("#product_container_id").on("click", ".remove_product", function (e) {
 
 //auto populate subcategories when a category is selected
 function getProductSubcategories(row_id){
+
     var invoiceproductLenght = parseInt($('#invoiceproductLenght').val());
    //Insert all editable products cost to product_cost_object variable
     for (var i = 0; i < invoiceproductLenght; i++) {
@@ -239,6 +240,7 @@ function getProductSubcategories(row_id){
 
 //auto populate products  when a subcategory is selected
 function getProducts(row_id){
+
       $("#product_container_id").on("change", "#sub_category_id"+row_id, function (e) {
     e.preventDefault();
      var sub_category_id = $(this).val();

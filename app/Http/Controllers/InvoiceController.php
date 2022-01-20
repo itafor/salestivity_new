@@ -473,7 +473,7 @@ class InvoiceController extends Controller
     public function update(Request $request)
     {
         $input = $request->all();
-        //dd($input);
+        // dd($input);
         $rules = [
             'invoice_id' => 'required',
             'customer' => 'required',
@@ -503,17 +503,18 @@ class InvoiceController extends Controller
 
 
         $invoice = Invoice::find($input['invoice_id']);
+        $original_billing_amount = $invoice->billingBalance + $invoice->amount_paid;
+        $billing_bal = $request->billingAmount - $original_billing_amount;
+        // dd($billing_bal);
+
+        $billing_bal = $billing_bal + $invoice->billingBalance;
+        // dd($billing_bal);
         $invoice->customer = $input['customer'];
-        // $invoice->category_id = $input['category_id'];
-        // $invoice->subcategory_id = $input['sub_category_id'];
-        // $invoice->product_id = $input['product'];
         $invoice->timeline = $input['timeline'];
         $invoice->cost = $input['cost'];
         $invoice->discount = isset($input['discount']) ? $input['discount'] : null;
         $invoice->billingAmount = $request->billingAmount;
-        $invoice->billingBalance = $request->billingAmount;
-        // $invoice->status = $request->input('status');
-     
+        $invoice->billingBalance = $billing_bal;
         $invoice->company_bank_acc_id = $input['company_bank_acc_id'];
         $invoice->due_date = Carbon::parse(formatDate($input['due_date'], 'd/m/Y', 'Y-m-d'));
          $invoice->payment_due = $request->payment_due;
@@ -528,15 +529,16 @@ class InvoiceController extends Controller
         if ($invoice) {
 
             $this->billing_invoice->updateInvoiceProducts($input, $invoice);
-            
+
             $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->queue(new SendInvoice($invoice));
+            // Mail::to($toEmail)->queue(new SendInvoice($invoice));
 
-            $status = "Invoice has been been updated ";
+            $status = "Invoice has been been updated";
             Alert::success('Invoice', $status);
+            return back()->withInput()->withSuccess($status);
 
-            return redirect()->route('billing.invoice.show', $invoice->id);
+            // return redirect()->route('billing.invoice.show', $invoice->id);
         }
         
         Alert::error('Invoice', 'The action could not be completed');

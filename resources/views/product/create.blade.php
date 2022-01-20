@@ -88,6 +88,10 @@
                                             <label class="form-control-label" for="currency_id">{{ __('Currency') }}</label>
                                              <select name="currency_id" id="currency_id" class="form-control border-input" data-toggle="select" required>
                                                 <option value="">Choose a Currency</option>
+                                                 @foreach($currencies as $currency)
+                                <option value="{{ $currency->id }}" {{$currency->symbol == '&#8358;' ? 'selected' : ''}}>{!! $currency->symbol !!}</option>
+                                @endforeach
+                                </select>
                                                    
                                             </select>
                                             @if ($errors->has('currency_id'))

@@ -22,22 +22,29 @@ class BillingInvoiceServices
     }
 	}
 
+//update invoice products by deleting the existing invoices and recreating them
    public function updateInvoiceProducts($data, $invoice)
     {
  if(isset($data['editableproducts']))
    {
-        foreach($data['editableproducts'] as $product){
-           $prodInvoice = InvoiceProduct::where([
-                ['billing_invoice_id', $invoice->id],
-                ['product_id', $product['product_id']],
-            ])->first();
 
-                $prodInvoice->billing_invoice_id = $invoice->id;
-                $prodInvoice->product_id = $product['product_id'];
-              $prodInvoice->save();
-            
+    $prodInvoices = InvoiceProduct::where([
+                ['billing_invoice_id', $invoice->id],
+            ])->get();
+        if($prodInvoices){
+    foreach ($prodInvoices as $key => $value) {
+              $value->delete();
+            }
+        }
+
+        foreach($data['editableproducts'] as $product){
+            InvoiceProduct::create([
+                'billing_invoice_id' => $invoice->id,
+                'product_id' => $product['product_id'],
+            ]);
         }
     }
+
     $this->storeInvoiceProducts($data, $invoice);
     }
 
