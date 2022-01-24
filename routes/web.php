@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CompanyEmailController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 
 /*
@@ -396,6 +397,9 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
     Route::get('billing/invoice/{invoicceId}/confirm', 'RenewalController@confirmRecurringInvoiceReceipt')->name('recurring.billing.confirm');
 
     Route::get('invoice/{invoicceId}/confirm', 'InvoiceController@confirmInvoiceReceipt')->name('invoice.billing.confirm');
+
+    //Export report
+    Route::get('export-csv', [ReportController::class, 'exportCSVReport'])->name('export.csv');
 
 
 //cron jobs notifications

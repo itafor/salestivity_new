@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Contact;
 use App\Customer;
+use App\Http\Controllers\ReportController;
 use App\Opportunity;
 use App\OpportunityProduct;
 use App\OpportunityUpdate;
@@ -712,9 +713,10 @@ class OpportunityController extends Controller
                         ->whereBetween('opportunities.initiation_date',[$init_date_from, $init_date_to])
                         ->whereBetween('opportunities.closure_date',[$closure_date_from, $closure_date_to])
                         ->whereBetween('opportunities.amount',[$request->amount_from, $request->amount_to])
-                        ->select('opportunities.name as opportunity_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date','owner.*','account.name as customer_name')->get();
+                        ->select('opportunities.name as opportunity_name','account.name as customer_name','opportunities.amount as opportunity_amount','opportunities.status as opportunity_status','opportunities.probability as opportunity_probability','opportunities.initiation_date as opportunity_initiation_date','opportunities.closure_date as opportunity_closure_date')->get(); //'owner.*'
 
-            //dd($data['selectedAccount']);
+            
+                        Session::put('reports', $data['opportunities_report_details']);
 
         return view('opportunity.report', $data);
     }

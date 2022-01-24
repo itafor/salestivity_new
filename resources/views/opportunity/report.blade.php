@@ -106,7 +106,13 @@
 @if(isset($opportunities_report_details))
 <div class="card">
   <div class="card-header">
-    Opportunities Record List
+    <div class="col-md-12">
+      <h2 class="float-left"> Opportunities Record List</h2>
+    <a href="{{route('export.csv')}}" target="_blank" class="btn btn-primary me-1 btn-sm float-right">Export CSV</a>
+
+    </div>
+   
+
   </div>
   <div class="card-body">
         
