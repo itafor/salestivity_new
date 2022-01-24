@@ -48,7 +48,7 @@
          <td>
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
             </td>
-            <td>{{ $invoice->customers->name }}</td>
+            <td >{{ $invoice->customers->name }}</td>
             
            <!--  @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
@@ -63,7 +63,7 @@
 
             <td>{{ $invoice->status }}</td>
             <td>{{ $invoice->customers->phone }}</td>
-            
+
             <td>
                 <span>
                     <a href="{{ route('billing.invoice.show', [$invoice->id, $currentStatus, 'next']) }}" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
