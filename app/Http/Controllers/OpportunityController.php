@@ -718,6 +718,6 @@ class OpportunityController extends Controller
             
                         Session::put('reports', $data['opportunities_report_details']);
 
-        return view('opportunity.report', $data);
+        return view('opportunity.Reports.report_form', $data);
     }
 }

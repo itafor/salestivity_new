@@ -11,11 +11,14 @@ use Session;
 class OpportunityReportExport implements FromCollection, WithHeadings
 {
 
+    /**
+     * Display the CSV headings
+     * @return array
+     */
     public function headings(): array
     {
         return ["Name", "Account", "Amount", "Stage", "Probability", "Date Initiated", "Closure Date"];
     }
-
 
     /**
     * @return \Illuminate\Support\Collection

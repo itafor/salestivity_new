@@ -398,8 +398,10 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 
     Route::get('invoice/{invoicceId}/confirm', 'InvoiceController@confirmInvoiceReceipt')->name('invoice.billing.confirm');
 
-    //Export report
+    //Export report to csv
     Route::get('export-csv', [ReportController::class, 'exportCSVReport'])->name('export.csv');
+    //download report as pdf
+    Route::get('download-pdf', [ReportController::class, 'downloadPdf'])->name('downloadreport.pdf');
 
 
 //cron jobs notifications
