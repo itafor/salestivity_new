@@ -22,9 +22,10 @@ class OpportunityReportExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-       $report =  Session::get('reports');
-              if($report){
-                return $report;
-                }
+    
+    $report =  Session::get('reports');
+        if($report){
+       return $report;
+    }
     }
 }
