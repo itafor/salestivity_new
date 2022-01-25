@@ -11,15 +11,6 @@ use Session;
 class OpportunityReportExport implements FromCollection, WithHeadings
 {
 
-	// public $reportsCollection;
-
-	// public function __construct($reporst)
-	// {
-	// 	$this->reportsCollection = $reporst;
-	// }
-
-	
-
     public function headings(): array
     {
         return ["Name", "Account", "Amount", "Stage", "Probability", "Date Initiated", "Closure Date"];
