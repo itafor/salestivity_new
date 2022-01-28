@@ -248,4 +248,5 @@ public function getCompanyEmail($id)
         $renewalUpdateReply = RenewalUpdateReply::where('id', $id)->first();
         return response()->json(['renewalUpdateReply' => $renewalUpdateReply]);
     }
+
 }

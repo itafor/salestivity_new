@@ -421,6 +421,30 @@
                                             </div>
                                         </ul>
                                     </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link" href="#navbar-team" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                            <span class="nav-link-text">{{ __('Teams') }}</span>
+                                        </a>
+                                        <ul class="flex-column">
+                                            <div class="collapse" id="navbar-team">
+                                                <ul class="nav nav-sm flex-column" >
+                                                    <ul class="nav nav-sm flex-column">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('team.index') }}">
+                                                                {{ __('List Teams') }}
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="{{ route('newSubUser') }}">
+                                                                {{ __('Create Team') }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                </ul>
+                                            </div>
+                                        </ul>
+                                    </li>
                                         <li class="nav-item">
                                         <a class="nav-link" href="{{ route('company_details.index') }}" >
                                             <span class="nav-link-text">{{ __('Company Details') }}</span>

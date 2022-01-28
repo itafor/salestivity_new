@@ -393,6 +393,20 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'adm
 
 });
 
+
+Route::group([
+'prefix' => 'team'], function () {
+    Route::get('/lists', 'TeamController@index')->name('team.index');
+    Route::post('/store', 'TeamController@store')->name('team.store');
+    Route::post('/update', 'TeamController@update')->name('team.update');
+    Route::get('/show/{team}', 'TeamController@show')->name('team.show');
+    Route::get('/destroy/{team}', 'TeamController@destroy')->name('team.destroy');
+    Route::get('/fetch/{team}', 'TeamController@fetchTeam');
+    Route::post('/add-member', 'TeamController@addMember')->name('team.add.member');
+
+});
+
+
 //billing receipt confirmation
     Route::get('billing/invoice/{invoicceId}/confirm', 'RenewalController@confirmRecurringInvoiceReceipt')->name('recurring.billing.confirm');
 
