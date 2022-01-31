@@ -6,12 +6,14 @@ use App\Category;
 use App\Contact;
 use App\Customer;
 use App\Http\Controllers\ReportController;
+use App\Http\Services\TeamService;
 use App\Opportunity;
 use App\OpportunityProduct;
 use App\OpportunityUpdate;
 use App\Product;
 use App\SubCategory;
 use App\SubUser;
+use App\Team;
 use Auth;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -24,9 +26,13 @@ use Validator;
 class OpportunityController extends Controller
 {
 
-  public function __construct()
+    protected $team_service;
+
+  public function __construct(TeamService $service)
     {
         $this->middleware(['auth','mainuserVerified','subuserVerified'])->except('homepage');
+        $this->team_service = $service;
+
     }
 
     public function index()
@@ -618,10 +624,19 @@ class OpportunityController extends Controller
             }
   }
 
+public function getSelectedTeam($id){
+    $team = Team::where('id',$id)
+                    ->where('main_acct_id',getActiveGuardType()->main_acct_id)->first();
+                    if($team){
+                      return $team;
+            }
+  }
+
   public function report()
     {
         
     $data['selectedSalesPerson'] = '';
+    $data['selectedTeam'] = '';
     $data['selectedAccount'] = '';
     $data['selectedstatus'] = '';
     $data['selectedAmountFrom'] = '';
@@ -632,14 +647,14 @@ class OpportunityController extends Controller
     $data['selectedClosureDateTo'] = '';
 
 
-
+    $data['teams'] =  $this->team_service->myTeams();
+    
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
        
-      
-
-        return view('opportunity.report', $data);
+        return view('opportunity.Reports.report_form', $data);
+        
     }
 
     public function getReport(Request $request)
@@ -690,6 +705,11 @@ class OpportunityController extends Controller
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
+    
+     $data['teams'] =  $this->team_service->myTeams();
+
+    $data['selectedTeam'] = $request->team_id !='All' ? $this->getSelectedTeam($request->team_id) : 'All';
+
 
          $data['selectedSalesPerson'] = $request->owner_id !='All' ? $this->getSelectedSalesPerson($request->owner_id) : 'All';
 

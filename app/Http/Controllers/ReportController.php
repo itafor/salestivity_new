@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\OpportunityReportExport;
+use App\Http\Services\TeamService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -11,12 +12,13 @@ use Session;
 class ReportController extends Controller
 {
 
-	// public $reportsCollection;
+   protected $team_service;
 
-	// public function __construct($reporst)
-	// {
-	// 	$this->reportsCollection = $reporst;
-	// }
+    function __construct(TeamService $service)
+    {
+    	$this->team_service = $service;
+
+    }
 
 	public function exportCSVReport()
 	{
@@ -37,5 +39,13 @@ class ReportController extends Controller
         return $pdf->download($documentName);
 		 }
        
+	}
+
+	public function displayTeamMembers($team_id)
+	{
+      $members =  $this->team_service->getTeamMembers($team_id);
+
+      return response()->json(['members'=>$members]);
+
 	}
 }

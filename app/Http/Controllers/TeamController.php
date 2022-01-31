@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamRequest;
 use App\Http\Services\TeamService;
+use App\SubUser;
 use App\Team;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -23,7 +24,7 @@ class TeamController extends Controller
 
     public function index()
     {
-    	$data['teams'] = Team::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+    	$data['teams'] =  $this->team_service->myTeams();
     	return view('teams.index', $data);
     }
 
@@ -73,8 +74,7 @@ class TeamController extends Controller
     {
     	$data['team'] = $team;
     	$data['team_members'] = $team->members;
-
-    							// dd($data['team_members']);
+    				// dd($members);
 
     	return view('teams.show', $data);
         
@@ -107,16 +107,16 @@ class TeamController extends Controller
             'sub_user_id' => 'required',
         ]);
 
+       if ($validator->fails()) {
+            Alert::warning('Required Fields', 'The member name is required');
+            return back()->withInput();
+        }
+
        if($this->team_service->member($data)){
        	 Alert::warning('Member already exist', 'The selected member already exist');
             return back()->withInput();
        }
-
-
-        if ($validator->fails()) {
-            Alert::warning('Required Fields', 'The member name is required');
-            return back()->withInput();
-        }
+      
 
         $this->team_service->addMemberToTeam($data);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\SubUser;
 use App\Team;
 use App\TeamMember;
 
@@ -66,5 +67,21 @@ class TeamService
 		])->first();
 
 		return $member;
+	}
+
+	public function myTeams()
+	{
+	  return Team::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+	}
+
+	public function getTeamMembers($team_id)
+	{
+		 $members = SubUser::join('team_members', 'sub_users.id', '=', 'team_members.sub_user_id')
+                            ->where('team_members.team_id', $team_id)
+                            ->select('sub_users.*')
+                            ->get();
+                            
+                 return $members;
+
 	}
 }

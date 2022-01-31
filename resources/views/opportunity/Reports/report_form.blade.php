@@ -19,7 +19,22 @@
         <form method="post" action="{{ route('opportunity.get.report') }}" autocomplete="off" id="opportunityReportForm">
              @csrf
   <div class="form-row">
-    <div class="form-group col-md-4">
+
+      <div class="form-group col-md-3">
+      <label for="inputEmail4">Teams</label>
+            <select name="team_id" id="team_id" class="form-control form-control-alternative border-input {{ $errors->has('team_id') ? ' is-invalid' : '' }} reportselectOption"  required>
+             @if(isset($selectedTeam) && $selectedTeam !='')
+              <option value="{{$selectedTeam == 'All' ? 'All' : $selectedTeam->id }}">{{$selectedTeam == 'All' ? 'All' : $selectedTeam->name.' '.$selectedTeam->team_name }}</option>
+               @endif
+            <option value="">Select team</option>
+            <option value="All">All</option>
+            @foreach($teams as $team)
+                <option value="{{ $team->id }}"> {{ $team->team_name }} </option>
+            @endforeach
+            </select>
+    </div>
+
+    <div class="form-group col-md-3">
       <label for="inputEmail4">Sales Person</label>
             <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
              @if(isset($selectedSalesPerson) && $selectedSalesPerson !='')
@@ -32,7 +47,7 @@
             @endforeach
             </select>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label for="inputPassword4">Account</label>
                 <select name="account_id" id="customer" class="form-control form-control-alternative border-input {{ $errors->has('account_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Account') }}" value="{{ old('account_id') }}" required>
                    @if(isset($selectedAccount) && $selectedAccount !='')
@@ -46,7 +61,7 @@
                 @endforeach
                 </select>
     </div>
-     <div class="form-group col-md-4">
+     <div class="form-group col-md-3">
       <label for="inputPassword4">Stage</label>
             <select name="status" id="status" class="form-control form-control-alternative border-input {{ $errors->has('status') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Status') }}" value="{{ old('status') }}" required>
                   @if(isset($selectedstatus) && $selectedstatus !='')
@@ -121,5 +136,5 @@
 </div>
 @endif 
     </div>
-
+<script type="text/javascript" src="/js/opportunity_report.js"></script>
 @endsection

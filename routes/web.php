@@ -416,6 +416,7 @@ Route::group([
     Route::get('export-csv', [ReportController::class, 'exportCSVReport'])->name('export.csv');
     //download report as pdf
     Route::get('download-pdf', [ReportController::class, 'downloadPdf'])->name('downloadreport.pdf');
+    Route::get('get-team-members/{team_id}', [ReportController::class, 'displayTeamMembers']);
 
 
 //cron jobs notifications
