@@ -42,9 +42,7 @@
                @endif
             <option value="">Select</option>
             <option value="All">All</option>
-            @foreach(mySubUsers() as $owner)
-                <option value="{{ $owner->id }}"> {{ $owner->name }} {{ $owner->last_name }}  </option>
-            @endforeach
+           
             </select>
     </div>
     <div class="form-group col-md-3">

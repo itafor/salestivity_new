@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\OpportunityReportExport;
 use App\Http\Services\TeamService;
+use App\SubUser;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -43,6 +44,14 @@ class ReportController extends Controller
 
 	public function displayTeamMembers($team_id)
 	{
+		if($team_id == "All"){
+
+			 $members =  SubUser::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
+        
+        return response()->json(['members'=>$members]);
+
+		}
+
       $members =  $this->team_service->getTeamMembers($team_id);
 
       return response()->json(['members'=>$members]);
