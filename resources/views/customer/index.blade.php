@@ -10,6 +10,8 @@
                 <div class="card shadow">
                     <div class="card-header col-12  mb-10">
                          <div class="row">
+            <div class="col-6">
+
                             <form action="{{ route('import.customers') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="file" name="file" class="form-control" required>
@@ -17,11 +19,17 @@
                 <button type="submit" class="btn btn-success btn-sm">Import customers Data</button>
             </form>
                         </div>
+            <div class="col-6">
+            <a href="https://docs.google.com/spreadsheets/d/1K1Pj8Ermn9qrt0wc8hWutLTQSu69R-Yiy7LIKOhJJ_g/edit?usp=sharing">View sample here</a>    
+            </div>
+                        </div>
+
+                        <hr>
                         <div class="row">
-                            <div class="col-md-6">
-                               <h4>All Accounts</h4>
+                            <div class="col-10">
+                               <h4>All Customers</h4>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-2">
              
                                 <a href="{{ route('customer.corporate.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Corporate Account') }}"><i class="las la-folder-plus"></i></a>
                                 <a href="{{ route('customer.individual.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Individual Account') }}"><i class="las la-user-plus"></i></a>

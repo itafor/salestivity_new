@@ -100,6 +100,8 @@ class Customer extends Model
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Individual',
+        'customer_id' => isset($data['customer_id']) ? $data['customer_id'] : null,
+
         ]);
 
         if($individualCustomer){
@@ -140,6 +142,7 @@ public static function createCorporateCustomer($data) {
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Corporate',
+        'customer_id' => isset($data['customer_id']) ? $data['customer_id'] : null,
         ]);
  
         if($corporateCustomer){
@@ -199,6 +202,7 @@ public static function createContact($customer,$data)
         'account_type' => $data['account_type'],
         'account_id' => null,
         'customer_type' => 'Corporate',
+        'customer_id' => isset($data['customer_id']) ? $data['customer_id'] : null,
         ]); 
 
         $customer = self::where('id', $data['id'])->first();
@@ -226,6 +230,7 @@ public static function createContact($customer,$data)
         'phone' => $data['phone'],
         'website' => isset($data['website']) ?  $data['website'] : null,
         'customer_type' => 'Individual',
+        'customer_id' => isset($data['customer_id']) ? $data['customer_id'] : null,
         ]); 
 
         $customer = self::where('id', $data['id'])->first();

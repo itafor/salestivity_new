@@ -86,7 +86,19 @@
 
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                         <div class="col-md-3">
+                                        <div class="form-group{{ $errors->has('customer_id') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label" for="input-customer_id">{{ __('Customer Id (Optional)') }}</label>
+                                            <input type="text" name="customer_id" id="customer_id" class="form-control form-control-alternative border-input {{ $errors->has('customer_id') ? ' is-invalid' : '' }}" placeholder="{{ __('customer_id') }}" value="{{ old('customer_id') }}">
+                                                
+                                            @if ($errors->has('customer_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('customer_id') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('industry') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-industry">{{ __('Industry') }}</label>
                                             <select name="industry" id="input-industry" class="form-control form-control-alternative border-input {{ $errors->has('industry') ? ' is-invalid' : '' }}" placeholder="{{ __('Industry') }}" value="{{ old('industry') }}" required>
@@ -103,7 +115,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('employee_count') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-employee_count">{{ __('Employee Count') }}</label>
                                             <select name="employee_count" id="input-employee_count" class="form-control form-control-alternative border-input{{ $errors->has('employee_count') ? ' is-invalid' : '' }}" placeholder="{{ __('Employee Count') }}" value="{{ old('employee_count') }}" required >
@@ -124,7 +136,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('turn_over') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-turn_over">{{ __('Turn Over') }}</label>
                                             <select name="turn_over" id="input-turn_over" class="form-control form-control-alternative border-input {{ $errors->has('turn_over') ? ' is-invalid' : '' }}" placeholder="{{ __('Turn Over') }}" value="{{ old('turn_over') }}" required >

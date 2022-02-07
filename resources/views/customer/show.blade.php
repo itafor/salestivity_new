@@ -51,6 +51,10 @@
                      <td style="width: 200px;"><b>{{ __('Customer') }}</b></td>
                      <td>{{ $customer->name }}</td>
                    </tr>
+                     <tr>
+                     <td style="width: 200px;"><b>{{ __('Customer ID') }}</b></td>
+                     <td>{{ $customer->customer_id ? $customer->customer_id : 'N/A'}}</td>
+                   </tr>
                  <tr>
                      <td style="width: 200px;"><b>{{ __('Email') }}</b></td>
                      <td>{{ $customer->email }}</td>
