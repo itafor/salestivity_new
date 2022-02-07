@@ -274,12 +274,22 @@ public static function createContact($customer,$data)
 }
 
 public static function updateAddress($address,$data){
+
+    if($address){
+
     AddressCustomer::where('id', $address->id)->update([
         'country' => $data['country'],
         'state' => $data['state'],
         'city' => $data['city'],
         'street' => $data['street'],
         ]); 
+
+        }else{
+        $customer = Customer::findOrFail($data['id']);
+        
+            self::createCustomerAddress($customer, $data);
+
+}
 }
 
  public static function deleteContacts($customer_id) {

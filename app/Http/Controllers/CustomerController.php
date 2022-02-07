@@ -7,9 +7,12 @@ use App\City;
 use App\Contact;
 use App\Customer;
 use App\CustomerCorporate;
+use App\Imports\CustomersImport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Session;
+use Validator;
 
 class CustomerController extends Controller
 {
@@ -26,7 +29,7 @@ class CustomerController extends Controller
     public function index()
     {
         $guard_object = \getActiveGuardType();
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->get();
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->paginate(20);
         return view('customer.index', compact('customers'));
     }
 
@@ -80,8 +83,8 @@ class CustomerController extends Controller
         $customer = Customer::where('id',$id)->where('main_acct_id',$userId)->first();
         if($customer){
             $address = AddressCustomer::where('customer_id',$customer->id)->where('main_acct_id',$userId)->first();
-                 $cityId = $address->city;
-                 $cityName= $address->cityName->name;
+                 $cityId = isset($address) ? $address->city : null;
+                 $cityName= isset($address) ? $address->cityName->name : null;
 
             $customerType = $customer->customer_type;
             if($customerType == 'Corporate'){
@@ -158,4 +161,42 @@ $output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px
    
    }
 }
+
+  public function importCustomers(Request $request) 
+    {
+        $validator = Validator::make($request->all(),[
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if($validator->fails()){
+
+
+             $status =   $validator->errors()->all();
+        Alert::error('Validation Error', implode('', $status));
+                
+         return back();
+        }
+        try {
+        
+        Excel::import(new CustomersImport,request()->file('file')->store('temp'));
+
+          
+         $status = "Customers has been successfully imported";
+       
+        Alert::success('status', $status);
+                
+         return back();
+            
+        } catch (Exception $e) {
+
+             $status = $e->getMessage();
+       
+                 Alert::error('status', $status);
+
+         return back();
+
+        }
+      
+             
+    }
 }

@@ -9,15 +9,25 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header col-12  mb-10">
+                         <div class="row">
+                            <form action="{{ route('import.customers') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-success btn-sm">Import customers Data</button>
+            </form>
+                        </div>
                         <div class="row">
-                            <div class="col-6  text-left">
+                            <div class="col-md-6">
                                <h4>All Accounts</h4>
                             </div>
-                            <div class="col-6  text-right">
+                            <div class="col-md-6">
+             
                                 <a href="{{ route('customer.corporate.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Corporate Account') }}"><i class="las la-folder-plus"></i></a>
                                 <a href="{{ route('customer.individual.create') }}" class="btn-icon btn-tooltip" title="{{ __('Add Individual Account') }}"><i class="las la-user-plus"></i></a>
                             </div>
                         </div>
+                       
                     </div>
                     <div class="card-body">
                         <div class="col-12">
@@ -40,7 +50,7 @@
                         
 
                             
-                                <table class="table table-bordered table-hover datatable">
+                                <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th scope="col">{{ __('S/N') }}</th>
@@ -82,8 +92,9 @@
                                         @endif
                                     </tbody>
                                 </table>    
-                            
                         </div>
+                            {{$customers->render("pagination::bootstrap-4")}}
+
                     </div>
             </div>
         </div>

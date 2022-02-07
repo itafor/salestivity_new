@@ -164,7 +164,9 @@
                                                 <option value="">Select a country</option>
                                                 @foreach(getCountries() as $country)
                                                     <option value="{{ $country->id }}"
-                                             {{$country->id == $address->country ? 'selected' : ''}}
+                                                          @if($address)
+                                             {{$country->id ==  $address->country ? 'selected' : ''}}
+                                             @endif
                                                         >{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
@@ -182,7 +184,9 @@
                                                 <option value="">Select State</option>
                                                  @foreach(getStates() as $state)
                                                     <option value="{{ $state->id }}"
-                                             {{$state->id == $address->state ? 'selected' : ''}}
+                                                        @if($address)
+                                             {{$state->id ==  $address->state ? 'selected' : ''}}
+                                             @endif
                                                         >{{ $state->name }}</option>
                                                 @endforeach
                                             </select>
@@ -213,7 +217,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-street">{{ __('Street') }}</label>
-                                            <input type="text" name="street" id="input-street" class="form-control form-control-alternative{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Street') }}" value="{{ old('street',$address->street)}}" required >
+                                            <input type="text" name="street" id="input-street" class="form-control form-control-alternative{{ $errors->has('street') ? ' is-invalid' : '' }}" placeholder="{{ __('Street') }}" value="{{ old('street', $address ? $address->street : '')}}" required >
 
                                             @if ($errors->has('street'))
                                                 <span class="invalid-feedback" role="alert">
