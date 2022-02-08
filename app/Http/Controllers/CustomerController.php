@@ -162,10 +162,24 @@ $output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px
    }
 }
 
+  /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function importCustomersForm()
+    {
+        return view('customer.import_customers');
+    }
+
+
   public function importCustomers(Request $request) 
     {
+
         $validator = Validator::make($request->all(),[
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xls,xlsx,csv'
         ]);
 
         if($validator->fails()){

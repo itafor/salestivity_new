@@ -26,7 +26,9 @@ class CustomersImport implements ToModel
         $created_by = auth()->guard('sub_user')->user()->id;
         $userType = 'sub_users';
     }
-    // dd($row);
+    // if(count($row) > 7 ){
+    //     return "Onle 8 columns allowed";
+    // };
         return new Customer([
         'customer_id' => isset($row[0]) ? $row[0] : null,
         'name' => isset($row[1]) ? $row[1] :null,

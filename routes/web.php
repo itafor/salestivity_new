@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('project/{id}/edit', ['as' => 'project.edit', 'uses' => 'ProjectController@edit']);
 
     Route::post('import-customers', ['as' => 'import.customers', 'uses' => 'CustomerController@importCustomers']);
+    Route::get('import/customers', ['as' => 'import.customers.form', 'uses' => 'CustomerController@importCustomersForm']);
 
     //Accounts
     Route::get('accounts', ['as' => 'customer.index', 'uses' => 'CustomerController@index']);

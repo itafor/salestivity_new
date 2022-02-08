@@ -120,6 +120,11 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('import.customers.form') }}">
+                                        {{ __('Import Accounts') }}
+                                    </a>
+                                </li>
                             </ul>        
                         </ul>
                     </div> 
