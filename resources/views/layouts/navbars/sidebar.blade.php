@@ -120,11 +120,29 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('import.customers.form') }}">
-                                        {{ __('Import Accounts') }}
+                                   <li class="nav-item">
+                                    <a class="nav-link" href="#navbar-importproducts" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                                        <span class="nav-link-text">{{ __('Import Account') }}</span>
                                     </a>
+
+                                    <div class="collapse" id="navbar-importproducts">
+                                        <ul class="nav nav-sm flex-column">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.corporate.import') }}">
+                                                        {{ __('Corporate') }}
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('customer.individual.import') }}">
+                                                        {{ __('Individual') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </ul>
+                                    </div>
                                 </li>
+                              
                             </ul>        
                         </ul>
                     </div> 
@@ -439,11 +457,7 @@
                                                                 {{ __('List Teams') }}
                                                             </a>
                                                         </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" href="{{ route('newSubUser') }}">
-                                                                {{ __('Create Team') }}
-                                                            </a>
-                                                        </li>
+                                                       
                                                     </ul>
 
                                                 </ul>

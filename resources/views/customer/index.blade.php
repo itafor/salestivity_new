@@ -43,7 +43,7 @@
                         
 
                             
-                                <table class="table table-bordered table-hover">
+                                <table class="table table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
                                             <th scope="col">{{ __('S/N') }}</th>
@@ -86,7 +86,6 @@
                                     </tbody>
                                 </table>    
                         </div>
-                            {{$customers->render("pagination::bootstrap-4")}}
 
                     </div>
             </div>

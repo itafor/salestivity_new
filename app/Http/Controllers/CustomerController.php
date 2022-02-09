@@ -8,6 +8,7 @@ use App\Contact;
 use App\Customer;
 use App\CustomerCorporate;
 use App\Imports\CustomersImport;
+use App\Imports\IndividualCustomerImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -29,7 +30,7 @@ class CustomerController extends Controller
     public function index()
     {
         $guard_object = \getActiveGuardType();
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->paginate(20);
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->get();
         return view('customer.index', compact('customers'));
     }
 
@@ -169,13 +170,19 @@ $output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function importCustomersForm()
+    public function importCorporateCustomersForm()
     {
-        return view('customer.import_customers');
+        return view('customer.import.corporate');
     }
 
 
-  public function importCustomers(Request $request) 
+ public function importIndividualCustomersForm()
+    {
+        return view('customer.import.individual');
+    }
+
+
+  public function importCorporateCustomers(Request $request) 
     {
 
         $validator = Validator::make($request->all(),[
@@ -195,7 +202,46 @@ $output.='<li><a href="/customer/'.$customer->id.'/show"  style="font-size: 14px
         Excel::import(new CustomersImport,request()->file('file')->store('temp'));
 
           
-         $status = "Customers has been successfully imported";
+         $status = "Corporate customers has been successfully imported";
+       
+        Alert::success('status', $status);
+                
+         return back();
+            
+        } catch (Exception $e) {
+
+             $status = $e->getMessage();
+       
+                 Alert::error('status', $status);
+
+         return back();
+
+        }
+      
+             
+    }
+
+      public function importIndividualCustomers(Request $request) 
+    {
+
+        $validator = Validator::make($request->all(),[
+            'file' => 'required|mimes:xls,xlsx,csv'
+        ]);
+
+        if($validator->fails()){
+
+
+             $status =   $validator->errors()->all();
+        Alert::error('Validation Error', implode('', $status));
+                
+         return back();
+        }
+        try {
+        
+        Excel::import(new IndividualCustomerImport,request()->file('file')->store('temp'));
+
+          
+         $status = "Individual customers has been successfully imported";
        
         Alert::success('status', $status);
                 
