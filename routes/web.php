@@ -429,3 +429,7 @@ Route::group([
     Route::get('renew_expired_recurring_by_one_year', 'CronJobController@renewExpiredReccuringByOneYear');
 
     Route::get('empty_jobstbl', 'EmailMarketingController@emptyJobTable');
+
+//Custom email reset
+Route::post('reset_password_without_token', 'CustomEmailResetController@validatePasswordRequest')->name('reset.password.without.token');
+Route::post('reset_password_with_token', 'CustomEmailResetController@resetPassword')->name('reset.password.with.token');

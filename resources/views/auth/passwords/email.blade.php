@@ -32,8 +32,8 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
-                        <form role="form" method="POST" action="{{ route('password.email') }}">
+                     @include('alerts.messages')
+                        <form role="form" method="POST" action="{{ route('reset.password.without.token') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
@@ -41,7 +41,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}" required  autofocus>
                                 </div>
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
