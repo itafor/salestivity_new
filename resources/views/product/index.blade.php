@@ -28,7 +28,7 @@
                                 </div>
                             @endif
                         
-                            
+                            <div class="table-responsive">
                                 <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
@@ -75,7 +75,7 @@
                                         @endif
                                     </tbody>
                                 </table>
-                           
+                            </div>
                         </div>
                     </div>                        
                 </div>

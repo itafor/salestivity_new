@@ -91,10 +91,9 @@
         border-radius: 4px;
         }
 
-  .table{
-   display: block !important;
-   overflow-x: auto !important;
-   width: 100% !important;
+
+ .table-responsive{
+    overflow-x:auto;
  }
     </style>
    
