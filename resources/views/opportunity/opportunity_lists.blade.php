@@ -1,5 +1,6 @@
  <div class="col-12">
- <table class="table table-bordered align-items-center table-flush invoices">
+    <div class="table-responsive">
+ <table class="table table-bordered invoices">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">{{ __('Start Date') }}</th>
@@ -51,4 +52,5 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                </div>
                                  </div>

@@ -91,6 +91,11 @@
         border-radius: 4px;
         }
 
+  .table{
+   display: block !important;
+   overflow-x: auto !important;
+   width: 100% !important;
+ }
     </style>
    
 
