@@ -42,7 +42,7 @@
                             @endif
                         
 
-                            
+                            <div class="table-responsive">
                                 <table class="table table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
@@ -84,7 +84,8 @@
                                             @endforeach
                                         @endif
                                     </tbody>
-                                </table>    
+                                </table>  
+                                </div>  
                         </div>
 
                     </div>
