@@ -13,7 +13,7 @@
 <thead>
 <tr>
     <th scope="col">{{ __('End Date') }}</th>
-    <th scope="col">{{ __('Customer') }}</th>
+    <th class="word-wrap" scope="col">{{ __('Customer') }}</th>
     <th scope="col">{{ __('Product') }}</th>
     <th scope="col">{{ __('Amount') }}</th>
     <th scope="col">{{ __('Status') }}</th>
@@ -48,7 +48,7 @@
          <td>
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
             </td>
-            <td >{{ $invoice->customers->name }}</td>
+            <td class="word-wrap">{{ $invoice->customers->name }}</td>
             
            <!--  @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.

@@ -15,7 +15,7 @@
                 <thead>
                 <tr>
                 <th ><b>{{ __('Due Date') }}</b></th>
-                <th ><b>{{ __('Customer') }}</b></th>
+                <th class="word-wrap"><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
                 <th ><b>{{ __('Amount') }}</b></th>
                 <th ><b>{{ __('Balance') }}</b></th>
@@ -49,7 +49,7 @@
 
 
 
-                <td>{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
+                <td class="word-wrap">{{ $renewal->customers ? $renewal->customers->name : '' }}</td>
                 <td>{{ $renewal->prod? $renewal->prod->name:'N/A' }}</td>
                 <td>{{ $renewal->billingAmount }}</td>
                 <td>{{ $renewal->billingBalance }}</td>

@@ -95,6 +95,11 @@
  .table-responsive{
     overflow-x:auto;
  }
+
+ table tr .word-wrap{
+    width: 80px;
+    white-space: normal;
+}
     </style>
    
 
