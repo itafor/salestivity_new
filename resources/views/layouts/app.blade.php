@@ -97,7 +97,7 @@
  }
 
  table tr .word-wrap{
-    width: 80px;
+    width: 110px;
     white-space: normal;
 }
     </style>
