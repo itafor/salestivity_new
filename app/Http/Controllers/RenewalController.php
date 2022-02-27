@@ -76,7 +76,7 @@ class RenewalController extends Controller
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Pending']
-        ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.pending', compact('renewals'));
                 
                 break;
@@ -84,7 +84,7 @@ class RenewalController extends Controller
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Paid']
-        ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.paid', compact('renewals'));
                 
                 break;
@@ -92,7 +92,7 @@ class RenewalController extends Controller
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', 'Partly paid']
-        ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.partly_paid', compact('renewals'));
                 
                 break;
@@ -100,7 +100,7 @@ class RenewalController extends Controller
                 $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', '!=', 'Paid'],
-        ])->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
         return view('billing.renewal.outstanding', compact('renewals'));
                 
                 break;
@@ -109,7 +109,7 @@ class RenewalController extends Controller
         ['main_acct_id', getActiveGuardType()->main_acct_id],
         ['billingBalance', '>', 0],
     ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)
-    ->orderby('created_at', 'asc')->with(['customers','prod'])->get();
+    ->orderby('end_date', 'asc')->with(['customers','prod'])->get();
     return view('billing.renewal.due', compact('renewals'));
             
             break;

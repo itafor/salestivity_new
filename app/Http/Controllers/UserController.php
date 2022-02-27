@@ -49,7 +49,10 @@ class UserController extends Controller
        $toEmail = $user->email;
          $user_type = 'users';
 
-      Mail::to($toEmail)->send(new MainUserEmailVerification($user, $user_type));
+            $verification_link = url('/').'/email-verified/'.$user->id.'/users';
+
+
+      Mail::to($toEmail)->send(new MainUserEmailVerification($user, $user_type, $verification_link));
 
       session(['emailResentToUser' => 'resentToMainuser']);
 
@@ -61,7 +64,9 @@ class UserController extends Controller
        $toEmail = $subuser->email;
        $user_type = 'sub_users';
 
-      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($subuser, $user_type));
+            $verification_link = url('/').'/email-verified/'.$subuser->id.'/sub_users';
+
+      Mail::to($toEmail)->send(new SendSubuserEmailVerificationLink($subuser, $user_type, $verification_link));
 
       session(['emailResent' => 'resentToSubuser']);
 

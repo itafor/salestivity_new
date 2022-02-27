@@ -117,7 +117,7 @@
                            
                            
                             <p>
-                                <a href="{{route('email.verified', [$user->id, $user_type])}}">
+                                <a href="{{$verification_link}}">
                                 <button class="btn btn-primary">Verify your email</button>
                                 </a>
                                 <br>

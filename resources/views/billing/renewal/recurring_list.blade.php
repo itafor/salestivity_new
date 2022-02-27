@@ -14,6 +14,7 @@
                 <table class="table table-bordered invoices"  style="width:100%">
                 <thead>
                 <tr>
+                <!-- <th ><b>{{ __('ID') }}</b></th> -->
                 <th ><b>{{ __('Due Date') }}</b></th>
                 <th class="word-wrap"><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
@@ -43,9 +44,9 @@
                      ?>
                 <tr>
 
-                <td>
-                    {{ date('Y/m/d', strtotime($renewal->end_date)) }}
-                    </td>
+                <!-- <td>{{ date('Y/m/d', strtotime($renewal->end_date)) }}</td> -->
+                <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
+               
 
 
 

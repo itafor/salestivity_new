@@ -13,16 +13,18 @@ class MainUserEmailVerification extends Mailable
 
      public $user;
     public $user_type;
+    public $verification_link;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $userType)
+    public function __construct($user, $userType, $verification_link)
     {
          $this->user = $user;
          $this->user_type = $userType;
+         $this->verification_link = $verification_link;
     }
 
     /**
