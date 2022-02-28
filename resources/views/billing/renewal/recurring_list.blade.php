@@ -44,8 +44,7 @@
                      ?>
                 <tr>
 
-                <!-- <td>{{ date('Y/m/d', strtotime($renewal->end_date)) }}</td> -->
-                <td>{{ date("jS F, Y", strtotime($renewal->end_date)) }}</td>           
+                <td>{{ date('Y/m/d', strtotime($renewal->end_date)) }}</td>
                
 
 
