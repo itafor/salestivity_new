@@ -36,12 +36,15 @@
 
     <div class="form-group col-md-3">
       <label for="inputEmail4">Sales Person</label>
-            <select name="owner_id" id="owner_id" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
+            <select name="owner_id" id="owner_idxx" class="form-control form-control-alternative border-input {{ $errors->has('owner_id') ? ' is-invalid' : '' }} reportselectOption" placeholder="{{ __('Sales Person') }}" value="{{ old('owner_id') }}" required>
              @if(isset($selectedSalesPerson) && $selectedSalesPerson !='')
               <option value="{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->id }}">{{$selectedSalesPerson == 'All' ? 'All' : $selectedSalesPerson->name.' '.$selectedSalesPerson->last_name }}</option>
                @endif
             <option value="">Select</option>
             <option value="All">All</option>
+              @foreach($sales_persons as $sales_person)
+                    <option value="{{ $sales_person->id }}">{{ $sales_person->name }} {{ $sales_person->last_name }}</option>
+                @endforeach
            
             </select>
     </div>

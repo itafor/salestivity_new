@@ -648,6 +648,9 @@ public function getSelectedTeam($id){
 
 
     $data['teams'] =  $this->team_service->myTeams();
+
+    $data['sales_persons']  = SubUser::where('main_acct_id',getActiveGuardType()->main_acct_id)->get();
+             
     
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
@@ -705,6 +708,8 @@ public function getSelectedTeam($id){
         $data['customers'] = Customer::where([
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
+        
+    $data['sales_persons']  = SubUser::where('main_acct_id',getActiveGuardType()->main_acct_id)->get();
     
      $data['teams'] =  $this->team_service->myTeams();
 
