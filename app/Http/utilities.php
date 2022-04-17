@@ -199,7 +199,9 @@ function customerContacts($customerId)
 
 function allCustomers()
 {
-    return Customer::all();
+    return Customer::where([
+        ['main_acct_id',getActiveGuardType()->main_acct_id],
+    ])->get();
 }
 
 function mySubUsers()

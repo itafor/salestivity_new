@@ -367,18 +367,18 @@ Route::group([
 
 });
  
-// Route::group([
-//     'prefix' => 'location'
-// ], function () {
+Route::group([
+    'prefix' => 'order'
+], function () {
 
-//     Route::get('fetch/cities', 'LocationController@fetchCities')->name('location.fetch.cities');
-//     Route::get('create/city', 'LocationController@createCity')->name('location.create.city');
-//     Route::post('add/city', 'LocationController@AddCity')->name('location.add.city');
-//     Route::get('edit/city', 'LocationController@editCity')->name('location.edit.city');
-//     Route::post('update/city', 'LocationController@updateCity')->name('location.update.city');
-//     Route::post('destroy/city', 'LocationController@destroyCity')->name('location.destroy.city');
+    Route::get('create', 'OrderController@createOrder')->name('order.create');
+    Route::get('lists', 'OrderController@listOrders')->name('order.lists');
+    Route::post('store', 'OrderController@storeOrder')->name('order.store');
+    Route::post('update', 'OrderController@updateOrder')->name('order.update');
+    Route::get('edit/{orderId}', 'OrderController@editOrder')->name('order.edit');
+    Route::get('destroy/{orderId}', 'OrderController@deleteOrder')->name('order.destroy');
 
-// });
+});
 
 // Only a zeus Admin can access this route
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'admin.'], function () {

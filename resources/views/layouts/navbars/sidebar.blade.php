@@ -345,6 +345,30 @@
                         </ul>
                     </div>
                   </li>
+
+                     <li class="nav-item">
+                    <a class="nav-link" href="#navbar-order" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-paper-diploma text-primary"></i>
+                        <span class="nav-link-text">{{ __('Order') }}</span>
+                    </a>
+
+                    <div class="collapse" id="navbar-order">
+                        <ul class="nav nav-sm flex-column">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('order.lists') }}">
+                                        {{ __('List orders') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('order.create') }}">
+                                        {{ __('Create order') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </li>
 <!-- 
 
                    <li class="nav-item">

@@ -20,7 +20,6 @@ class CreateOrdersTable extends Migration
             $table->integer('product_id')->nullable();
             $table->integer('category_id')->nullable();
             $table->integer('subcategory_id')->nullable();
-            $table->integer('sale_man_id')->nullable();
             $table->string('quantity')->nullable();
             $table->string('status')->nullable();
             $table->string('user_type')->nullable();

@@ -17,7 +17,6 @@ class Order extends Model
     	'category_id',
     	'subcategory_id',
     	'product_id',
-    	'sale_man_id',
     	'quantity',
     	'status',
         'user_type'
@@ -46,11 +45,6 @@ class Order extends Model
       public function product()
     {
         return $this->belongsTo(Product::class, 'product_id','id');
-    }
-
-    public function saleMan()
-    {
-        return $this->belongsTo(SubUser::class, 'sale_man_id', 'id');
     }
     
 }

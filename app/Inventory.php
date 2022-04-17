@@ -14,8 +14,10 @@ class Inventory extends Model
     protected $fillable = [
     	'main_acct_id',
     	'customer_id',
-    	'product_id',
+        'product_id',
+    	'order_id',
     	'quantity',
+        'status',
         'user_type'
     ];
    

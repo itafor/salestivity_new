@@ -20,6 +20,7 @@ class CreateInventoriesTable extends Migration
             $table->integer('product_id')->nullable();
             $table->string('quantity')->nullable();
             $table->string('user_type')->nullable();
+            $table->string('status')->nullable();
             $table->integer('created_by_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
