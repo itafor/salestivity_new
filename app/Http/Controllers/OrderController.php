@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Inventory;
 use App\Product;
 use App\Services\OrderService;
 use App\SubCategory;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Session;
 use Validator;
 
 class OrderController extends Controller
@@ -24,7 +26,7 @@ class OrderController extends Controller
      public function listOrders()
     {
         $data['orders'] = $this->orderService->listOrders();
-        return view('orders.lists', $data);
+        return view('direct-sale.orders.lists', $data);
     }
 
      public function createOrder()
@@ -33,7 +35,7 @@ class OrderController extends Controller
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
-        return view('orders.create', $data);
+        return view('direct-sale.orders.create', $data);
     }
 
        /**
@@ -84,7 +86,7 @@ class OrderController extends Controller
 
       $data['subcategory'] = SubCategory::findOrFail($data['order']->subcategory_id);
 
-        return view('orders.edit', $data);
+        return view('direct-sale.orders.edit', $data);
     }
 
        public function updateOrder(Request $request)
@@ -128,5 +130,47 @@ class OrderController extends Controller
             Alert::success('Order', $status);
 
             return redirect()->route('order.lists');
+    }
+
+     public function inSale()
+    {
+    	 $orders = Session::get('orders');
+        $orderOwner = Session::get('orderOwner');
+        $customerInventories = Inventory::where([
+            ['customer_id', $orderOwner->id],
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->get();
+        return view('direct-sale.orders.insale', compact('orders','orderOwner','customerInventories'));
+    }
+
+        public function customerInsale(Request $request)
+    {
+
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+             'customer_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $orders = $this->orderService->customerInsale($input);
+
+        if ($orders) {
+
+            // $status = "Customer Purchase pattern fetched!";
+            // Alert::success('Purchase pattern ', $status);
+
+        
+        Session::put('orders', $orders);
+
+
+            return redirect()->route('order.insale');
+        }
+
+        Alert::error('Order', 'This action could not be completed');
+        return back()->withInput()->withErrors($validator);
     }
 }

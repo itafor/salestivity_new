@@ -30,7 +30,7 @@ class CustomerController extends Controller
     public function index()
     {
         $guard_object = \getActiveGuardType();
-        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->get();
+        $customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->get()->keyBy('name');
         // $customers = collect();
         // $get_customers = Customer::orderBy('id', 'DESC')->where('main_acct_id', $guard_object->main_acct_id)->chunk(20, function($accounts) use ($customers){
         //     foreach ($accounts as $key => $account) {

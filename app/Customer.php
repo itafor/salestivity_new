@@ -40,6 +40,11 @@ class Customer extends Model
     	return $this->hasMany('App\Renewal');
     }
 
+      public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
     /**
      * Get the corporate account record associated with the account.
      */

@@ -1,8 +1,12 @@
 <?php
 namespace App\Services;
 
+use App\Customer;
 use App\Inventory;
 use App\Order;
+use Carbon\Carbon;
+use DB;
+use Session;
 
 /**
  * 
@@ -34,7 +38,13 @@ class OrderService
 	public function createOrderInventory($order)
 	{
 
-	     $inventory = $this->getInventory($order->customer_id, $order->product_id);
+	     // $inventory = $this->getInventory($order->customer_id, $order->product_id);
+
+	     $inventory = Inventory::where([
+			['customer_id', $order->customer_id],
+			['product_id', $order->product_id],
+			['main_acct_id', getActiveGuardType()->main_acct_id],
+		])->first();
 
 
 		if($inventory)
@@ -76,8 +86,9 @@ class OrderService
 			['main_acct_id', getActiveGuardType()->main_acct_id],
 		])->first();
 
-		if($oldOrder && $inventory)
+		if($inventory && $inventory->quantity >= $oldOrder->quantity)
 		{
+            $inventory->status = $inventory->quantity >= 1 ?  'In Stock' : 'Out of Stock';
 			$inventory->quantity -= $oldOrder->quantity;
 			$inventory->save();
 
@@ -95,13 +106,8 @@ class OrderService
         $order->status = $data['status'];
         $order->save();
 
-       if($oldOrder && $inventory)
-		{
-			$inventory->quantity += $data['quantity'];
-            $inventory->status = $inventory->status <= 0 ? 'Out of Stock' : 'In Stock';
-			$inventory->save();
-
-		} 
+       $this->createOrderInventory($order);
+       
 
         return $order;
 	}
@@ -127,10 +133,10 @@ class OrderService
 			['main_acct_id', getActiveGuardType()->main_acct_id],
 		])->first();
 
-		if($inventory)
+		if($inventory && $inventory->quantity >= $order->quantity)
 		{
-			$inventory->quantity -= $order->quantity;
             $inventory->status = $inventory->quantity <= 0 ? 'Out of Stock' : 'In Stock';
+			$inventory->quantity -= $order->quantity;
 			$inventory->save();
 
 		}
@@ -148,5 +154,32 @@ class OrderService
 			['main_acct_id', getActiveGuardType()->main_acct_id],
 		])->first();
 
+	}
+
+	public function customerInsale(array $data)
+	{
+		// return $data;
+		$customer = Customer::where([
+			['id', $data['customer_id']],
+			['main_acct_id', getActiveGuardType()->main_acct_id],
+		])
+		->first();
+
+		$orders = $customer->orders->keyBy('product_id');
+
+		  // $orders =  DB::table('orders')->join('customers', 'customers.id', '=', 'orders.customer_id')
+		  //                   ->join('products', 'products.id', '=', 'orders.product_id')
+		  //                   ->where('customers.id', $data['customer_id'])
+		  //                   ->where('orders.main_acct_id',  getActiveGuardType()->main_acct_id)
+		  //                   ->whereDate('orders.created_at', Carbon::now()->subDays(7))
+		  //                   ->select('products.name', 'orders.quantity as quantity', DB::raw('sum(orders.quantity) as quantitySum'))
+		  //                   ->distinct('orders.product_id')
+		  //                   ->get();
+
+	      
+		// dd($orders);
+
+		Session::put('orderOwner', $customer);
+        return $orders;
 	}
 }

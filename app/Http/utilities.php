@@ -13,6 +13,7 @@ use App\Industry;
 use App\Invoice;
 use App\InvoicePayment;
 use App\MailFromName;
+use App\Order;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
@@ -201,7 +202,7 @@ function allCustomers()
 {
     return Customer::where([
         ['main_acct_id',getActiveGuardType()->main_acct_id],
-    ])->get();
+    ])->get()->keyBy('id');
 }
 
 function mySubUsers()
@@ -612,4 +613,71 @@ function whatsappNotification($from_number, $to_number, $text_messages)
         $finalPrice = $final_Price + getValueAddedTax($final_Price, $value_added_tax) + getWithholdingTax($final_Price, $withholding_tax);
 
         return $finalPrice;
+ }
+
+ function last7DaysOrder($customerId, $productId)
+ {
+    $sun_order_quantity = Order::where([
+        ['main_acct_id',  getActiveGuardType()->main_acct_id],
+        ['customer_id', $customerId],
+        ['product_id', $productId]
+    ])
+    ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()])
+   ->sum('quantity');
+
+   //  $sun_order_quantity = Order::where([
+   //      ['main_acct_id',  getActiveGuardType()->main_acct_id],
+   //      ['customer_id', $customerId],
+   //      ['product_id', $productId]
+   //  ])
+   //  ->whereDate('created_at', Carbon::now()->subDays(7))
+   // ->sum('quantity');
+
+   return $sun_order_quantity;
+
+ }
+
+  function last30DaysOrder($customerId, $productId)
+ {
+
+    $sun_order_quantity = Order::where([
+        ['main_acct_id',  getActiveGuardType()->main_acct_id],
+        ['customer_id', $customerId],
+        ['product_id', $productId]
+    ])
+    ->whereBetween('created_at', [Carbon::now()->subDays(35), Carbon::now()])
+   ->sum('quantity');
+
+   //  $sun_order_quantity = Order::where([
+   //      ['main_acct_id',  getActiveGuardType()->main_acct_id],
+   //      ['customer_id', $customerId],
+   //      ['product_id', $productId]
+   //  ])
+   //  ->whereDate('created_at', Carbon::now()->subDays(30))
+   // ->sum('quantity');
+
+   return $sun_order_quantity;
+
+ }
+
+  function last90DaysOrder($customerId, $productId)
+ {
+
+    $sun_order_quantity = Order::where([
+        ['main_acct_id',  getActiveGuardType()->main_acct_id],
+        ['customer_id', $customerId],
+        ['product_id', $productId]
+    ])
+    ->whereBetween('created_at', [Carbon::now()->subDays(89), Carbon::now()])
+   ->sum('quantity');
+   //  $sun_order_quantity = Order::where([
+   //      ['main_acct_id',  getActiveGuardType()->main_acct_id],
+   //      ['customer_id', $customerId],
+   //      ['product_id', $productId]
+   //  ])
+   //  ->whereDate('created_at', Carbon::now()->subDays(90))
+   // ->sum('quantity');
+
+   return $sun_order_quantity;
+
  }

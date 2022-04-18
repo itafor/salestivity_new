@@ -377,6 +377,8 @@ Route::group([
     Route::post('update', 'OrderController@updateOrder')->name('order.update');
     Route::get('edit/{orderId}', 'OrderController@editOrder')->name('order.edit');
     Route::get('destroy/{orderId}', 'OrderController@deleteOrder')->name('order.destroy');
+    Route::get('insale', 'OrderController@inSale')->name('order.insale');
+    Route::post('customer-insale', 'OrderController@customerInsale')->name('customer.insale');
 
 });
 
