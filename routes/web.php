@@ -379,7 +379,13 @@ Route::group([
     Route::get('destroy/{orderId}', 'OrderController@deleteOrder')->name('order.destroy');
     Route::get('insale', 'OrderController@inSale')->name('order.insale');
     Route::post('customer-insale', 'OrderController@customerInsale')->name('customer.insale');
+});
 
+Route::group([
+    'prefix' => 'inventory'
+], function () {
+    Route::get('/fetch/{inventoryId}', 'InventoryController@getInventoryToManage')->name('inventory.fetch');
+    Route::post('/update', 'InventoryController@updateInventory')->name('inventory.update');
 });
 
 // Only a zeus Admin can access this route

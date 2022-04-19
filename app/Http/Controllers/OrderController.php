@@ -136,10 +136,17 @@ class OrderController extends Controller
     {
     	 $orders = Session::get('orders');
         $orderOwner = Session::get('orderOwner');
-        $customerInventories = Inventory::where([
+
+        $customerInventories = '';
+
+        if($orderOwner){
+            $customerInventories = Inventory::where([
             ['customer_id', $orderOwner->id],
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
+        }
+        
+
         return view('direct-sale.orders.insale', compact('orders','orderOwner','customerInventories'));
     }
 

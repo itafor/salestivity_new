@@ -23,7 +23,7 @@
 
          @if($orderOwner)
 <div class="form-horizontal">
-  Customer: {{$orderOwner->name}}
+  Customer: <strong>{{$orderOwner->name}}</strong>
 </div>
 <br>
                         @endif
@@ -57,13 +57,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($orders->isEmpty())
-                                            <tr>
-                                                <td colspan="8" style="text-align: center">
-                                                    <h3>No data available</h3>
-                                                </td>
-                                            </tr>
-                                        @else
+                                        @if(isset($orders) && $orders != '')
+                                           
                                             @foreach($orders as $order)
                                             <tr>
                                                 <td>{{ $order->product ?  $order->product->name : 'N/A' }}</td>
@@ -73,6 +68,12 @@
                                                
                                             </tr>
                                             @endforeach
+                                            @else
+                                             <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
+                                                </td>
+                                            </tr>
                                         @endif
                                     </tbody>
                                 </table>
@@ -81,7 +82,7 @@
                              <div class="table-responsive">
         @if($orderOwner)
 <div class="form-horizontal">
-  {{$orderOwner->name}} Inventory
+  <strong>{{$orderOwner->name}}</strong> Inventory
 </div>
 <br>
 @endif
@@ -90,23 +91,33 @@
                                         <tr>
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Quantity') }}</th>
+                                            <th scope="col">{{ __('Manage') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($customerInventories->isEmpty())
-                                            <tr>
-                                                <td colspan="8" style="text-align: center">
-                                                    <h3>No data available</h3>
-                                                </td>
-                                            </tr>
-                                        @else
+                                        @if(isset($customerInventories) && $customerInventories !='')
+                                           
                                             @foreach($customerInventories as $inventory)
                                             <tr>
                                                 <td>{{ $inventory->product ?  $inventory->product->name : 'N/A' }}</td>
                                                 <td>{{ $inventory->quantity }}</td>
+
+                                                   <td>
+                                                  <div class="btn-group" role="group">
+                                                            <a onclick="editInventory({{$inventory->id}})" href="#" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_inventory_modal"><i class="las la-edit"></i></a>
+                                                        </div>                                           
+                                                </td>
+                                               
                                                
                                             </tr>
                                             @endforeach
+                                            @else
+                                             <tr>
+                                                <td colspan="8" style="text-align: center">
+                                                    <h3>No data available</h3>
+                                                </td>
+                                            </tr>
+                                        
                                         @endif
                                     </tbody>
                                 </table>
@@ -115,8 +126,11 @@
                 </div>
             </div>
         </div>
+     
+     @include('direct-sale.partials.edit_inventory')
 
         @include('layouts.footers.auth')
     </div>
+  <script type="text/javascript" src="/js/inventory.js"></script>
 
 @endsection
