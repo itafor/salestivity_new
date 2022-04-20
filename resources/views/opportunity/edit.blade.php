@@ -38,14 +38,13 @@
                                             @endif
                                         </div>
                                     </div>
-
                                     <div class="col-xl-4">
                                         <div class="form-group{{ $errors->has('account') ? ' has-danger' : '' }}">
                                             <label class="form-control-label" for="input-account">{{ __('Account') }}</label>
                                             <select name="account_id" id="customer" class="form-control form-control-alternative{{ $errors->has('account_id') ? ' is-invalid' : '' }}" >
                                                 
                                                 @foreach($customers as $customer)
-                                                    <option {{ $customer->id == $opportunity->customer->id ? 'selected': '' }} value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                    <option {{ $customer->id == $opportunity->account_id ? 'selected': '' }} value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                 @endforeach
                                             </select>
                                             @if ($errors->has('account_id'))

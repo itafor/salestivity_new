@@ -17,7 +17,8 @@ class ProductReview extends Model
     	'inventory_id',
     	'attribute',
     	'comment',
-        'user_type'
+        'user_type',
+        'created_by_id'
     ];
    
     public function user()

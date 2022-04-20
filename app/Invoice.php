@@ -13,7 +13,7 @@ class Invoice extends Model
     
     public function customers()
     {
-        return $this->belongsTo('App\Customer', 'customer');
+        return $this->belongsTo('App\Customer', 'customer', 'id');
     }
 
      public function prod()

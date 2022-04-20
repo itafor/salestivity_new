@@ -386,7 +386,23 @@ Route::group([
 ], function () {
     Route::get('/fetch/{inventoryId}', 'InventoryController@getInventoryToManage')->name('inventory.fetch');
     Route::post('/update', 'InventoryController@updateInventory')->name('inventory.update');
+    Route::get('show/{inventoryId}', 'InventoryController@showInventory')->name('inventory.show');
+
 });
+
+Route::group([
+    'prefix' => 'product-review'
+], function () {
+
+    // Route::get('create', 'ProductReviewController@createReview')->name('review.create');
+    // Route::get('lists', 'ProductReviewController@listReviews')->name('review.lists');
+    Route::post('store', 'ProductReviewController@storeReview')->name('review.store');
+    Route::post('update', 'ProductReviewController@updateReview')->name('review.update');
+    // Route::get('edit/{reviewId}', 'ProductReviewController@editReview')->name('review.edit');
+    // Route::get('show/{reviewId}', 'ProductReviewController@showReview')->name('review.show');
+    Route::get('destroy/{reviewId}', 'ProductReviewController@deleteReview')->name('review.destroy');
+});
+
 
 // Only a zeus Admin can access this route
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin/', 'as' => 'admin.'], function () {

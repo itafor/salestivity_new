@@ -48,7 +48,7 @@
          <td>
             {{ $invoice->due_date ? date('Y/m/d', strtotime($invoice->due_date)) : 'N/A' }}
             </td>
-            <td class="word-wrap">{{ $invoice->customers->name }}</td>
+            <td class="word-wrap">{{ $invoice->customers ? $invoice->customers->name : '' }}</td>
             
            <!--  @if(getCreatedByDetails($invoice->user_type, $invoice->created_by) !== null)
                 <td>{{ getCreatedByDetails($invoice->user_type, $invoice->created_by)['name'] .' '.
@@ -58,11 +58,11 @@
             @else
                 <td>Not Set</td>
             @endif -->
-            <td>{{ $invoice->prod ?  $invoice->prod->name : 'N/A' }}</td>
+            <td>{{ $invoice->prod ?  $invoice->prod->name : '' }}</td>
             <td>{{ $invoice->billingAmount }}</td>
 
             <td>{{ $invoice->status }}</td>
-            <td>{{ $invoice->customers->phone }}</td>
+            <td>{{ $invoice->customers ? $invoice->customers->phone : '' }}</td>
 
             <td>
                 <span>

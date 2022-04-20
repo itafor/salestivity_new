@@ -78,7 +78,7 @@
                                     </tbody>
                                 </table>
                             </div>
-<hr>
+<!-- <hr> -->
                              <div class="table-responsive">
         @if($orderOwner)
 <div class="form-horizontal">
@@ -103,11 +103,22 @@
                                                 <td>{{ $inventory->quantity }}</td>
 
                                                    <td>
-                                                  <div class="btn-group" role="group">
+                                                   
+
+                                                            
+                                                    <div class="btn-group-justified text-center" role="group">
+
+                                                       <div class="btn-group" role="group">
                                                             <a onclick="editInventory({{$inventory->id}})" href="#" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_inventory_modal"><i class="las la-edit"></i></a>
-                                                        </div>                                           
+                                                        </div> 
+
+                                                         <div class="btn-group" role="group">
+                                                            <a href="{{ route('inventory.show', [$inventory->id]) }}" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
+                                                        </div>  
+                                                                                                        
+                                                    </div>                                                    
+
                                                 </td>
-                                               
                                                
                                             </tr>
                                             @endforeach

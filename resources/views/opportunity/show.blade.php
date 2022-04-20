@@ -182,7 +182,7 @@
                             </div>
                         </div>
                         @endforeach
-                      {!! $opportunity_updates->links() !!}
+                      {{ $opportunity_updates->links('pagination::bootstrap-4') }}
                       
                     </div>
                 </div>

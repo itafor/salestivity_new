@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Inventory;
+use App\ProductReview;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class InventoryController extends Controller
 {
-    public function getInventoryToManage($InventoryId)
+    public function getInventoryToManage($inventoryId)
     {
-    	$inventory = Inventory::where([
-    		['id', $InventoryId],
-    		['main_acct_id', getActiveGuardType()->main_acct_id]
-    	])->with(['user', 'customer', 'product'])->first();
+    	$inventory =$this->getOneInventory($inventoryId);
 
     	return response()->json(['inventory'=>$inventory], 200);
     }
@@ -35,5 +33,26 @@ class InventoryController extends Controller
                return back();
             }
     	}
+
+    public function showInventory($inventoryId)
+    {
+      $data['inventory'] = $this->getOneInventory($inventoryId);
+
+      $data['reviews'] = ProductReview::where([
+            ['inventory_id', $inventoryId],
+            ['user_id', getActiveGuardType()->main_acct_id]
+        ])->orderBy('created_at', 'desc')->paginate(5);
+
+
+        return view('direct-sale.inventory.show', $data);
     }
+
+    public function getOneInventory($inventoryId)
+    {
+   return   $inventory = Inventory::where([
+            ['id', $inventoryId],
+            ['main_acct_id', getActiveGuardType()->main_acct_id]
+        ])->with(['user', 'customer', 'product'])->first();
+    }
+}
 
