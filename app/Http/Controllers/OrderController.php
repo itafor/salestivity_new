@@ -48,28 +48,29 @@ class OrderController extends Controller
     {
 
     	$input = $request->all();
-
+        // dd($input);
         $validator = Validator::make($input, [
         	 'customer_id' => 'required|numeric',
         	 'category_id' => 'required|numeric',
         	 'subcategory_id' => 'required|numeric',
         	 'product_id' => 'required|numeric',
-        	 'quantity' => 'required|numeric',
+        	 'quantity' => 'required|numeric|min:1',
         	 'status' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator->errors());
         }
 
         $order = $this->orderService->storeOrder($input);
 
         if ($order) {
 
-            $status = "New Order created successfully!";
+            $status = "Order successfully created!";
             Alert::success('Order', $status);
+            return redirect()->back()->withStatus(__( $status ));
 
-            return redirect()->route('order.lists');
+            // return redirect()->route('order.lists');
         }
 
         Alert::error('Order', 'This action could not be completed');
@@ -146,6 +147,7 @@ class OrderController extends Controller
         ])->get();
         }
         
+        Session::forget(['orders', 'orderOwner']);
 
         return view('direct-sale.orders.insale', compact('orders','orderOwner','customerInventories'));
     }

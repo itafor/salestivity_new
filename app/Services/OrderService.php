@@ -114,7 +114,9 @@ class OrderService
 
 	public function listOrders()
 	{
-		return Order::with(['user', 'customer', 'product', 'category', 'subCategory'])->orderBy('created_at','desc')->get();
+		return Order::where([
+			['main_acct_id', getActiveGuardType()->main_acct_id],
+		])->with(['user', 'customer', 'product', 'category', 'subCategory'])->orderBy('created_at','desc')->get();
 	}
 
 	public function showOrder($orderId)

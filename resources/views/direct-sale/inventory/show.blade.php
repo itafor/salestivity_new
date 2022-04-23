@@ -77,7 +77,7 @@
                     @endif
                   </table>
                                    <hr>
-                <h3 class="text-center mb-5"> Product Reviews </h3>
+                <h3 class="text-center mb-5"> Product Reviews ({!!count($inventory->productReviews)!!}) </h3>
 
 <div class="container mb-5 mt-5">
     @if(isset($reviews) && count($reviews) >=1)

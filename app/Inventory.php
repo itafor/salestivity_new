@@ -35,4 +35,9 @@ class Inventory extends Model
     {
         return $this->belongsTo(Product::class, 'product_id','id');
     }
+
+      public function productReviews()
+    {
+        return $this->hasMany(ProductReview::class, 'inventory_id', 'id');
+    }
 }

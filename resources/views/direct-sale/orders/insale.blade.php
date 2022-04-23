@@ -17,6 +17,8 @@
                         </div>
                     </div>
                     <div class="card-body">
+             @include('alerts.messages')
+
 
         <form method="post" action="{{ route('customer.insale') }}" class='form-group' autocomplete="off">
                             @csrf
@@ -83,6 +85,7 @@
         @if($orderOwner)
 <div class="form-horizontal">
   <strong>{{$orderOwner->name}}</strong> Inventory
+
 </div>
 <br>
 @endif
@@ -91,6 +94,7 @@
                                         <tr>
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Quantity') }}</th>
+                                            <th scope="col">{{ __('Determined Order') }}</th>
                                             <th scope="col">{{ __('Manage') }}</th>
                                         </tr>
                                     </thead>
@@ -102,9 +106,10 @@
                                                 <td>{{ $inventory->product ?  $inventory->product->name : 'N/A' }}</td>
                                                 <td>{{ $inventory->quantity }}</td>
 
+                                                  <td>
+                                    @include('direct-sale.orders.create_order_form')
+                                                  </td>
                                                    <td>
-                                                   
-
                                                             
                                                     <div class="btn-group-justified text-center" role="group">
 
@@ -113,7 +118,8 @@
                                                         </div> 
 
                                                          <div class="btn-group" role="group">
-                                                            <a href="{{ route('inventory.show', [$inventory->id]) }}" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="View"><i class="las la-eye"></i></a>
+                                                            <a href="{{ route('inventory.show', [$inventory->id]) }}" style="margin-right: 5px;" class="" title="View">
+                                                               <!--  <i class="las la-eye"></i> -->{!!count($inventory->productReviews)!!} Reviews</a>
                                                         </div>  
                                                                                                         
                                                     </div>                                                    
