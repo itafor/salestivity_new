@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Inventory;
 use App\ProductReview;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Session;
 
 class InventoryController extends Controller
 {
+    public $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function getInventoryToManage($inventoryId)
     {
     	$inventory =$this->getOneInventory($inventoryId);
@@ -27,6 +36,15 @@ class InventoryController extends Controller
     	if($inventory){
     		$inventory->quantity = $data['quantity'];
     		$inventory->save();
+
+            ;
+
+            $orders = $this->orderService->customerInsale($inventory->customer->id);
+
+            if ($orders) {
+              Session::put('orders', $orders);
+         }
+
 
     		 $status = "Inventory updated successfully!";
                Alert::success('Inventory', $status);

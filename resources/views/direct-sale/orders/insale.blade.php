@@ -41,14 +41,21 @@
 <small class="text-danger">{{$message}}</small>
 @enderror
 
-    <button type="submit" 
-        class="btn-icon" title="Search customer order" 
+    <button type="submit"
+        class="btn-icon" title="Search customer order"
         style="margin-left:-2px;margin-top:-2px;min-height:44px;">
             <i class="las la-search"></i>
      </button>
   </div>
 </form>
    <div class="table-responsive">
+             @if($orderOwner)
+<div class="form-horizontal">
+  <strong>{{$orderOwner->name}}</strong> orders
+</div>
+<br>
+@enderror
+
                                 <table class="table table-bordered align-items-center table-flush datatable">
                                     <thead class="thead-dark">
                                         <tr>
@@ -60,14 +67,14 @@
                                     </thead>
                                     <tbody>
                                         @if(isset($orders) && $orders != '')
-                                           
+
                                             @foreach($orders as $order)
                                             <tr>
                                                 <td>{{ $order->product ?  $order->product->name : 'N/A' }}</td>
                                                 <td>{{ last7DaysOrder($order->customer_id, $order->product_id) }}</td>
                                                 <td>{{ last30DaysOrder($order->customer_id, $order->product_id) }}</td>
                                                 <td>{{ last90DaysOrder($order->customer_id, $order->product_id) }}</td>
-                                               
+
                                             </tr>
                                             @endforeach
                                             @else
@@ -100,7 +107,7 @@
                                     </thead>
                                     <tbody>
                                         @if(isset($customerInventories) && $customerInventories !='')
-                                           
+
                                             @foreach($customerInventories as $inventory)
                                             <tr>
                                                 <td>{{ $inventory->product ?  $inventory->product->name : 'N/A' }}</td>
@@ -110,22 +117,22 @@
                                     @include('direct-sale.orders.create_order_form')
                                                   </td>
                                                    <td>
-                                                            
+
                                                     <div class="btn-group-justified text-center" role="group">
 
                                                        <div class="btn-group" role="group">
                                                             <a onclick="editInventory({{$inventory->id}})" href="#" style="margin-right: 10px;" class="btn-icon btn-tooltip" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_inventory_modal"><i class="las la-edit"></i></a>
-                                                        </div> 
+                                                        </div>
 
                                                          <div class="btn-group" role="group">
                                                             <a href="{{ route('inventory.show', [$inventory->id]) }}" style="margin-right: 5px;" class="" title="View">
                                                                <!--  <i class="las la-eye"></i> -->{!!count($inventory->productReviews)!!} Reviews</a>
-                                                        </div>  
-                                                                                                        
-                                                    </div>                                                    
+                                                        </div>
+
+                                                    </div>
 
                                                 </td>
-                                               
+
                                             </tr>
                                             @endforeach
                                             @else
@@ -134,7 +141,7 @@
                                                     <h3>No data available</h3>
                                                 </td>
                                             </tr>
-                                        
+
                                         @endif
                                     </tbody>
                                 </table>
@@ -143,7 +150,7 @@
                 </div>
             </div>
         </div>
-     
+
      @include('direct-sale.partials.edit_inventory')
 
         @include('layouts.footers.auth')

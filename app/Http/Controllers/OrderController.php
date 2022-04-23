@@ -48,6 +48,12 @@ class OrderController extends Controller
     {
 
     	$input = $request->all();
+
+         $orders = $this->orderService->customerInsale($input['customer_id']);
+
+        if ($orders) {
+        Session::put('orders', $orders);
+       }
         // dd($input);
         $validator = Validator::make($input, [
         	 'customer_id' => 'required|numeric',
@@ -165,7 +171,7 @@ class OrderController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        $orders = $this->orderService->customerInsale($input);
+        $orders = $this->orderService->customerInsale($input['customer_id']);
 
         if ($orders) {
 
