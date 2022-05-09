@@ -143,6 +143,12 @@
                                         </ul>
                                     </div>
                                 </li>
+
+                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('customer.location.create') }}">
+                                        {{ __('Add Location') }}
+                                    </a>
+                                </li>
                               
                             </ul>        
                         </ul>

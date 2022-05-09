@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPhoneToSubUsersTable extends Migration
+class AddLandMarkToAddressCustomer extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddPhoneToSubUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('sub_users', function (Blueprint $table) {
-             $table->string('phone')->nullable();
+        Schema::table('address_customer', function (Blueprint $table) {
+            $table->string('landmark')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddPhoneToSubUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('sub_users', function (Blueprint $table) {
-           Schema::dropIfExists(['phone']);
+        Schema::table('address_customer', function (Blueprint $table) {
+           Schema::dropIfExists(['landmark']);
         });
     }
 }

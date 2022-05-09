@@ -25,6 +25,11 @@ class Customer extends Model
         return $this->hasOne('App\AddressCustomer', 'customer_id','id');
     }
 
+    public function locations()
+    {
+        return $this->hasMany('App\AddressCustomer', 'customer_id','id');
+    }
+
      public function customerIndustry()
     {
         return $this->belongsTo('App\Industry', 'industry','id');

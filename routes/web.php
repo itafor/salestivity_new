@@ -435,6 +435,19 @@ Route::group([
 });
 
 
+Route::group([
+'prefix' => 'location'], function () {
+    Route::get('/lists', 'CustomerLocationController@index')->name('customer.location.index');
+    Route::post('/store', 'CustomerLocationController@storeCustomerLocation')->name('customer.location.store');
+    Route::post('/update', 'CustomerLocationController@update')->name('customer.location.update');
+    Route::get('/show/{location}', 'CustomerLocationController@show')->name('customer.location.show');
+    Route::get('/create', 'CustomerLocationController@createLocation')->name('customer.location.create');
+    Route::get('/destroy/{location}', 'CustomerLocationController@destroy')->name('customer.location.destroy');
+
+});
+
+
+
 //billing receipt confirmation
     Route::get('billing/invoice/{invoicceId}/confirm', 'RenewalController@confirmRecurringInvoiceReceipt')->name('recurring.billing.confirm');
 

@@ -11,7 +11,12 @@ class AddressCustomer extends Model
     
     protected $table = 'address_customer';
 
-    public function customer()
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'main_acct_id', 'id');
+    }
+
+     public function customer()
     {
         return $this->belongsTo('App\Customer', 'customer_id');
     }
