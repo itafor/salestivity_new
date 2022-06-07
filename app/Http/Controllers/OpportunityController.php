@@ -272,7 +272,7 @@ class OpportunityController extends Controller
     switch ($id) {
         case 1:
             $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type', 'users']
             ])->get();
 
@@ -288,7 +288,7 @@ class OpportunityController extends Controller
        break;
        case 2:
               $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type', 'users']
             ])->whereBetween('closure_date', [$today->copy()->startOfMonth(), $today->copy()->endOfMonth()])->get();
 
@@ -305,7 +305,7 @@ class OpportunityController extends Controller
         case 3:
 
            $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type','users']
             ])->whereBetween('closure_date', [$today->copy()->addMonth(1)->startOfMonth(), $today->copy()->endOfMonth()->addMonth(1)])->get();
 
@@ -323,7 +323,7 @@ class OpportunityController extends Controller
         $user = SubUser::where('email',Auth::user()->email)->first();
 
             $opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type','users']
             ])->where('owner_id', $user->id)->get();
             return view('opportunity.myopp', compact('opportunities'));
@@ -332,7 +332,7 @@ class OpportunityController extends Controller
        case 5:
 
         $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type','users']
             ])->where('status', '=', 'Closed Won')->get();
 
@@ -348,7 +348,7 @@ class OpportunityController extends Controller
 
      case 6:
             $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type','users']
             ])->where('status', '=', 'Closed Lost')->get();
 
@@ -364,7 +364,7 @@ class OpportunityController extends Controller
 
          case 7:
             $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type','users']
             ])->where([
                 ['status', '!=', 'Closed Lost'],

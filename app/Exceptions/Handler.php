@@ -47,13 +47,13 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
             // dd($exception->getMessage());
-    if ($exception->getMessage() == "Unauthenticated.") {
-        return parent::render($request, $exception);
+    // if ($exception->getMessage() == "Unauthenticated.") {
+    //     return parent::render($request, $exception);
            
-    }elseif ($exception) {
-        return redirect()->route('non.http.errors');
+    // }elseif ($exception) {
+    //     return redirect()->route('non.http.errors');
         
-    }
+    // }
     
     
         return parent::render($request, $exception);
