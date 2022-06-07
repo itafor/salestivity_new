@@ -69,7 +69,7 @@ class OpportunityController extends Controller
              $idsOfUsersUnderParentUser =   array_merge($combinedArray, $usersThatreportsToParentUser);
 
                $parent_user_opportunities = Opportunity::where([
-                ['owner_id', $userId],
+                ['main_acct_id', $userId],
                 ['user_type', 'users'],
                 ['status', '!=', 'Closed Lost'],
                 ['status', '!=', 'Closed Won']
