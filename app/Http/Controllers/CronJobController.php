@@ -119,7 +119,7 @@ public static function notifyCustomer($renewal){
         ['end_date', '<=', Carbon::now()],
       ])->get();
    
-   dd($renewals);
+   // dd($renewals);
 
        foreach($renewals as $renewal) {
 
@@ -155,12 +155,14 @@ public static function notifyCustomer($renewal){
         $new_renewal->company_bank_acc_id = $renewal->company_bank_acc_id;
         $new_renewal->save();   
 
-        if($new_renewal){
+         if(isset($contactEmails) && !empty($contactEmails) && $new_renewal){
            Renewal::createRenewalContactEmail($new_renewal,$contactEmails);
+        }
+        
+        if($new_renewal){
            Renewal::createRenewalReminderDuration($data, $new_renewal);
            self::modify_renewal_renew_status($renewal);
         }
-           
     }
  }
 
