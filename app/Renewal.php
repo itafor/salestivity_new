@@ -202,7 +202,7 @@ class Renewal extends Model
  public static function createRenewalContactEmail($renewal,$contactEmails) {
 
    
-    if($contactEmails !='' && $contactEmails[0] != null){
+    if($contactEmails !=''){
     foreach ($contactEmails as $key => $contactEmail) {
        $renewalContact = new renewalContactEmail();
        $renewalContact->contact_id = isset($contactEmail['contact_id']) ? $contactEmail['contact_id'] : $contactEmail;
