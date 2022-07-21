@@ -118,7 +118,8 @@ public static function notifyCustomer($renewal){
         ['renew_status', null],
         ['end_date', '<=', Carbon::now()],
       ])->get();
-   // dd($renewals);
+   
+   dd($renewals);
 
        foreach($renewals as $renewal) {
 
