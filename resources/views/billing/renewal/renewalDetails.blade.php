@@ -296,6 +296,7 @@
                             <div class="row">
                                      <div class="col-8 d-flex mt-2">
                                         
+                                @if($update->user)
                                 @if(loginUserId() == $update->user->id)
                                
                                         <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; <i class="fa fa-edit" aria-hidden="true" title="Edit renewal update"></i> </span>&nbsp;&nbsp;
@@ -304,6 +305,7 @@
 
                                          <span onclick="editRenewalUpdate({{$update->id}})" style="cursor: pointer;">&nbsp;&nbsp; </span>&nbsp;&nbsp;
 
+                                @endif
                                 @endif
                           </div>
                           <div class="col-4">
