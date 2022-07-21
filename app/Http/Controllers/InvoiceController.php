@@ -625,4 +625,37 @@ class InvoiceController extends Controller
       return $pdf->download($documentName);
   }
    }
+
+    public function filterInvoiceBystartDate(Request $request)
+    {
+        $validator = $request->validate([
+            "start_date" => "required|string",
+        ]);
+        $startDate = $validator['start_date'];
+        $start_date = Carbon::parse(formatDate($validator['start_date'], 'd/m/Y', 'Y-m-d'));
+        // return $start_date;
+
+       $invoices = Invoice::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+        ])->whereDate('created_at', '=', $start_date)->orderBy('created_at', 'asc')->with(['customers','prod'])->get();
+
+        return view('billing.invoice.all', compact('invoices','startDate'));
+    }
+
+     public function filterInvoiceByEndDate(Request $request)
+    {
+        $validator = $request->validate([
+            "end_date" => "required|string",
+        ]);
+        $endDate = $validator['end_date'];
+        $end_date = Carbon::parse(formatDate($validator['end_date'], 'd/m/Y', 'Y-m-d'));
+        // return $end_date;
+
+       $invoices = Invoice::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['due_date', $end_date]
+        ])->orderBy('due_date', 'asc')->with(['customers','prod'])->get();
+
+        return view('billing.invoice.all', compact('invoices','endDate'));
+    }
 }

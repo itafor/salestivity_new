@@ -452,4 +452,36 @@ class RenewalController extends Controller
         $products = Product::where('main_acct_id', $userId)->get();
         return view('billing.renewal.manage', compact('renewal', 'customers', 'products', 'categories', 'sub_categories'));
     }
+
+    public function filterRecurringInvoiceBystartDate(Request $request)
+    {
+        $validator = $request->validate([
+            "start_date" => "required|string",
+        ]);
+        $startDate = $validator['start_date'];
+        $start_date = Carbon::parse(formatDate($validator['start_date'], 'd/m/Y', 'Y-m-d'));
+
+       $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['start_date', $start_date]
+        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+
+        return view('billing.renewal.all', compact('renewals','startDate'));
+    }
+
+     public function filterRecurringInvoiceByEndDate(Request $request)
+    {
+        $validator = $request->validate([
+            "end_date" => "required|string",
+        ]);
+        $endDate = $validator['end_date'];
+        $end_date = Carbon::parse(formatDate($validator['end_date'], 'd/m/Y', 'Y-m-d'));
+
+       $renewals = Renewal::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['end_date', $end_date]
+        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+
+        return view('billing.renewal.all', compact('renewals','endDate'));
+    }
 }

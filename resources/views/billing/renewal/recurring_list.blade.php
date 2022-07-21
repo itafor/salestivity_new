@@ -1,5 +1,45 @@
                 
 
+
+        
+
+    <div class="row">
+       <div class="col">
+
+      <form action="{{route('renewal.filter.startdate')}}" method="post" class="form-inline" autocomplete="off">
+      @csrf
+      <div class="form-group mb-2 mr-1">
+      <label for="start_date" >Filter by start date</label>
+      <input type="text" class="form-control-plaintext" name="start_date" placeholder="{{ __('Filter by start date') }}"  data-toggle="datepicker" value="{{ isset($startDate) ? $startDate :'' }}" required>
+       @if ($errors->has('start_date'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('start_date') }}</strong>
+            </span>
+        @endif
+      </div>
+      <button type="submit" class="btn mb--3">Filter</button>
+      </form>
+      </div> 
+
+       <div class="col">
+       <form action="{{route('renewal.filter.enddate')}}" method="post" class="form-inline" autocomplete="off">
+      @csrf
+      <div class="form-group mb-2 mr-1">
+      <label for="reply_to_email" >Filter by end date</label>
+      <input type="text" class="form-control-plaintext" name="end_date" placeholder="{{ __('Filter by end date') }}"  data-toggle="datepicker" value="{{ isset($endDate) ? $endDate :'' }}"  required>
+       @if ($errors->has('end_date'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('end_date') }}</strong>
+            </span>
+        @endif
+      </div>
+      <button type="submit" class="btn mb--3">Filter</button>
+      </form>
+      </div> 
+      </div> 
+
+<br>
+
                 @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('status') }}
@@ -16,6 +56,7 @@
                 <tr>
                 <!-- <th ><b>{{ __('ID') }}</b></th> -->
                 <th ><b>{{ __('Due Date') }}</b></th>
+                <!-- <th ><b>{{ __('Start Date') }}</b></th> -->
                 <th class="word-wrap"><b>{{ __('Customer') }}</b></th>
                 <th ><b>{{ __('Product') }}</b></th>
                 <th ><b>{{ __('Amount') }}</b></th>
@@ -45,6 +86,7 @@
                 <tr>
 
                 <td>{{ date('Y/m/d', strtotime($renewal->end_date)) }}</td>
+                <!-- <td>{{ date('Y/m/d', strtotime($renewal->start_date)) }}</td> -->
                
 
 

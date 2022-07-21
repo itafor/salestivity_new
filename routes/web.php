@@ -171,6 +171,9 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
     Route::get('resend/invoice-payment/receipt/{id}', 'InvoiceController@resendInvoicePaymentReceipt')->name('resend.invoice.payment.receipt');
     Route::get('download/invoice-payment/receipt/{id}', 'InvoiceController@downloadInvoicePaymentReceipt')->name('download.invoice.payment.receipt');
 
+     Route::post('invoice/filter/by-start-date', 'InvoiceController@filterInvoiceBystartDate')->name('invoice.filter.startdate');
+    Route::post('invoice/filter/by-end-date', 'InvoiceController@filterInvoiceByEndDate')->name('invoice.filter.enddate');
+
     // Renewal
     Route::get('billing/renewal', ['as' => 'billing.renewal.index', 'uses' => 'RenewalController@index']);
     Route::get('billing/renewal/new', ['as' => 'billing.renewal.create', 'uses' => 'RenewalController@create']);
@@ -194,6 +197,10 @@ Route::group(['middleware' => ['auth:sub_user,web']], function () {
 
     Route::get('resend/payment/receipt/{id}', 'RenewalController@resendRenwalPaymentReceipt')->name('resend.renewal.payment.receipt');
     Route::get('download/payment/receipt/{id}', 'RenewalController@downloadRenewalPaymentReceipt')->name('download.renewal.payment.receipt');
+
+    Route::post('renewal/filter/by-start-date', 'RenewalController@filterRecurringInvoiceBystartDate')->name('renewal.filter.startdate');
+    Route::post('renewal/filter/by-end-date', 'RenewalController@filterRecurringInvoiceByEndDate')->name('renewal.filter.enddate');
+
 
 
     //renewal updates
