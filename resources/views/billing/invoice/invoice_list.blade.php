@@ -1,37 +1,38 @@
 
-   <div class="row">
+    <div class="row">
+
+      <form action="{{route('search.invoice.by.start.end.date')}}" method="post" class="form-inline" autocomplete="off">
+      @csrf
        <div class="col">
 
-      <form action="{{route('invoice.filter.startdate')}}" method="post" class="form-inline" autocomplete="off">
-      @csrf
       <div class="form-group mb-2 mr-1">
-      <label for="start_date" >Filter by start date</label>
-      <input type="text" class="form-control-plaintext" name="start_date" placeholder="{{ __('Filter by start date') }}"  data-toggle="datepicker" value="{{ isset($startDate) ? $startDate :'' }}" required>
+      <label for="start_date" >Start Date</label>
+      <input type="text" class="form-control-plaintext" name="start_date" placeholder="{{ __('Enter start date') }}"  data-toggle="datepicker" value="{{ isset($startDate) ? $startDate :'' }}" required>
        @if ($errors->has('start_date'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('start_date') }}</strong>
             </span>
         @endif
       </div>
-      <button type="submit" class="btn mb--3">Filter</button>
-      </form>
       </div> 
-
        <div class="col">
-       <form action="{{route('invoice.filter.enddate')}}" method="post" class="form-inline" autocomplete="off">
-      @csrf
       <div class="form-group mb-2 mr-1">
-      <label for="reply_to_email" >Filter by end date</label>
-      <input type="text" class="form-control-plaintext" name="end_date" placeholder="{{ __('Filter by end date') }}"  data-toggle="datepicker" value="{{ isset($endDate) ? $endDate :'' }}"  required>
+      <label for="reply_to_email" >End Date</label>
+      <input type="text" class="form-control-plaintext" name="end_date" placeholder="{{ __('Enter end date') }}"  data-toggle="datepicker" value="{{ isset($endDate) ? $endDate :'' }}"  required>
        @if ($errors->has('end_date'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('end_date') }}</strong>
             </span>
         @endif
       </div>
-      <button type="submit" class="btn mb--3">Filter</button>
-      </form>
       </div> 
+      <div class="col">
+      <button type="submit" class="btn mb--3">Search</button>
+      </div>
+
+
+      </form>
+
       </div> 
 
 <br>
