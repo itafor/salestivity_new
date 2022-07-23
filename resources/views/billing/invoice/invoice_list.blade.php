@@ -7,7 +7,7 @@
 
       <div class="form-group mb-2 mr-1">
       <label for="start_date" >Start Date</label>
-      <input type="text" class="form-control-plaintext" name="start_date" placeholder="{{ __('Enter start date') }}"  data-toggle="datepicker" value="{{ isset($startDate) ? $startDate :'' }}" required>
+      <input type="text" class="form-control-plaintext" id="startDate" name="start_date" placeholder="{{ __('Enter start date') }}"  data-toggle="datepicker" value="{{ isset($startDate) ? $startDate :'' }}" required>
        @if ($errors->has('start_date'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('start_date') }}</strong>
@@ -18,7 +18,7 @@
        <div class="col">
       <div class="form-group mb-2 mr-1">
       <label for="reply_to_email" >End Date</label>
-      <input type="text" class="form-control-plaintext" name="end_date" placeholder="{{ __('Enter end date') }}"  data-toggle="datepicker" value="{{ isset($endDate) ? $endDate :'' }}"  required>
+      <input type="text" class="form-control-plaintext" id="endDate" name="end_date" placeholder="{{ __('Enter end date') }}"  data-toggle="datepicker" value="{{ isset($endDate) ? $endDate :'' }}"  required>
        @if ($errors->has('end_date'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('end_date') }}</strong>
@@ -28,6 +28,7 @@
       </div> 
       <div class="col">
       <button type="submit" class="btn mb--3">Search</button>
+      <button type="reset" onclick="clearStartEndDate()" class="btn btn-danger mb--3">Clear</button>
       </div>
 
 
@@ -117,3 +118,13 @@
 </div>
 
 </div>
+
+ <script type="text/javascript">
+                  function clearStartEndDate() {
+                    $(document).ready(function() {
+                      $('#startDate').val(''); 
+                      $('#endDate').val(''); 
+                      });
+                  
+                  }
+                </script>

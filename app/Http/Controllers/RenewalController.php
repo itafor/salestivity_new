@@ -468,9 +468,9 @@ class RenewalController extends Controller
 
        $renewals = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['start_date', '>=', $start_date],
-            ['end_date', '<=', $end_date]
-        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+        ])
+       ->whereBetween('end_date', [$start_date, $end_date])
+       ->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
 
         return view('billing.renewal.all', compact('renewals','startDate','endDate'));
     }

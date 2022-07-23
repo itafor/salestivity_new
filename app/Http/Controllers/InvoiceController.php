@@ -641,9 +641,9 @@ class InvoiceController extends Controller
 
        $invoices = Invoice::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
-             ['created_at', '>=', $start_date],
-            ['due_date', '<=', $end_date]
-        ])->orderBy('created_at', 'asc')->with(['customers','prod'])->get();
+        ])
+       ->whereBetween('due_date', [$start_date, $end_date])
+       ->orderBy('created_at', 'asc')->with(['customers','prod'])->get();
 
         return view('billing.invoice.all', compact('invoices','startDate','endDate'));
     }
