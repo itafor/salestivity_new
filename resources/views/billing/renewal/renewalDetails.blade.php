@@ -74,6 +74,7 @@
                     <div class="card-body">
                                 <table class="table table-bordered" style="background-color: #ffffff;">
            @if(isset($renewal))
+
                     <tbody>
                    <tr>
                      <td style="width: 200px;"><b>{{ __('Invoice Number') }}</b></td>

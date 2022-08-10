@@ -13,15 +13,16 @@ class SendInvoice extends Mailable
     use Queueable, SerializesModels;
 
     public $invoice;
-
+    public $contactEmails;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($invoice)
+    public function __construct($invoice, $contactEmails)
     {
         $this->invoice = $invoice;
+        $this->contactEmails = $contactEmails;
     }
 
     /**
@@ -49,7 +50,8 @@ class SendInvoice extends Mailable
         ->replyTo(getReplyToEmailAddress($this->invoice))
         ->attachData($pdf->output(), $documentName)
         ->subject('Invoice Notification')
-        ->cc(getUserCCEmailAddress($this->invoice));
+        ->cc($this->contactEmails ?? $this->contactEmails);
+        // ->cc(getUserCCEmailAddress($this->invoice));
         
     }
 }

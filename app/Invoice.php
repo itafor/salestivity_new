@@ -35,6 +35,10 @@ class Invoice extends Model
         return $this->hasMany(InvoicePayment::class,'invoice_id','id');
     }
 
+     public function contacts(){
+        return $this->hasMany(InvoiceContact::class,'invoice_id','id');
+    }
+
       public function user()
     {
         return $this->belongsTo('App\User', 'main_acct_id');

@@ -11,6 +11,7 @@ use App\Customer;
 use App\Http\Services\Billing\BillingInvoiceServices;
 use App\Http\Traits\InvoiceBillStatus;
 use App\Invoice;
+use App\InvoiceContact;
 use App\InvoicePayment;
 use App\MailFromName;
 use App\Mail\InvoicePaid;
@@ -123,7 +124,6 @@ class InvoiceController extends Controller
         ['main_acct_id', getActiveGuardType()->main_acct_id],
       ])->get();
 
-       
         $data['categories'] = Category::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
@@ -157,6 +157,9 @@ class InvoiceController extends Controller
     {
         $guard_object = \getActiveGuardType();
         $input = $request->all();
+
+        $contactEmails = isset($input['contact_emails']) ? $input['contact_emails'] : '' ;
+
         // dd($input);
         $rules = [
             
@@ -232,11 +235,27 @@ class InvoiceController extends Controller
 
             $this->billing_invoice->storeInvoiceProducts($input, $invoice);
 
+           self::createInvoiceContactEmail($invoice,$contactEmails);
+
+           $contactEmails = [];
+
+           $contactEmails[]= getUserCCEmailAddress($invoice);
+            // dd($invoice->contacts);
+            if($invoice->contacts != null){
+        foreach ($invoice->contacts as $key => $contact) {
+             if($contact->contact_id != null){
+           $contactEmails[] = $contact->user->email;
+       }
+        }
+        }
+
             $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->queue(new SendInvoice($invoice));
+            Mail::to($toEmail)->queue(new SendInvoice($invoice, $contactEmails));
 
             self::update_invoice_bill_status_to_sent($invoice);
+
+
 
             $status = "New Invoice has been Added ";
             Alert::success('Invoice', $status);
@@ -247,6 +266,21 @@ class InvoiceController extends Controller
         Alert::error('Invoice', 'This action could not be completed');
         return back()->withInput()->withErrors($validator);
     }
+
+     public static function createInvoiceContactEmail($invoice,$contactEmails) {
+
+   
+    if($contactEmails !=''){
+    foreach ($contactEmails as $key => $contactEmail) {
+       $invoiceContact = new InvoiceContact();
+       $invoiceContact->contact_id = isset($contactEmail['contact_id']) ? $contactEmail['contact_id'] : $contactEmail;
+       $invoiceContact->invoice_id = $invoice->id;
+       $invoiceContact->save();
+    }
+
+  }
+
+ }
 
     /**
      * Display the specified resource.
