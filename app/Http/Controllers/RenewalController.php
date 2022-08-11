@@ -2,24 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\BillingAgent;
 use App\CarbonCopyEmail;
 use App\Category;
 use App\CompanyAccountDetail;
 use App\CompanyEmail;
-use App\Contact;
 use App\CurrencySymbol;
 use App\Customer;
-use App\Http\Controllers\CronJobController;
 use App\Http\Traits\RecurringBillStatus;
 use App\Http\Traits\RenewalInvoiceTrait;
 use App\Http\Traits\RenewalPaymentTrait;
-use App\Jobs\SendRenewalPaymentNotification;
-use App\MailFromName;
-use App\Mail\ConfirmRecurringInvoiceRecceipt;
-use App\Mail\RenewalPaid;
-use App\Notifications\RenewalCreated;
-use App\Payment;
 use App\Product;
 use App\Renewal;
 use App\RenewalPayment;
@@ -27,14 +18,11 @@ use App\RenewalUpdate;
 use App\ReplyToEmail;
 use App\SubCategory;
 use App\User;
-use App\renewalContactEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use PDF;
 use RealRashid\SweetAlert\Facades\Alert;
-use Session;
 use Validator;
 
 class RenewalController extends Controller
@@ -43,22 +31,22 @@ class RenewalController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','mainuserVerified','subuserVerified'])->except(['confirmRecurringInvoiceReceipt']);
+        $this->middleware(['auth', 'mainuserVerified', 'subuserVerified'])->except(['confirmRecurringInvoiceReceipt']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-   
+
     public function index()
     {
         $data['renewals'] = Renewal::where([
             ['main_acct_id', getActiveGuardType()->main_acct_id],
             ['status', '!=', 'Paid'],
-        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+        ])->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
         // dd($data['renewals']);
-        return view('billing.renewal.index', $data);
+        return view('billing.renewal.outstanding', $data);
     }
 
     public function getBillingRenewals($id)
@@ -66,54 +54,54 @@ class RenewalController extends Controller
         switch ($id) {
             case 'all':
                 $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                ])->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
 
-        return view('billing.renewal.all', compact('renewals'));
+                return view('billing.renewal.all', compact('renewals'));
 
                 break;
-     case 'Pending':
+            case 'Pending':
                 $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Pending']
-        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
-        return view('billing.renewal.pending', compact('renewals'));
-                
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Pending'],
+                ])->orderby('end_date', 'asc')->with(['customers', 'prod'])->get();
+                return view('billing.renewal.pending', compact('renewals'));
+
                 break;
-     case 'paid':
+            case 'paid':
                 $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Paid']
-        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
-        return view('billing.renewal.paid', compact('renewals'));
-                
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Paid'],
+                ])->orderby('end_date', 'asc')->with(['customers', 'prod'])->get();
+                return view('billing.renewal.paid', compact('renewals'));
+
                 break;
-       case 'partly_paid':
+            case 'partly_paid':
                 $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', 'Partly paid']
-        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
-        return view('billing.renewal.partly_paid', compact('renewals'));
-                
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Partly paid'],
+                ])->orderby('end_date', 'asc')->with(['customers', 'prod'])->get();
+                return view('billing.renewal.partly_paid', compact('renewals'));
+
                 break;
-       case 'outstanding':
+            case 'outstanding':
                 $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-            ['status', '!=', 'Paid'],
-        ])->orderby('end_date', 'asc')->with(['customers','prod'])->get();
-        return view('billing.renewal.outstanding', compact('renewals'));
-                
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', '!=', 'Paid'],
+                ])->orderby('end_date', 'asc')->with(['customers', 'prod'])->get();
+                return view('billing.renewal.outstanding', compact('renewals'));
+
                 break;
-     case 'due':
-            $renewals = Renewal::where([
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ['billingBalance', '>', 0],
-    ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)
-    ->orderby('end_date', 'asc')->with(['customers','prod'])->get();
-    return view('billing.renewal.due', compact('renewals'));
-            
-            break;
-            
+            case 'due':
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['billingBalance', '>', 0],
+                ])->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)
+                    ->orderby('end_date', 'asc')->with(['customers', 'prod'])->get();
+                return view('billing.renewal.due', compact('renewals'));
+
+                break;
+
             default:
                 # code...
                 break;
@@ -127,7 +115,7 @@ class RenewalController extends Controller
     public function create()
     {
         $guard_object = getActiveGuardType();
-         $data['currencies'] = CurrencySymbol::all();
+        $data['currencies'] = CurrencySymbol::all();
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['products'] = Product::where([
@@ -137,22 +125,20 @@ class RenewalController extends Controller
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
 
         $data['mail_from_name'] = User::where([
-                ['id', getActiveGuardType()->main_acct_id],
+            ['id', getActiveGuardType()->main_acct_id],
         ])->first();
 
-         $data['reply_to_emails'] = ReplyToEmail::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        $data['reply_to_emails'] = ReplyToEmail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
-       $data['cc_emails'] = CarbonCopyEmail::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        $data['cc_emails'] = CarbonCopyEmail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
-
 
         return view('billing.renewal.create', $data);
     }
 
-    
     public function store(Request $request)
     {
         //dd($request->all());
@@ -166,11 +152,11 @@ class RenewalController extends Controller
             'description' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
-            'duration_type' =>'required',
+            'duration_type' => 'required',
             // 'company_email_id' =>'required',
-            'company_bank_acc_id' =>'required',
-            'currency_id' =>'required',
-            'reply_to_email_id' =>'required',
+            'company_bank_acc_id' => 'required',
+            'currency_id' => 'required',
+            'reply_to_email_id' => 'required',
             // 'mail_from_name_id' =>'required',
         ]);
 
@@ -197,15 +183,14 @@ class RenewalController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            
+
             Alert::error('Renewal Addition Failed', 'An attempt to add renewal failed');
             return back()->withInput();
         }
-        
+
         Alert::success('Add Renewal', 'Renewal added successfully');
         return redirect()->route('billing.renewal.index');
     }
-
 
     public function mail()
     {
@@ -220,22 +205,22 @@ class RenewalController extends Controller
      */
     public function show($id, $status, $navStatus)
     {
-        $renewalPayments='';
+        $renewalPayments = '';
         $renewal = Renewal::where([
             ['id', $id],
-            ['main_acct_id', getActiveGuardType()->main_acct_id]
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->first();
         // dd($renewal);
 
         $maxId = 0;
         $minId = 0;
         $currentId = $id;
-        
+
         if ($renewal) {
             $renewalPayments = RenewalPayment::where('renewal_id', $renewal->id)->get();
         }
         $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at', 'desc')->paginate(10);
-       
+
         return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId', 'currentId'));
     }
 
@@ -245,11 +230,11 @@ class RenewalController extends Controller
      * @param mixed $status
      * @param mixed $navStatus
      *
-      * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function navigateRenewals($id, $status, $navStatus)
     {
-        $renewalPayments='';
+        $renewalPayments = '';
 
         $maxId = 0;
         $minId = 0;
@@ -257,56 +242,55 @@ class RenewalController extends Controller
         if ($status == "partly_paid" && $navStatus == "next") {
             $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('Partly paid');
             $renewal = Renewal::where([
-        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
-        ['status', 'Partly paid'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+                $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id],
+                ['status', 'Partly paid'],
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'asc')->with(['customers', 'prod'])->first();
         } elseif ($status == "Pending" && $navStatus == "next") {
             $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('Pending');
             $renewal = Renewal::where([
-        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
-        ['status', 'Pending'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+                $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id],
+                ['status', 'Pending'],
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'asc')->with(['customers', 'prod'])->first();
         } elseif ($status == "paid" && $navStatus == "next") {
             $maxId = $this->getPaidPartlyPaidPendingRenewalMaxId('paid');
             $renewal = Renewal::where([
-        $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id] ,
-            ['status', 'Paid'],
+                $maxId == $id ? ['id', '>=', $id] : ['id', '>', $id],
+                ['status', 'Paid'],
 
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'asc')->with(['customers','prod'])->first();
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'asc')->with(['customers', 'prod'])->first();
         } elseif ($status == "partly_paid" && $navStatus == "previous") {
-            $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Partly paid');
+            $minId = $this->getPaidPartlyPaidPendingRenewalMinId('Partly paid');
             $renewal = Renewal::where([
-         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
-            ['status', 'Partly paid'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+                $minId == $id ? ['id', '<=', $id] : ['id', '<', $id],
+                ['status', 'Partly paid'],
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'desc')->with(['customers', 'prod'])->first();
         } elseif ($status == "Pending" && $navStatus == "previous") {
-            $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Pending');
+            $minId = $this->getPaidPartlyPaidPendingRenewalMinId('Pending');
             $renewal = Renewal::where([
-         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
-            ['status', 'Pending'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+                $minId == $id ? ['id', '<=', $id] : ['id', '<', $id],
+                ['status', 'Pending'],
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'desc')->with(['customers', 'prod'])->first();
         } elseif ($status == "paid" && $navStatus == "previous") {
-            $minId =  $this->getPaidPartlyPaidPendingRenewalMinId('Paid');
+            $minId = $this->getPaidPartlyPaidPendingRenewalMinId('Paid');
             $renewal = Renewal::where([
-         $minId == $id ? ['id', '<=', $id] : ['id', '<', $id] ,
-            ['status', 'Paid'],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])->orderBy('id', 'desc')->with(['customers','prod'])->first();
+                $minId == $id ? ['id', '<=', $id] : ['id', '<', $id],
+                ['status', 'Paid'],
+                ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ])->orderBy('id', 'desc')->with(['customers', 'prod'])->first();
         }
 
         if ($renewal) {
             $renewalPayments = RenewalPayment::where('renewal_id', $renewal->id)->get();
         }
         $renewal_updates = RenewalUpdate::where('renewal_id', $id)->orderBy('created_at', 'desc')->paginate(10);
-       
+
         return view('billing.renewal.show', compact('renewal', 'renewalPayments', 'renewal_updates', 'maxId', 'minId', 'currentId'));
     }
-
 
     /**
      * Get paid, partly paid and pending renewal with the highest id
@@ -318,7 +302,7 @@ class RenewalController extends Controller
     {
         return Renewal::where([
             ['status', $status],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->max('id');
     }
 
@@ -332,11 +316,9 @@ class RenewalController extends Controller
     {
         return Renewal::where([
             ['status', $status],
-        ['main_acct_id', getActiveGuardType()->main_acct_id],
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->min('id');
     }
-
-  
 
     /**
      * Show the form for editing the specified resource.
@@ -347,7 +329,7 @@ class RenewalController extends Controller
     public function edit($id)
     {
         $userId = auth()->user()->id;
-          $data['currencies'] = CurrencySymbol::all();
+        $data['currencies'] = CurrencySymbol::all();
         $data['categories'] = Category::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['customers'] = Customer::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['renewal'] = Renewal::where('id', $id)->first();
@@ -357,19 +339,19 @@ class RenewalController extends Controller
 
         $data['companyEmails'] = CompanyEmail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
         $data['companyBankDetails'] = CompanyAccountDetail::where('main_acct_id', getActiveGuardType()->main_acct_id)->get();
-        
+
         $data['product'] = $data['renewal']->prod;
 
         $data['mail_from_name'] = User::where([
-                ['id', getActiveGuardType()->main_acct_id],
+            ['id', getActiveGuardType()->main_acct_id],
         ])->first();
 
-         $data['reply_to_emails'] = ReplyToEmail::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        $data['reply_to_emails'] = ReplyToEmail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
-          $data['cc_emails'] = CarbonCopyEmail::where([
-                ['main_acct_id', getActiveGuardType()->main_acct_id],
+        $data['cc_emails'] = CarbonCopyEmail::where([
+            ['main_acct_id', getActiveGuardType()->main_acct_id],
         ])->get();
 
         return view('billing.renewal.edit', $data);
@@ -396,12 +378,12 @@ class RenewalController extends Controller
             'productPrice' => 'required|numeric',
             'billingAmount' => 'required|numeric',
             'description' => 'required',
-            'duration_type' =>'required',
+            'duration_type' => 'required',
             // 'company_email_id' =>'required',
-            'company_bank_acc_id' =>'required',
-            'reply_to_email_id' =>'required',
+            'company_bank_acc_id' => 'required',
+            'reply_to_email_id' => 'required',
             // 'mail_from_name_id' =>'required',
-            'cc_email_id' =>'required',
+            'cc_email_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -420,13 +402,13 @@ class RenewalController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            
+
             Alert::error('Renewal Update Failed', 'An attempt to edit the selected renewal failed');
             return back()->withInput();
         }
-        
+
         Alert::success('Renewal Update successful', 'Renewal updated successfully');
-        return back();//redirect()->route('billing.renewal.show', $request->renewal_id);
+        return back(); //redirect()->route('billing.renewal.show', $request->renewal_id);
     }
 
     /**
@@ -455,24 +437,104 @@ class RenewalController extends Controller
 
     public function filterRecurringInvoiceBystartEndDate(Request $request)
     {
+
         $validator = $request->validate([
             "start_date" => "required|string",
             "end_date" => "required|string",
+            "status" => "required|string",
         ]);
+
+
         $startDate = $validator['start_date'];
         $endDate = $validator['end_date'];
+        $status = $validator['status'];
 
         $start_date = Carbon::parse(formatDate($validator['start_date'], 'd/m/Y', 'Y-m-d'));
         $end_date = Carbon::parse(formatDate($validator['end_date'], 'd/m/Y', 'Y-m-d'));
+        // $renewals = Renewal::where([
+        //      ['main_acct_id', getActiveGuardType()->main_acct_id],
+        //  ])
+        // ->whereBetween('end_date', [$start_date, $end_date])
+        // ->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
 
+        //  return view('billing.renewal.all', compact('renewals','startDate','endDate'));
 
-       $renewals = Renewal::where([
-            ['main_acct_id', getActiveGuardType()->main_acct_id],
-        ])
-       ->whereBetween('end_date', [$start_date, $end_date])
-       ->orderBy('end_date', 'asc')->with(['customers','prod'])->get();
+        switch ($status) {
+            case 'all':
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
 
-        return view('billing.renewal.all', compact('renewals','startDate','endDate'));
+                return view('billing.renewal.all', compact('renewals', 'startDate', 'endDate'));
+
+                break;
+            case 'pending':
+
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Pending'],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
+
+                return view('billing.renewal.pending', compact('renewals', 'startDate', 'endDate'));
+
+                break;
+            case 'paid':
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Paid'],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
+
+                return view('billing.renewal.paid', compact('renewals', 'startDate', 'endDate'));
+
+                break;
+
+            case 'partly_paid':
+
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', 'Partly paid'],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
+
+                return view('billing.renewal.partly_paid', compact('renewals', 'startDate', 'endDate'));
+                break;
+            case 'outstanding':
+
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['status', '!=', 'Paid'],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
+
+                return view('billing.renewal.outstanding', compact('renewals', 'startDate', 'endDate'));
+
+                break;
+            case 'due':
+
+                $renewals = Renewal::where([
+                    ['main_acct_id', getActiveGuardType()->main_acct_id],
+                    ['billingBalance', '>', 0],
+                ])
+                    ->whereBetween('end_date', [$start_date, $end_date])
+                    ->where(DB::raw('TIMESTAMPDIFF(DAY,CURDATE(),renewals.end_date)'), '<', 60)
+                    ->orderBy('end_date', 'asc')->with(['customers', 'prod'])->get();
+
+                return view('billing.renewal.due', compact('renewals', 'startDate', 'endDate'));
+
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
 }

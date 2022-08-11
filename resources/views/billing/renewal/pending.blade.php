@@ -41,7 +41,12 @@
                             <div class="col-xl-6"></div>
 
                         <div class="col-12">
-                           
+                             <?php   
+                 
+                         $status = "pending";
+
+                     ?> 
+    @include('billing.renewal.filterRenewal')
                             @include('billing.renewal.recurring_list')
 
                         </div>

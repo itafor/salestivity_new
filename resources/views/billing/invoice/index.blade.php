@@ -43,6 +43,13 @@
                             <div class="col-xl-6"></div>
 
                         <div class="col-12">
+
+                             <?php   
+                 
+                             $status = "outstanding";
+
+                           ?> 
+                            @include('billing.invoice.filterInvoice')
                             @include('billing.invoice.invoice_list')
                          
                     </div>

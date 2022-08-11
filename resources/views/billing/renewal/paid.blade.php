@@ -3,9 +3,11 @@
 @section('content')
 @include('users.partials.header', ['title' => __('Recurring')]) 
 
-      
+                   
     <div class="container-fluid mt--7 main-container">
+
         <div class="row">
+
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header border-0">
@@ -43,6 +45,15 @@
                             <div class="col-xl-6"></div>
 
                         <div class="col-12">
+
+                            <?php   
+                 
+                         $status = "paid";
+
+                     ?> 
+    @include('billing.renewal.filterRenewal')
+
+
                             
                             @include('billing.renewal.recurring_list')
                             

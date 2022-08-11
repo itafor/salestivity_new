@@ -42,6 +42,14 @@
                             <div class="col-xl-6"></div>
 
                         <div class="col-12">
+
+                             <?php   
+                 
+                             $status = "partly_paid";
+
+                           ?> 
+                            @include('billing.invoice.filterInvoice')
+                           
                             
                             @include('billing.invoice.invoice_list')
                             

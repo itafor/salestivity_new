@@ -2,7 +2,7 @@
 
 
         
-
+<!-- 
     <div class="row">
 
       <form action="{{route('search.renewal.by.start.end.date')}}" method="post" class="form-inline" autocomplete="off">
@@ -41,7 +41,7 @@
 
       </div> 
 
-<br>
+<br> -->
 
                 @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
