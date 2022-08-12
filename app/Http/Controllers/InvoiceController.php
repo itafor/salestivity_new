@@ -494,6 +494,9 @@ class InvoiceController extends Controller
     public function update(Request $request)
     {
         $input = $request->all();
+
+        $contactEmails = isset($input['contact_emails']) ? $input['contact_emails'] : '';
+
         // dd($input);
         $rules = [
             'invoice_id' => 'required',
@@ -550,9 +553,23 @@ class InvoiceController extends Controller
 
             $this->billing_invoice->updateInvoiceProducts($input, $invoice);
 
+           $this->updateInvoiceContactEmail($input, $contactEmails);
+
+             $contactEmails = [];
+
+            $contactEmails[] = getUserCCEmailAddress($invoice);
+            // dd($invoice->contacts);
+            if ($invoice->contacts != null) {
+                foreach ($invoice->contacts as $key => $contact) {
+                    if ($contact->contact_id != null) {
+                        $contactEmails[] = $contact->user->email;
+                    }
+                }
+            }
+
             $toEmail = $invoice->customers->email;
 
-            Mail::to($toEmail)->queue(new SendInvoice($invoice));
+            Mail::to($toEmail)->queue(new SendInvoice($invoice, $contactEmails));
 
             $status = "Invoice has been been updated";
             Alert::success('Invoice', $status);
@@ -564,6 +581,27 @@ class InvoiceController extends Controller
         Alert::error('Invoice', 'The action could not be completed');
         return back()->withInput()->withErrors($validator);
     }
+
+      public function updateInvoiceContactEmail($data, $contactEmails) {
+
+        $invoiceContact = InvoiceContact::where('invoice_id', $data['invoice_id'])->get();
+        if(count($invoiceContact) >= 1){
+            foreach ($invoiceContact as $key => $contactEmail) {
+                $contactEmail->delete();
+            }
+        }
+   
+    if($contactEmails !='' && $contactEmails[0] != null){
+    foreach ($contactEmails as $key => $contactEmail) {
+       $invoiceContact = new InvoiceContact();
+       $invoiceContact->contact_id = $contactEmail;
+       $invoiceContact->invoice_id = $data['invoice_id'];
+       $invoiceContact->save();
+    }
+
+  }
+
+ }
 
     /**
      * Remove the specified resource from storage.

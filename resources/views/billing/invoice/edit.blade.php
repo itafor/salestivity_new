@@ -256,6 +256,28 @@
                                   
                                 </div>
 
+       <div class="row mt-2">
+    <div class="col">
+      <label class="form-control-label" for="discount">{{ __('Contact Emails') }} <button type="button" class="btn btn-sm btn-default" onclick="selectAllcontactEmails()">Select all</button>  <button type="button" class="btn btn-sm btn-default" onclick="deSelectAllcontactEmails()">Deselect all</button></label>
+        <select name="contact_emails[]" class="form-control contact_emails " multiple="true" id="contact_emails">
+            @if($invoice->contacts)
+                @foreach($invoice->contacts as $contactEmail)
+                    <option value="{{$contactEmail->user ?  $contactEmail->user->id : ''}}" selected="selected">{{$contactEmail->user ? $contactEmail->user->email : ''}}</option>
+                @endforeach
+            @endif
+
+           <!--   @if(customerContacts($invoice->customer_id))
+                @foreach(customerContacts($invoice->customer_id) as $contact)
+                    <option value="{{$contact->id}}">{{$contact->email}}</option>
+                @endforeach
+            @endif -->
+        </select>
+        @error('contact_emails')
+        <small class="text-danger">{{$message}}</small>
+        @enderror
+        </div>
+  </div>
+
                                 <div class="row">
                                     <div class="col-12">
                                          <div class="form-group{{ $errors->has('payment_due') ? ' has-danger' : '' }}">
